@@ -155,6 +155,7 @@ Cam::WheelVRoll(WHEEL state)
 {
 	transform.position.y-=(float)state/10;
 	FieldOfView(FieldOfView() - state); 
+	printf("\nCAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
 }
 
 BASS_3DVECTOR

@@ -245,22 +245,25 @@ InputManager::UpdateMouseButtons(int button,int state,int x,int y)
 void
 InputManager::UpdateMouseWheel(int wheel,int state,int x,int y)
 {
+	// Resets The Mouse-Wheel variables to WHEEL::NONE... 
+	// otherwhise the last detected UP or DOWN state will stay as state
 	Mouse.WheelV = Mouse.WheelH = WHEEL::NONE;
 
-		if(wheel == 0)  // the first mouswheel -> veretical scroll
-			Mouse.WheelV = (WHEEL)state;
-		else if(wheel == 1)   // the second mousewheel (if your Mouse has one...)
-			Mouse.WheelH = (WHEEL)state;
+	if(wheel == 0)			// the first mouswheel -> veretical scroll
+		Mouse.WheelV = (WHEEL)state;
+	else if(wheel == 1)		// the second mousewheel (if your Mouse has one...)
+		Mouse.WheelH = (WHEEL)state;
 
-	// calls the invoktionList
-	_notifyWheel(wheel);
-
-#ifdef MOUSE_TEST_OUTPUT
+//Output Status to Console if MOUSE_TEST_OUTPUT is defined...	
+#ifdef MOUSE_TEST_OUTPUT 
 	if(instance->Mouse.WheelV == WHEEL::UP)
-		std::cout<<"WheelUP\n";
+		std::cout<<"\nWheelUP";
 	if(instance->Mouse.WheelV == WHEEL::DOWN)
-		std::cout<<"WheelDOWN\n";
+		std::cout<<"\nWheelDOWN";
 #endif
+
+// call the invoktionList
+	_notifyWheel(wheel);
 }
 
 void
