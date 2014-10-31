@@ -31,7 +31,6 @@ public:
 	}
 
 	virtual ~IConnectable(void);
-	
 
 
 	//Returns the Connaction's owner...
@@ -39,27 +38,10 @@ public:
 	//or the "Head" of the Connection...
 	IGobject* Connection(void);
 
-	
-	//Get's the Component defined by "T" of the Object where it's called on... 
-	//Its slower but esear to use as calling by ID...
-	template<typename T> T* GetConnected(void)
-	{
-		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == (ConID)typeid(T).hash_code())
-				return (T*)getConnectables(i);
-		return NULL;
-	}
-
-	//Gets a component of an Object by givin its Connection-ID...
-	//Workes mutch faster....
-	template<typename T> T* GetConnected(ConID conid)
-	{
-		return (T*)getConnectables(conid-1);
-	}
-
 
 	//Adds a Component to the Object were its called on...
 	//the component later can be getted with the Objects "GetConnected<IConnectable>()"-function...
+	//if you later want to call it by ID, you can get it's ID later by "GetConnectionID<IConnectable>()"
 	template<typename T> T* AddConnectable(void)
 	{
 
@@ -80,7 +62,7 @@ public:
 	//Adds a Component to the Object were its called on, and retrieves
 	//the Connection's ID-number via the given Pointer witch later can be used
 	//to get the component via the faster "GetConnected<IConnectable>(ConID)"-function...
-	template<typename T> T* AddConnectable(unsigned int*id)
+	template<typename T> T* AddConnectable(ConID *id)
 	{
 
 	Not_hasInitialized();
@@ -98,6 +80,38 @@ public:
 		return NULL;
 	}
 
+
+	//Get's the Component defined by "T" of the Object where it's called on... 
+	//Its slower at Runtime but faster at "Write-time" then calling by ID...
+	template<typename T> T* GetConnected(void)
+	{
+		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
+			if(ConIDs[i] == (ConID)typeid(T).hash_code())
+				return (T*)getConnectables(i);
+		return NULL;
+	}
+
+	//Gets a component of an Object by givin its Connection-ID...
+	//Workes mutch faster....
+	template<typename T> T* GetConnected(ConID conid)
+	{
+		return (T*)getConnectables(conid-1);
+	}
+
+
+	//Get's the ID of a "IConnectable" Component...
+	//use this, if you want to call a Component by it's ID , but it was
+	//previously Addet by Type,.. and not by ID...
+	template<typename T> ConID GetConnectionID(void)
+	{
+		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
+			if(ConIDs[i] == (ConID)typeid(T).hash_code())
+				return ConIDs[i]+1;
+	}
+
+
+
+	//UNREADY-SECTION...
 	// helper-functions and "under-construction" stuff...
 	// most of it should be private next time...
 
