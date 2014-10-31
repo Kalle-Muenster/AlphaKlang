@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E3B84B61-21D8-4C55-9D85-A3626E330646}</ProjectGuid>
+    <RootNamespace>soundXgame</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioObject.cpp" />
+    <ClCompile Include="BassAudio.cpp" />
+    <ClCompile Include="Cam.cpp" />
+    <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="IGobject.cpp" />
+    <ClCompile Include="IMusicListener.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="IvOxject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="TestConectables.cpp" />
+    <ClCompile Include="TestYeti.cpp" />
+    <ClCompile Include="UpdateManager.cpp" />
+    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="Voxel.cpp" />
+    <ClCompile Include="VoxelMap.cpp" />
+    <ClCompile Include="VoxGrid.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AudioObject.h" />
+    <ClInclude Include="BassAudio.h" />
+    <ClInclude Include="Cam.h" />
+    <ClInclude Include="Connectable.h" />
+    <ClInclude Include="IGobject.h" />
+    <ClInclude Include="IMusicListener.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IObserver.h" />
+    <ClInclude Include="IvOxject.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="projectClasses.h" />
+    <ClInclude Include="projectGrafics.h" />
+    <ClInclude Include="projectMacros.h" />
+    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="TestConectables.h" />
+    <ClInclude Include="TestYeti.h" />
+    <ClInclude Include="UpdateManager.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Voxel.h" />
+    <ClInclude Include="VoxelMap.h" />
+    <ClInclude Include="VoxGrid.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
