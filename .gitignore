@@ -42,5 +42,8 @@ Temporary Items
 .apdisk
 
 
-#VisualStudio Komisches sql-dings-file....
+# VisualStudio Komisches sql-dings-file....
 soundXgame.sdf
+
+# everything in the debug-folder...
+soundXgame/Debug/*
