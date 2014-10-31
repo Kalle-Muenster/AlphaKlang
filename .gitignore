@@ -13,8 +13,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
-soundXgame.sdf
-soundXgame\Debug\*.*
 
 # =========================
 # Operating System Files
@@ -42,3 +40,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+#VisualStudio Komisches sql-dings-file....
+soundXgame.sdf
