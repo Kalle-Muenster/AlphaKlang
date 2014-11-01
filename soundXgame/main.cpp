@@ -96,7 +96,7 @@ void GlInit(void)
 
 	glEnable(GL_DEPTH_TEST);
 	
-	glEnable(GL_TEXTURE_2D); // ??? TODO weg??
+	//glEnable(GL_TEXTURE_2D); // ??? hier weg!
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);

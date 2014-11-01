@@ -164,37 +164,44 @@ IGobject::rotate(float toiX,float toYps,float toZed)
 void
 IGobject::draw()
 {
-	if(IsVisible)
+	if(!IsVisible)
+		return;
+	
+	if(!vertexBufferID)
+		return;
+
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
+	glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		
+
+	glPushMatrix();
 	{
-		glPushMatrix();
-		{
-			glBindTexture(GL_TEXTURE_2D, textureID);
+		//Translate...
+		glTranslatef(this->transform.position.x, this->transform.position.y, this->transform.position.z);
 
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-			glVertexPointer(3, GL_FLOAT, 0, 0);
-
-			glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-			glTexCoordPointer(2, GL_FLOAT, 0, 0);
-		
-		
-			//Translate...
-			glTranslatef(this->transform.position.x, this->transform.position.y, this->transform.position.z);
-
-			//Rotate...
-			glRotatef(this->getTransform()->rotation.x, 1, 0, 0);
-			glRotatef(this->getTransform()->rotation.y, 0, 1, 0);
-			glRotatef(this->getTransform()->rotation.z, 0, 0, 1);
-
-			
+		//Rotate...
+		glRotatef(this->getTransform()->rotation.x, 1, 0, 0);
+		glRotatef(this->getTransform()->rotation.y, 0, 1, 0);
+		glRotatef(this->getTransform()->rotation.z, 0, 0, 1);
 
 		//	printf("forward: %f  \n\n",this->getTransform()->forward->z);
-			//Scaleate...
+		//Scaleate...
 		//	glScalef(this->transform.scale.x,this->transform.scale.y,this->transform.scale.z);
 		
-			glDrawArrays(GL_TRIANGLES, 0, verts.size());
-		}
-		glPopMatrix();
+		// Draw
+		glDrawArrays(GL_TRIANGLES, 0, verts.size());
 	}
+	glPopMatrix();
+			
+	glDisable(GL_TEXTURE_2D);
+
 }
 
 //TransformA*
