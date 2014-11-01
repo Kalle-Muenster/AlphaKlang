@@ -4,6 +4,8 @@ soundXgame/[Dd]ebug/
 *.suo
 *.user
 *.sln.docstates
+soundXgame.sdf
+soundXgame.opensdf
 
 
 # Windows image file caches

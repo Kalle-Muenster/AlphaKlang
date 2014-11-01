@@ -1,6 +1,7 @@
 #include "projectGrafics.h"
 #include "projectMacros.h"
 #include "projectClasses.h"
+#include "Sky.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -10,6 +11,7 @@ void* font;
 
 //Objects:
 Map* map;
+Sky* sky;
 TestYeti* testYeti;
 
 //Functions:
@@ -53,6 +55,7 @@ int prepareForExit(void)
 	delete font;
 	delete map;
 	delete testYeti;
+	delete sky;
 
 	return 0;
 }
@@ -121,6 +124,8 @@ void LoadContent(void)
 
 	SCENE->camera->SetTarget(testYeti);
 	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
+
+	sky = new Sky();
 }
 
 //Main-Cycle:
@@ -132,7 +137,8 @@ void UpdateCycle(void)
 
 void RenderCycle(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	sky->Draw(); // Draw sky first
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SCENE->DrawAll();
 		
