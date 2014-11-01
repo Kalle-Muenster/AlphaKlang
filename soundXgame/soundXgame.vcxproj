@@ -74,6 +74,7 @@
     <ClCompile Include="BassAudio.cpp" />
     <ClCompile Include="Cam.cpp" />
     <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGobject.cpp" />
     <ClCompile Include="IMusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="BassAudio.h" />
     <ClInclude Include="Cam.h" />
     <ClInclude Include="Connectable.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="IGobject.h" />
     <ClInclude Include="IMusicListener.h" />
     <ClInclude Include="InputManager.h" />

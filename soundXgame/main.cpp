@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 #include "Sky.h"
+#include "Ground.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -12,6 +13,7 @@ void* font;
 //Objects:
 Map* map;
 Sky* sky;
+Ground* ground;
 TestYeti* testYeti;
 
 //Functions:
@@ -118,12 +120,15 @@ void LoadContent(void)
 	// AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	// AUDIO->Play();
 
-	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
-	map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
-	map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
+	//map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
+	//map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
 
+	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
 	SCENE->camera->SetTarget(testYeti);
 	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
+
+	ground = Ground::getInstance();
+	ground->Init();
 
 	sky = new Sky();
 }
@@ -139,6 +144,8 @@ void RenderCycle(void)
 {
 	sky->Draw(); // Draw sky first
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	ground->Draw();
 
 	SCENE->DrawAll();
 		

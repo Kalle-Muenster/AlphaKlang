@@ -74,6 +74,9 @@
     <ClCompile Include="Sky.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputManager.h">
@@ -143,6 +146,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Sky.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
