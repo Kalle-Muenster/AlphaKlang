@@ -358,26 +358,26 @@ InputManager::PerFrameReset(void)
 {
 	_setMouseButtons();
 
-#ifdef MOUSE_TEST_OUTPUT
-		 if(instance->Mouse.LEFT.CLICK)
-		std::cout<<"CLICK\n";
-	else if(instance->Mouse.LEFT.RELEASE)
-		std::cout<<"\n...RELEASE\n\n";
-	else if(instance->Mouse.LEFT.HOLD)
-		std::cout<<"HOLD..";
-	if(instance->Mouse.RIGHT.CLICK)
-		std::cout<<"RIGHT-CLICK\n";
-	else if(instance->Mouse.RIGHT.RELEASE)
-		std::cout<<"\n...RIGHT-RELEASE\n\n";
-	else if(instance->Mouse.RIGHT.HOLD)
-		std::cout<<"RIGHT-HOLD..";
-	if(instance->Mouse.MIDDLE.CLICK)
-		std::cout<<"MIDDLE-CLICK\n";
-	else if(instance->Mouse.MIDDLE.RELEASE)
-		std::cout<<"\n...MIDDLE-RELEASE\n\n";
-	else if(instance->Mouse.MIDDLE.HOLD)
-		std::cout<<"MIDDLE-HOLD..";
-#endif
+	#ifdef MOUSE_TEST_OUTPUT
+		if(instance->Mouse.LEFT.CLICK)
+			std::cout<<"CLICK\n";
+		else if(instance->Mouse.LEFT.RELEASE)
+			std::cout<<"\n...RELEASE\n\n";
+		else if(instance->Mouse.LEFT.HOLD)
+			std::cout<<"HOLD..";
+		if(instance->Mouse.RIGHT.CLICK)
+			std::cout<<"RIGHT-CLICK\n";
+		else if(instance->Mouse.RIGHT.RELEASE)
+			std::cout<<"\n...RIGHT-RELEASE\n\n";
+		else if(instance->Mouse.RIGHT.HOLD)
+			std::cout<<"RIGHT-HOLD..";
+		if(instance->Mouse.MIDDLE.CLICK)
+			std::cout<<"MIDDLE-CLICK\n";
+		else if(instance->Mouse.MIDDLE.RELEASE)
+			std::cout<<"\n...MIDDLE-RELEASE\n\n";
+		else if(instance->Mouse.MIDDLE.HOLD)
+			std::cout<<"MIDDLE-HOLD..";
+	#endif
 }
 
 

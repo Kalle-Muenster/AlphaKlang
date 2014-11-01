@@ -14,6 +14,7 @@ TestYeti* testYeti;
 
 //Functions:
 void Init(void);
+void GlInit(void);
 void LoadContent(void);
 void UpdateCycle(void);
 void RenderCycle(void);
@@ -58,7 +59,7 @@ int prepareForExit(void)
 
 void Init(void)
 {
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowSize(SCREENWIDTH, SCREENHEIGHT);
 	wnd = glutCreateWindow("-soundXgame-");
 	font = GLUT_BITMAP_HELVETICA_18;
@@ -74,33 +75,45 @@ void Init(void)
 	glutSpecialFunc(processSpecialKeys);
 	glutKeyboardFunc(keyboardInput);
 	glutEntryFunc(MouseHoverWindow);
-	glewInit();
+	
+	GLenum glewError = glewInit();
+	if( glewError != GLEW_OK )
+		std::cerr << "Unable to init GLew";
 
+	GlInit();
+
+	LoadContent();
+}
+
+void GlInit(void)
+{
+	
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClearDepth(1);
 
 	glEnable(GL_DEPTH_TEST);
+	
+	glEnable(GL_TEXTURE_2D); // ??? TODO weg??
 
-	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	// enable Multisample Antialiasing
+    glEnable(GL_MULTISAMPLE_ARB);
 
 	//shader
-	 
-//	glEnableVertexAttribArray( atribut_coordinate2 );
-
-	LoadContent();
+	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
 
 void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
-//	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-//	AUDIO->Play();
+	// AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+	// AUDIO->Play();
 
 	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
 	map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
