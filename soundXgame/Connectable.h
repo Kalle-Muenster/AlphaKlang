@@ -112,7 +112,7 @@ public:
 	{
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
 			if(ConIDs[i] == (ConID)typeid(T).hash_code())
-				return ConIDs[i]+1;
+				return ConIDs[i]-1;
 	}
 
 

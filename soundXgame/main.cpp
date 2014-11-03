@@ -11,9 +11,6 @@ int wnd;
 void* font;
 
 //Objects:
-Map* map;
-TestYeti *testYeti;
-TestYeti *yeti2;
 Sky* sky;
 Ground* ground;
 
@@ -57,8 +54,6 @@ int prepareForExit(void)
 {
 	//deletions:
 	delete font;
-	delete map;
-	delete testYeti;
 	delete sky;
 
 	return 0;
@@ -119,58 +114,49 @@ void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
-	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
-	testYeti->SetName("y1");
-	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
-	testYeti->GetConnected<AudioEmitter>()->LoadeStream("testtrack.mp3");
-	testYeti->GetConnected<AudioEmitter>()->PlayAudio();
+	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	tempObject->move(tempObject->getTransform()->position.x-3,tempObject->getTransform()->position.y,tempObject->getTransform()->position.z);
 
-	yeti2 = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
-	yeti2->SetName("y2");
-	yeti2->conXtor->AddConnectable<CameraTargetRotator>();
-	UPDATE->SignInForUpdate(yeti2->GetConnected<CameraTargetRotator>());
-	yeti2->move(-1,yeti2->getTransform()->position.y,-1);
-
-
-	//map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
-	//map->SetName("MapObject");
-	//map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
-
-	
+	tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	tempObject->conXtor->AddConnectable<CameraTargetRotator>();
+	UPDATE->SignInForUpdate(tempObject->GetConnected<CameraTargetRotator>());
+	tempObject->move(-1,tempObject->getTransform()->position.y,-1);
+	tempObject->AddConnectable<AudioEmitter>();
+	tempObject->GetConnected<AudioEmitter>()->LoadeStream("testtrack.mp3");
+	tempObject->GetConnected<AudioEmitter>()->PlayAudio();
 	
 	ground = Ground::getInstance();
 	ground->Init();
 
 	sky = new Sky();
 	
-	SCENE->camera->SetTarget(yeti2);
+	
+	int i = -1;
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
 
-	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
-	SCENE->camera->SetTarget(testYeti);
-	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
+	SCENE->camera->SetTarget(tempObject);
+
 }
 
-int switcher=0;
+GobID switcher=0;
 //Main-Cycle:
 ////////////////////////////////////////////////////////
 void UpdateCycle(void)
 {
 	UPDATE->DoAllTheUpdates();
 	if(INPUT->Mouse.RIGHT.CLICK)
-		printf("\nTEST: %s,%s\n",yeti2->GetName(),testYeti->GetName());
+		printf("\nTEST: %s,%s\n",SCENE->Object(switcher)->GetName(),SCENE->Object(switcher+1)->GetName());
 
 	if(INPUT->Mouse.LEFT.CLICK)
 	{
-		if(switcher == 0)
-		{
-			SCENE->camera->SetTarget(yeti2);
-				switcher=1;
-		}
-		else if(switcher == 1)
-		{
-			SCENE->camera->SetTarget(testYeti);
-				switcher=0;
-		}
+		SCENE->camera->SetTarget(SCENE->Object(switcher));
+		if(++switcher>=SCENE->ObjectsCount())
+			switcher=0;
 	}
 
 	
@@ -219,7 +205,7 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 void keyboardInput(unsigned char key,int x,int y)
 {
 	if(key=='m')
-		testID = yeti2->conXtor->AddConnection(testYeti);
+		testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
 	if(key=='q')
 		glutExit();
 

@@ -38,7 +38,7 @@ public:
 	virtual void DoUpdate(void)
 	{
 		
-		if(SCENE->camera->GetTarget()->GetObjectID() == this->Connection()->GetObjectID())
+		if(SCENE->camera->GetTarget()->GetID() == this->Connection()->GetID())
 		{
 			RotateOnMouseHold();
 

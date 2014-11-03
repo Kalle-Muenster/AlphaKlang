@@ -4,7 +4,7 @@
 void
 YetiInteractive::keyPress(char key)
 {
-	if(this->Connection()->GetObjectID() == (SCENE->camera->GetTarget()->GetObjectID()) )
+	if(this->Connection()->GetID() == (SCENE->camera->GetTarget()->GetID()) )
 	{
 		bool ismoving = false;
 		float X,Z;

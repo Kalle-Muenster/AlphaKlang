@@ -8,21 +8,50 @@
 
 #define This this->conXtor->Connection()
 static unsigned objIDs = 99;
+std::vector<GobID> usedIDs = std::vector<GobID>();
+
+bool
+_IDIsFree(GobID id)
+{
+	for(auto it=usedIDs.begin();it!=usedIDs.end();it++)
+		if((*it)==id)
+			return false;
+	return true;
+}
+
 
 IGobject::IGobject(void)
 {
 	IsVisible=false;
 	this->_idIsSet=false;
-
-	if(!this->_idIsSet)
-	{
-		this->ID = ++objIDs;
-		this->_idIsSet=true;
-	}
-
-	itoa(this->ID,&this->Name[0],10);
 }
 
+bool
+IGobject::SetID(GobID id)
+{
+	if(this->_idIsSet==false)
+	{
+		this->ID = id;
+		itoa(this->ID,&this->Name[0],10);
+		usedIDs.push_back(id);
+		return this->_idIsSet=true;
+	}
+	else
+		return false;
+}
+
+void
+IGobject::LockID(void)
+{
+	if(!_idIsSet)
+	{
+		while(!_IDIsFree(++objIDs));
+		this->ID = objIDs;
+		usedIDs.push_back(this->ID);
+		itoa(this->ID,&this->Name[0],10);
+		this->_idIsSet=true;
+	}
+}
 
 IGobject::~IGobject(void)
 {
@@ -39,28 +68,23 @@ IMeshGobject::IMeshGobject(void)
 
 IMeshGobject::~IMeshGobject(void)
 {
-
+	delete conXtor;
 }
 
 void
 IMeshGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
 {
-	
-	init(objFile,textureFile);
-
 	if(addToSceneGraph)
-		SCENE->Add(this);
+		SetID(SCENE->Add(this));
+
+	init(objFile,textureFile);
 
 }
 
 void
 IMeshGobject::init(const char* objFile, const char* textureFile)
 {
-	if(this->_idIsSet!=true)
-	{
-		this->ID = ++objIDs;
-		this->_idIsSet=true;
-	}
+	LockID();
 	Utility::loadObj(objFile,this->verts,this->uvs,this->norms);
 	this->textureID = Utility::loadTexture(textureFile);
 	glm::vec3 temp1 = glm::vec3(0,0,1);
@@ -88,7 +112,7 @@ IMeshGobject::init(const char* objFile, const char* textureFile)
 
 
 GobID
-IGobject::GetObjectID(void)
+IGobject::GetID(void)
 {
 	return this->ID;
 }
@@ -142,7 +166,7 @@ IMeshGobject::move(Vector3 to)
 {
 	getTransform()->movement = (to - getTransform()->position);
 	getTransform()->position = to;
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
 	return getTransform()->position;
 }
 
@@ -158,7 +182,7 @@ IMeshGobject::move(float tox,float toy,float toz)
 	getTransform()->position.z = toz;
 
 	
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
 
 
 	return getTransform()->position;

@@ -13,13 +13,15 @@ typedef unsigned int GobID;
 
 class IGobject
 {
+private:
+	GobID ID;
+	bool _idIsSet;
 
 protected:
-
 	TransformA transform;
-	bool _idIsSet;
-	GobID ID;
 	char Name[64];
+	bool SetID(GobID);
+	void LockID(void);
 
 public:
 	IGobject(void);
@@ -30,7 +32,7 @@ public:
 	virtual Vector3 move(float,float,float)=0;
 	virtual Vector3 rotate(float,float,float)=0;
 	virtual Vector3 scale(Vector3)=0;
-	GobID GetObjectID(void);
+	GobID GetID(void);
 	char* GetName(void);
 	void SetName(char*);
 	IConnectable* conXtor;
@@ -40,6 +42,8 @@ public:
 	{return conXtor->AddConnectable<T>();};
 	template<typename T> T* GetConnected(void)
 	{return conXtor->GetConnected<T>();};
+	template<typename T> bool HasConnected(void)
+	{return conXtor->GetConnected<T>()!=NULL;}
 };
 
 class IMeshGobject : 

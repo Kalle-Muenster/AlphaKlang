@@ -15,11 +15,9 @@ TestYeti::TestYeti(const char* objFile,const char* textureFile,bool addToSceneGr
 		
 		MoveIt = &_MoveOnMusic;
 
-		SetName("TestYeti");
+		SetName("Yeti");
 
 	conXtor->AddConnectable<YetiInteractive>();
-	conXtor->AddConnectable<AudioEmitter>();
-	conXtor->GetConnected<AudioEmitter>();
 	conXtor->AddConnectable<MusicListener>();
 	conXtor->GetConnected<MusicListener>()->SetThreshold(0,0.038f);
 	conXtor->GetConnected<MusicListener>()->GetLineData(0)->fallOff=0.1;
@@ -50,11 +48,14 @@ TestYeti::~TestYeti(void)
 void
 TestYeti::DoUpdate(void)
 {
+	if(this->HasConnected<AudioEmitter>())
+	{
 	if(conXtor->GetConnected<AudioEmitter>()->IsAudioPlaying())
 	{
 		float* fftWin = conXtor->GetConnected<AudioEmitter>()->GetFFTWindow(FFT_SIZE::Small);
 		conXtor->GetConnected<MusicListener>()->listen(fftWin);
 	}	
+	}
 }
 
 void

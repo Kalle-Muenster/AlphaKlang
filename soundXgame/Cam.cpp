@@ -63,7 +63,7 @@ Cam::SetTarget(IGobject *targetObject)
 	_target = targetObject;
 	_target->IsVisible=true;
 	_FollowFirstPerson=false;
-	printf("\nCAMERA: Set %s-ID:%i As Follow-Target!",_target->GetName(),_target->GetObjectID());
+	printf("\nCAMERA: Set %s-ID:%i As Follow-Target!",_target->GetName(),_target->GetID());
 }
 
 IGobject* 
