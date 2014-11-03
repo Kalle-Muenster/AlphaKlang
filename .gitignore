@@ -1,3 +1,13 @@
+# Custom added
+Debug/soundXgame.*
+soundXgame/[Dd]ebug/
+*.suo
+*.user
+*.sln.docstates
+soundXgame.sdf
+soundXgame.opensdf
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

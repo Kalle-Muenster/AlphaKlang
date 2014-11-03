@@ -278,5 +278,6 @@ Cam::Update()
 		gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 //	else if(Mode()==ORTHOGRAFIC)
 //		gluLookAt(0,0,0,0,0,0,0,1,0);
+
 }
 

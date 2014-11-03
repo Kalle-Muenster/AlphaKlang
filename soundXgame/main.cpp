@@ -1,6 +1,8 @@
 #include "projectGrafics.h"
 #include "projectMacros.h"
 #include "projectClasses.h"
+#include "Sky.h"
+#include "Ground.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -10,10 +12,15 @@ void* font;
 
 //Objects:
 Map* map;
-TestYeti* testYeti,*yeti2;
-TransformA* testTraansform;
+TestYeti *testYeti;
+TestYeti *yeti2;
+Sky* sky;
+Ground* ground;
+
+
 //Functions:
 void Init(void);
+void GlInit(void);
 void LoadContent(void);
 void UpdateCycle(void);
 void RenderCycle(void);
@@ -52,13 +59,14 @@ int prepareForExit(void)
 	delete font;
 	delete map;
 	delete testYeti;
+	delete sky;
 
 	return 0;
 }
 
 void Init(void)
 {
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowSize(SCREENWIDTH, SCREENHEIGHT);
 	wnd = glutCreateWindow("-soundXgame-");
 	font = GLUT_BITMAP_HELVETICA_18;
@@ -74,35 +82,43 @@ void Init(void)
 	glutSpecialFunc(processSpecialKeys);
 	glutKeyboardFunc(keyboardInput);
 	glutEntryFunc(MouseHoverWindow);
-	glewInit();
+	
+	GLenum glewError = glewInit();
+	if( glewError != GLEW_OK )
+		std::cerr << "Unable to init GLew";
 
+	GlInit();
+
+	LoadContent();
+}
+
+void GlInit(void)
+{
+	
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClearDepth(1);
 
 	glEnable(GL_DEPTH_TEST);
+	
+	//glEnable(GL_TEXTURE_2D); // ??? hier weg!
 
-	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	// enable Multisample Antialiasing
+    glEnable(GL_MULTISAMPLE_ARB);
 
 	//shader
-	 
-//	glEnableVertexAttribArray( atribut_coordinate2 );
-
-	LoadContent();
+	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
 ConID* testID;
 void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
-//	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-//	AUDIO->Play();
-	
-	
 	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
 	testYeti->SetName("y1");
 	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
@@ -116,20 +132,22 @@ void LoadContent(void)
 	yeti2->move(-1,yeti2->getTransform()->position.y,-1);
 
 
-	map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
-	map->SetName("MapObject");
-	map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
+	//map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
+	//map->SetName("MapObject");
+	//map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
 
+	
+	
+	ground = Ground::getInstance();
+	ground->Init();
+
+	sky = new Sky();
+	
 	SCENE->camera->SetTarget(yeti2);
-	
 
-	
-	
-//	testID = testYeti->conXtor->AddConnection(map);
-//	testID = map->conXtor->AddConnection(testYeti);
-	
-
-	//testID = testYeti->conXtor->AddConnection(yeti2);
+	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	SCENE->camera->SetTarget(testYeti);
+	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
 }
 
 int switcher=0;
@@ -160,7 +178,10 @@ void UpdateCycle(void)
 
 void RenderCycle(void)
 {
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	sky->Draw(); // Draw sky first
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	ground->Draw();
 
 	SCENE->DrawAll();
 		

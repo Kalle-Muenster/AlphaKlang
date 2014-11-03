@@ -75,6 +75,7 @@
     <ClCompile Include="Cam.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGobject.cpp" />
     <ClCompile Include="IMusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="Sky.cpp" />
     <ClCompile Include="TestConectables.cpp" />
     <ClCompile Include="TestYeti.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
@@ -99,6 +101,7 @@
     <ClInclude Include="Cam.h" />
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="IGobject.h" />
     <ClInclude Include="IMusicListener.h" />
     <ClInclude Include="InputManager.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Sky.h" />
     <ClInclude Include="TestConectables.h" />
     <ClInclude Include="TestYeti.h" />
     <ClInclude Include="UpdateManager.h" />

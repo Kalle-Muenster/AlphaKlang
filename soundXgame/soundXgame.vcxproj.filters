@@ -75,6 +75,11 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="VoxelVector.cpp">
+	<Filter>Quelldateien</Filter>
+    <ClCompile Include="Sky.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,6 +154,11 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="VoxelVector.h">
+	<Filter>Headerdateien</Filter>
+    <ClInclude Include="Sky.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
