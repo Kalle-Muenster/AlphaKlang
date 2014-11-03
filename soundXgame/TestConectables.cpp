@@ -30,7 +30,7 @@ YetiInteractive::keyPress(char key)
 				break;
 			}
 		if(ismoving)
-			this->Connection()->move(Vector3(X,this->Connection()->getTransform()->position.y,Z));
+			this->Connection()->move(X,this->Connection()->getTransform()->position.y,Z);
 
 		printf("\nKeypress (\"%c\") recieved in Object: %s !\n",key,this->Connection()->GetName());
 	}

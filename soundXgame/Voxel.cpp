@@ -1,9 +1,7 @@
 #include "projectGrafics.h"
 #include "projectMacros.h"
-#include "Vector.h"
-#include "Voxel.h"
-#include "VoxelMap.h"
 
+#include "Voxel.h"
 
 
 VectorF Voxel::GetPosition(void)

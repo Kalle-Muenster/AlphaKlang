@@ -1,11 +1,7 @@
 #ifndef __DING__
 #define __DING__
 
-
-#include "Vector.h"
-//#include "VoxelMap.h"
-//#include "Connectable.h"
-//#include "projectMacros.h"
+#include "VoxelVector.h"
 
 
  class Voxel

@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include "DataStructs.h"
 
 InputManager* instance;
 

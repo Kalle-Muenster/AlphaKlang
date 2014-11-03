@@ -4,7 +4,7 @@
 #include "IGobject.h"
 
 class Map :
-	public IGobject
+	public IMeshGobject
 {
 public:
 	Map(void);

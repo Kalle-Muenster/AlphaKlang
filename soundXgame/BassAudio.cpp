@@ -1,6 +1,5 @@
-#include "projectMacros.h"
-#include "AudioObject.h"
-#include <vector>
+#include "BassAudio.h"
+#include <iostream>
 
 #define DEBUG
 
@@ -232,10 +231,10 @@ BassAudio::GetChannelFFT(DWORD channel,void* buffer,FFT_SIZE size)
 }
 
 void*
-BassAudio::GetBackgroundAudioFFT(FFT_SIZE size)
+BassAudio::GetBackgroundAudioFFT(int size)
 {
 	void* buffer;
-	GetChannelFFT(derAudio,buffer,size);
+	GetChannelFFT(derAudio,buffer,(FFT_SIZE)size);
 	return buffer;
 }
 

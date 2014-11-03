@@ -641,7 +641,7 @@ static const struct {
 
 #include <stdio.h>
 #include <istream>
-#include "Vector.h"
+#include "VoxelVector.h"
 #include "Voxel.h"
 
 //class Voxel;

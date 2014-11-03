@@ -1,8 +1,6 @@
-#include "projectMacros.h"
+
 #include "AudioObject.h"
 
-#include <bass.h>
-#include <bass_fx.h>
 
 static IAudioReciever* MasterReciever;
 static bool _IsMasterStable = false;
@@ -25,141 +23,6 @@ IAudioReciever::IsMasterReciever(void)
 	return  ((this == MasterReciever)&& _IsMasterStable);
 }
 
-IAudioEmitter::IAudioEmitter(void)
-{
-	IsPlaying=false;
-	for (int i=0;i<1024;i++)
-		fftwindow[i]=0;
-}
-
-void
-IAudioEmitter::InitiateAudioEmitter(TransformA* myTransform,const char *audioFileName)
-{
-	this->LoadeSample(audioFileName);
-	SetMyPosition(myTransform);
-	BASS_Apply3D();
-}
-
-
-IAudioEmitter::~IAudioEmitter(void)
-{
-
-}
-
-void
-IAudioEmitter::AudioPause(void)
-{
-	if(IsPlaying)
-	{
-		BASS_ChannelPause(audioSource);
-		IsPlaying=false;
-	}
-}
-
-void
-IAudioEmitter::PlayAudio(void)
-{
-	if(!IsPlaying)
-	{
-		BASS_ChannelPlay(audioSource,true);
-		IsPlaying=true;
-	}
-}
-
-float
-IAudioEmitter::AudioVolume(float setter)
-{
-	if(setter<=1)
-		BASS_ChannelSetAttribute(audioSource,BASS_ATTRIB_VOL,setter);
-
-	return BASS_ChannelGetAttribute(audioSource,BASS_ATTRIB_VOL,&setter);
-}
-
-float
-IAudioEmitter::PitchAudio(float pitcher)
-{
-	if(pitcher<=1)
-		
-		//todo..
-
-	throw "mach ich später...";
-}
-
-
-
-bool
-IAudioEmitter::IsAudioPlaying(void)
-{
-	if( BASS_ChannelIsActive(audioSource) == BASS_ACTIVE_PLAYING)
-		return true;
-	else 
-		return false;
-}
-
-void
-IAudioEmitter::SetMyPosition(TransformA *myTransform)
-{
-	BASS_ChannelSet3DPosition((DWORD)audioSource,myTransform->position.asBassVector(),myTransform->rotation.asBassVector(),&myTransform->movement);
-	BASS_Apply3D();
-}
-
-float*
-IAudioEmitter::GetFFTWindow(void)
-{
-	return this->GetFFTWindow(Small);
-}
-float*
-IAudioEmitter::GetFFTWindow(int size)
-{
-	void* buffer = &fftwindow[0];
-	AUDIO->GetChannelFFT(this->audioSource,buffer,(FFT_SIZE)size);
-	return &fftwindow[0];
-}
-
-
-AudioEmitter::AudioEmitter(void)
-{
-	
-}
-
-
-void
-IAudioEmitter::LoadeSample(const char* audioFileName)
-{
-	
-	audioSource = AUDIO->Loade3DSample(audioFileName);
-//	SetMyPosition(&this->Connection()->transform);
-	this->AudioVolume(0.8);
-
-}
-void
-AudioEmitter::LoadeSample(const char* audioFileName)
-{
-	
-	audioSource = AUDIO->Loade3DSample(audioFileName);
-	SetMyPosition(this->Connection()->getTransform());
-	this->AudioVolume(0.8);
-
-}
-
-void
-IAudioEmitter::LoadeStream(const char* audioFileName)
-{
-	
-	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
-//	SetMyPosition(&this->Connection()->transform);
-	this->AudioVolume(0.8);
-
-}
-void
-AudioEmitter::LoadeStream(const char* audioFileName)
-{
-	
-	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
-	SetMyPosition(this->Connection()->getTransform());
-	this->AudioVolume(0.8);
-
-}
 
 IAudioReciever::IAudioReciever(void)
 {
@@ -178,7 +41,7 @@ IAudioReciever::InitiateListener(TransformA* myTransform)
 	
 }
 
-volatile bool
+bool
 IAudioReciever::IsShared(bool setter)
 {
 	if(setter)
@@ -187,7 +50,7 @@ IAudioReciever::IsShared(bool setter)
 	return false;
 }
 
-volatile IAudioReciever*
+IAudioReciever*
 IAudioReciever::GetMasterReciever(void)
 {
 	return MasterReciever;
@@ -267,3 +130,151 @@ IAudioReciever::GetMasterOutFFT(void)
 	if(AUDIO->MasterResampling() && _FFTwindowGettable)
 		return AUDIO->GetMasterOutFFT();
 }
+
+
+
+
+
+IAudioEmitter::IAudioEmitter(void)
+{
+	IsPlaying=false;
+	for (int i=0;i<1024;i++)
+		fftwindow[i]=0;
+}
+
+void
+IAudioEmitter::InitiateAudioEmitter(TransformA* myTransform,const char *audioFileName)
+{
+	this->LoadeSample(audioFileName);
+	SetMyPosition(myTransform);
+	BASS_Apply3D();
+}
+
+
+IAudioEmitter::~IAudioEmitter(void)
+{
+
+}
+
+void
+IAudioEmitter::AudioPause(void)
+{
+	if(IsPlaying)
+	{
+		BASS_ChannelPause(audioSource);
+		IsPlaying=false;
+	}
+}
+
+void
+IAudioEmitter::PlayAudio(void)
+{
+	if(!IsPlaying)
+	{
+		BASS_ChannelPlay(audioSource,true);
+		IsPlaying=true;
+	}
+}
+
+float
+IAudioEmitter::AudioVolume(float setter)
+{
+	if(setter<=1)
+		BASS_ChannelSetAttribute(audioSource,BASS_ATTRIB_VOL,setter);
+
+	return (float)BASS_ChannelGetAttribute(audioSource,BASS_ATTRIB_VOL,&setter);
+}
+
+float
+IAudioEmitter::PitchAudio(float pitcher)
+{
+	if(pitcher<=1)
+		
+		//todo..
+
+	throw "mach ich später...";
+}
+
+
+
+bool
+IAudioEmitter::IsAudioPlaying(void)
+{
+	if( BASS_ChannelIsActive(audioSource) == BASS_ACTIVE_PLAYING)
+		return true;
+	else 
+		return false;
+}
+
+void
+IAudioEmitter::SetMyPosition(TransformA *myTransform)
+{
+	BASS_ChannelSet3DPosition((DWORD)audioSource,myTransform->position.asBassVector(),myTransform->rotation.asBassVector(),&myTransform->movement);
+	BASS_Apply3D();
+}
+
+float*
+IAudioEmitter::GetFFTWindow(void)
+{
+	return this->GetFFTWindow(Small);
+}
+
+float*
+IAudioEmitter::GetFFTWindow(int size)
+{
+	void* buffer = &fftwindow[0];
+	AUDIO->GetChannelFFT(this->audioSource,buffer,(FFT_SIZE)size);
+	return &fftwindow[0];
+}
+
+
+AudioEmitter::AudioEmitter(void)
+{
+	
+}
+
+
+void
+IAudioEmitter::LoadeSample(const char* audioFileName)
+{
+	
+	audioSource = AUDIO->Loade3DSample(audioFileName);
+//	SetMyPosition(&this->Connection()->transform);
+	this->AudioVolume(0.8);
+
+}
+
+void
+AudioEmitter::LoadeSample(const char* audioFileName)
+{
+	
+	audioSource = AUDIO->Loade3DSample(audioFileName);
+
+	this->AudioVolume(0.8);
+
+}
+
+void
+IAudioEmitter::LoadeStream(const char* audioFileName)
+{
+	
+	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
+//	SetMyPosition(&this->Connection()->transform);
+	this->AudioVolume(0.8);
+
+}
+
+void
+AudioEmitter::LoadeStream(const char* audioFileName)
+{
+	
+	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
+	SetMyPosition(this->Connection()->getTransform());
+	this->AudioVolume(0.8);
+
+}
+
+
+
+
+

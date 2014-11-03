@@ -2,7 +2,9 @@
 #define __VOXGRID_H__
 #include "Connectable.h"
 #include "InputManager.h"
+#include "DataStructs.h"
 #include "ivoxject.h"
+
 
 class VoxelInteractive : public IConnectable,public IInteractive
 {

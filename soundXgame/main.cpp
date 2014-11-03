@@ -10,8 +10,8 @@ void* font;
 
 //Objects:
 Map* map;
-TestYeti* testYeti;
-
+TestYeti* testYeti,*yeti2;
+TransformA* testTraansform;
 //Functions:
 void Init(void);
 void LoadContent(void);
@@ -94,27 +94,68 @@ void Init(void)
 
 	LoadContent();
 }
-
+ConID* testID;
 void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
 //	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 //	AUDIO->Play();
-
+	
+	
 	testYeti = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	testYeti->SetName("y1");
+	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
+	testYeti->GetConnected<AudioEmitter>()->LoadeStream("testtrack.mp3");
+	testYeti->GetConnected<AudioEmitter>()->PlayAudio();
+
+	yeti2 = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	yeti2->SetName("y2");
+	yeti2->conXtor->AddConnectable<CameraTargetRotator>();
+	UPDATE->SignInForUpdate(yeti2->GetConnected<CameraTargetRotator>());
+	yeti2->move(-1,yeti2->getTransform()->position.y,-1);
+
+
 	map = new Map("Landschaft.obi","Landschaft_Diffuse.jpg",true);
+	map->SetName("MapObject");
 	map->move(Vector3(map->getTransform()->position.x,-0.2,map->getTransform()->position.z));
 
-	SCENE->camera->SetTarget(testYeti);
-	testYeti->move(testYeti->getTransform()->position.x-3,testYeti->getTransform()->position.y,testYeti->getTransform()->position.z);
+	SCENE->camera->SetTarget(yeti2);
+	
+
+	
+	
+//	testID = testYeti->conXtor->AddConnection(map);
+//	testID = map->conXtor->AddConnection(testYeti);
+	
+
+	//testID = testYeti->conXtor->AddConnection(yeti2);
 }
 
+int switcher=0;
 //Main-Cycle:
 ////////////////////////////////////////////////////////
 void UpdateCycle(void)
 {
 	UPDATE->DoAllTheUpdates();
+	if(INPUT->Mouse.RIGHT.CLICK)
+		printf("\nTEST: %s,%s\n",yeti2->GetName(),testYeti->GetName());
+
+	if(INPUT->Mouse.LEFT.CLICK)
+	{
+		if(switcher == 0)
+		{
+			SCENE->camera->SetTarget(yeti2);
+				switcher=1;
+		}
+		else if(switcher == 1)
+		{
+			SCENE->camera->SetTarget(testYeti);
+				switcher=0;
+		}
+	}
+
+	
 }
 
 void RenderCycle(void)
@@ -156,6 +197,8 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 //Keyboard:
 void keyboardInput(unsigned char key,int x,int y)
 {
+	if(key=='m')
+		testID = yeti2->conXtor->AddConnection(testYeti);
 	if(key=='q')
 		glutExit();
 

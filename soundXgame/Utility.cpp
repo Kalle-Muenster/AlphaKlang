@@ -2,48 +2,8 @@
 #include "projectGrafics.h"
 #include "Utility.h"
 
-Vector3::Vector3(void)
-{
-	x=y=z=0.0f;
-}
 
-Vector3::Vector3(float X,float Y,float Z)
-{
-	bassVector.x = x = X;
-	bassVector.y = y = Y;
-	bassVector.z = z = Z;
-}
-Vector3::Vector3(glm::vec3 glVector)
-{
-	bassVector.x = x = glVector.x;
-	bassVector.y = y = glVector.y;
-	bassVector.z = z = glVector.z;
-}
-Vector3::operator BASS_3DVECTOR()
-{
-	return BASS_3DVECTOR(this->x,this->y,this->z);
-}
 
-Vector3
-Vector3::operator+(Vector3 adder)
-{
-	return Vector3(this->x + adder.x,this->y + adder.y,this->z + adder.z);
-}
-
-Vector3
-Vector3::operator-(Vector3 subtractor)
-{
-	return Vector3(this->x - subtractor.x,this->y - subtractor.y,this->z - subtractor.z);
-}
-
-BASS_3DVECTOR*
-Vector3::asBassVector(void)
-{
-	bassVector.x = this->x;
-	bassVector.y = this->y;
-	bassVector.z = this->z;
-	return &bassVector;
-}
 
 
 
@@ -56,144 +16,7 @@ u32_2s16_4b8::u32_2s16_4b8(int set)
 {
 	this->u32 = set;
 }
-//
-//BitMap::BitMap(const POWERS_OF_TWO w,const POWERS_OF_TWO h)
-//{
-//	_bitmap.width=w;
-//	sizeInByte = w*h*4;
-//	Height(h);
-//}
-//
-//BitMap::~BitMap(void)
-//{
-//	
-//}
-//
-//unsigned
-//BitMap::GetSizeInByte(void)
-//{
-//	return sizeInByte;
-//}
-//
-//unsigned short
-//BitMap::Width(POWERS_OF_TWO w)
-//{
-//	if(w)
-//	{
-//		for(int i=0;i<_bitmap.height;i++)
-//			switch(w)
-//			{
-//			case _64:
-//				_bitmap.data[i]=ScanLine_64();
-//				break;
-//			case _128:
-//				_bitmap.data[i]=ScanLine_128();
-//				break;
-//			case _256:
-//				_bitmap.data[i]=ScanLine_256();
-//				break;
-//			}
-//
-//		_bitmap.width=w;
-//		sizeInByte = _bitmap.width*_bitmap.height*4;
-//
-//		for(int y = 0;y<_bitmap.height;y++)
-//			for(int x=0;x<w;x++)
-//				_bitmap.data[y].data[x]=u32_2s16_4b8(0);
-//	}
-//	return _bitmap.width;
-//}
-//
-//void
-//BitMap::Init(POWERS_OF_TWO w,POWERS_OF_TWO h)
-//{
-//	if(h)
-//	{
-//
-//		switch(h)
-//		{
-//		case _64:
-//			_bitmap = BitMap_64();
-//			for(int i = 0;i<h;i++)
-//				switch(w)
-//			{
-//			case _64:
-//				_bitmap.data[i]=ScanLine_64();
-//				break;
-//			case _128:
-//				_bitmap.data[i]=ScanLine_128();
-//				break;
-//			case _256:
-//				_bitmap.data[i]=ScanLine_256();
-//				break;
-//			}
-//			break;
-//		case _128:
-//			_bitmap = BitMap_128();
-//			for(int i = 0;i<h;i++)
-//					switch(w)
-//			{
-//			case _64:
-//				_bitmap.data[i]=ScanLine_64();
-//				break;
-//			case _128:
-//				_bitmap.data[i]=ScanLine_128();
-//				break;
-//			case _256:
-//				_bitmap.data[i]=ScanLine_256();
-//				break;
-//			}
-//			break;
-//		case _256:
-//			_bitmap = BitMap_256();
-//			for(int i = 0;i<h;i++)
-//					switch(w)
-//			{
-//			case _64:
-//				_bitmap.data[i]=ScanLine_64();
-//				break;
-//			case _128:
-//				_bitmap.data[i]=ScanLine_128();
-//				break;
-//			case _256:
-//				_bitmap.data[i]=ScanLine_256();
-//				break;
-//			}
-//			break;
-//		}
-//		_bitmap.height=h;
-//		_bitmap.width=(POWERS_OF_TWO)w;
-//		for(int y = 0;y<_bitmap.height;y++)
-//			for(int x=0;x<w;x++)
-//				_bitmap.data[y].data[x]=u32_2s16_4b8(0);
-//	}
-//	
-//	return _bitmap.height;
-//}
-//
-//Color
-//BitMap::Pixel(unsigned short x,unsigned short y,int color)
-//{
-//	if(color != NULL)
-//		_bitmap.data[y].data[x].s32 = color;
-//	return _bitmap.data[y].data[x];
-//}
-//
-//Color
-//BitMap::Pixel(int index)
-//{
-//	return _bitmap.data[index/_bitmap.width].data[index%_bitmap.width];
-//}
-//
-//void*
-//BitMap::GetData(int offset,int sizeBytes)
-//{
-//	if(sizeBytes)
-//		if(offset+sizeBytes>sizeInByte)
-//			throw "index out of range error: in BitMap";
-//	return &_bitmap.data[offset/_bitmap.width].data[offset%_bitmap.width];
-//}
-	
+
 
 Loader::Loader(void)
 {
@@ -397,6 +220,5 @@ Utility::loadTexture(const char* filename)
 
 	return 0;
 }
-
 
 

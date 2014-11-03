@@ -3,20 +3,21 @@
 
 #include "IGobject.h"
 #include "VoxelMap.h"
+struct Vector3;
+
 
 typedef unsigned int ConID;
 typedef IConnectable* Connectable;
 
-class IvOxject : public VoxelMap ,public AbsGobject
+class IvOxject : public VoxelMap ,public IGobject
 {
 protected:
-	IConnectable* connector;
+	
 	ConID		  conID;
-//	GobID		  gobID;
 	Voxel		  Voxlers[65536];
-	//TransformA    transform;
 
 public:
+
 	IvOxject(void);
 	virtual ~IvOxject(void);
 	virtual void Initiate(const char* ppmFileName);
@@ -24,19 +25,22 @@ public:
 	virtual Vector3 move(float,float,float);
 	virtual Vector3 scale(Vector3){return transform.scale;}
 	virtual Vector3 rotate(float,float,float);
+
 	template<typename C> C* AddConnectable(void)
 	{
-		return this->connector->AddConnectable<C>();
+		return this->conXtor->AddConnectable<C>();
 	}
+
 	template<typename C> C* GetConnected(void)
 	{
-		return this->connector->GetConnected<C>();
+		return this->conXtor->GetConnected<C>();
 	}
+
 	template<typename C> bool HasConnectable(void);
 
 	operator Connectable(void)
 	{
-		return this->connector;
+		return this->conXtor;
 	}
 
 };

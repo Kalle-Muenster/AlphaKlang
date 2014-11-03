@@ -1,11 +1,13 @@
 #include "IvOxject.h"
 #include "Utility.h"
 #include "projectMacros.h"
+#include "DataStructs.h"
+#include "Connectable.h"
 
 IvOxject::IvOxject(void)
 {
-	connector = new IConnectable();
-	connector->SetConnection((IGobject*)this);
+	conXtor = new IConnectable();
+	conXtor->SetConnection(this);
 
 	this->position.x = &this->transform.position.x;
 	this->position.y = &this->transform.position.y;
@@ -21,7 +23,7 @@ IvOxject::Initiate(const char* ppmFileName)
 
 IvOxject::~IvOxject(void)
 {
-	delete connector;
+	delete conXtor;
 }
 
 void
@@ -62,7 +64,7 @@ template<typename C> bool
 IvOxject::HasConnectable(void)
 {
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(this->connector->ConIDs[i] == typeid(C))
+		if(this->conXtor->ConIDs[i] == typeid(C))
 			return true;
 	return false;
 }

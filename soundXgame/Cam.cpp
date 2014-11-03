@@ -27,7 +27,7 @@ Cam::Cam(void)
 	_mode = CAM_MODE::PERSPECTIVE;
 }
 
-volatile bool
+bool
 Cam::IsShared(bool setter)
 {
 	if(setter!=NULL)
@@ -54,7 +54,7 @@ Cam::~Cam(void)
 }
 
 void
-Cam::SetTarget(AbsGobject *targetObject)
+Cam::SetTarget(IGobject *targetObject)
 {
 	_distanceToTarget = 0.1;
 	this->camTarget = &targetObject->getTransform()->position;
@@ -66,7 +66,7 @@ Cam::SetTarget(AbsGobject *targetObject)
 	printf("\nCAMERA: Set %s-ID:%i As Follow-Target!",_target->GetName(),_target->GetObjectID());
 }
 
-AbsGobject* 
+IGobject* 
 Cam::GetTarget(void)
 {
 	if(_isFollowingTarget||_FollowFirstPerson)

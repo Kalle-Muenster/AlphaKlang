@@ -1,3 +1,6 @@
+#include <vector>
+#include "IGobject.h"
+#include "Cam.h"
 #include "SceneGraph.h"
 
 SceneGraph* scenegraph;
@@ -5,7 +8,7 @@ SceneGraph* scenegraph;
 SceneGraph::SceneGraph(void)
 {
 	camera = new Cam();
-	drawables = std::vector<AbsGobject*>();
+	drawables = std::vector<IGobject*>();
 }
 
 SceneGraph::~SceneGraph(void)
@@ -22,7 +25,7 @@ SceneGraph* SceneGraph::GetInstance()
 	return scenegraph;
 }
 
-void SceneGraph::Add(AbsGobject* object)
+void SceneGraph::Add(IGobject* object)
 {
 	scenegraph->drawables.push_back(object);
 }

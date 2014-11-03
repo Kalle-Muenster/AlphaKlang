@@ -7,7 +7,7 @@
 #include "IMusicListener.h"
 
 class TestYeti :
-	public IGobject ,  
+	public IMeshGobject ,  
 	public IUpdateble
 {
 	public:

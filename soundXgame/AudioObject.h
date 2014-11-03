@@ -2,19 +2,25 @@
 #define _AUDIO_OBJECT_H_
 
 
-#include "Utility.h"
+#include <bass.h>
+#include <bass_fx.h>
 
+#include "projectMacros.h"
+#include "DataStructs.h"
+#include "UpdateManager.h"
+#include "Connectable.h"
 
 
 class IAudioEmitter
 {
 protected:
-	HCHANNEL audioSource;
+	
 	void InitiateAudioEmitter(TransformA*,const char*);
 	bool IsPlaying;
 	void SetMyPosition(TransformA*);
 	float fftwindow[1024];
 public:
+	HCHANNEL audioSource;
 	IAudioEmitter(void);
 //	IAudioEmitter(Transform*);
 	virtual ~IAudioEmitter(void)=0;
@@ -29,6 +35,7 @@ public:
 	virtual bool IsAudioPlaying(void);
 
 };
+
 
 class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateble
 {
@@ -46,14 +53,17 @@ public:
 };
 
 
+
+
+
 class IAudioReciever 
 {
 protected:
 	float mutedVolume;
 	bool IsMuted;
 	void SetMyPosition(TransformA*);
-	virtual volatile bool IsShared(bool=NULL);
-	virtual volatile IAudioReciever* GetMasterReciever(void); 
+	virtual bool IsShared(bool=NULL);
+	virtual IAudioReciever* GetMasterReciever(void); 
 
 	
 

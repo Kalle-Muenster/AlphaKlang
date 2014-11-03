@@ -1,6 +1,8 @@
 #ifndef _POJECT_MACROS__
 #define _POJECT_MACROS__
 
+#include <vector>
+#include <iostream>
 #include "InputManager.h"
 #include "SceneGraph.h"
 #include "UpdateManager.h"
@@ -18,12 +20,12 @@
 #include <windows.h>
 
 
-
 #define INPUT InputManager::getInstance()
 #define SCENE SceneGraph::GetInstance()
 #define UPDATE UpdateManager::getInstance()
 #define AUDIO BassAudio::GetInstance()
 
-typedef char* string;
+
+
 
 #endif

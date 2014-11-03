@@ -2,13 +2,14 @@
 #define _PROJECTCLASSES_H_
 
 #include "IGobject.h"
+#include "DataStructs.h"
 #include "Cam.h"
 #include "Connectable.h"
+#include "Combiner.h"
 #include "IMusicListener.h"
 #include "IObserver.h"
 #include "TestConectables.h"
 #include "TestYeti.h"
-//#include "Yeti.h"
 #include "Observer.h"
 #include "Map.h"
 #include "VoxelMap.h"

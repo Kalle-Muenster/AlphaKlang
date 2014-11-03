@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include "IGobject.h"
+#include "Combiner.h"
+#include "DataStructs.h"
 #include "Connectable.h"
 
 
@@ -25,7 +29,11 @@ IConnectable::~IConnectable(void)
 }
 
 
-
+void
+IConnectable::AddCombiner(IGobject* obje,ConID* id1,ConID* id2,int componentSlot)
+{
+		setConnectables(componentSlot,(new Combiner())->SetConiIDKeyPair(id1,id2));
+}
 
 IGobject* 
 IConnectable::Connection(void)
@@ -59,12 +67,7 @@ IConnectable::SetConnection(IGobject* gobject)
 	ConnectionID=0;
 }
 
-void 
-IConnectable::SetConnection(AbsGobject* gobject)
-{
-	connection=gobject;
-	ConnectionID=0;
-}
+
 
 void
 IConnectable::SetConnection(IConnectable* connectable)
@@ -72,3 +75,46 @@ IConnectable::SetConnection(IConnectable* connectable)
 	ConnectionID = ++connectable->current;
 	connection = connectable->Connection();
 }
+
+TransformA*
+IConnectable::getTransform(void)
+{
+		return this->Connection()->getTransform();
+}
+
+
+CTransform::CTransform(void)
+{
+}
+
+
+CTransform::~CTransform(void)
+{
+}
+
+
+//
+//void
+//CTransform::Initiator(void)
+//{
+//	
+//}
+
+
+
+TransformA*
+CTransform::getTransform(void)
+{
+	TransformA* returner = new TransformA();
+	returner->position = this->Connection()->getTransform()->position + this->Connection()->getTransform()->position;
+	returner->rotation = this->Connection()->getTransform()->rotation + this->Connection()->getTransform()->rotation;
+	returner->scale = this->Connection()->getTransform()->scale * this->Connection()->getTransform()->scale;
+	returner->movement = this->Connection()->getTransform()->movement;
+	return returner;
+}
+
+CTransform::operator TransformA*(void)
+{
+	return this->getTransform();
+}
+

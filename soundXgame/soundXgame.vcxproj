@@ -73,10 +73,12 @@
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="BassAudio.cpp" />
     <ClCompile Include="Cam.cpp" />
+    <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="IGobject.cpp" />
     <ClCompile Include="IMusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="DataStructs.cpp" />
     <ClCompile Include="IvOxject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -86,7 +88,7 @@
     <ClCompile Include="TestYeti.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
     <ClCompile Include="Utility.cpp" />
-    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="VoxelVector.cpp" />
     <ClCompile Include="Voxel.cpp" />
     <ClCompile Include="VoxelMap.cpp" />
     <ClCompile Include="VoxGrid.cpp" />
@@ -95,11 +97,13 @@
     <ClInclude Include="AudioObject.h" />
     <ClInclude Include="BassAudio.h" />
     <ClInclude Include="Cam.h" />
+    <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="IGobject.h" />
     <ClInclude Include="IMusicListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IObserver.h" />
+    <ClInclude Include="DataStructs.h" />
     <ClInclude Include="IvOxject.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="projectClasses.h" />
@@ -110,7 +114,7 @@
     <ClInclude Include="TestYeti.h" />
     <ClInclude Include="UpdateManager.h" />
     <ClInclude Include="Utility.h" />
-    <ClInclude Include="Vector.h" />
+    <ClInclude Include="VoxelVector.h" />
     <ClInclude Include="Voxel.h" />
     <ClInclude Include="VoxelMap.h" />
     <ClInclude Include="VoxGrid.h" />

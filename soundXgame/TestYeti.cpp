@@ -19,7 +19,7 @@ TestYeti::TestYeti(const char* objFile,const char* textureFile,bool addToSceneGr
 
 	conXtor->AddConnectable<YetiInteractive>();
 	conXtor->AddConnectable<AudioEmitter>();
-	conXtor->GetConnected<AudioEmitter>()->LoadeStream("testtrack.mp3");
+	conXtor->GetConnected<AudioEmitter>();
 	conXtor->AddConnectable<MusicListener>();
 	conXtor->GetConnected<MusicListener>()->SetThreshold(0,0.038f);
 	conXtor->GetConnected<MusicListener>()->GetLineData(0)->fallOff=0.1;
@@ -37,7 +37,7 @@ TestYeti::TestYeti(const char* objFile,const char* textureFile,bool addToSceneGr
 	INPUT->attachKey(conXtor->GetConnected<YetiInteractive>());
 	INPUT->attachMouseMove(conXtor->GetConnected<YetiInteractive>());	
 
-	conXtor->GetConnected<AudioEmitter>()->PlayAudio();
+	//conXtor->GetConnected<AudioEmitter>()->PlayAudio();
 
 	AUDIO->MasterResampling(true);
 	}

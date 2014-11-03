@@ -1,18 +1,22 @@
 #ifndef _CONNECTABLE_H_
 #define _CONNECTABLE_H_
+
 #include "IGobject.h"
 //class IGobject;
+struct TransformA;
+
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
 
 typedef unsigned int ConID;
 
-
-
 class IConnectable
 {
+private:
+	void AddCombiner(IGobject*,ConID*,ConID*,int);
+
 public:
 	unsigned ConnectionID;
-	AbsGobject* connection;
+	IGobject* connection;
 	bool _initialized;
 	IConnectable* Connectables[MAXIMUM_NUMBER_OF_CONNECTIONS];
 	unsigned ConnectTo(IConnectable*);
@@ -20,6 +24,7 @@ public:
 	bool Not_hasInitialized(void);
 	int current;
 	int NumberOfConnectedObjects;
+	virtual TransformA* getTransform(void);
 
 public:
 	IConnectable(void)
@@ -36,8 +41,9 @@ public:
 	//Returns the Connaction's owner...
 	//The "Main"-Object where all other Connectables are connected to
 	//or the "Head" of the Connection...
-	IGobject* Connection(void);
-
+	virtual IGobject* Connection(void);
+	
+	
 
 	//Adds a Component to the Object were its called on...
 	//the component later can be getted with the Objects "GetConnected<IConnectable>()"-function...
@@ -111,6 +117,7 @@ public:
 
 
 
+
 	//UNREADY-SECTION...
 	// helper-functions and "under-construction" stuff...
 	// most of it should be private next time...
@@ -145,6 +152,7 @@ public:
 			this->Connectables[i]=inst;
 			inst->Connection()->conXtor->ConIDs[i]=i+1;
 			this->ConIDs[i]=inst->Connection()->conXtor->ConIDs[i];
+			setConnectables(i,inst);
 			return &this->ConIDs[i];
 		}
 			return NULL;
@@ -152,8 +160,60 @@ public:
 
 
 	void SetConnection(IGobject*);
-	void SetConnection(AbsGobject*);
 	void SetConnection(IConnectable*);
+
+	// Link's two Conections conXtor<->conXtor-whise and returns a pointer to the newly Added Conection's ConID,
+	// wich then will contain this Conection's ConID-Key as it's value. the ConID of this Object
+	// (where the AddConection-function has been called on) will contain the newAdded-Conection's
+	// ConID-Key as its value in oposide. so both Object's connected Components and Member-functions
+	// are Accsessible by eachother. So it is Possible to "merge" two objects from different Classes to one new
+	// object at runtime. the new "merged" object will contain all functionality and Components-sets of both Instances it is merged from...
+	// -> calling "Conection()" on this Object's Components, will return this Object. (as usual..)
+	// -> calling "Conection()" on the other Object's Components, will also return this Object, (not the other Object itself)
+	ConID* AddConnection(IGobject* instance)
+	{
+		int x=0;
+		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+			if(ConIDs[i]==0)
+			{
+				for(int n = 0;n<MAXIMUM_NUMBER_OF_CONNECTIONS;n++)
+					if(instance->conXtor->ConIDs[n]==0)
+					{
+						this->ConIDs[i]=n+1;
+						instance->conXtor->ConIDs[n]=i+1;
+						instance->conXtor->SetConnection(this);
+
+						setConnectables(i,instance->conXtor);
+						
+						while(ConIDs[i+(++x)]!=0);
+						ConIDs[x+=i]=x+1;
+											
+						AddCombiner(this->Connection(),&this->ConIDs[i],&instance->conXtor->ConIDs[n],x);
+						instance->conXtor->setConnectables(n,this);
+						//this->SetConnection(instance);
+						return &this->ConIDs[i];
+					}
+			}
+	}
+
+	
+};
+
+class CTransform : 
+	public IConnectable
+{
+private:
+	TransformA* transform;
+
+public:
+	CTransform(void);
+	virtual void Initiator(TransformA* origin)
+	{
+		transform = origin;
+	}
+	virtual ~CTransform(void);
+	virtual TransformA* getTransform(void);
+	virtual operator TransformA*();
 };
 
 #endif

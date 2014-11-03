@@ -20,7 +20,7 @@ class Cam : public IWheelee , public IConnectable, public IAudioReciever
 {
 
 private:
-	AbsGobject*			_target;
+	IGobject*			_target;
 	bool				_isFollowingTarget;
 	bool				_FollowFirstPerson;
 	float				_distanceToTarget;
@@ -38,10 +38,10 @@ public:
 	CAM_MODE                Mode(CAM_MODE=CAM_MODE_NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
 	TransformA              transform;
-	void					SetTarget(AbsGobject*);
+	void					SetTarget(IGobject*);
 	void					SetFirstPerson(IGobject*);
 	ConID*					SetFirstPerson(IConnectable*);
-	AbsGobject*				GetTarget(void);
+	IGobject*				GetTarget(void);
 	const glm::vec3			GetTargetPosition(void);
 	void					followTarget(void);
 	void					StopFollowing(void);
@@ -53,7 +53,7 @@ public:
 	bool				    ShareAudio(BOOL=3);
 protected:
 	
-	virtual volatile bool IsShared(bool=NULL);
+	virtual bool IsShared(bool=NULL);
 	
 	
 };

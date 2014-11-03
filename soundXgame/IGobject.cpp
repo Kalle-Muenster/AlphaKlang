@@ -1,11 +1,15 @@
+
+#include <iostream>
 #include "projectMacros.h"
-#include "IGobject.h"
+#include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
+#include "IGobject.h"
 
+#define This this->conXtor->Connection()
 static unsigned objIDs = 99;
 
-AbsGobject::AbsGobject(void)
+IGobject::IGobject(void)
 {
 	IsVisible=false;
 	this->_idIsSet=false;
@@ -19,50 +23,30 @@ AbsGobject::AbsGobject(void)
 	itoa(this->ID,&this->Name[0],10);
 }
 
-IGobject::IGobject(void)
-{
-
-	this->conXtor = new IConnectable();
-	this->conXtor->SetConnection(this);
-
-}
 
 IGobject::~IGobject(void)
 {
-	delete this->conXtor;
+	delete conXtor;
 }
 
-GobID
-AbsGobject::GetObjectID(void)
+IMeshGobject::IMeshGobject(void)
 {
-	return ID;
+
+	conXtor = new IConnectable();
+	conXtor->SetConnection(this);
+
 }
 
-char* 
-AbsGobject::GetName(void)
+IMeshGobject::~IMeshGobject(void)
 {
-	return &this->Name[0];
+
 }
 
 void
-AbsGobject::SetName(char* name)
-{
-	int i = 0;
-	while(i<63)
-	{
-		this->Name[i] = name[i];
-		if(this->Name[i]=='\0')
-			return;
-		i++;
-	}
-	Name[63]='\0';
-}
-
-void
-IGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
+IMeshGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
 {
 	
-	this->init(objFile,textureFile);
+	init(objFile,textureFile);
 
 	if(addToSceneGraph)
 		SCENE->Add(this);
@@ -70,7 +54,7 @@ IGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
 }
 
 void
-IGobject::init(const char* objFile, const char* textureFile)
+IMeshGobject::init(const char* objFile, const char* textureFile)
 {
 	if(this->_idIsSet!=true)
 	{
@@ -83,7 +67,6 @@ IGobject::init(const char* objFile, const char* textureFile)
 
 	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
 	
-
 	//this->transform.right =&temp2;
 	//this->transform.up =&temp3;
 
@@ -102,67 +85,124 @@ IGobject::init(const char* objFile, const char* textureFile)
 	IsVisible = true;
 }
 
-TransformA*
-AbsGobject::getTransform()
+
+
+GobID
+IGobject::GetObjectID(void)
 {
-	return &this->transform;
-}
-
-Vector3
-IGobject::move(Vector3 to)
-{
-	this->transform.movement = (to - this->transform.position);
-	this->transform.position = to;
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),transform.position.x,transform.position.y,transform.position.z);
-	return transform.position;
-}
-
-Vector3
-IGobject::move(float tox,float toy,float toz)
-{
-	this->transform.movement.x = (tox - this->transform.position.x);
-	this->transform.movement.y = (toy - this->transform.position.y);
-	this->transform.movement.z = (toz - this->transform.position.z);
-
-	this->transform.position.x = tox;
-	this->transform.position.y = toy;
-	this->transform.position.z = toz;
-
-	
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),transform.position.x,transform.position.y,transform.position.z);
-
-
-	return transform.position;
+	return this->ID;
 }
 
 
-Vector3
-IGobject::scale(Vector3 to)
-{
-	this->transform.scale = to;
-	return transform.scale;
-}
 
-Vector3
-IGobject::rotate(Vector3 to)
+char* 
+IGobject::GetName(void)
 {
-	this->transform.rotation = to;
-	this->transform.forward = glm::normalize((glm::vec3)this->transform.rotation);
-	return transform.rotation;
-}
-Vector3
-IGobject::rotate(float toiX,float toYps,float toZed)
-{
-	this->transform.rotation.x = toiX;
-	this->transform.rotation.y = toYps;
-	this->transform.rotation.z = toZed;
-	this->transform.forward = glm::normalize((glm::vec3)this->transform.rotation);
-
-	return transform.rotation;
+	return &this->Name[0];
 }
 
 void
-IGobject::draw()
+IGobject::SetName(char* name)
+{
+	int i = 0;
+	while(i<63)
+	{
+		this->Name[i] = name[i];
+		if(this->Name[i]=='\0')
+			return;
+		i++;
+	}
+	Name[63]='\0';
+}
+
+TransformA*
+IGobject::getTransform()
+{
+	return &This->transform;
+}
+
+
+IGobject::operator IConnectable(void)
+{
+	return *conXtor;
+}
+
+
+//template<typename T> T*
+//IGobject::AddConnectable(void)
+//{
+//	return conXtor->AddConnectable<T>();
+//}
+//
+//template<typename T> T*
+//IGobject::GetConnected(void)
+//{
+//	return conXtor->GetConnected<T>();
+//}
+
+
+
+
+
+
+
+
+Vector3
+IMeshGobject::move(Vector3 to)
+{
+	getTransform()->movement = (to - getTransform()->position);
+	getTransform()->position = to;
+	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+	return getTransform()->position;
+}
+
+Vector3
+IMeshGobject::move(float tox,float toy,float toz)
+{
+	getTransform()->movement.x = (tox - getTransform()->position.x);
+	getTransform()->movement.y = (toy - getTransform()->position.y);
+	getTransform()->movement.z = (toz - getTransform()->position.z);
+
+	getTransform()->position.x = tox;
+	getTransform()->position.y = toy;
+	getTransform()->position.z = toz;
+
+	
+	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetObjectID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+
+
+	return getTransform()->position;
+}
+
+
+Vector3
+IMeshGobject::scale(Vector3 to)
+{
+	getTransform()->scale = to;
+	return getTransform()->scale;
+}
+
+Vector3
+IMeshGobject::rotate(Vector3 to)
+{
+	getTransform()->rotation = to;
+	getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
+	return getTransform()->rotation;
+}
+
+Vector3
+IMeshGobject::rotate(float toiX,float toYps,float toZed)
+{
+	getTransform()->rotation.x = toiX;
+	getTransform()->rotation.y = toYps;
+	getTransform()->rotation.z = toZed;
+	getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
+
+	return getTransform()->rotation;
+}
+
+void
+IMeshGobject::draw()
 {
 	if(IsVisible)
 	{
@@ -178,12 +218,12 @@ IGobject::draw()
 		
 		
 			//Translate...
-			glTranslatef(this->transform.position.x, this->transform.position.y, this->transform.position.z);
+			glTranslatef(getTransform()->position.x, getTransform()->position.y,getTransform()->position.z);
 
 			//Rotate...
-			glRotatef(this->getTransform()->rotation.x, 1, 0, 0);
-			glRotatef(this->getTransform()->rotation.y, 0, 1, 0);
-			glRotatef(this->getTransform()->rotation.z, 0, 0, 1);
+			glRotatef(getTransform()->rotation.x, 1, 0, 0);
+			glRotatef(getTransform()->rotation.y, 0, 1, 0);
+			glRotatef(getTransform()->rotation.z, 0, 0, 1);
 
 			
 
@@ -196,6 +236,8 @@ IGobject::draw()
 		glPopMatrix();
 	}
 }
+
+#undef This;
 
 //TransformA*
 //AbsGobject::getTransform(void)
