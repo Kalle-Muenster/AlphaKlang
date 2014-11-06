@@ -26,8 +26,6 @@ union
 	void fDraw(VectorPF offset);
 	void fDrawBlure(VectorF offset);
 	void SetNeighbours(int ol,int or,int ur,int ul);
-//	__declspec(property(get=GetPosition,put=SetPosition))VectorF position;
-//	__declspec(property(get=GetSize,put=SetSize))VectorF size;
 	VectorF GetPosition(void); 
 	void SetPosition(VectorF setter);
 	VectorF GetSize(void); 

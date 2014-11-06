@@ -139,7 +139,7 @@ IGobject::SetName(char* name)
 	Name[63]='\0';
 }
 
-TransformA*
+Transform*
 IGobject::getTransform()
 {
 	return &This->transform;

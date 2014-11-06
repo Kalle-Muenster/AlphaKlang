@@ -76,7 +76,7 @@ IConnectable::SetConnection(IConnectable* connectable)
 	connection = connectable->Connection();
 }
 
-TransformA*
+Transform*
 IConnectable::getTransform(void)
 {
 		return this->Connection()->getTransform();
@@ -102,10 +102,10 @@ CTransform::~CTransform(void)
 
 
 
-TransformA*
+Transform*
 CTransform::getTransform(void)
 {
-	TransformA* returner = new TransformA();
+	Transform* returner = new Transform();
 	returner->position = this->Connection()->getTransform()->position + this->Connection()->getTransform()->position;
 	returner->rotation = this->Connection()->getTransform()->rotation + this->Connection()->getTransform()->rotation;
 	returner->scale = this->Connection()->getTransform()->scale * this->Connection()->getTransform()->scale;
@@ -113,7 +113,7 @@ CTransform::getTransform(void)
 	return returner;
 }
 
-CTransform::operator TransformA*(void)
+CTransform::operator Transform*(void)
 {
 	return this->getTransform();
 }

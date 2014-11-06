@@ -1,165 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
+    <ClCompile Include="AudioObject.cpp" />
+    <ClCompile Include="BassAudio.cpp" />
+    <ClCompile Include="Cam.cpp" />
+    <ClCompile Include="Combiner.cpp" />
+    <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="IGobject.cpp" />
+    <ClCompile Include="IMusicListener.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="DataStructs.cpp" />
+    <ClCompile Include="IvOxject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="Sky.cpp" />
+    <ClCompile Include="TestConectables.cpp" />
+    <ClCompile Include="TestYeti.cpp" />
+    <ClCompile Include="UpdateManager.cpp" />
+    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="VoxelVector.cpp" />
+    <ClCompile Include="Voxel.cpp" />
+    <ClCompile Include="VoxelMap.cpp" />
+    <ClCompile Include="VoxGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioObject.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="BassAudio.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Cam.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Connectable.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="IGobject.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="IMusicListener.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGraph.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="UpdateManager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TestYeti.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="TestConectables.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="IvOxject.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Voxel.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxelMap.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxGrid.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Combiner.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="DataStructs.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxelVector.cpp">
-	<Filter>Quelldateien</Filter>
-    <ClCompile Include="Sky.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
+    <ClInclude Include="AudioObject.h" />
+    <ClInclude Include="BassAudio.h" />
+    <ClInclude Include="Cam.h" />
+    <ClInclude Include="Combiner.h" />
+    <ClInclude Include="Connectable.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="IGobject.h" />
+    <ClInclude Include="IMusicListener.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IObserver.h" />
+    <ClInclude Include="DataStructs.h" />
+    <ClInclude Include="IvOxject.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="projectClasses.h" />
+    <ClInclude Include="projectGrafics.h" />
+    <ClInclude Include="projectMacros.h" />
+    <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Sky.h" />
+    <ClInclude Include="TestConectables.h" />
+    <ClInclude Include="TestYeti.h" />
+    <ClInclude Include="UpdateManager.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="VoxelVector.h" />
+    <ClInclude Include="Voxel.h" />
+    <ClInclude Include="VoxelMap.h" />
+    <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InputManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="projectClasses.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="projectGrafics.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="projectMacros.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioObject.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="BassAudio.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Cam.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Connectable.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="IGobject.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="IMusicListener.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGraph.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="UpdateManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="IvOxject.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="TestYeti.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="IObserver.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="TestConectables.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxGrid.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Voxel.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelMap.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Combiner.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="DataStructs.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelVector.h">
-	<Filter>Headerdateien</Filter>
-    <ClInclude Include="Sky.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

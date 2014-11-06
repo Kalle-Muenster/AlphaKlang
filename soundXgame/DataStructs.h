@@ -21,7 +21,7 @@ public:
 	BASS_3DVECTOR* asBassVector(void);
 };
 
-struct TransformGL 
+/*struct TransformGL 
 {
 public:
 	glm::vec3 position;
@@ -29,9 +29,9 @@ public:
 	glm::vec3 rotation;
 
 	glm::vec3 forward,right,up;
-};
+};*/
 
-struct TransformA
+struct Transform
 {
 public:
 	Vector3 position;

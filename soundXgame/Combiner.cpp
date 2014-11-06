@@ -21,7 +21,7 @@ Combiner::SetConiIDKeyPair(ConID* setter1,ConID* setter2)
 	return this;
 }
 
-TransformA*
+Transform*
 Combiner::getSubform(unsigned childIndex)
 {
 	return GetConnected<IConnectable>(*ConIDKeyPair[childIndex])->connection->getTransform();

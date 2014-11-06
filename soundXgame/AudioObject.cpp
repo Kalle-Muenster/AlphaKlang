@@ -33,7 +33,7 @@ IAudioReciever::~IAudioReciever(void)
 
 }
 void
-IAudioReciever::InitiateListener(TransformA* myTransform)
+IAudioReciever::InitiateListener(Transform* myTransform)
 {
 	this->SetMyPosition(myTransform);
 
@@ -74,7 +74,7 @@ AudioReciever::TryGetReciever(void)
 }
 
 void
-IAudioReciever::SetMyPosition(TransformA* myTranform)
+IAudioReciever::SetMyPosition(Transform* myTranform)
 {
 //	BASS_Set3DPosition(myTranform->position.asBassVector(), &myTranform->movement,myTranform->forward.asBassVector(),myTranform->up.asBassVector());
 	if(IsMasterReciever())
@@ -143,7 +143,7 @@ IAudioEmitter::IAudioEmitter(void)
 }
 
 void
-IAudioEmitter::InitiateAudioEmitter(TransformA* myTransform,const char *audioFileName)
+IAudioEmitter::InitiateAudioEmitter(Transform* myTransform,const char *audioFileName)
 {
 	this->LoadeSample(audioFileName);
 	SetMyPosition(myTransform);
@@ -207,7 +207,7 @@ IAudioEmitter::IsAudioPlaying(void)
 }
 
 void
-IAudioEmitter::SetMyPosition(TransformA *myTransform)
+IAudioEmitter::SetMyPosition(Transform *myTransform)
 {
 	BASS_ChannelSet3DPosition((DWORD)audioSource,myTransform->position.asBassVector(),myTransform->rotation.asBassVector(),&myTransform->movement);
 	BASS_Apply3D();

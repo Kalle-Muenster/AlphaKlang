@@ -19,9 +19,12 @@ TestYeti::TestYeti(const char* objFile,const char* textureFile,bool addToSceneGr
 
 	conXtor->AddConnectable<YetiInteractive>();
 	conXtor->AddConnectable<MusicListener>();
+	
 	conXtor->GetConnected<MusicListener>()->SetThreshold(0,0.038f);
 	conXtor->GetConnected<MusicListener>()->GetLineData(0)->fallOff=0.1;
 	conXtor->GetConnected<MusicListener>()->SetClambt(0,-0.5,10);
+	conXtor->GetConnected<MusicListener>()->SetLineBounds(0, 0, 10, 10);
+
 	conXtor->GetConnected<MusicListener>()->Enabled(1,true);
 	conXtor->GetConnected<MusicListener>()->SetClambt(1,-1,1);
 	conXtor->GetConnected<MusicListener>()->GetLineData(1)->Effect = 0;

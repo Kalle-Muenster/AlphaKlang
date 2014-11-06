@@ -32,18 +32,14 @@ IvOxject::draw(void)
 	this->Draw(this->position);
 }
 
-
-
 Vector3
 IvOxject::move(float iX,float Yps,float Zed)
 {
-this->transform.position.x = iX;
-this->transform.position.y = Yps;
-this->transform.position.z = Zed;
+	this->transform.position.x = iX;
+	this->transform.position.y = Yps;
+	this->transform.position.z = Zed;
 
-
-
-return this->getTransform()->position;
+	return this->getTransform()->position;
 }
 
 Vector3
@@ -53,13 +49,9 @@ IvOxject::rotate(float iX,float Yps,float Zed)
 	this->getTransform()->rotation.y = Yps;
 	this->getTransform()->rotation.z = Zed;
 
-return	this->getTransform()->rotation;
+	return	this->getTransform()->rotation;
 }
 	
-
-
-
-
 template<typename C> bool 
 IvOxject::HasConnectable(void)
 {
@@ -68,9 +60,3 @@ IvOxject::HasConnectable(void)
 			return true;
 	return false;
 }
-
-//TransformA*	
-//IvOxject::getTransform(void)
-//{
-//	return &transform;
-//}
