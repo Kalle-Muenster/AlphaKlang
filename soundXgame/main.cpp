@@ -1,7 +1,6 @@
 #include "projectGrafics.h"
 #include "projectMacros.h"
 #include "projectClasses.h"
-#include "Sky.h"
 #include "Ground.h"
 
 //Global Declerations:
@@ -11,7 +10,6 @@ int wnd;
 void* font;
 
 //Objects:
-Sky* sky;
 Ground* ground;
 
 
@@ -54,7 +52,6 @@ int prepareForExit(void)
 {
 	//deletions:
 	delete font;
-	delete sky;
 
 	return 0;
 }
@@ -127,8 +124,6 @@ void LoadContent(void)
 	
 	ground = Ground::getInstance();
 	ground->Init();
-
-	sky = new Sky();
 	
 	
 	int i = -1;
@@ -164,7 +159,7 @@ void UpdateCycle(void)
 
 void RenderCycle(void)
 {
-	sky->Draw(); // Draw sky first
+	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	ground->Draw();

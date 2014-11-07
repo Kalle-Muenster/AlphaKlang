@@ -3,7 +3,7 @@
 
 static bool _shareAudioReciever = true;
 
-Cam::Cam(void)
+Cam::Cam(void) : angle(0),lx(0),lz(-1),x(0),z(5),eyeY(1),moveSpeed(0.1f)
 {
 	_isFollowingTarget=false;
 	this->transform.position.x=0;
@@ -16,7 +16,6 @@ Cam::Cam(void)
 	this->transform.movement.y=0;
 	this->transform.movement.z=0;
 
-
 	InitiateListener(&this->transform);
 
 	_fieldOfView = 55;
@@ -24,7 +23,13 @@ Cam::Cam(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
-	_mode = CAM_MODE::PERSPECTIVE;
+	_mode = CAM_MODE::FIRSTPERSON;
+
+	InputManager* Input = InputManager::getInstance();
+	Input->attachKey(this);
+	Input->attachMouseMove(this);
+	Input->attachSpecial(this);
+
 }
 
 bool
@@ -230,24 +235,30 @@ Cam::UpdateView(void)
 {
 	glViewport(0, 0, INPUT->GetViewportRectangle().w,INPUT->GetViewportRectangle().z);
 	
-	if(Mode()==PERSPECTIVE)
+	switch(Mode())
 	{
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
+		case PERSPECTIVE:
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			gluPerspective(FieldOfView(), Aspect(), 0.1f, 100.0f);
+			break;
+		case ORTHOGRAFIC:
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			gluOrtho2D(0,SCREENWIDTH,SCREENHEIGHT,0);
+			gluLookAt(0,0,0,0,0,0,0,1,0);
+			break;
+		case FIRSTPERSON:
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			gluLookAt(x, eyeY, z,
+				x+lx, 1.0f,  z+lz,
+				0.0f, 1.0f,  0.0f);
+			break;
 
-		gluPerspective(FieldOfView(), Aspect(), 0.1f, 100.0f);
-	}
-
-	if(Mode()==ORTHOGRAFIC)
-	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		gluOrtho2D(0,SCREENWIDTH,SCREENHEIGHT,0);
-	
-		gluLookAt(0,0,0,0,0,0,0,1,0);
-		
 	}
 }
+
 
 void
 Cam::Update()
@@ -268,16 +279,91 @@ Cam::Update()
 		this->rotate(_target->getTransform()->rotation);
 	}
 
-	if(INPUT->Mouse.MIDDLE.HOLD)
-		this->move(transform.position + Vector3(INPUT->Mouse.Movement.x/100,0,INPUT->Mouse.Movement.y/100));
+	//if(INPUT->Mouse.MIDDLE.HOLD)
+	//	this->move(transform.position + Vector3(INPUT->Mouse.Movement.x/100,0,INPUT->Mouse.Movement.y/100));
 
 	//Set The Position of the attached AudioListener
 	SetMyPosition(&transform);
 
-	if(Mode()==PERSPECTIVE)
-		gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
+	//if(Mode()==PERSPECTIVE)
+	//	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 //	else if(Mode()==ORTHOGRAFIC)
 //		gluLookAt(0,0,0,0,0,0,0,1,0);
 
 }
 
+
+
+void
+Cam::notifyKey(unsigned char key)
+{
+	switch(key)
+	{
+		case 119: // W
+			x += lx * moveSpeed;
+			z += lz * moveSpeed;
+			break;
+		case 115: // S
+			x -= lx * moveSpeed;
+			z -= lz * moveSpeed;
+			break;
+		case 97: // A
+			x += lz * moveSpeed;
+			z += lx * (moveSpeed*-1);
+			break;
+		case 100: // D
+			x -= lz * moveSpeed;
+			z -= lx * (moveSpeed*-1);
+			break;
+	}
+
+	//INPUT.notifyKey(key);
+}
+
+void
+Cam::specialKeyPressed(int key) 
+{
+	switch (key) {
+		case GLUT_KEY_UP:
+			x += lx * moveSpeed;
+			z += lz * moveSpeed;
+			break;
+		case GLUT_KEY_DOWN:
+			x -= lx * moveSpeed;
+			z -= lz * moveSpeed;
+			break;
+		case GLUT_KEY_LEFT:
+			x += lz * moveSpeed;
+			z += lx * (moveSpeed*-1);
+			break;
+		case GLUT_KEY_RIGHT:
+			x -= lz * moveSpeed;
+			z -= lx * (moveSpeed*-1);
+			break;
+	}
+}
+
+
+int mouseX, mouseY;
+void
+Cam::mouseMotion(int newX, int newY)
+{
+	if(!mouseX)
+		mouseX = newX;
+	if(!mouseY)
+		mouseY = newY;
+
+	int diffX = newX - mouseX;
+	int diffY = newY - mouseY;
+
+	angle += 0.005f * diffX;
+	lx = sin(angle);
+	lz = -cos(angle);
+
+	
+	
+	eyeY += (float)diffY / 300;
+
+	mouseX = newX;
+	mouseY = newY;
+}

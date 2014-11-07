@@ -16,7 +16,7 @@ enum CAM_MODE : int
 	CAM_MODE_NULL=NULL
 };
 
-class Cam : public IWheelee , public IConnectable, public IAudioReciever
+class Cam : public IInteractive, public IConnectable, public IAudioReciever
 {
 
 private:
@@ -30,6 +30,12 @@ private:
 	GLfloat				_aspect;
 	void                UpdateView();
 	CAM_MODE            _mode;
+	
+	float				angle;			// angle of rotation for the camera direction
+	float				lx, lz;			// actual vector representing the camera's direction
+	float				x, z;			// XZ position of the camera
+	float				eyeY;			// head rotation front/back
+	float				moveSpeed;		// firstPerson Cam moving speed
 
 public:
 							Cam(void);
@@ -37,7 +43,7 @@ public:
 	virtual double			FieldOfView(double = _FNan._Double);
 	CAM_MODE                Mode(CAM_MODE=CAM_MODE_NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
-	Transform              transform;
+	Transform				transform;
 	void					SetTarget(IGobject*);
 	void					SetFirstPerson(IGobject*);
 	ConID*					SetFirstPerson(IConnectable*);
@@ -51,8 +57,12 @@ public:
 	BASS_3DVECTOR           move(glm::vec3);
 	BASS_3DVECTOR           rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
+
+	virtual void			notifyKey(unsigned char key);
+	virtual void			specialKeyPressed(int key);
+	virtual void			mouseMotion(int newX, int newY);
+
 protected:
-	
 	virtual bool IsShared(bool=NULL);
 	
 	

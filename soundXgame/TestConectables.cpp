@@ -13,19 +13,19 @@ YetiInteractive::keyPress(char key)
 		switch (key)
 			{
 			case 'w':
-				X+=0.01;
+				X+=0.01f;
 				ismoving = true;
 				break;
 			case 's':
-				X-=0.01;
+				X-=0.01f;
 				ismoving = true;
 				break;
 			case 'a':
-				Z+=0.01;
+				Z+=0.01f;
 				ismoving = true;
 				break;
 			case 'd':
-				Z-=0.01;
+				Z-=0.01f;
 				ismoving = true;
 				break;
 			}

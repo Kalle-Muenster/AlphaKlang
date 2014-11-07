@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AudioEmitter" Collapsed="true">
-    <Position X="11.75" Y="4" Width="1.5" />
+    <Position X="11.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAAAAAAAAAEAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>AudioObject.h</FileName>
@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AudioReciever" Collapsed="true">
-    <Position X="9.75" Y="4" Width="1.5" />
+    <Position X="9.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAAAAAAEACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AudioObject.h</FileName>
@@ -37,16 +37,8 @@
   </Class>
   <Class Name="Cam" Collapsed="true">
     <Position X="7.75" Y="12" Width="1.5" />
-    <InheritanceLine Type="IWheelee" FixedToPoint="true">
-      <Path>
-        <Point X="7" Y="11.191" />
-        <Point X="7" Y="11.625" />
-        <Point X="8.312" Y="11.625" />
-        <Point X="8.312" Y="12" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>IAQAAQiAAIQRQECAAkgQAAEAQAAEEAADAAAgBAAQBCI=</HashCode>
+      <HashCode>IAQAAQiAEIQRQEGAAkgQAAEAQAgEEAADEABgBQBQBCY=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -56,6 +48,8 @@
       <Path>
         <Point X="7.25" Y="1.812" />
         <Point X="7.25" Y="5.91" />
+        <Point X="8.094" Y="5.91" Type="JumpStart" />
+        <Point X="8.26" Y="5.91" Type="JumpEnd" />
         <Point X="8.417" Y="5.91" Type="JumpStart" />
         <Point X="8.583" Y="5.91" Type="JumpEnd" />
         <Point X="8.715" Y="5.91" Type="JumpStart" />
@@ -144,17 +138,25 @@
   </Class>
   <Class Name="IInteractive" Collapsed="true">
     <Position X="1.75" Y="10.25" Width="1.5" />
+    <InheritanceLine Type="IObserver" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="4.312" Y="9.062" />
+        <Point X="4.312" Y="9.875" />
+        <Point X="2.5" Y="9.875" />
+        <Point X="2.5" Y="10.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAEQAAAAAAAAAAAAgAAQAAAEAAAAAAg=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IQlickable" Collapsed="true">
-    <Position X="4.25" Y="10.5" Width="1.5" />
+    <Position X="4" Y="10.25" Width="1.5" />
     <InheritanceLine Type="IObserver" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="4.875" Y="9.062" />
-        <Point X="4.875" Y="10.5" />
+        <Point X="4.625" Y="9.062" />
+        <Point X="4.625" Y="10.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -163,13 +165,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="IWheelee" Collapsed="true">
-    <Position X="6.25" Y="10.5" Width="1.5" />
+    <Position X="6" Y="10.25" Width="1.5" />
     <InheritanceLine Type="IObserver" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
         <Point X="5" Y="9.062" />
         <Point X="5" Y="9.416" />
-        <Point X="7" Y="9.416" />
-        <Point X="7" Y="10.5" />
+        <Point X="6.75" Y="9.416" />
+        <Point X="6.75" Y="10.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -186,12 +188,12 @@
   </Class>
   <Class Name="IvOxject" Collapsed="true">
     <Position X="0.5" Y="4.5" Width="1.5" />
-    <InheritanceLine Type="IGobject" FixedFromPoint="true">
+    <InheritanceLine Type="IGobject" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="2.938" Y="3.562" />
         <Point X="2.938" Y="4.125" />
-        <Point X="1.25" Y="4.125" />
-        <Point X="1.25" Y="4.5" />
+        <Point X="1.5" Y="4.125" />
+        <Point X="1.5" Y="4.5" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -207,17 +209,10 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SceneGraph" Collapsed="true">
-    <Position X="24.5" Y="1.5" Width="1.5" />
+    <Position X="6.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIQAAAAAgAABAggAAAAAAAABAEAAAAAAAAAAIAAAAA=</HashCode>
+      <HashCode>AAIQAAAAAgAIBAggAAAAAAAABAEAAAAIAQABAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Sky" Collapsed="true">
-    <Position X="26.25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAgEAAAAAAAAAAAAAAAAIEQABAAAAAAA=</HashCode>
-      <FileName>Sky.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="YetiInteractive" Collapsed="true">
@@ -232,7 +227,9 @@
     <InheritanceLine Type="IConnectable" ManuallyRouted="true">
       <Path>
         <Point X="7.25" Y="1.812" />
-        <Point X="7.25" Y="9.439" />
+        <Point X="7.25" Y="4.329" />
+        <Point X="8.177" Y="4.329" />
+        <Point X="8.177" Y="9.439" />
         <Point X="8.417" Y="9.439" Type="JumpStart" />
         <Point X="8.583" Y="9.439" Type="JumpEnd" />
         <Point X="8.715" Y="9.439" Type="JumpStart" />
@@ -277,7 +274,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="UpdateManager" Collapsed="true">
-    <Position X="28" Y="1.5" Width="1.5" />
+    <Position X="4.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAABAAAAAEAAIAAAAAAAAAAAAQQAEAAAAAAAAA=</HashCode>
       <FileName>UpdateManager.h</FileName>
@@ -317,13 +314,15 @@
       <Path>
         <Point X="7.25" Y="1.812" />
         <Point X="7.25" Y="4.885" />
+        <Point X="8.094" Y="4.885" Type="JumpStart" />
+        <Point X="8.26" Y="4.885" Type="JumpEnd" />
         <Point X="8.417" Y="4.885" Type="JumpStart" />
         <Point X="8.583" Y="4.885" Type="JumpEnd" />
         <Point X="8.798" Y="4.885" />
-        <Point X="8.798" Y="11.125" />
-        <Point X="8.583" Y="11.125" Type="JumpStart" />
-        <Point X="8.417" Y="11.125" Type="JumpEnd" />
-        <Point X="5.25" Y="11.125" />
+        <Point X="8.798" Y="11.417" />
+        <Point X="8.583" Y="11.417" Type="JumpStart" />
+        <Point X="8.417" Y="11.417" Type="JumpEnd" />
+        <Point X="5.25" Y="11.417" />
         <Point X="5.25" Y="12" />
       </Path>
     </InheritanceLine>

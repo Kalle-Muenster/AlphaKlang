@@ -85,7 +85,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
-    <ClCompile Include="Sky.cpp" />
     <ClCompile Include="TestConectables.cpp" />
     <ClCompile Include="TestYeti.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
@@ -113,7 +112,6 @@
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
-    <ClInclude Include="Sky.h" />
     <ClInclude Include="TestConectables.h" />
     <ClInclude Include="TestYeti.h" />
     <ClInclude Include="UpdateManager.h" />

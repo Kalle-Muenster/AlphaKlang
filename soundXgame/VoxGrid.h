@@ -14,8 +14,8 @@ public:
 
 	virtual void mouseMotion(int iX,int Yps)
 	{
-		this->Connection()->getTransform()->position.x = iX;
-		this->Connection()->getTransform()->position.y = Yps;
+		this->Connection()->getTransform()->position.x = (float)iX;
+		this->Connection()->getTransform()->position.y = (float)Yps;
 	}
 };
 

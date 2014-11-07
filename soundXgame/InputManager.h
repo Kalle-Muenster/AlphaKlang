@@ -150,7 +150,7 @@ public:
 
 
 	//frameReset: must be called before all other
-	//i.E. as firs function in the UpdateFunction 
+	//i.E. as first function in the UpdateFunction 
 	//or as last function just below swapBuffer()
 	void PerFrameReset(void);
 
