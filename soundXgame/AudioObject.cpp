@@ -67,6 +67,12 @@ AudioReciever::DoEarly(void)
 	}
 }
 
+void
+AudioReciever::DoUpdate(void)
+{
+
+}
+
 bool 
 AudioReciever::TryGetReciever(void)
 {

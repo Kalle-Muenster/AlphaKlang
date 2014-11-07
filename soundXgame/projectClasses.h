@@ -2,6 +2,7 @@
 #define _PROJECTCLASSES_H_
 
 #include "IGobject.h"
+#include "Cubus.h"
 #include "DataStructs.h"
 #include "Cam.h"
 #include "Connectable.h"
