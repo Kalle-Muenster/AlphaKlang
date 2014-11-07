@@ -133,12 +133,6 @@ void LoadContent(void)
 	
 	
 	int i = -1;
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
 
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);

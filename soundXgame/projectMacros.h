@@ -18,7 +18,7 @@
 //#define CAM_PERSPECTIVE "Perspective"
 
 #include <windows.h>
-
+#include <windef.h>
 
 #define INPUT InputManager::getInstance()
 #define SCENE SceneGraph::GetInstance()

@@ -21,7 +21,7 @@ enum WHEEL{DOWN=-1,NONE=0,UP=1};
 struct MouseButton
 {
 public:
-	bool CLICK,HOLD,RELEASE;
+	bool CLICK,HOLD,DOUBLE,RELEASE;
 };
 
 
@@ -95,11 +95,12 @@ private:
 	/*private vars and functions
 	 (used for update inputs)*/
 	bool LEFTnewState,MIDDLEnewState,RIGHTnewState;
-	void _setMouseButtons();
-	void _setMousePosition(int,int);
-	void _notifyWheel(int wheel);
-	void _notifyQlicks();
-	void _notifyJoystick(int id,int button,bool state,int aX,int aY,int aZ);
+	void setMouseButtons(void);
+	void setMousePosition(int,int);
+	void notifyWheel(int wheel);
+	void notifyQlicks(void);
+	void notifyJoystick(int id,int button,bool state,int aX,int aY,int aZ);
+
 
 	//Public Stuff...........................
 public:
@@ -129,6 +130,8 @@ public:
 	float aX,aY,aR,aZ;
  }	Controler2;
 	glm::vec4 GetViewportRectangle(void);
+	void SetDoubleclickTime(int milliseconds);
+	double FrameTime; //deltaTime...
 
     /*attachement functions by wich "IObserver"-objects
     can register on Notification-Events */
