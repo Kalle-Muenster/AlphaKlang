@@ -111,7 +111,8 @@ void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
-	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
+	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.png",true);
+//	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","CubusX-8bit.jpg",true);
 	tempObject->move(tempObject->getTransform()->position.x-3,tempObject->getTransform()->position.y,tempObject->getTransform()->position.z);
 
 	tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
@@ -127,12 +128,21 @@ void LoadContent(void)
 	
 	
 	int i = -1;
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
-	(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+	//(new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true))->move(i,tempObject->getTransform()->position.y,i++);
+
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+
 
 	SCENE->camera->SetTarget(tempObject);
 

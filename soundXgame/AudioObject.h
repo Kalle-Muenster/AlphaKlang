@@ -87,10 +87,7 @@ class AudioReciever :
 {
 public:
 		virtual void DoEarly(void);
-		virtual void DoUpdate(void)
-		{
-		
-		}
+		virtual void DoUpdate(void);
 		bool TryGetReciever(void);
 
 };

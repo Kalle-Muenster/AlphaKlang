@@ -24,6 +24,7 @@
     <ClCompile Include="Voxel.cpp" />
     <ClCompile Include="VoxelMap.cpp" />
     <ClCompile Include="VoxGrid.cpp" />
+    <ClCompile Include="Cubus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h" />
@@ -51,6 +52,10 @@
     <ClInclude Include="Voxel.h" />
     <ClInclude Include="VoxelMap.h" />
     <ClInclude Include="VoxGrid.h" />
+    <ClInclude Include="Cubus.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="cube.obi" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

@@ -75,6 +75,7 @@
     <ClCompile Include="Cam.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGobject.cpp" />
     <ClCompile Include="IMusicListener.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Cam.h" />
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
+    <ClInclude Include="Cubus.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IGobject.h" />
     <ClInclude Include="IMusicListener.h" />
@@ -122,10 +124,12 @@
     <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="cube.obi" />
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

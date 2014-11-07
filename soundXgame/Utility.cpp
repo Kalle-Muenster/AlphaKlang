@@ -114,7 +114,7 @@ Loader::LoadeFile(const char* filename)
 void
 Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::vector<glm::vec2> &uvs, std::vector<glm::vec3> &normals)
 {
-	
+	bool HasNormals = false;
 
 	std::vector<unsigned int> vertexIndices, vertexTextureIndices, normalIndices;
 
@@ -158,29 +158,51 @@ Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::v
 			glm::vec3 normal;
 			fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
 			tempNormals.push_back(normal);
+			HasNormals = true;
 		}
 		else if(strcmp(line, "f") == 0) 
 		{
 			unsigned int tempVertexIndex[3], tempVertexTextureIndex[3],
 				tempNormalIndex[3];
 
-			fscanf(file, "%d/%d %d/%d %d/%d\n", 
+			if(HasNormals)
+			{
+				fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+				&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
+				&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
+				&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2]);									
+			
+				vertexIndices.push_back(tempVertexIndex[0]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+				normalIndices.push_back(tempNormalIndex[0]);
+
+				vertexIndices.push_back(tempVertexIndex[1]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+				normalIndices.push_back(tempNormalIndex[1]);
+
+				vertexIndices.push_back(tempVertexIndex[2]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+				normalIndices.push_back(tempNormalIndex[2]);
+			}
+			else
+			{
+				fscanf(file, "%d/%d %d/%d %d/%d\n", 
 				&tempVertexIndex[0], &tempVertexTextureIndex[0],
 				&tempVertexIndex[1], &tempVertexTextureIndex[1],
-				&tempVertexIndex[2], &tempVertexTextureIndex[2]
-			);
+				&tempVertexIndex[2], &tempVertexTextureIndex[2]);
+			
+				vertexIndices.push_back(tempVertexIndex[0]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+				normalIndices.push_back(tempNormalIndex[0]);
 
-			vertexIndices.push_back(tempVertexIndex[0]);
-			vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
-			normalIndices.push_back(tempNormalIndex[0]);
+				vertexIndices.push_back(tempVertexIndex[1]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+				normalIndices.push_back(tempNormalIndex[0]);
 
-			vertexIndices.push_back(tempVertexIndex[1]);
-			vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
-			normalIndices.push_back(tempNormalIndex[0]);
-
-			vertexIndices.push_back(tempVertexIndex[2]);
-			vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
-			normalIndices.push_back(tempNormalIndex[0]);
+				vertexIndices.push_back(tempVertexIndex[2]);
+				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+				normalIndices.push_back(tempNormalIndex[0]);
+			}
 		}
 	}
 
@@ -194,6 +216,15 @@ Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::v
 	{
 		glm::vec2 uv = tempVertexTextures[vertexTextureIndices[i] - 1];
 		uvs.push_back(uv);
+	}
+
+	if(HasNormals)
+	{
+		for(int i = 0; i < normalIndices.size();i++)
+		{
+			glm::vec3 normale = tempNormals[normalIndices[i] - 1];
+			normals.push_back(normale);
+		}
 	}
 }
 

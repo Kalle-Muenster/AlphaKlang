@@ -24,6 +24,7 @@ IGobject::IGobject(void)
 {
 	IsVisible=false;
 	this->_idIsSet=false;
+
 }
 
 bool
@@ -74,6 +75,7 @@ IMeshGobject::~IMeshGobject(void)
 void
 IMeshGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
 {
+
 	if(addToSceneGraph)
 		SetID(SCENE->Add(this));
 
