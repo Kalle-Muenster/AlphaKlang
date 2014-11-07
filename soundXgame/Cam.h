@@ -37,7 +37,7 @@ public:
 	virtual double			FieldOfView(double = _FNan._Double);
 	CAM_MODE                Mode(CAM_MODE=CAM_MODE_NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
-	Transform              transform;
+	Transform               transform;
 	void					SetTarget(IGobject*);
 	void					SetFirstPerson(IGobject*);
 	ConID*					SetFirstPerson(IConnectable*);

@@ -59,7 +59,7 @@
   <Class Name="CTransform" Collapsed="true">
     <Position X="19.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAABAAABAEAABAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAABAAABAEAAAAAAAAAAAgAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -135,8 +135,25 @@
   </Class>
   <Class Name="InputManager" Collapsed="true">
     <Position X="25.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="InputManager::__unnamed_struct_000e_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>InputManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="InputManager::__unnamed_struct_000e_2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>InputManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="InputManager::__unnamed_struct_000e_3" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>InputManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAEIAAGAABBgAsBQAIDYAEAkAAAAAUgBgwAoAgAAAU=</HashCode>
+      <HashCode>AAAEYQAGAABBgAsEQAIDIBEAkAAEAAUgAgwAIAAACAc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -252,10 +269,10 @@
       <FileName>IMusicListener.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="MouseButton" Collapsed="true">
+  <Struct Name="MouseButton">
     <Position X="25.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAGAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -266,7 +283,7 @@
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Transform" Collapsed="true">
+  <Struct Name="Transform">
     <Position X="27.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAEAAAAAACAIAACAAAAAAAAAAAAAgAAgAA=</HashCode>
@@ -274,7 +291,7 @@
     </TypeIdentifier>
   </Struct>
   <Struct Name="VectorI" Collapsed="true">
-    <Position X="27.25" Y="4.75" Width="1.5" />
+    <Position X="23.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
@@ -288,7 +305,7 @@
     </TypeIdentifier>
   </Struct>
   <Struct Name="VectorF" Collapsed="true">
-    <Position X="25.5" Y="4.75" Width="1.5" />
+    <Position X="25.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
@@ -301,7 +318,7 @@
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="__unnamed_struct_002e_1" Collapsed="true">
+  <Struct Name="__unnamed_struct_0028_1" Collapsed="true">
     <Position X="22" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAQAQAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
@@ -309,28 +326,28 @@
     </TypeIdentifier>
   </Struct>
   <Typedef Name="ConID" Collapsed="true">
-    <Position X="23.75" Y="8.75" Width="1.5" />
+    <Position X="23.75" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="GobID" Collapsed="true">
-    <Position X="25.5" Y="8.75" Width="1.5" />
+    <Position X="25.5" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IGobject.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="ListenerFunc" Collapsed="true">
-    <Position X="27.25" Y="8.75" Width="1.5" />
+    <Position X="27.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IMusicListener.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="string" Collapsed="true">
-    <Position X="22" Y="9.5" Width="1.5" />
+    <Position X="22" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
@@ -344,56 +361,56 @@
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="UpdateID" Collapsed="true">
-    <Position X="23.75" Y="9.5" Width="1.5" />
+    <Position X="23.75" Y="11" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>UpdateManager.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="Color" Collapsed="true">
-    <Position X="22" Y="8.75" Width="1.5" />
+    <Position X="22" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility.h</FileName>
     </TypeIdentifier>
   </Typedef>
-  <Enum Name="FFT_SIZE" Collapsed="true">
+  <Enum Name="FFT_SIZE">
     <Position X="23.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="GET_DATA_MODE" Collapsed="true">
+  <Enum Name="GET_DATA_MODE">
     <Position X="25.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="LOAD_MODE" Collapsed="true">
-    <Position X="27.25" Y="7" Width="1.5" />
+  <Enum Name="LOAD_MODE">
+    <Position X="25.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAACQAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="CAM_MODE" Collapsed="true">
+  <Enum Name="CAM_MODE">
     <Position X="22" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAEAACAAABA=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="WHEEL" Collapsed="true">
-    <Position X="23.75" Y="7.75" Width="1.5" />
+  <Enum Name="WHEEL">
+    <Position X="23.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAICAAAAAAAAAAAAAAA=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="POWERS_OF_TWO" Collapsed="true">
-    <Position X="22" Y="7.75" Width="1.5" />
+  <Enum Name="POWERS_OF_TWO">
+    <Position X="27.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAJAAAAAAgAAAAAAAAQAAQAAAAAAAQAACAI=</HashCode>
       <FileName>Utility.h</FileName>

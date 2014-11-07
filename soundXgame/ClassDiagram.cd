@@ -105,7 +105,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAABAAABAEAABAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAABAAABAEAAAAAAAAAAAgAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -182,7 +182,7 @@
   <Class Name="InputManager" Collapsed="true">
     <Position X="27.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEIAAGAABBgAsBQAIDYAEAkAAAAAUgBgwAoAgAAAU=</HashCode>
+      <HashCode>AAAEYQAGAABBgAsEQAIDIBEAkAAEAAUgAgwAIAAACAc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -251,7 +251,7 @@
         <Point X="4.062" Y="4.941" />
         <Point X="4.062" Y="5.875" />
         <Point X="5.429" Y="5.875" Type="JumpStart" />
-        <Point X="5.596" Y="5.875" Type="JumpEnd" />
+        <Point X="5.595" Y="5.875" Type="JumpEnd" />
         <Point X="6.75" Y="5.875" />
         <Point X="6.75" Y="6.25" />
       </Path>
@@ -349,7 +349,7 @@
   <Struct Name="MouseButton" Collapsed="true">
     <Position X="27.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAGAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -357,13 +357,6 @@
     <Position X="27.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEgAAAAAAIAAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>DataStructs.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="TransformGL" Collapsed="true">
-    <Position X="24" Y="5.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAAAAAAACAIAACAAAAAAAAAAAAAgAAgAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -402,7 +395,7 @@
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="__unnamed_struct_002e_1" Collapsed="true">
+  <Struct Name="__unnamed_struct_0028_1" Collapsed="true">
     <Position X="24" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAQAQAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
