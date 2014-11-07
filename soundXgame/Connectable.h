@@ -3,7 +3,7 @@
 
 #include "IGobject.h"
 //class IGobject;
-struct TransformA;
+struct Transform;
 
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
 
@@ -24,7 +24,7 @@ public:
 	bool Not_hasInitialized(void);
 	int current;
 	int NumberOfConnectedObjects;
-	virtual TransformA* getTransform(void);
+	virtual Transform* getTransform(void);
 
 public:
 	IConnectable(void)
@@ -203,17 +203,17 @@ class CTransform :
 	public IConnectable
 {
 private:
-	TransformA* transform;
+	Transform* transform;
 
 public:
 	CTransform(void);
-	virtual void Initiator(TransformA* origin)
+	virtual void Initiator(Transform* origin)
 	{
 		transform = origin;
 	}
 	virtual ~CTransform(void);
-	virtual TransformA* getTransform(void);
-	virtual operator TransformA*();
+	virtual Transform* getTransform(void);
+	virtual operator Transform*();
 };
 
 #endif

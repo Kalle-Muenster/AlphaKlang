@@ -159,6 +159,7 @@ GobID switcher=0;
 void UpdateCycle(void)
 {
 	UPDATE->DoAllTheUpdates();
+
 	if(INPUT->Mouse.RIGHT.CLICK)
 		printf("\nTEST: %s,%s\n",SCENE->Object(switcher)->GetName(),SCENE->Object(switcher+1)->GetName());
 
@@ -168,7 +169,6 @@ void UpdateCycle(void)
 		if(++switcher>=SCENE->ObjectsCount())
 			switcher=0;
 	}
-
 	
 }
 

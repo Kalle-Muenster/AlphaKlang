@@ -11,18 +11,18 @@
 #include "Connectable.h"
 
 
+/* Interface, not instanziable */
 class IAudioEmitter
 {
 protected:
 	
-	void InitiateAudioEmitter(TransformA*,const char*);
+	void InitiateAudioEmitter(Transform*,const char*);
 	bool IsPlaying;
-	void SetMyPosition(TransformA*);
+	void SetMyPosition(Transform*);
 	float fftwindow[1024];
 public:
 	HCHANNEL audioSource;
 	IAudioEmitter(void);
-//	IAudioEmitter(Transform*);
 	virtual ~IAudioEmitter(void)=0;
 	virtual void LoadeSample(const char*);
 	virtual void LoadeStream(const char*);
@@ -36,7 +36,7 @@ public:
 
 };
 
-
+/* Connetable of IAudioEmitter */
 class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateble
 {
 
@@ -55,13 +55,13 @@ public:
 
 
 
-
+/* Interface, not instanziable */
 class IAudioReciever 
 {
 protected:
 	float mutedVolume;
 	bool IsMuted;
-	void SetMyPosition(TransformA*);
+	void SetMyPosition(Transform*);
 	virtual bool IsShared(bool=NULL);
 	virtual IAudioReciever* GetMasterReciever(void); 
 
@@ -70,7 +70,7 @@ protected:
 public:
 	IAudioReciever(void);
 	virtual ~IAudioReciever(void);
-	virtual void InitiateListener(TransformA*);
+	virtual void InitiateListener(Transform*);
 	virtual bool ToggleMute(void);
 	virtual float AudioVolume(float=2);
 	void DebugOutPosition(void);
@@ -79,6 +79,7 @@ public:
 	bool IsMasterReciever();
 };
 
+/* Connectable of AudioReciever */
 class AudioReciever : 
 	public IConnectable, 
 	public IAudioReciever, 

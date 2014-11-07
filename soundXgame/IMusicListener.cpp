@@ -42,35 +42,34 @@ IMusicListener::Enabled(int lineNumber,BOOL enable)
 }
 
 float
-IMusicListener::listenTo(int line,float *fft)
+IMusicListener::listenTo(int line, float* fft)
 {
 
-		float lowVal=0;
-		float highVal=0;
-	
+	float lowVal=0;
+	float highVal=0;
 
-		for(int c1=Line[line].lowerBound;c1<Line[line].lowerBound+Line[line].bandWidth;c1++)
-			lowVal += fft[c1];
+	for(int c1 = Line[line].lowerBound; c1 < Line[line].lowerBound + Line[line].bandWidth; c1++)
+		lowVal += fft[c1];
 
-		for(int c2=Line[line].upperBound-Line[line].bandWidth;c2<Line[line].upperBound;c2++)
-			highVal += fft[c2];
+	for(int c2 = Line[line].upperBound - Line[line].bandWidth; c2 < Line[line].upperBound; c2++)
+		highVal += fft[c2];
 
-		lowVal/=Line[line].bandWidth;
-		highVal/=(Line[line].bandWidth/2);
+	lowVal /= Line[line].bandWidth;
+	highVal /= (Line[line].bandWidth/2);
 
-		applyEffect(line,lowVal,highVal);
+	applyEffect(line,lowVal,highVal);
 
-		if(Line[line].clampf)
-			Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
+	if(Line[line].clampf)
+		Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
 
 
-		Line[line].value[0]=lowVal;
-		Line[line].value[1]=highVal;
+	Line[line].value[0]=lowVal;
+	Line[line].value[1]=highVal;
 
-		if(this->callbacks[line])
-			callbacks[line](line,&Line[line],clients[line]);
+	if(this->callbacks[line])
+		callbacks[line](line,&Line[line],clients[line]);
 
-		return Line[line].Effect;
+	return Line[line].Effect;
 }
 
 void
@@ -102,6 +101,7 @@ IMusicListener::GetLineData(int number)
 }
 
 
+/* trigger, der beim Überschreiten ausgelöst wird */
 void
 IMusicListener::SetThreshold(int line,float value)
 {

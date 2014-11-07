@@ -28,7 +28,7 @@ public:
 	void LoadeBackgroundAudio(const char*);// or musik...
 	void Play(void);
 	void Pause(void);
-	void SetListenerPosition(TransformA*);
+	void SetListenerPosition(Transform*);
 	float Volume(float=2);
 	void* GetChannelBuffer(DWORD channel,int sizeInBytes);
 	unsigned GetChannelFFT(DWORD channel,void* buffer);

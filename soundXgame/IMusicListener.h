@@ -15,8 +15,8 @@ struct ListenerData
 	int upperBound;
 	float value[NUMBER_OF_LINEVALUES];
 	int bandWidth;
-	float fallOff;
-	bool clampf;
+	float fallOff; /* Zeit in sekunden, auf dem der threshold bleiben soll */
+	bool clampf; /* clampen min / max begrenzen für end-ausgabe wert */
 	float MINClampf;
 	float MAXClampf;
 };

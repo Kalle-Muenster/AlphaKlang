@@ -15,7 +15,7 @@ public:
 	Combiner(void);
 	~Combiner(void);
 	Combiner* SetConiIDKeyPair(ConID* setter1,ConID* setter2);
-	virtual TransformA* getSubform(unsigned childIndex);
+	virtual Transform* getSubform(unsigned childIndex);
 };
 
 

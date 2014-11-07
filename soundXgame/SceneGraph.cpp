@@ -13,27 +13,26 @@ SceneGraph::SceneGraph(void)
 
 SceneGraph::~SceneGraph(void)
 {
-	//delete camera;
+	//delete cam;
 }
 
-SceneGraph* SceneGraph::GetInstance()
+SceneGraph*
+SceneGraph::GetInstance()
 {
 	if(!scenegraph)
-	{
 		scenegraph = new SceneGraph();
-	}
 	return scenegraph;
 }
 
-unsigned int SceneGraph::Add(IGobject* object)
+unsigned int
+SceneGraph::Add(IGobject* object)
 {
 	scenegraph->drawables.push_back(object);
 	return (GobID)(scenegraph->drawables.size()-1);
 }
 
-
-
-void SceneGraph::DrawAll()
+void
+SceneGraph::DrawAll()
 {
 	this->camera->Update();
 

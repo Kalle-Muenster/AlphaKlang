@@ -4,29 +4,6 @@
 #include "Voxel.h"
 
 
-VectorF Voxel::GetPosition(void)
-{
-	VectorF neu;
-	neu.x =  position.iX * MainDimensions->x;
-	neu.y = position.Yps * MainDimensions->x;
-	return neu;
-}
-void Voxel::SetPosition(VectorF setter)
-{
-	position = setter/MainDimensions->x; 
-}
-VectorF Voxel::GetSize(void)
-{
-	VectorF neu;
-	neu.x = size.ix * MainDimensions->y;
-	neu.y = size.yps * MainDimensions->y;
-	return neu;
-}
-void Voxel::SetSize(VectorF setter)
-{
-	size.ix = (setter/MainDimensions->y).x; 
-	size.yps = (setter/MainDimensions->y).y;
-}
 Voxel::Voxel(void)
 {
 	position.iX=position.Yps=size.ix=size.yps=0;
@@ -37,14 +14,44 @@ Voxel::Voxel(void)
 	farb.s32 = 0;
 }
 
-
-
 Voxel::~Voxel(void)
 {
 	delete x,y,w,h;
     delete MainDimensions;
 
 }
+
+VectorF
+Voxel::GetPosition(void)
+{
+	VectorF neu;
+	neu.x =  position.iX * MainDimensions->x;
+	neu.y = position.Yps * MainDimensions->x;
+	return neu;
+}
+
+void
+Voxel::SetPosition(VectorF setter)
+{
+	position = setter/MainDimensions->x; 
+}
+
+VectorF
+Voxel::GetSize(void)
+{
+	VectorF neu;
+	neu.x = size.ix * MainDimensions->y;
+	neu.y = size.yps * MainDimensions->y;
+	return neu;
+}
+
+void
+Voxel::SetSize(VectorF setter)
+{
+	size.ix = (setter/MainDimensions->y).x; 
+	size.yps = (setter/MainDimensions->y).y;
+}
+
 
 void Voxel::SetNeighbours(int ol,int or,int ur,int ul)
 {

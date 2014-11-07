@@ -6,7 +6,7 @@
 #include "DataStructs.h"
 
 class IConnectable;
-struct TransformA;
+struct Transform;
 struct Vector3;
 
 typedef unsigned int GobID;
@@ -18,7 +18,7 @@ private:
 	bool _idIsSet;
 
 protected:
-	TransformA transform;
+	Transform transform;
 	char Name[64];
 	bool SetID(GobID);
 	void LockID(void);
@@ -28,7 +28,7 @@ public:
 	virtual ~IGobject(void);
 	bool IsVisible;
 	virtual void draw(void)=0;
-	TransformA* getTransform(void);
+	Transform* getTransform(void);
 	virtual Vector3 move(float,float,float)=0;
 	virtual Vector3 rotate(float,float,float)=0;
 	virtual Vector3 scale(Vector3)=0;
@@ -39,11 +39,17 @@ public:
 	operator IConnectable();
 
 	template<typename T> T* AddConnectable(void)
-	{return conXtor->AddConnectable<T>();};
+	{
+		return conXtor->AddConnectable<T>();
+	}
 	template<typename T> T* GetConnected(void)
-	{return conXtor->GetConnected<T>();};
+	{
+		return conXtor->GetConnected<T>();
+	}
 	template<typename T> bool HasConnected(void)
-	{return conXtor->GetConnected<T>()!=NULL;}
+	{
+		return conXtor->GetConnected<T>()!=NULL;
+	}
 };
 
 class IMeshGobject : 
