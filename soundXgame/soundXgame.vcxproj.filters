@@ -27,6 +27,8 @@
     <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="CamTargetMover.cpp" />
     <ClCompile Include="CamTargetRotator.cpp" />
+    <ClCompile Include="Fountain.cpp" />
+    <ClCompile Include="FourtainObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h" />
@@ -57,14 +59,13 @@
     <ClInclude Include="Cubus.h" />
     <ClInclude Include="CamTargetMover.h" />
     <ClInclude Include="CamTargetRotator.h" />
+    <ClInclude Include="Fountain.h" />
+    <ClInclude Include="FourtainObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.obi" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

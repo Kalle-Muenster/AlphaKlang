@@ -1,5 +1,6 @@
 #include "Cam.h"
 #include "projectMacros.h"
+#include "Ground.h"
 
 static bool _shareAudioReciever = true;
 
@@ -267,13 +268,15 @@ Cam::Update()
 	{
 		this->UpdateTransform();
 		//this->move(x, eyeY, z);
-		//this->rotate(Vector3(x+lx, 1.0f,  z+lz));
+		//this->rotate(Vector3(x+lx, 1.0f, z+lz));
 		// TODO update just if values changed.. does not work so gar
 	}
 
 	// if transform changed -> update camera
 	if(this->_transformChanged == true)
 	{
+		//float y = Ground::getInstance()->GetGroundY(this->transform.position.x, this->transform.position.z);
+
 		gluLookAt(transform.position.x, transform.position.y, transform.position.z,
 			transform.rotation.x,transform.rotation.y,transform.rotation.z,
 			0, 1, 0);

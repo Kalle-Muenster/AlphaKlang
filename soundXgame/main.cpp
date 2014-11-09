@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 #include "Ground.h"
+#include "Fountain.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -11,6 +12,7 @@ void* font;
 
 //Objects:
 Ground* ground;
+Fountain* fountain;
 
 
 //Functions:
@@ -122,10 +124,11 @@ void LoadContent(void)
 	
 	ground = Ground::getInstance();
 	ground->Init();
-	
+
+	fountain = new Fountain();
+	fountain->Init();
 	
 	int i = -1;
-
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);

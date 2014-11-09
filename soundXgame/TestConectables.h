@@ -16,7 +16,7 @@ public:
 
 };
 
-class CameraTargetRotator : public IConnectable , public IUpdateble
+class CameraTargetRotator : public IConnectable, public IUpdateble
 {
 private:
 	void RotateOnMouseHold(void)
