@@ -30,11 +30,17 @@ private:
 	GLfloat					_aspect;
 	CAM_MODE				_mode;
 	
+	int						mouseX, mouseY; // last-frame mouse position within screen
 	float					angle;			// angle of rotation for the camera direction
 	float					lx, lz;			// actual vector representing the camera's direction
 	float					x, z;			// XZ position of the camera
 	float					eyeY;			// head rotation front/back
-	float					moveSpeed;		// firstPerson Cam moving speed
+	float					moveSpeed;		// firstPerson Keyboard moving sensitivity
+	float					mouseSpeed;		// firstPerson Mouse sensitivity
+	bool					_transformChanged; // flag if last frame the transform has changed
+
+	void					UpdateView();
+	void					UpdateTransform(void); // Update move and rotate Transform
 
 public:
 							Cam(void);
@@ -52,12 +58,13 @@ public:
 	void					StopFollowing(void);
 	void					SetTargetasFirstPerson(void);
 	void					WheelVRoll(WHEEL state);
-	BASS_3DVECTOR           move(glm::vec3);
 	BASS_3DVECTOR			move(float x,float y,float z);
+	BASS_3DVECTOR           move(glm::vec3);
+	BASS_3DVECTOR			rotate(float x,float y,float z);
 	BASS_3DVECTOR           rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
-	void					UpdateView();
 	void					Update(void);
+
 	virtual void			notifyKey(unsigned char key);
 	virtual void			specialKeyPressed(int key);
 	virtual void			mouseMotion(int newX, int newY);

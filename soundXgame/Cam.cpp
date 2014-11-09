@@ -3,7 +3,7 @@
 
 static bool _shareAudioReciever = true;
 
-Cam::Cam(void) : angle(0),lx(0),lz(-1),x(0),z(5),eyeY(1),moveSpeed(0.1f)
+Cam::Cam(void) : angle(0),lx(0),lz(-1),x(0),z(5),eyeY(1),moveSpeed(0.1f),mouseSpeed(1.0f),mouseX(0),mouseY(0)
 {
 	_isFollowingTarget=false;
 	this->transform.position.x=0;
@@ -17,6 +17,7 @@ Cam::Cam(void) : angle(0),lx(0),lz(-1),x(0),z(5),eyeY(1),moveSpeed(0.1f)
 	this->transform.movement.z=0;
 
 	InitiateListener(&this->transform);
+	_transformChanged=true;
 
 	_fieldOfView = 55;
 	_aspect = 16.0/9.0;
@@ -75,8 +76,7 @@ IGobject*
 Cam::GetTarget(void)
 {
 	if(_isFollowingTarget||_FollowFirstPerson)
-	return _target;
-	else
+		return _target;
 	return NULL;
 }
 
@@ -138,29 +138,14 @@ Cam::GetTargetPosition()
 	return *this->camTarget;
 }
 
-//void 
-//Cam::keyPress(char key)
-//{
-//
-//}
-//
-//void
-//Cam::mouseMotion(int x,int y)
-//{
-//
-//}
-//
-//void
-//Cam::specialKeyPressed(int spezial)
-//{
-//
-//}
-void 
-Cam::WheelVRoll(WHEEL state)
+/* * * * Transform * * * */
+
+void
+Cam::UpdateTransform(void)
 {
-	transform.position.y-=(float)state/10;
-	FieldOfView(FieldOfView() - state); 
-	printf("\nCAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
+	this->move(x, eyeY, z);
+	this->rotate(x+lx, 1.0f,  z+lz);
+	this->_transformChanged = true;
 }
 
 BASS_3DVECTOR
@@ -172,34 +157,38 @@ Cam::move(float x,float y,float z)
 BASS_3DVECTOR
 Cam::move(glm::vec3  newPosition)
 {
-		this->transform.movement.x = newPosition.x - this->transform.position.x;
-		this->transform.movement.y = newPosition.y - this->transform.position.y;
-		this->transform.movement.z = newPosition.z - this->transform.position.z;
+	this->transform.movement.x = newPosition.x - this->transform.position.x;
+	this->transform.movement.y = newPosition.y - this->transform.position.y;
+	this->transform.movement.z = newPosition.z - this->transform.position.z;
 
-		this->transform.position.x = newPosition.x;
-		this->transform.position.y = newPosition.y;
-		this->transform.position.z = newPosition.z;
+	this->transform.position.x = newPosition.x;
+	this->transform.position.y = newPosition.y;
+	this->transform.position.z = newPosition.z;
 
+	SetAudioResieverPosition(&this->transform);
 
+	//if(transform.movement.x!=0 || transform.movement.y!=0 || transform.movement.z!=0)
+		//printf("\nCAMERA: moved to: %f,%f,%f !",transform.position.x,transform.position.y,transform.position.z);
+	
+	return transform.position;
+}
 
-		SetAudioResieverPosition(&this->transform);
-
-		if(transform.movement.x!=0 || transform.movement.y!=0 || transform.movement.z!=0)
-			printf("\nCAMERA: moved to: %f,%f,%f !",transform.position.x,transform.position.y,transform.position.z);
-
-		return transform.position;
+BASS_3DVECTOR
+Cam::rotate(float x,float y,float z)
+{
+	return rotate(Vector3(x,y,z));
 }
 
 BASS_3DVECTOR
 Cam::rotate(glm::vec3 newRotation)
 {
-		this->transform.rotation.x = newRotation.x;
-		this->transform.rotation.y = newRotation.y;
-		this->transform.rotation.z = newRotation.z;
+	this->transform.rotation.x = newRotation.x;
+	this->transform.rotation.y = newRotation.y;
+	this->transform.rotation.z = newRotation.z;
 
-		this->transform.forward = glm::normalize((glm::vec3)this->transform.rotation);
+	this->transform.forward = glm::normalize((glm::vec3)this->transform.rotation);
 		
-		return this->transform.rotation;
+	return this->transform.rotation;
 }
 
 double
@@ -271,28 +260,40 @@ Cam::Update()
 	{
 		this->move(transform.position);
 		this->rotate(*camTarget);
+		this->_transformChanged = true;
 	}
 
 	if(Mode()==FIRSTPERSON)
 	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		this->move(x, eyeY, z);
-		this->rotate(Vector3(x+lx, 1.0f,  z+lz));
-	//	gluLookAt(x, eyeY, z,
-	//		x+lx, 1.0f,  z+lz,
-	//		0.0f, 1.0f,  0.0f);
+		this->UpdateTransform();
+		//this->move(x, eyeY, z);
+		//this->rotate(Vector3(x+lx, 1.0f,  z+lz));
+		// TODO update just if values changed.. does not work so gar
 	}
 
+	// if transform changed -> update camera
+	if(this->_transformChanged == true)
+	{
+		gluLookAt(transform.position.x, transform.position.y, transform.position.z,
+			transform.rotation.x,transform.rotation.y,transform.rotation.z,
+			0, 1, 0);
+		this->_transformChanged = false;
+	}
 
-	//update the Camera's transform coordinates
-	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 
 	//update The Position of the attached AudioReciever
 	SetAudioResieverPosition(&transform);
 }
 
+/* * * * User Input * * * */
 
+void
+Cam::WheelVRoll(WHEEL state)
+{
+	transform.position.y-=(float)state/10;
+	FieldOfView(FieldOfView() - state); 
+	//printf("\nCAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
+}
 
 void
 Cam::notifyKey(unsigned char key)
@@ -316,9 +317,9 @@ Cam::notifyKey(unsigned char key)
 			z -= lx * (moveSpeed*-1);
 			break;
 	}
-	
-	// Update view
-	//this->UpdateView();
+
+	// Update Transform
+	UpdateTransform();
 }
 
 void
@@ -343,33 +344,30 @@ Cam::specialKeyPressed(int key)
 			break;
 	}
 	
-	// Update view
-	//this->UpdateView();
-
+	// Update Transform
+	UpdateTransform();
 }
 
-
-int mouseX, mouseY;
 void
 Cam::mouseMotion(int newX, int newY)
 {
-	if(!mouseX)
+ 	if(mouseX == 0 && mouseX == 0)
+	{
 		mouseX = newX;
-	if(!mouseY)
 		mouseY = newY;
+	}
 
 	int diffX = newX - mouseX;
 	int diffY = newY - mouseY;
 
-	angle += 0.005f * diffX;
+	angle += 0.005f * diffX * mouseSpeed;
 	lx = sin(angle);
 	lz = -cos(angle);
-
 	eyeY += (float)diffY / 300;
 
 	mouseX = newX;
 	mouseY = newY;
 	
-	// Update view
-	//this->UpdateView();
+	// Update Transform
+	UpdateTransform();
 }

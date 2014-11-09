@@ -17,7 +17,7 @@ Ground::Ground(void) :
 	x(-7.0f),
 	y(-1.5f),
 	z(10.0f),
-	width(2.5f),
+	width(3.5f),
 	heightRange(7.0f),
 	dynamicRange(5.0f),
 

@@ -36,7 +36,7 @@ struct Transform
 public:
 	Vector3 position;
 	Vector3 scale;
-	BASS_3DVECTOR movement;
+	BASS_3DVECTOR movement; // movement is a relative position and shows the difference to the last frame
 	Vector3 rotation;
 
 	Vector3 forward;
