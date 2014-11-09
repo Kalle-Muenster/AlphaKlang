@@ -37,6 +37,7 @@ public:
 	void SetName(char*);
 	IConnectable* conXtor;
 	operator IConnectable();
+	bool IsGrounded;
 
 	template<typename T> T* AddConnectable(void)
 	{

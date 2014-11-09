@@ -17,7 +17,7 @@
   <Class Name="IAudioReciever" Collapsed="true">
     <Position X="9.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAIAAAAIAAAAAAAAIgEAABAMABAAMAAAAAEACAA=</HashCode>
+      <HashCode>AAACAAIAAAAIAAAACAAAIgEAABAEABAAMAAAAAEACAA=</HashCode>
       <FileName>AudioObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -37,35 +37,45 @@
   </Class>
   <Class Name="Cam" Collapsed="true">
     <Position X="7.75" Y="12" Width="1.5" />
-    <InheritanceLine Type="IWheelee" FixedToPoint="true">
+    <InheritanceLine Type="IInteractive" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="6.5" Y="10.941" />
-        <Point X="6.5" Y="11.625" />
-        <Point X="8.312" Y="11.625" />
-        <Point X="8.312" Y="12" />
+        <Point X="3.125" Y="10.941" />
+        <Point X="3.125" Y="11.5" />
+        <Point X="5.167" Y="11.5" Type="JumpStart" />
+        <Point X="5.333" Y="11.5" Type="JumpEnd" />
+        <Point X="8.375" Y="11.5" />
+        <Point X="8.375" Y="12" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="IConnectable" FixedFromPoint="true">
+      <Path>
+        <Point X="7.688" Y="1.812" />
+        <Point X="7.688" Y="2.187" />
+        <Point X="8.5" Y="2.187" />
+        <Point X="8.5" Y="12" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>IAQAAQiAEIQRQEGAAkgQAAEAQAgEEAADEABgBQBQBCY=</HashCode>
+      <HashCode>IAQAAQiAEIQRQEGAAkgQAEEAQAgEEACTEABmBQBQBCY=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Combiner" Collapsed="true">
-    <Position X="12.75" Y="6.25" Width="1.5" />
-    <InheritanceLine Type="IConnectable" ManuallyRouted="true">
+    <Position X="11.75" Y="6.25" Width="1.5" />
+    <InheritanceLine Type="IConnectable" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
-        <Point X="7.25" Y="1.812" />
-        <Point X="7.25" Y="5.91" />
-        <Point X="8.094" Y="5.91" Type="JumpStart" />
-        <Point X="8.26" Y="5.91" Type="JumpEnd" />
-        <Point X="8.417" Y="5.91" Type="JumpStart" />
-        <Point X="8.583" Y="5.91" Type="JumpEnd" />
-        <Point X="8.715" Y="5.91" Type="JumpStart" />
-        <Point X="8.881" Y="5.91" Type="JumpEnd" />
-        <Point X="9.417" Y="5.91" Type="JumpStart" />
-        <Point X="9.583" Y="5.91" Type="JumpEnd" />
-        <Point X="13.5" Y="5.91" />
-        <Point X="13.5" Y="6.25" />
+        <Point X="7.5" Y="1.812" />
+        <Point X="7.5" Y="5.587" />
+        <Point X="8.094" Y="5.587" Type="JumpStart" />
+        <Point X="8.26" Y="5.587" Type="JumpEnd" />
+        <Point X="8.417" Y="5.587" Type="JumpStart" />
+        <Point X="8.583" Y="5.587" Type="JumpEnd" />
+        <Point X="8.715" Y="5.587" Type="JumpStart" />
+        <Point X="8.881" Y="5.587" Type="JumpEnd" />
+        <Point X="9.417" Y="5.587" Type="JumpStart" />
+        <Point X="9.583" Y="5.587" Type="JumpEnd" />
+        <Point X="12.5" Y="5.587" />
+        <Point X="12.5" Y="6.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -81,7 +91,23 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CTransform" Collapsed="true">
-    <Position X="10.75" Y="6.25" Width="1.5" />
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <InheritanceLine Type="IConnectable" ManuallyRouted="true">
+      <Path>
+        <Point X="7.25" Y="1.812" />
+        <Point X="7.25" Y="5.816" />
+        <Point X="8.094" Y="5.816" Type="JumpStart" />
+        <Point X="8.26" Y="5.816" Type="JumpEnd" />
+        <Point X="8.417" Y="5.816" Type="JumpStart" />
+        <Point X="8.583" Y="5.816" Type="JumpEnd" />
+        <Point X="8.715" Y="5.816" Type="JumpStart" />
+        <Point X="8.881" Y="5.816" Type="JumpEnd" />
+        <Point X="9.417" Y="5.816" Type="JumpStart" />
+        <Point X="9.583" Y="5.816" Type="JumpEnd" />
+        <Point X="10.5" Y="5.816" />
+        <Point X="10.5" Y="6.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgEAAAAAAABAAABAEAAAAAAAAAAAgAAA=</HashCode>
       <FileName>Connectable.h</FileName>
@@ -104,12 +130,12 @@
   <Class Name="IMeshGobject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACCQAIQAAACAAAAABMAAAAAAEAAAiA=</HashCode>
+      <HashCode>AAAEAAAAQAAAAACCQAIQAAACAAAAAhGAAAgAAEAQAiA=</HashCode>
       <FileName>IGobject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMusicListener" Collapsed="true">
-    <Position X="5.25" Y="3" Width="1.5" />
+    <Position X="4.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAACAAQABAAIAAIAgAIABgAAIAAABCAAAAAAABACA=</HashCode>
       <FileName>IMusicListener.h</FileName>
@@ -117,19 +143,18 @@
   </Class>
   <Class Name="CIMusicListener" Collapsed="true">
     <Position X="5.25" Y="4" Width="1.5" />
-    <InheritanceLine Type="IMusicListener" ManuallyRouted="true">
+    <InheritanceLine Type="IMusicListener" ManuallyRouted="true" FixedToPoint="true">
       <Path>
-        <Point X="6" Y="3.562" />
-        <Point X="6" Y="4" />
+        <Point X="5.5" Y="3.562" />
+        <Point X="5.5" Y="4" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="IConnectable" ManuallyRouted="true">
+    <InheritanceLine Type="IConnectable" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.25" Y="1.812" />
-        <Point X="6.885" Y="1.812" />
-        <Point X="6.885" Y="3.76" />
-        <Point X="6" Y="3.76" />
-        <Point X="6" Y="4" />
+        <Point X="6.938" Y="1.812" />
+        <Point X="6.938" Y="3.76" />
+        <Point X="6.188" Y="3.76" />
+        <Point X="6.188" Y="4" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -153,6 +178,14 @@
   </Class>
   <Class Name="IInteractive" Collapsed="true">
     <Position X="2.25" Y="10.25" Width="1.5" />
+    <InheritanceLine Type="IObserver" ManuallyRouted="true">
+      <Path>
+        <Point X="4.75" Y="9.062" />
+        <Point X="4.75" Y="9.771" />
+        <Point X="3" Y="9.771" />
+        <Point X="3" Y="10.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAEQAAAAAAAAAAAAgAAQAAAEAAAAAAg=</HashCode>
       <FileName>InputManager.h</FileName>
@@ -237,6 +270,8 @@
       <Path>
         <Point X="7.25" Y="1.812" />
         <Point X="7.25" Y="4.329" />
+        <Point X="7.417" Y="4.329" Type="JumpStart" />
+        <Point X="7.583" Y="4.329" Type="JumpEnd" />
         <Point X="8.177" Y="4.329" />
         <Point X="8.177" Y="9.439" />
         <Point X="8.417" Y="9.439" Type="JumpStart" />
@@ -323,6 +358,8 @@
       <Path>
         <Point X="7.25" Y="1.812" />
         <Point X="7.25" Y="4.885" />
+        <Point X="7.417" Y="4.885" Type="JumpStart" />
+        <Point X="7.583" Y="4.885" Type="JumpEnd" />
         <Point X="8.094" Y="4.885" Type="JumpStart" />
         <Point X="8.26" Y="4.885" Type="JumpEnd" />
         <Point X="8.417" Y="4.885" Type="JumpStart" />
@@ -331,8 +368,6 @@
         <Point X="8.798" Y="11.125" />
         <Point X="8.583" Y="11.125" Type="JumpStart" />
         <Point X="8.417" Y="11.125" Type="JumpEnd" />
-        <Point X="6.583" Y="11.125" Type="JumpStart" />
-        <Point X="6.417" Y="11.125" Type="JumpEnd" />
         <Point X="5.25" Y="11.125" />
         <Point X="5.25" Y="12" />
       </Path>

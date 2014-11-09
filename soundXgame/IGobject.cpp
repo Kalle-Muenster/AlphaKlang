@@ -1,10 +1,11 @@
-
 #include <iostream>
 #include "projectMacros.h"
 #include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGobject.h"
+
+#include "Ground.h"
 
 #define This this->conXtor->Connection()
 static unsigned objIDs = 99;
@@ -26,6 +27,7 @@ IGobject::IGobject(void)
 	this->_idIsSet=false;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
+	IsGrounded=true;
 }
 
 bool
@@ -250,6 +252,15 @@ IMeshGobject::draw()
 	{
 		//Translate...
 		glTranslatef(this->getTransform()->position.x, this->getTransform()->position.y,this->getTransform()->position.z);
+
+		if(this->IsGrounded)
+		{
+			
+			//float y = this->transform.position.y + Ground::getInstance()->GetGroundY(this->transform.position.x, this->transform.position.z);
+			float y = Ground::getInstance()->GetGroundY(this->transform.position.x, this->transform.position.z);
+			glTranslatef(0, y, 0);
+
+		}
 
 		//Rotate...
 		glRotatef(this->getTransform()->rotation.x, 1, 0, 0);
