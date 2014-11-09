@@ -77,6 +77,8 @@
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="BassAudio.cpp" />
     <ClCompile Include="Cam.cpp" />
+    <ClCompile Include="CamTargetMover.cpp" />
+    <ClCompile Include="CamTargetRotator.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="Cubus.cpp" />
@@ -103,6 +105,8 @@
     <ClInclude Include="AudioObject.h" />
     <ClInclude Include="BassAudio.h" />
     <ClInclude Include="Cam.h" />
+    <ClInclude Include="CamTargetMover.h" />
+    <ClInclude Include="CamTargetRotator.h" />
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="Cubus.h" />

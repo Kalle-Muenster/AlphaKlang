@@ -25,6 +25,8 @@
     <ClCompile Include="VoxelMap.cpp" />
     <ClCompile Include="VoxGrid.cpp" />
     <ClCompile Include="Cubus.cpp" />
+    <ClCompile Include="CamTargetMover.cpp" />
+    <ClCompile Include="CamTargetRotator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h" />
@@ -53,6 +55,8 @@
     <ClInclude Include="VoxelMap.h" />
     <ClInclude Include="VoxGrid.h" />
     <ClInclude Include="Cubus.h" />
+    <ClInclude Include="CamTargetMover.h" />
+    <ClInclude Include="CamTargetRotator.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.obi" />

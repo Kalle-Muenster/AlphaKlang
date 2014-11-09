@@ -64,12 +64,11 @@ Cam::SetTarget(IGobject *targetObject)
 {
 	_distanceToTarget = 0.1;
 	this->camTarget = &targetObject->getTransform()->position;
-	if (this->camTarget)
-		_isFollowingTarget = true;
 	_target = targetObject;
 	_target->IsVisible=true;
-	_FollowFirstPerson=false;
-	printf("\nCAMERA: Set %s-ID:%i As Follow-Target!",_target->GetName(),_target->GetID());
+	//_FollowFirstPerson=false;
+	this->Mode(CAM_MODE::FOLLOWTARGET);
+	printf("CAMERA: Set %s-ID:%i As Follow-Target!\n",_target->GetName(),_target->GetID());
 }
 
 IGobject* 
@@ -220,7 +219,7 @@ Cam::Mode(CAM_MODE mode)
 	{
 		_mode=mode;
 		UpdateView();
-		printf("\nCAMERA: Set to %s-Mode !",_mode==ORTHOGRAFIC?"Orthografic":_mode==PERSPECTIVE?"Perspective":NULL);
+		printf("\nCAMERA: Set to %s-Mode !",_mode==FIRSTPERSON?"FirstPerson":_mode==PERSPECTIVE?"Perspective":_mode==FOLLOWTARGET?"FollowTarget":NULL);
 	}
 	return _mode;
 }
@@ -256,7 +255,8 @@ Cam::Update()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	if(_isFollowingTarget)
+//	if(_isFollowingTarget)
+	if(Mode()==FOLLOWTARGET)
 	{
 		this->move(transform.position);
 		this->rotate(*camTarget);
