@@ -136,7 +136,8 @@ void LoadContent(void)
 
 
 	SCENE->camera->SetTarget(tempObject);
-
+	SCENE->camera->Mode(PERSPECTIVE);
+	SCENE->camera->Mode(FIRSTPERSON);
 }
 
 GobID switcher=0;
@@ -164,7 +165,7 @@ void RenderCycle(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Update Camera
-	SCENE->camera->UpdateView();
+//	SCENE->camera->UpdateView();
 
 	ground->Draw();
 

@@ -54,6 +54,7 @@ public:
 	void					SetTargetasFirstPerson(void);
 	void					WheelVRoll(WHEEL state);
 	BASS_3DVECTOR           move(glm::vec3);
+	BASS_3DVECTOR			move(float x,float y,float z);
 	BASS_3DVECTOR           rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
 	void					UpdateView();

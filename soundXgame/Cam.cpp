@@ -164,6 +164,12 @@ Cam::WheelVRoll(WHEEL state)
 }
 
 BASS_3DVECTOR
+Cam::move(float x,float y,float z)
+{
+	return move(Vector3(x,y,z));
+}
+
+BASS_3DVECTOR
 Cam::move(glm::vec3  newPosition)
 {
 		this->transform.movement.x = newPosition.x - this->transform.position.x;
@@ -242,21 +248,12 @@ Cam::UpdateView(void)
 			glLoadIdentity();
 			gluPerspective(FieldOfView(), Aspect(), 0.1f, 100.0f);
 			break;
-		case ORTHOGRAFIC:
+	/*	case ORTHOGRAFIC:
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 			gluOrtho2D(0,SCREENWIDTH,SCREENHEIGHT,0);
 			gluLookAt(0,0,0,0,0,0,0,1,0);
-			break;
-		case FIRSTPERSON:
-			
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
-			gluLookAt(x, eyeY, z,
-				x+lx, 1.0f,  z+lz,
-				0.0f, 1.0f,  0.0f);
-			break;
-
+			break;*/
 	}
 }
 
@@ -274,22 +271,26 @@ Cam::Update()
 		this->move(transform.position);
 		this->rotate(*camTarget);
 	}
-	if(_FollowFirstPerson)
-	{
-		this->move(*camTarget);
-		this->rotate(_target->getTransform()->rotation);
-	}
-
-	//if(INPUT->Mouse.MIDDLE.HOLD)
-	//	this->move(transform.position + Vector3(INPUT->Mouse.Movement.x/100,0,INPUT->Mouse.Movement.y/100));
+		if(Mode()==FIRSTPERSON)
+		{
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			this->move(x, eyeY, z);
+			this->rotate(Vector3(x+lx, 1.0f,  z+lz));
+		//	gluLookAt(x, eyeY, z,
+		//		x+lx, 1.0f,  z+lz,
+		//		0.0f, 1.0f,  0.0f);
+		}
 
 	//Set The Position of the attached AudioListener
 	SetMyPosition(&transform);
-
+	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 	//if(Mode()==PERSPECTIVE)
-	//	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
+	//	
 //	else if(Mode()==ORTHOGRAFIC)
 //		gluLookAt(0,0,0,0,0,0,0,1,0);
+
+
 
 }
 
