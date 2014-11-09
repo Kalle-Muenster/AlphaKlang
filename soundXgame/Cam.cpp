@@ -249,6 +249,7 @@ Cam::UpdateView(void)
 			gluLookAt(0,0,0,0,0,0,0,1,0);
 			break;
 		case FIRSTPERSON:
+			
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 			gluLookAt(x, eyeY, z,
@@ -316,8 +317,9 @@ Cam::notifyKey(unsigned char key)
 			z -= lx * (moveSpeed*-1);
 			break;
 	}
-
-	//INPUT.notifyKey(key);
+	
+	// Update view
+	//this->UpdateView();
 }
 
 void
@@ -341,6 +343,10 @@ Cam::specialKeyPressed(int key)
 			z -= lx * (moveSpeed*-1);
 			break;
 	}
+	
+	// Update view
+	//this->UpdateView();
+
 }
 
 
@@ -360,10 +366,11 @@ Cam::mouseMotion(int newX, int newY)
 	lx = sin(angle);
 	lz = -cos(angle);
 
-	
-	
 	eyeY += (float)diffY / 300;
 
 	mouseX = newX;
 	mouseY = newY;
+	
+	// Update view
+	//this->UpdateView();
 }

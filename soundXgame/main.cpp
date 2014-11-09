@@ -91,9 +91,6 @@ void GlInit(void)
 	glClearDepth(1);
 
 	glEnable(GL_DEPTH_TEST);
-	
-	//glEnable(GL_TEXTURE_2D); // ??? hier weg!
-
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
@@ -166,6 +163,8 @@ void RenderCycle(void)
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	SCENE->camera->UpdateView();
+
 	ground->Draw();
 
 	SCENE->DrawAll();
@@ -208,11 +207,11 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key=='q')
 		glutExit();
 
-	if(key=='o')
-		SCENE->camera->Mode(ORTHOGRAFIC);
+	//if(key=='o')
+		//SCENE->camera->Mode(ORTHOGRAFIC);
 
-	if(key=='p')
-		SCENE->camera->Mode(PERSPECTIVE);
+	//if(key=='p')
+		//SCENE->camera->Mode(PERSPECTIVE);
 
 	INPUT->notifyKey(key);
 }

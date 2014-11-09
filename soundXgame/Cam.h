@@ -20,22 +20,21 @@ class Cam : public IInteractive, public IConnectable, public IAudioReciever
 {
 
 private:
-	IGobject*			_target;
-	bool				_isFollowingTarget;
-	bool				_FollowFirstPerson;
-	float				_distanceToTarget;
-	glm::vec3			*camTarget;
-	ConID				*targetConID;
-	double				_fieldOfView;
-	GLfloat				_aspect;
-	void                UpdateView();
-	CAM_MODE            _mode;
+	IGobject*				_target;
+	bool					_isFollowingTarget;
+	bool					_FollowFirstPerson;
+	float					_distanceToTarget;
+	glm::vec3				*camTarget;
+	ConID					*targetConID;
+	double					_fieldOfView;
+	GLfloat					_aspect;
+	CAM_MODE				_mode;
 	
-	float				angle;			// angle of rotation for the camera direction
-	float				lx, lz;			// actual vector representing the camera's direction
-	float				x, z;			// XZ position of the camera
-	float				eyeY;			// head rotation front/back
-	float				moveSpeed;		// firstPerson Cam moving speed
+	float					angle;			// angle of rotation for the camera direction
+	float					lx, lz;			// actual vector representing the camera's direction
+	float					x, z;			// XZ position of the camera
+	float					eyeY;			// head rotation front/back
+	float					moveSpeed;		// firstPerson Cam moving speed
 
 public:
 							Cam(void);
@@ -57,6 +56,7 @@ public:
 	BASS_3DVECTOR           move(glm::vec3);
 	BASS_3DVECTOR           rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
+	void					UpdateView();
 
 	virtual void			notifyKey(unsigned char key);
 	virtual void			specialKeyPressed(int key);
