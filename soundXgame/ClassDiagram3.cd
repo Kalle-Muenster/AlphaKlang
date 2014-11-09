@@ -37,6 +37,14 @@
   </Class>
   <Class Name="Cam" Collapsed="true">
     <Position X="7.75" Y="12" Width="1.5" />
+    <InheritanceLine Type="IWheelee" FixedToPoint="true">
+      <Path>
+        <Point X="6.5" Y="10.941" />
+        <Point X="6.5" Y="11.625" />
+        <Point X="8.312" Y="11.625" />
+        <Point X="8.312" Y="12" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>IAQAAQiAEIQRQEGAAkgQAAEAQAgEEAADEABgBQBQBCY=</HashCode>
       <FileName>Cam.h</FileName>
@@ -109,12 +117,19 @@
   </Class>
   <Class Name="CIMusicListener" Collapsed="true">
     <Position X="5.25" Y="4" Width="1.5" />
-    <InheritanceLine Type="IConnectable" FixedFromPoint="true" FixedToPoint="true">
+    <InheritanceLine Type="IMusicListener" ManuallyRouted="true">
       <Path>
-        <Point X="7.062" Y="1.812" />
-        <Point X="7.062" Y="3.76" />
-        <Point X="6.375" Y="3.76" />
-        <Point X="6.375" Y="4" />
+        <Point X="6" Y="3.562" />
+        <Point X="6" Y="4" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="IConnectable" ManuallyRouted="true">
+      <Path>
+        <Point X="7.25" Y="1.812" />
+        <Point X="6.885" Y="1.812" />
+        <Point X="6.885" Y="3.76" />
+        <Point X="6" Y="3.76" />
+        <Point X="6" Y="4" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -137,15 +152,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="IInteractive" Collapsed="true">
-    <Position X="1.75" Y="10.25" Width="1.5" />
-    <InheritanceLine Type="IObserver" ManuallyRouted="true" FixedFromPoint="true">
-      <Path>
-        <Point X="4.312" Y="9.062" />
-        <Point X="4.312" Y="9.875" />
-        <Point X="2.5" Y="9.875" />
-        <Point X="2.5" Y="10.25" />
-      </Path>
-    </InheritanceLine>
+    <Position X="2.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAIAAAAAEQAAAAAAAAAAAAgAAQAAAEAAAAAAg=</HashCode>
       <FileName>InputManager.h</FileName>
@@ -155,7 +162,9 @@
     <Position X="4" Y="10.25" Width="1.5" />
     <InheritanceLine Type="IObserver" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="4.625" Y="9.062" />
+        <Point X="4.875" Y="9.062" />
+        <Point X="4.875" Y="9.875" />
+        <Point X="4.625" Y="9.875" />
         <Point X="4.625" Y="10.25" />
       </Path>
     </InheritanceLine>
@@ -165,13 +174,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="IWheelee" Collapsed="true">
-    <Position X="6" Y="10.25" Width="1.5" />
+    <Position X="5.75" Y="10.25" Width="1.5" />
     <InheritanceLine Type="IObserver" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
         <Point X="5" Y="9.062" />
         <Point X="5" Y="9.416" />
-        <Point X="6.75" Y="9.416" />
-        <Point X="6.75" Y="10.25" />
+        <Point X="6.5" Y="9.416" />
+        <Point X="6.5" Y="10.25" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -182,7 +191,7 @@
   <Class Name="InputManager" Collapsed="true">
     <Position X="28" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEIAAGAABBgAsBQAIDYAEAkAAAAAUgBgwAoAgAAAU=</HashCode>
+      <HashCode>AAAEYQAGAABBgAsEQAIDIBEAkAAEAAUgAgwAIAAACAc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -319,17 +328,19 @@
         <Point X="8.417" Y="4.885" Type="JumpStart" />
         <Point X="8.583" Y="4.885" Type="JumpEnd" />
         <Point X="8.798" Y="4.885" />
-        <Point X="8.798" Y="11.417" />
-        <Point X="8.583" Y="11.417" Type="JumpStart" />
-        <Point X="8.417" Y="11.417" Type="JumpEnd" />
-        <Point X="5.25" Y="11.417" />
+        <Point X="8.798" Y="11.125" />
+        <Point X="8.583" Y="11.125" Type="JumpStart" />
+        <Point X="8.417" Y="11.125" Type="JumpEnd" />
+        <Point X="6.583" Y="11.125" Type="JumpStart" />
+        <Point X="6.417" Y="11.125" Type="JumpEnd" />
+        <Point X="5.25" Y="11.125" />
         <Point X="5.25" Y="12" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="IInteractive" FixedToPoint="true">
       <Path>
-        <Point X="2.5" Y="10.941" />
-        <Point X="2.5" Y="11.625" />
+        <Point X="3" Y="10.941" />
+        <Point X="3" Y="11.625" />
         <Point X="4.938" Y="11.625" />
         <Point X="4.938" Y="12" />
       </Path>
@@ -356,7 +367,7 @@
   <Struct Name="MouseButton" Collapsed="true">
     <Position X="28" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAGAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -402,7 +413,7 @@
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="__unnamed_struct_002e_1" Collapsed="true">
+  <Struct Name="__unnamed_struct_0028_1" Collapsed="true">
     <Position X="24.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAQAQAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>

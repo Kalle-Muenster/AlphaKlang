@@ -6,7 +6,7 @@ soundXgame/[Dd]ebug/
 *.sln.docstates
 soundXgame.sdf
 soundXgame.opensdf
-
+*.cd
 
 # Windows image file caches
 Thumbs.db

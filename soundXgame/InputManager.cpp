@@ -1,21 +1,48 @@
 #include "InputManager.h"
 #include "DataStructs.h"
 
+LPSYSTEMTIME _sTime;
+DWORD _timerTicks;
+DWORD _lastTicks;
+DWORD _frameTicks;
+DWORD _clicktimer;
+DWORD _doubleClickLength;
+
 InputManager* instance;
 
 glm::vec4 Viewport;
 Vector3 ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
+
 bool _HasFlag(unsigned value,unsigned flag)
 {
-	return (value / flag > 0);	
+	return (value / flag > 0);
+}
+
+double _TicksToSeconds(DWORD ticks)
+{
+	return (float)ticks/1000;
+}
+
+double 
+_updateTimer(void)
+{
+	_timerTicks = GetTickCount();
+	_frameTicks = _timerTicks - _lastTicks;
+	_clicktimer = ((_clicktimer > 0)&&(_clicktimer<=_doubleClickLength))? (_clicktimer - _frameTicks):0;
+	_lastTicks = _timerTicks;
+	return _TicksToSeconds(_frameTicks);
 }
 
 InputManager* InputManager::getInstance() 
 {
 	if(!instance) 
 	{
+		_lastTicks = 0;
+		_frameTicks = 0;
+		_doubleClickLength = 200;
+		_timerTicks = GetTickCount();
 		instance = new InputManager();
 	}
 
@@ -30,11 +57,13 @@ InputManager::InputManager(void)
 	this->mouseClickListener = std::vector<IObserver*>();
 	this->mouseWheelListener = std::vector<IObserver*>();
 
+	FrameTime = 0;
 	Mouse.X=Mouse.Y=0;
 	Mouse.Position.x=Mouse.Position.y=0.0f;
 	LEFTnewState=MIDDLEnewState=RIGHTnewState=false;
 	Mouse.LEFT.CLICK=Mouse.RIGHT.CLICK=Mouse.MIDDLE.CLICK=false;
 	Mouse.LEFT.HOLD=Mouse.RIGHT.HOLD=Mouse.MIDDLE.HOLD=false;
+	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
 	Mouse.Movement = glm::vec2(0,0);
 
 	Viewport=glm::vec4(0,0,1,1);
@@ -65,7 +94,7 @@ InputManager::InputManager(void)
 
 InputManager::~InputManager(void)
 {
-
+	delete _sTime;
 }
 
 void InputManager::attachMouseMove(IObserver* obs) 
@@ -101,7 +130,7 @@ void InputManager::attachMouseWheel(IObserver* obs)
 
 
 void 
-InputManager::_notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,int AxisZ)
+InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,int AxisZ)
 {
 	//Todo:  implement Invokationlist for JoysticObserverCalbacks...
 }
@@ -127,7 +156,7 @@ InputManager::notifyKey(char key)
 void
 InputManager::notifyMouse(int x, int y) 
 {
-	_setMousePosition(x,y);
+	setMousePosition(x,y);
 	for(auto it = this->mouseMoveListener.begin(); it != this->mouseMoveListener.end(); ++it) 
 	{
 		((IInteractive*)(*it))->mouseMotion(x,y);
@@ -135,7 +164,7 @@ InputManager::notifyMouse(int x, int y)
 }
 
 void
-InputManager::_notifyWheel(int wheel)
+InputManager::notifyWheel(int wheel)
 {
 	for(auto it=mouseWheelListener.begin();it!=mouseWheelListener.end();it++)
 	{
@@ -152,7 +181,7 @@ InputManager::_notifyWheel(int wheel)
 }
 
 void
-InputManager::_notifyQlicks(void)
+InputManager::notifyQlicks(void)
 {
 	bool click = false;
 	if(Mouse.LEFT.CLICK)
@@ -234,7 +263,7 @@ InputManager::UpdateMouseButtons(int button,int state,int x,int y)
 			RIGHTnewState = !state;
 			break;
 		}
-		_setMousePosition(x,y);
+		setMousePosition(x,y);
 
 		for(auto it=mouseClickListener.begin();it!=mouseClickListener.end();it++)
 		{
@@ -264,7 +293,7 @@ InputManager::UpdateMouseWheel(int wheel,int state,int x,int y)
 #endif
 
 // call the invoktionList
-	_notifyWheel(wheel);
+	notifyWheel(wheel);
 }
 
 void
@@ -278,7 +307,7 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 		{
 			for(int i = 0;i<Controler1.NumberOfButtons;i++)
 				if(_buttonChange[i] = buttons>>31-i)
-					_notifyJoystick(0,i,_buttonChange[i],Controler1.aX=AxisX,Controler1.aY=AxisY,Controler1.aZ=AxisZ);
+					notifyJoystick(0,i,_buttonChange[i],Controler1.aX=AxisX,Controler1.aY=AxisY,Controler1.aZ=AxisZ);
 		}
 		else
 		{
@@ -289,7 +318,7 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 			_axisChange[2]=Controler1.aX!=AxisZ;
 			Controler1.aZ = AxisZ;
 			if(_axisChange[0]||_axisChange[1]||_axisChange[2])
-				_notifyJoystick(id,-1,NULL,Controler1.aX,Controler1.aY,Controler1.aZ);
+				notifyJoystick(id,-1,NULL,Controler1.aX,Controler1.aY,Controler1.aZ);
 		}
 		break;
 
@@ -314,8 +343,14 @@ InputManager::SaveViewportRectangle(int x,int y,int w,int h)
 	Viewport.z=h;
 }
 
+void 
+InputManager::SetDoubleclickTime(int milliseconds)
+{
+	_doubleClickLength = (DWORD)milliseconds;
+}
+
 void
-InputManager::_setMousePosition(int x,int y)
+InputManager::setMousePosition(int x,int y)
 {
 	Mouse.Movement.x = x-Mouse.Position.x;
 	Mouse.Movement.y = y-Mouse.Position.y;
@@ -337,27 +372,66 @@ InputManager::_setMousePosition(int x,int y)
 	*/
 }
 
+
+
 void
-InputManager::_setMouseButtons()
+InputManager::setMouseButtons(void)
 {
+	//evaluate Left-button-state:
 	Mouse.LEFT.RELEASE = Mouse.LEFT.HOLD? !(Mouse.LEFT.HOLD = LEFTnewState):false;
-	Mouse.LEFT.CLICK = Mouse.LEFT.CLICK? !(Mouse.LEFT.HOLD = LEFTnewState): !Mouse.LEFT.HOLD? LEFTnewState:false;
+	Mouse.LEFT.CLICK = (Mouse.LEFT.CLICK||Mouse.LEFT.DOUBLE)? !(Mouse.LEFT.HOLD = LEFTnewState): !Mouse.LEFT.HOLD? LEFTnewState:false;
+	if(Mouse.LEFT.CLICK)
+	{
+		if(_clicktimer>0)
+			Mouse.LEFT.CLICK = !(Mouse.LEFT.DOUBLE = true);
+		_clicktimer = _doubleClickLength;
+	}
+	else
+		Mouse.LEFT.DOUBLE=false;
+	
 
+	//evaluate Right-button-state:
 	Mouse.RIGHT.RELEASE = Mouse.RIGHT.HOLD? !(Mouse.RIGHT.HOLD = RIGHTnewState):false;
-	Mouse.RIGHT.CLICK = Mouse.RIGHT.CLICK? !(Mouse.RIGHT.HOLD = RIGHTnewState): !Mouse.RIGHT.HOLD? RIGHTnewState:false;
+	Mouse.RIGHT.CLICK = (Mouse.RIGHT.CLICK||Mouse.RIGHT.DOUBLE)? !(Mouse.RIGHT.HOLD = RIGHTnewState): !Mouse.RIGHT.HOLD? RIGHTnewState:false;
+	if(Mouse.RIGHT.CLICK)
+	{
+		if(_clicktimer>0)
+			Mouse.RIGHT.CLICK = !(Mouse.RIGHT.DOUBLE = true);
+		_clicktimer = _doubleClickLength;
+	}
+	else
+		Mouse.RIGHT.DOUBLE=false;
 
+	//evaluate Middle-button-state:
 	Mouse.MIDDLE.RELEASE = Mouse.MIDDLE.HOLD? !(Mouse.MIDDLE.HOLD = MIDDLEnewState):false;
-	Mouse.MIDDLE.CLICK = Mouse.MIDDLE.CLICK? !(Mouse.MIDDLE.HOLD = MIDDLEnewState): !Mouse.MIDDLE.HOLD? MIDDLEnewState:false;
+	Mouse.MIDDLE.CLICK = (Mouse.MIDDLE.CLICK||Mouse.MIDDLE.DOUBLE)? !(Mouse.MIDDLE.HOLD = MIDDLEnewState): !Mouse.MIDDLE.HOLD? MIDDLEnewState:false;
+	if(Mouse.MIDDLE.CLICK)
+	{
+		if(_clicktimer>0)
+			Mouse.MIDDLE.CLICK = !(Mouse.MIDDLE.DOUBLE = true);
+		_clicktimer = _doubleClickLength;
+	}
+	else
+		Mouse.MIDDLE.DOUBLE=false;
 
+
+	//reset Mouse-Wheels:
 	Mouse.WheelV = Mouse.WheelH = WHEEL::NONE;
 
-	_notifyQlicks();
+
+	//fire click-events if there where clicks during this frame...
+	notifyQlicks();
 }
+
+
 
 void
 InputManager::PerFrameReset(void)
 {
-	_setMouseButtons();
+	FrameTime = _updateTimer();
+
+	setMouseButtons();
+
 
 	#ifdef MOUSE_TEST_OUTPUT
 		if(instance->Mouse.LEFT.CLICK)
@@ -366,18 +440,26 @@ InputManager::PerFrameReset(void)
 			std::cout<<"\n...RELEASE\n\n";
 		else if(instance->Mouse.LEFT.HOLD)
 			std::cout<<"HOLD..";
+		else if(instance->Mouse.LEFT.DOUBLE)
+			std::cout<<"DOUBLE-CLICK!!!\n";
+
 		if(instance->Mouse.RIGHT.CLICK)
 			std::cout<<"RIGHT-CLICK\n";
 		else if(instance->Mouse.RIGHT.RELEASE)
 			std::cout<<"\n...RIGHT-RELEASE\n\n";
 		else if(instance->Mouse.RIGHT.HOLD)
 			std::cout<<"RIGHT-HOLD..";
+		else if(instance->Mouse.RIGHT.DOUBLE)
+			std::cout<<"DOUBLE-RIGHT!!!\n";
+
 		if(instance->Mouse.MIDDLE.CLICK)
 			std::cout<<"MIDDLE-CLICK\n";
 		else if(instance->Mouse.MIDDLE.RELEASE)
 			std::cout<<"\n...MIDDLE-RELEASE\n\n";
 		else if(instance->Mouse.MIDDLE.HOLD)
 			std::cout<<"MIDDLE-HOLD..";
+		else if(instance->Mouse.MIDDLE.DOUBLE)
+			std::cout<<"DOUBLE-MIDDLE!!!\n";
 	#endif
 }
 
