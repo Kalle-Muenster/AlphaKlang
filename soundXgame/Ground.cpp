@@ -15,7 +15,7 @@ Ground::Ground(void) :
 	count_x(40),
 	count_z(40),
 	x(-7.0f),
-	y(-3.5f),
+	y(-1.5f),
 	z(10.0f),
 	width(2.5f),
 	heightRange(7.0f),
