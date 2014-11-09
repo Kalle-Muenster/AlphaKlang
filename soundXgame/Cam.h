@@ -65,7 +65,7 @@ public:
 	bool				    ShareAudio(BOOL=3);
 	void					Update(void);
 
-	virtual void			notifyKey(unsigned char key);
+	virtual void			keyPress(unsigned char key);
 	virtual void			specialKeyPressed(int key);
 	virtual void			mouseMotion(int newX, int newY);
 

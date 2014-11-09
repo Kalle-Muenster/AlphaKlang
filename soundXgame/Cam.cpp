@@ -296,7 +296,7 @@ Cam::WheelVRoll(WHEEL state)
 }
 
 void
-Cam::notifyKey(unsigned char key)
+Cam::keyPress(unsigned char key)
 {
 	switch(key)
 	{

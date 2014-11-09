@@ -112,13 +112,13 @@ void InputManager::attachKey(IObserver* obs)
 void InputManager::attachSpecial(IObserver* obs) 
 {
 	if(obs->checkForObservability(OBSERVATE_KEYBOARD))
-	this->specialListener.push_back(obs);
+		this->specialListener.push_back(obs);
 }
 
 void InputManager::attachMouseClick(IObserver* obs)
 {
-		if(obs->checkForObservability(OBSERVATE_MOUSE)||obs->checkForObservability(OBSERVATE_CLICKS))
-			this->mouseClickListener.push_back(obs);
+	if(obs->checkForObservability(OBSERVATE_MOUSE)||obs->checkForObservability(OBSERVATE_CLICKS))
+		this->mouseClickListener.push_back(obs);
 }
 
 void InputManager::attachMouseWheel(IObserver* obs)
