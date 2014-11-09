@@ -33,7 +33,7 @@ union u32_2s16_4b8
 
 
 
-typedef u32_2s16_4b8* Color;
+typedef u32_2s16_4b8* LoaderColor;
 
 class Loader
 {
@@ -41,15 +41,15 @@ private:
 	unsigned _w,_h,_length;
 	std::vector<u32_2s16_4b8> _Data;
 public:
-	Color data;
+	LoaderColor data;
 	Loader(void);
 	Loader(const char* filename);
 	~Loader(void);
 	int width(int=NULL);
 	int height(int=NULL);
 	int count(void);
-	Color Pixel(int);
-	Color Pixel(int,int);
+	LoaderColor Pixel(int);
+	LoaderColor Pixel(int,int);
 	void* LoadeFile(const char* filename);
 };
 
@@ -59,7 +59,10 @@ private:
 	Utility();
 	virtual ~Utility();
 public:
-	static void loadObj(const char*,  std::vector<glm::vec3> &, std::vector<glm::vec2> &, std::vector<glm::vec3> &);
+/* loadObj-function: 
+ * loades vertices,uv's and normals from OBJ-file to given vectors and the Shape within it's faces are made up...
+ * returns a string containing the Object's Name or Type if's specified in file.. */
+	static char* loadObj(const char*,  std::vector<glm::vec3> &, std::vector<glm::vec2> &, std::vector<glm::vec3> &,GLuint &);
 	static GLuint loadTexture(const char *);
 //	static Vector3 LoadePPMBitmap(const char* filename,Voxel* buffer);
 };

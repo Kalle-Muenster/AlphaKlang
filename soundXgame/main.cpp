@@ -126,14 +126,14 @@ void LoadContent(void)
 	
 	int i = -1;
 
+	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->LoadTexture("X-7.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-
+	
 
 	SCENE->camera->SetTarget(tempObject);
 	SCENE->camera->Mode(PERSPECTIVE);

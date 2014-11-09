@@ -2,28 +2,50 @@
 #include "Utility.h"
 #include "projectMacros.h"
 #include "AudioObject.h"
+#include "CamTargetMover.h"
+#include "CamTargetRotator.h"
 
 Cubus::Cubus(void)
 {
-	InitializeCubus("cube.obi","tex_wendy.jpg");
+	InitializeCubus("X-3.png","03.wav");
+	this->SetName("Cubus");
 	this->IsVisible=true;
-
 }
 
 
 Cubus::~Cubus(void)
 {
+	delete conXtor;
+}
+
+void 
+Cubus::InitializeCubus(void)
+{
+	InitializeObject("cube-quads.obi",true);
+	this->conXtor->AddConnectable<CamTargetMover>();
+	this->AddConnectable<CamTargetRotator>();
 }
 
 void
-Cubus::InitializeCubus(string meshfile,string texturefile)
+Cubus::InitializeCubus(string texturefile)
 {
-	this->SetID(SCENE->Add(this));
-	Utility::loadObj(meshfile,verts,uvs,norms);
-	this->textureID = Utility::loadTexture(texturefile);
-	
-	this->SetName("Cubus");
+	InitializeCubus();
+	LoadTexture(texturefile);
+}
 
-	this->AddConnectable<AudioEmitter>();
+void 
+Cubus::InitializeCubus(string texturefile,string audiofile)
+{
+	InitializeCubus(texturefile);
+	SetCollisionSound(audiofile);
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 }
+
+void
+Cubus::SetCollisionSound(string file)
+{
+	if(!this->HasConnected<AudioEmitter>())
+		this->AddConnectable<AudioEmitter>();
+	this->GetConnected<AudioEmitter>()->LoadeSample(file);
+}
+

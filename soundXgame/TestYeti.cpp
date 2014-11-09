@@ -11,8 +11,8 @@ TestYeti::TestYeti(const char* objFile,const char* textureFile,bool addToSceneGr
 	{ 
 		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 			ConIDs[i]=0;
-		init(objFile,textureFile,addToSceneGraph);
-		
+		this->InitializeObject(objFile,addToSceneGraph);
+		this->LoadTexture(textureFile);
 		MoveIt = &_MoveOnMusic;
 
 		SetName("Yeti");

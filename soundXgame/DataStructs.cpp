@@ -45,3 +45,128 @@ Vector3::asBassVector(void)
 	bassVector.z = this->z;
 	return &bassVector;
 }
+
+
+void
+Data32::BaseInitor(void)
+{
+	data = data32();
+	data.u32 = 0;
+}
+
+
+Data32::Data32(void)
+{
+	BaseInitor();
+}
+
+data32
+Data32::GetUnion(void)
+{
+	return data;
+}
+
+Data32::~Data32(void)
+{
+	
+}
+
+Color::Color(void)
+{
+	BaseInitor();
+}
+
+void
+Color::initor(void)
+{
+	BaseInitor();
+	R = &data.byte[1];
+	G = &data.byte[2];
+	B = &data.byte[3];
+	A = &data.byte[0];
+	uInt = &data.u32;
+}
+
+Color::Color(unsigned uint)
+{
+	initor();
+	data.u32 = uint;
+}
+
+Color::Color(int r,int g, int b, int a)
+{
+	initor();
+	data.byte[0] = a;
+	data.byte[1] = r;
+	data.byte[2] = g;
+	data.byte[3] = b;
+}
+
+chan
+Color::operator[] (int index)
+{
+	return (&this->data.byte[index]);
+}
+
+Color::~Color(void)
+{
+	//delete R;
+	//delete G;
+	//delete B;
+	//delete A;
+	//delete uInt;
+}
+
+
+Sample::Sample(void)
+{
+	initor();
+}
+
+void
+Sample::initor(void)
+{
+	BaseInitor();
+	data.u32 = 0;
+	L = &data.s16[0];
+	R = &data.s16[1];
+	Float32 = &data.f32;
+}
+
+Sample::Sample(short Left,short Right)
+{
+	initor();
+	data.s16[0] = Left;
+	data.s16[1] = Right;
+}
+
+Sample::Sample(float monoSample)
+{
+	initor();
+	data.f32 = monoSample;
+}
+
+Sample::~Sample(void)
+{
+	delete L,R,Float32;
+}
+
+short
+Sample::GetMono(void)
+{
+	return (data.s16[0]+data.s16[1])/2;
+}
+
+pcm
+Sample::operator[] (int index)
+{
+	return (&data.s16[index]);
+}
+
+
+
+Data64::Data64(void)
+{
+	unionData32[0] = data32();
+	unionData32[1] = data32();
+}
