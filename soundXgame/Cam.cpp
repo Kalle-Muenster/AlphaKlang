@@ -182,7 +182,7 @@ Cam::move(glm::vec3  newPosition)
 
 
 
-		SetMyPosition(&this->transform);
+		SetAudioResieverPosition(&this->transform);
 
 		if(transform.movement.x!=0 || transform.movement.y!=0 || transform.movement.z!=0)
 			printf("\nCAMERA: moved to: %f,%f,%f !",transform.position.x,transform.position.y,transform.position.z);
@@ -236,7 +236,7 @@ Cam::Mode(CAM_MODE mode)
 	return _mode;
 }
 
-void
+void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
 {
 	glViewport(0, 0, INPUT->GetViewportRectangle().w,INPUT->GetViewportRectangle().z);
@@ -257,8 +257,9 @@ Cam::UpdateView(void)
 	}
 }
 
-
-void
+/* The Camera's Update-function: */ 
+//it's called by the SCENE just before it's MainDrawCycle each frame...
+void 
 Cam::Update()
 {
 	IsShared(this->ShareAudio());
@@ -271,27 +272,24 @@ Cam::Update()
 		this->move(transform.position);
 		this->rotate(*camTarget);
 	}
-		if(Mode()==FIRSTPERSON)
-		{
-			glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
-			this->move(x, eyeY, z);
-			this->rotate(Vector3(x+lx, 1.0f,  z+lz));
-		//	gluLookAt(x, eyeY, z,
-		//		x+lx, 1.0f,  z+lz,
-		//		0.0f, 1.0f,  0.0f);
-		}
 
-	//Set The Position of the attached AudioListener
-	SetMyPosition(&transform);
+	if(Mode()==FIRSTPERSON)
+	{
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		this->move(x, eyeY, z);
+		this->rotate(Vector3(x+lx, 1.0f,  z+lz));
+	//	gluLookAt(x, eyeY, z,
+	//		x+lx, 1.0f,  z+lz,
+	//		0.0f, 1.0f,  0.0f);
+	}
+
+
+	//update the Camera's transform coordinates
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
-	//if(Mode()==PERSPECTIVE)
-	//	
-//	else if(Mode()==ORTHOGRAFIC)
-//		gluLookAt(0,0,0,0,0,0,0,1,0);
 
-
-
+	//update The Position of the attached AudioReciever
+	SetAudioResieverPosition(&transform);
 }
 
 

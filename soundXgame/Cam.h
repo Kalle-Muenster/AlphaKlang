@@ -50,7 +50,6 @@ public:
 	const glm::vec3			GetTargetPosition(void);
 	void					followTarget(void);
 	void					StopFollowing(void);
-	void					Update(void);
 	void					SetTargetasFirstPerson(void);
 	void					WheelVRoll(WHEEL state);
 	BASS_3DVECTOR           move(glm::vec3);
@@ -58,7 +57,7 @@ public:
 	BASS_3DVECTOR           rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
 	void					UpdateView();
-
+	void					Update(void);
 	virtual void			notifyKey(unsigned char key);
 	virtual void			specialKeyPressed(int key);
 	virtual void			mouseMotion(int newX, int newY);

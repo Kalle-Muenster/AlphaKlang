@@ -35,7 +35,7 @@ IAudioReciever::~IAudioReciever(void)
 void
 IAudioReciever::InitiateListener(Transform* myTransform)
 {
-	this->SetMyPosition(myTransform);
+	this->SetAudioResieverPosition(myTransform);
 
 		MasterReciever = this;
 	
@@ -62,8 +62,8 @@ AudioReciever::DoEarly(void)
 	
 	if(TryGetReciever())
 	{
-			SetMyPosition(this->Connection()->getTransform());
-
+		//Set The Position of the attached AudioReciever
+		SetAudioResieverPosition(this->Connection()->getTransform());
 	}
 }
 
@@ -80,7 +80,7 @@ AudioReciever::TryGetReciever(void)
 }
 
 void
-IAudioReciever::SetMyPosition(Transform* myTranform)
+IAudioReciever::SetAudioResieverPosition(Transform* myTranform)
 {
 //	BASS_Set3DPosition(myTranform->position.asBassVector(), &myTranform->movement,myTranform->forward.asBassVector(),myTranform->up.asBassVector());
 	if(IsMasterReciever())

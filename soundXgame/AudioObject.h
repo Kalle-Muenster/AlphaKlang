@@ -61,7 +61,7 @@ class IAudioReciever
 protected:
 	float mutedVolume;
 	bool IsMuted;
-	void SetMyPosition(Transform*);
+	void SetAudioResieverPosition(Transform*);
 	virtual bool IsShared(bool=NULL);
 	virtual IAudioReciever* GetMasterReciever(void); 
 
