@@ -16,7 +16,8 @@ private:
 public:
 	~SceneGraph(void);
 	static SceneGraph* GetInstance();
-	unsigned int Add(IGobject*);
+	unsigned int Add(IGobject* object);
+	void Remove(IGobject* object);
 	void DrawAll();
 	void DrawSky(void);
 	Cam* camera;

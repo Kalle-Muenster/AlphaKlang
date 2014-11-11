@@ -64,7 +64,7 @@ public:
  * returns a string containing the Object's Name or Type if's specified in file.. */
 	static char* loadObj(const char*,  std::vector<glm::vec3> &, std::vector<glm::vec2> &, std::vector<glm::vec3> &,GLuint &);
 	static GLuint loadTexture(const char *);
-	static void Rotate90(float,float &,float &);
+	static void Rotate90(float partOf90,float & A,float & B);
 //	static Vector3 LoadePPMBitmap(const char* filename,Voxel* buffer);
 };
 

@@ -35,6 +35,15 @@ SceneGraph::Add(IGobject* object)
 }
 
 void
+SceneGraph::Remove(IGobject* object)
+{
+	//objects.erase(objects.begin());
+
+	//scenegraph->drawables.push_back(object);
+	//return (GobID)(scenegraph->drawables.size()-1);
+}
+
+void
 SceneGraph::DrawAll()
 {
 

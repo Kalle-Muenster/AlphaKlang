@@ -21,7 +21,7 @@ Ground::Ground(void) :
 	heightRange(7.0f),
 	dynamicRange(5.0f),
 
-	drawLines(true),
+	drawLines(false),
 	dynamicToTop(true),
 	dynamicVal(0)
 {
@@ -270,7 +270,7 @@ void Ground::Draw(void)
 					
 					if(drawLines == false)
 					{
-						glColor3f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f);
+						glColor4f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f, 0.4f);
 					}
 
 					glVertex3f(x + nx*width + width ,   y + heightRearRight ,  z + nz*depth + depth  );

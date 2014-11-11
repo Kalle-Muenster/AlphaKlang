@@ -16,6 +16,8 @@ private:
 public:
 	FourtainObject(void);
 	~FourtainObject(void);
+	void Create(void);
+	void Clear(void);
 	void Update(void);
 };
 
