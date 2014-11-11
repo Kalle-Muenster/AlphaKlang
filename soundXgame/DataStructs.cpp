@@ -1,50 +1,121 @@
-
-
 #include "DataStructs.h"
+
 
 
 Vector3::Vector3(void)
 {
-	x=y=z=0.0f;
+	 x = 0;
+	 y = 0;
+	 z = 0;
 }
-
 Vector3::Vector3(float X,float Y,float Z)
 {
-	bassVector.x = x = X;
-	bassVector.y = y = Y;
-	bassVector.z = z = Z;
+	 x = X;
+	 y = Y;
+	 z = Z;
 }
 Vector3::Vector3(glm::vec3 glVector)
 {
-	bassVector.x = x = glVector.x;
-	bassVector.y = y = glVector.y;
-	bassVector.z = z = glVector.z;
+	 x = glVector.x;
+	 y = glVector.y;
+	 z = glVector.z;
 }
-Vector3::operator BASS_3DVECTOR()
+Vector3::Vector3(BASS_3DVECTOR from)
 {
-	return BASS_3DVECTOR(this->x,this->y,this->z);
+	x=from.x;
+	y=from.y;
+	z=from.z;
 }
 
+Vector3::operator BASS_3DVECTOR(void)
+{
+	return BASS_3DVECTOR(x,y,z);
+}
+
+Vector3::operator glm::vec3(void)
+{
+	return glm::vec3(x,y,z);
+}
+
+
+bool
+Vector3::operator==(Vector3 other)
+{
+	return (x==other.x && y==other.y && z==other.z);
+}
+bool
+Vector3::operator!=(Vector3 other)
+{
+	return !(*this==other);
+}
 Vector3
 Vector3::operator+(Vector3 adder)
 {
-	return Vector3(this->x + adder.x,this->y + adder.y,this->z + adder.z);
+	return Vector3(x + adder.x,y + adder.y,z + adder.z);
 }
-
 Vector3
 Vector3::operator-(Vector3 subtractor)
 {
-	return Vector3(this->x - subtractor.x,this->y - subtractor.y,this->z - subtractor.z);
+	return Vector3(x - subtractor.x,y - subtractor.y,z - subtractor.z);
+}
+Vector3
+Vector3::operator*(float scalar)
+{
+	return Vector3(x*scalar,y*scalar,z*scalar);
+}
+Vector3
+Vector3::operator/(float scalar)
+{
+	return Vector3(x/scalar,y/scalar,z/scalar);
+}
+void
+Vector3::operator+=(Vector3 other)
+{
+	x+=other.x;
+	y+=other.y;
+	z+=other.z;
+}
+void
+Vector3::operator-=(Vector3 other)
+{
+	x-=other.x;
+	y-=other.y;
+	z-=other.z;
 }
 
-BASS_3DVECTOR*
+BASS_3DVECTOR
 Vector3::asBassVector(void)
 {
-	bassVector.x = this->x;
-	bassVector.y = this->y;
-	bassVector.z = this->z;
-	return &bassVector;
+	return BASS_3DVECTOR(x,y,z);
 }
+
+float 
+Vector3::GetLength(void)
+{
+	return sqrtf(pow(x,2)+pow(y,2)+pow(z,2));
+}
+
+
+float
+Vector3::distance(Vector3 to)
+{
+	return (to - *this).GetLength();
+}
+
+Vector3
+Vector3::direction(Vector3 to)
+{
+	return glm::normalize( (glm::vec3)(to - *this));
+}
+
+
+
+
+
+
+
+
+
 
 
 void

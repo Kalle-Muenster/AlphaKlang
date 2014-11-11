@@ -18,6 +18,10 @@ IConnectable::Not_hasInitialized(void)
 		this->_initialized=true;
 		return this->_initialized;
 	}
+
+		if(needOneMoreStartupCycle)
+			needOneMoreStartupCycle = this->Initialize();
+
 	return false;
 }
 
@@ -52,6 +56,7 @@ IConnectable::setConnectables(int index,IConnectable* connectable)
 {
 	this->Connectables[index]=connectable;
 	this->ConIDs[index]=connectable->ConnectionID;
+	this->needOneMoreStartupCycle = !connectable->Initialize();
 }
 
 int
@@ -108,7 +113,7 @@ CTransform::getTransform(void)
 	Transform* returner = new Transform();
 	returner->position = this->Connection()->getTransform()->position + this->Connection()->getTransform()->position;
 	returner->rotation = this->Connection()->getTransform()->rotation + this->Connection()->getTransform()->rotation;
-	returner->scale = this->Connection()->getTransform()->scale * this->Connection()->getTransform()->scale;
+	returner->scale = this->Connection()->getTransform()->scale + this->Connection()->getTransform()->scale;
 	returner->movement = this->Connection()->getTransform()->movement;
 	return returner;
 }

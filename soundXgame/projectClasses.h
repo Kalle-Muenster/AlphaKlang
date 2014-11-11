@@ -6,6 +6,7 @@
 #include "DataStructs.h"
 #include "Cam.h"
 #include "Connectable.h"
+#include "CamTargetRotator.h"
 #include "Combiner.h"
 #include "IMusicListener.h"
 #include "IObserver.h"

@@ -3,7 +3,11 @@
 #include "Utility.h"
 
 
-
+void _rotate90(float partOf90,float & a,float &b)
+{
+	a=a*partOf90;
+	b=b/(1.0-partOf90);
+}
 
 
 
@@ -461,4 +465,8 @@ Utility::loadTexture(const char* filename)
 	return 0;
 }
 
-
+void 
+Utility::Rotate90(float partOf90,float & A,float & B)
+{
+	_rotate90(partOf90,A,B);
+}

@@ -85,7 +85,7 @@ IAudioReciever::SetAudioResieverPosition(Transform* myTranform)
 //	BASS_Set3DPosition(myTranform->position.asBassVector(), &myTranform->movement,myTranform->forward.asBassVector(),myTranform->up.asBassVector());
 	if(IsMasterReciever())
 	{
-			BASS_Set3DPosition(&(BASS_3DVECTOR)myTranform->position, &myTranform->movement,&(BASS_3DVECTOR)myTranform->forward,&(BASS_3DVECTOR)myTranform->up);
+			BASS_Set3DPosition(&(BASS_3DVECTOR)myTranform->position, &(BASS_3DVECTOR)myTranform->movement,&(BASS_3DVECTOR)myTranform->forward,&(BASS_3DVECTOR)myTranform->up);
 			BASS_Apply3D();
 			_FFTwindowGettable=true;
 	}
@@ -215,7 +215,7 @@ IAudioEmitter::IsAudioPlaying(void)
 void
 IAudioEmitter::SetMyPosition(Transform *myTransform)
 {
-	BASS_ChannelSet3DPosition((DWORD)audioSource,myTransform->position.asBassVector(),myTransform->rotation.asBassVector(),&myTransform->movement);
+	BASS_ChannelSet3DPosition((DWORD)audioSource,&myTransform->position.asBassVector(),&myTransform->rotation.asBassVector(),&myTransform->movement.asBassVector());
 	BASS_Apply3D();
 }
 

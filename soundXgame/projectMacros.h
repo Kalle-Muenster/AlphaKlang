@@ -14,8 +14,7 @@
 #define SCREENHEIGHT (600)
 #define DINGERBUFFERLENGTH (16384)
 #define CONTROLERPOLLINTERVAL (50)
-//#define CAM_ORTHOGRAFIC "Orthografic"
-//#define CAM_PERSPECTIVE "Perspective"
+
 
 #include <windows.h>
 #include <windef.h>

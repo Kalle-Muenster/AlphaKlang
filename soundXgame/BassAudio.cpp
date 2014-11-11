@@ -297,7 +297,7 @@ BassAudio::LoadeMusic(const char* fileName,LOAD_MODE mode)
 void 
 BassAudio::SetListenerPosition(Transform* cameraTranform)
 {
-	BASS_Set3DPosition(cameraTranform->position.asBassVector(),&cameraTranform->movement,cameraTranform->forward.asBassVector(),cameraTranform->up.asBassVector());
+	BASS_Set3DPosition(&cameraTranform->position.asBassVector(),&cameraTranform->movement.asBassVector(),&cameraTranform->forward.asBassVector(),&cameraTranform->up.asBassVector());
 	printf("\nAUDIO: %s",_GetErrorString());
 	BASS_Apply3D();
 }

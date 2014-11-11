@@ -66,7 +66,7 @@ protected:
 	GLuint uvBufferID;
 	GLuint textureID;
 	Color color;
-
+	glm::vec3* pVertexBuffer;
 	std::vector<glm::vec3> verts;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> norms;

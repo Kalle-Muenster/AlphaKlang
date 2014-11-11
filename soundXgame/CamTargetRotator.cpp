@@ -13,7 +13,7 @@ CamTargetRotator::~CamTargetRotator(void)
 void
 CamTargetRotator::RotateOnMouseHold(void)
 {
-	if(INPUT->Mouse.RIGHT.HOLD)
+	if(INPUT->Mouse.MIDDLE.HOLD)
 	{
 		this->Connection()->rotate(this->Connection()->getTransform()->rotation.x,this->Connection()->getTransform()->rotation.y+INPUT->Mouse.Movement.x,this->Connection()->getTransform()->rotation.z);
 		this->Connection()->rotate(this->Connection()->getTransform()->rotation.x,this->Connection()->getTransform()->rotation.y,this->Connection()->getTransform()->rotation.z+INPUT->Mouse.Movement.y);

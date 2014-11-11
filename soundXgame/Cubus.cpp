@@ -22,7 +22,7 @@ void
 Cubus::InitializeCubus(void)
 {
 	InitializeObject("cube-quads.obi",true);
-	this->conXtor->AddConnectable<CamTargetMover>();
+//	this->AddConnectable<CamTargetMover>();
 	this->AddConnectable<CamTargetRotator>();
 }
 

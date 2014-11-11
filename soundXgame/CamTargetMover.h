@@ -10,6 +10,7 @@ class CamTargetMover : public IConnectable, public IInteractive
 public:
 	CamTargetMover(void);
 	virtual ~CamTargetMover(void);
+	virtual bool Initialize(void);
 	bool IsActive;
 	virtual void mouseMotion(int x,int y);
 };

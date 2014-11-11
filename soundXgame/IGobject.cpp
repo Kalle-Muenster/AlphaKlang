@@ -76,17 +76,27 @@ IMeshGobject::~IMeshGobject(void)
 void
 IMeshGobject::LoadMesh(const char* objFileName)
 {
+	
 	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
 
 	glm::vec3 temp1 = glm::vec3(0,0,1);
+	glm::vec3 temp2 = glm::vec3(1,0,0);
+	glm::vec3 temp3 = glm::vec3(0,1,0);
 
 	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
+	transform.right = Vector3(temp1.x,temp1.y,temp1.z);
+	transform.up = Vector3(temp1.x,temp1.y,temp1.z);
+
 	verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
+	verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
+	verts.push_back(glm::vec3(temp3.x,temp3.y,temp3.z));
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
-
+	GLvoid** pointerGet=(GLvoid**)&pVertexBuffer;
+	glGetPointerv(GL_VERTEX_ARRAY_POINTER,pointerGet);
+	pVertexBuffer = (glm::vec3*)pointerGet[0];
 	glGenBuffers(1, &uvBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
@@ -213,24 +223,27 @@ Vector3
 IMeshGobject::rotate(Vector3 to)
 {
 	getTransform()->rotation = to;
-	getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
 	return getTransform()->rotation;
 }
 
 Vector3
 IMeshGobject::rotate(float toiX,float toYps,float toZed)
-{
-	getTransform()->rotation.x = toiX;
-	getTransform()->rotation.y = toYps;
-	getTransform()->rotation.z = toZed;
-	getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
-
+{ 
+	rotate(Vector3(toiX,toYps,toZed));
+	//getTransform()->rotation.x = toiX;
+	//getTransform()->rotation.y = toYps;
+	//getTransform()->rotation.z = toZed;
+	//getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
+	//
 	return getTransform()->rotation;
 }
 
 void
 IMeshGobject::draw()
 {
+
+
+
 	if(!IsVisible)
 		return;
 	
@@ -243,7 +256,7 @@ IMeshGobject::draw()
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-
+	
 	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 		
@@ -267,11 +280,12 @@ IMeshGobject::draw()
 		glRotatef(this->getTransform()->rotation.y, 0, 1, 0);
 		glRotatef(this->getTransform()->rotation.z, 0, 0, 1);
 
+		
 		//Scaleate...
 		//glScalef(this->transform.scale.x,this->transform.scale.y,this->transform.scale.z);
 		
 		//Draw
-		glDrawArrays(this->FaceShape, 0, verts.size());
+		glDrawArrays(this->FaceShape, 0, verts.size()-3);
 	}
 	glPopMatrix();
 			

@@ -108,35 +108,23 @@ void LoadContent(void)
 {
 	INPUT->attachMouseWheel(SCENE->camera);
 
-	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.png",true);
-//	TestYeti* tempObject = new TestYeti("wendy_Scene.obi","CubusX-8bit.jpg",true);
-	tempObject->move(tempObject->getTransform()->position.x-3,tempObject->getTransform()->position.y,tempObject->getTransform()->position.z);
-
-	tempObject = new TestYeti("wendy_Scene.obi","tex_wendy.jpg",true);
-	tempObject->conXtor->AddConnectable<CameraTargetRotator>();
-	UPDATE->SignInForUpdate(tempObject->GetConnected<CameraTargetRotator>());
-	tempObject->move(-1,tempObject->getTransform()->position.y,-1);
-	tempObject->AddConnectable<AudioEmitter>();
-	tempObject->GetConnected<AudioEmitter>()->LoadeStream("testtrack.mp3");
-	tempObject->GetConnected<AudioEmitter>()->PlayAudio();
 	
 	ground = Ground::getInstance();
 	ground->Init();
 	
 	
 	int i = -1;
-
+	IGobject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("X-7.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
+
 	
 
-	SCENE->camera->SetTarget(tempObject);
-	SCENE->camera->Mode(PERSPECTIVE);
+	
+
 	SCENE->camera->Mode(FIRSTPERSON);
 }
 
@@ -148,9 +136,6 @@ void UpdateCycle(void)
 	UPDATE->DoAllTheUpdates();
 
 	if(INPUT->Mouse.RIGHT.CLICK)
-		printf("\nTEST: %s,%s\n",SCENE->Object(switcher)->GetName(),SCENE->Object(switcher+1)->GetName());
-
-	if(INPUT->Mouse.LEFT.CLICK)
 	{
 		SCENE->camera->SetTarget(SCENE->Object(switcher));
 		if(++switcher>=SCENE->ObjectsCount())

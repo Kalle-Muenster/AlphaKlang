@@ -13,6 +13,7 @@ class IConnectable
 {
 private:
 	void AddCombiner(IGobject*,ConID*,ConID*,int);
+	bool needOneMoreStartupCycle;
 
 public:
 	unsigned ConnectionID;
@@ -43,7 +44,13 @@ public:
 	//or the "Head" of the Connection...
 	virtual IGobject* Connection(void);
 	
-	
+	//StartUp-Initializer...
+	//override and put code in it for handling dependencies on other Components
+	//or objects if there where some. it will bee executed each frame, as long as
+	//you return "false" (-initialization-proces not completed). If everything
+	//than is Setup right, return "true" to let the Component enter it's normal Runtime-Cycling...
+	virtual bool Initialize(void)
+	{return true;}
 
 	//Adds a Component to the Object were its called on...
 	//the component later can be getted with the Objects "GetConnected<IConnectable>()"-function...
