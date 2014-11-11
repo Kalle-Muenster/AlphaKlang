@@ -72,8 +72,8 @@ Cam::~Cam(void)
 	delete camTarget;
 }
 
-IGobject*
-Cam::SetTarget(IGobject *targetObject)
+IGObject*
+Cam::SetTarget(IGObject *targetObject)
 {
 	_distanceToTarget = transform.position.distance(targetObject->getTransform()->position);
 	this->camTarget = &targetObject->getTransform()->position;
@@ -83,7 +83,7 @@ Cam::SetTarget(IGobject *targetObject)
 	return targetObject;
 }
 
-IGobject* 
+IGObject* 
 Cam::GetTarget(void)
 {
 	return _target;
@@ -108,7 +108,7 @@ Cam::StopFollowing()
 }
 
 void
-Cam::SetTargetAsFirstPerson(IGobject* personObj)
+Cam::SetTargetAsFirstPerson(IGObject* personObj)
 {
 	_target = personObj;
 	this->camTarget = &personObj->getTransform()->position;
@@ -118,7 +118,7 @@ Cam::SetTargetAsFirstPerson(IGobject* personObj)
 
 
 
-IGobject*
+IGObject*
 Cam::GrabTarget(void)
 {
 	if(!_target)

@@ -1,8 +1,8 @@
 #ifndef _CONNECTABLE_H_
 #define _CONNECTABLE_H_
 
-#include "IGobject.h"
-//class IGobject;
+#include "IGObject.h"
+//class IGObject;
 struct Transform;
 
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
@@ -12,12 +12,12 @@ typedef unsigned int ConID;
 class IConnectable
 {
 private:
-	void AddCombiner(IGobject*,ConID*,ConID*,int);
+	void AddCombiner(IGObject*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
 
 public:
 	unsigned ConnectionID;
-	IGobject* connection;
+	IGObject* connection;
 	bool _initialized;
 	IConnectable* Connectables[MAXIMUM_NUMBER_OF_CONNECTIONS];
 	unsigned ConnectTo(IConnectable*);
@@ -42,7 +42,7 @@ public:
 	//Returns the Connaction's owner...
 	//The "Main"-Object where all other Connectables are connected to
 	//or the "Head" of the Connection...
-	virtual IGobject* Connection(void);
+	virtual IGObject* Connection(void);
 	
 	//StartUp-Initializer...
 	//override and put code in it for handling dependencies on other Components
@@ -134,7 +134,7 @@ public:
 	int GetNumberOfConnected(void);
 
 
-	template<typename T> T* AddConnectable(IGobject* gobject)
+	template<typename T> T* AddConnectable(IGObject* gobject)
 	{
 
 	Not_hasInitialized();
@@ -166,7 +166,7 @@ public:
 	}
 
 
-	void SetConnection(IGobject*);
+	void SetConnection(IGObject*);
 	void SetConnection(IConnectable*);
 
 	// Link's two Conections conXtor<->conXtor-whise and returns a pointer to the newly Added Conection's ConID,
@@ -177,7 +177,7 @@ public:
 	// object at runtime. the new "merged" object will contain all functionality and Components-sets of both Instances it is merged from...
 	// -> calling "Conection()" on this Object's Components, will return this Object. (as usual..)
 	// -> calling "Conection()" on the other Object's Components, will also return this Object, (not the other Object itself)
-	ConID* AddConnection(IGobject* instance)
+	ConID* AddConnection(IGObject* instance)
 	{
 		int x=0;
 		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)

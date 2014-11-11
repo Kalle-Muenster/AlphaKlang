@@ -1,10 +1,10 @@
 #ifndef __MAP_INCLUDET__
 #define __MAP_INCLUDET__
 
-#include "IGobject.h"
+#include "IGObject.h"
 
 class Map :
-	public IMeshGobject
+	public IMeshObject
 {
 public:
 	Map(void);

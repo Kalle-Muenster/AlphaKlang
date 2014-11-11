@@ -1,12 +1,12 @@
 #ifndef __FOURTAINOBJECT_H__
 #define __FOURTAINOBJECT_H__
 
-#include "IGobject.h"
+#include "IGObject.h"
 
 
 
 class FourtainObject
-	: public IMeshGobject
+	: public IMeshObject
 {
 private:
 	

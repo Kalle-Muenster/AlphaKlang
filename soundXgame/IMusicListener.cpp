@@ -131,7 +131,7 @@ IMusicListener::SetLineBounds(int line,int lower,int upper,int width)
 }
 
 void
-IMusicListener::AddListenerCallback(int line,ListenerFunc callback,IGobject* client)
+IMusicListener::AddListenerCallback(int line,ListenerFunc callback,IGObject* client)
 {
 	this->callbacks[line] = callback;
 	this->clients[line] = client;

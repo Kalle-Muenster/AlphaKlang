@@ -2,7 +2,7 @@
 #include "projectClasses.h"
 
 void
-_MoveOnMusic(int line,ListenerData* data,IGobject* sender)
+_MoveOnMusic(int line,ListenerData* data,IGObject* sender)
 {
 	((TestYeti*)sender)->MoveOnMusic(line,data);
 }

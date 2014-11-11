@@ -1,10 +1,10 @@
-#include "IvOxject.h"
+#include "IVoxelObject.h"
 #include "Utility.h"
 #include "projectMacros.h"
 #include "DataStructs.h"
 #include "Connectable.h"
 
-IvOxject::IvOxject(void)
+IVoxelObject::IVoxelObject(void)
 {
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
@@ -14,26 +14,26 @@ IvOxject::IvOxject(void)
 }
 
 void
-IvOxject::Initiate(const char* ppmFileName)
+IVoxelObject::Initiate(const char* ppmFileName)
 {
 	this->Loade(ppmFileName,SetVoxelerBuffer(&Voxlers[0]));
 	SCENE->Add(this);
 	IsVisible=true;
 }
 
-IvOxject::~IvOxject(void)
+IVoxelObject::~IVoxelObject(void)
 {
 	delete conXtor;
 }
 
 void
-IvOxject::draw(void)
+IVoxelObject::draw(void)
 {
 	this->Draw(this->position);
 }
 
 Vector3
-IvOxject::move(float iX,float Yps,float Zed)
+IVoxelObject::move(float iX,float Yps,float Zed)
 {
 	this->transform.position.x = iX;
 	this->transform.position.y = Yps;
@@ -43,7 +43,7 @@ IvOxject::move(float iX,float Yps,float Zed)
 }
 
 Vector3
-IvOxject::rotate(float iX,float Yps,float Zed)
+IVoxelObject::rotate(float iX,float Yps,float Zed)
 {
 	this->getTransform()->rotation.x = iX;
 	this->getTransform()->rotation.y = Yps;
@@ -53,7 +53,7 @@ IvOxject::rotate(float iX,float Yps,float Zed)
 }
 	
 template<typename C> bool 
-IvOxject::HasConnectable(void)
+IVoxelObject::HasConnectable(void)
 {
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 		if(this->conXtor->ConIDs[i] == typeid(C))

@@ -11,7 +11,7 @@ struct Vector3;
 
 typedef unsigned int GobID;
 
-class IGobject
+class IGObject
 {
 private:
 	GobID ID;
@@ -24,14 +24,14 @@ protected:
 	void LockID(void);
 
 public:
-	IGobject(void);
-	virtual ~IGobject(void);
+	IGObject(void);
+	virtual ~IGObject(void);
 	bool IsVisible;
 	virtual void draw(void)=0;
 	Transform* getTransform(void);
-	virtual Vector3 move(float,float,float)=0;
-	virtual Vector3 rotate(float,float,float)=0;
-	virtual Vector3 scale(Vector3)=0;
+	virtual Vector3 move(float,float,float) {return Vector3();};//=0;
+	virtual Vector3 rotate(float,float,float) {return Vector3();};//=0;
+	virtual Vector3 scale(Vector3) {return Vector3();};//=0;
 	GobID GetID(void);
 	char* GetName(void);
 	void SetName(char*);
@@ -55,8 +55,8 @@ public:
 
 
 
-class IMeshGobject : 
-	public IGobject
+class IMeshObject : 
+	public IGObject
 {
 
 
@@ -72,12 +72,12 @@ protected:
 
 public:
 
-	IMeshGobject(void);
-	virtual ~IMeshGobject(void);
+	IMeshObject(void);
+	virtual ~IMeshObject(void);
 	virtual void draw();
 	virtual void InitializeObject(const char* objFile,bool addToSceneGraph=true);
 	virtual void LoadMesh(const char* objFileName);
-	virtual IGobject* LoadTexture(const char* textureFileName);
+	virtual IGObject* LoadTexture(const char* textureFileName);
 	virtual void SetColor(Color);
 	virtual Vector3 move(Vector3);
 	virtual Vector3 move(float,float,float);
@@ -116,7 +116,7 @@ public:
 //
 //typedef unsigned int GobID;
 //
-//class IGobject
+//class IGObject
 //{
 //private:
 //	GobID ID;
@@ -129,8 +129,8 @@ public:
 //	void LockID(void);
 //
 //public:
-//	IGobject(void);
-//	virtual ~IGobject(void);
+//	IGObject(void);
+//	virtual ~IGObject(void);
 //	bool IsVisible;
 //	virtual void draw(void)=0;
 //	Transform* getTransform(void);
@@ -157,8 +157,8 @@ public:
 //	}
 //};
 //
-//class IMeshGobject : 
-//	public IGobject
+//class IMeshObject : 
+//	public IGObject
 //{
 //protected:
 //
@@ -172,8 +172,8 @@ public:
 //
 //public:
 //
-//	IMeshGobject(void);
-//	virtual ~IMeshGobject(void);
+//	IMeshObject(void);
+//	virtual ~IMeshObject(void);
 //	virtual void draw();
 //	virtual void init(const char* objFile,const char* textureFile);
 //	virtual void init(const char* objFile,const char* textureFile,bool addToSceneGraph);

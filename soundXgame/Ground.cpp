@@ -1,4 +1,5 @@
 #include "Ground.h"
+#include "projectMacros.h"
 
 
 Ground* instance;
@@ -84,7 +85,12 @@ Ground::Ground(void) :
 		dynamicMap[i] = new int [count_x+1];
 	}
 
+	
+	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
+	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
 
+
+	SCENE->Add(this);
 
 }
 
@@ -94,14 +100,6 @@ Ground::~Ground(void)
 	delete[] heightMap;
 }
 
-void Ground::Init(void)
-{
-
-	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
-
-	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
-
-}
 
 int** Ground::CalculateMap(int** assignMap, int** config, int size)
 {
@@ -237,7 +235,7 @@ int** Ground::CalculateMap(int** assignMap, int** config, int size)
 }
 
 
-void Ground::Draw(void)
+void Ground::draw(void)
 {
 
 	Update();

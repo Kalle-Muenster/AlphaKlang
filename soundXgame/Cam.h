@@ -3,7 +3,7 @@
 
 #include "Utility.h"
 #include "InputManager.h"
-#include "IGobject.h"
+#include "IGObject.h"
 #include "Connectable.h"
 #include "AudioObject.h"
 
@@ -21,7 +21,7 @@ class Cam : public IInteractive, public IConnectable, public IAudioReciever
 
 
 private:
-	IGobject*				_target;				//the object the camaera alwas "look's" at if in FOLLOWTARGET-Mode...
+	IGObject*				_target;				//the object the camaera alwas "look's" at if in FOLLOWTARGET-Mode...
 	float					_distanceToTarget;		//hold's the actual distance to the cam's target if in FOLLOWTARGET-Mode...
 	Vector3					*camTarget;				//position vector the camera looks at if in FOLLOWTARGET-Mode...
 	ConID					*targetConID;			
@@ -52,10 +52,10 @@ public:
 	CAM_MODE                Mode(CAM_MODE = (CAM_MODE)NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
 	Transform               transform;					
-	IGobject*				SetTarget(IGobject*);
-	void					SetTargetAsFirstPerson(IGobject*);
-	IGobject*				GrabTarget(void);
-	IGobject*				GetTarget(void);
+	IGObject*				SetTarget(IGObject*);
+	void					SetTargetAsFirstPerson(IGObject*);
+	IGObject*				GrabTarget(void);
+	IGObject*				GetTarget(void);
 	Vector3					GetTargetPosition(void);
 	float					GetTargetDistance(void);
 	void					followTarget(void);

@@ -2,12 +2,12 @@
 #define _TESTYETI_H_
 
 #include "Observer.h"
-#include "IGobject.h"
+#include "IGObject.h"
 #include "Connectable.h"
 #include "IMusicListener.h"
 
 class TestYeti :
-	public IMeshGobject ,  
+	public IMeshObject ,  
 	public IUpdateble
 {
 	public:

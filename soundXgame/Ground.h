@@ -8,8 +8,10 @@
 #include <glload\gl_load.hpp>
 #include <glimg/glimg.h>
 
+#include "IGObject.h"
 
-class Ground
+
+class Ground : public IGObject
 {
 private:
 
@@ -41,8 +43,8 @@ public:
 
 	Ground(void);
 	~Ground(void);
-	void Init(void);
-	void Draw(void);
+	//void Init(void);
+	virtual void draw(void);
 	float GetGroundY(float posX, float posZ);
 
 };

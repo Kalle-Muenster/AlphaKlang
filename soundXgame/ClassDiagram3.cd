@@ -120,18 +120,18 @@
       <FileName>Ground.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IGobject" Collapsed="true">
+  <Class Name="IGObject" Collapsed="true">
     <Position X="2.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAkEDCAAIQgAQCAAAECAAAAAACQFAgBQA=</HashCode>
-      <FileName>IGobject.h</FileName>
+      <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IMeshGobject" Collapsed="true">
+  <Class Name="IMeshObject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAQAAAAACCQAIQAAACAAAAAhGAAAgAAEAQAiA=</HashCode>
-      <FileName>IGobject.h</FileName>
+      <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMusicListener" Collapsed="true">
@@ -191,7 +191,7 @@
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IQlickable" Collapsed="true">
+  <Class Name="IClickable" Collapsed="true">
     <Position X="4" Y="10.25" Width="1.5" />
     <InheritanceLine Type="IObserver" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -228,9 +228,9 @@
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IvOxject" Collapsed="true">
+  <Class Name="IVoxelObject" Collapsed="true">
     <Position X="0.5" Y="4.5" Width="1.5" />
-    <InheritanceLine Type="IGobject" FixedFromPoint="true" FixedToPoint="true">
+    <InheritanceLine Type="IGObject" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="2.938" Y="3.562" />
         <Point X="2.938" Y="4.125" />
@@ -240,7 +240,7 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAQAAgAAAAACAAAIQAACCIAAAAAAAAARAAFAAABA=</HashCode>
-      <FileName>IvOxject.h</FileName>
+      <FileName>IVoxelObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Map" Collapsed="true">
@@ -297,7 +297,7 @@
   </Class>
   <Class Name="TestYeti" Collapsed="true">
     <Position X="4.25" Y="7.25" Width="1.5" />
-    <InheritanceLine Type="IMeshGobject" FixedFromPoint="true" FixedToPoint="true">
+    <InheritanceLine Type="IMeshObject" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="3.438" Y="5.191" />
         <Point X="3.438" Y="6.875" />
@@ -466,7 +466,7 @@
     <Position X="28" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IGobject.h</FileName>
+      <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="ListenerFunc" Collapsed="true">
@@ -487,7 +487,7 @@
     <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IvOxject.h</FileName>
+      <FileName>IVoxelObject.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="UpdateID" Collapsed="true">

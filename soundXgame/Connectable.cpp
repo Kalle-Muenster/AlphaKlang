@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "IGobject.h"
+#include "IGObject.h"
 #include "Combiner.h"
 #include "DataStructs.h"
 #include "Connectable.h"
@@ -34,15 +34,15 @@ IConnectable::~IConnectable(void)
 
 
 void
-IConnectable::AddCombiner(IGobject* obje,ConID* id1,ConID* id2,int componentSlot)
+IConnectable::AddCombiner(IGObject* obje,ConID* id1,ConID* id2,int componentSlot)
 {
 		setConnectables(componentSlot,(new Combiner())->SetConiIDKeyPair(id1,id2));
 }
 
-IGobject* 
+IGObject* 
 IConnectable::Connection(void)
 {
-	return (IGobject*)this->connection;
+	return (IGObject*)this->connection;
 }
 
 IConnectable*
@@ -66,7 +66,7 @@ IConnectable::GetNumberOfConnected(void)
 }
 
 void 
-IConnectable::SetConnection(IGobject* gobject)
+IConnectable::SetConnection(IGObject* gobject)
 {
 	connection=gobject;
 	ConnectionID=0;

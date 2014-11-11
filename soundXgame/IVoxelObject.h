@@ -1,7 +1,7 @@
 #ifndef _VOXJECT_
 #define _VOXJECT_
 
-#include "IGobject.h"
+#include "IGObject.h"
 #include "VoxelMap.h"
 struct Vector3;
 
@@ -9,7 +9,7 @@ struct Vector3;
 typedef unsigned int ConID;
 typedef IConnectable* Connectable;
 
-class IvOxject : public VoxelMap ,public IGobject
+class IVoxelObject : public VoxelMap ,public IGObject
 {
 protected:
 	
@@ -18,8 +18,8 @@ protected:
 
 public:
 
-	IvOxject(void);
-	virtual ~IvOxject(void);
+	IVoxelObject(void);
+	virtual ~IVoxelObject(void);
 	virtual void Initiate(const char* ppmFileName);
 	virtual void draw(void);
 	virtual Vector3 move(float,float,float);

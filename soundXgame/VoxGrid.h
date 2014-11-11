@@ -3,7 +3,7 @@
 #include "Connectable.h"
 #include "InputManager.h"
 #include "DataStructs.h"
-#include "ivoxject.h"
+#include "IVoxelObject.h"
 
 
 class VoxelInteractive : public IConnectable,public IInteractive
@@ -20,7 +20,7 @@ public:
 };
 
 class VoxGrid :
-	public IvOxject
+	public IVoxelObject
 {
 public:
 	VoxGrid(void);

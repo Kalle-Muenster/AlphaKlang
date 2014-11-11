@@ -3,7 +3,7 @@
 #include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
-#include "IGobject.h"
+#include "IGObject.h"
 
 #include "Ground.h"
 
@@ -20,7 +20,7 @@ _IDIsFree(GobID id)
 	return true;
 }
 
-IGobject::IGobject(void)
+IGObject::IGObject(void)
 {
 	IsVisible=false;
 	this->_idIsSet=false;
@@ -30,13 +30,13 @@ IGobject::IGobject(void)
 
 }
 
-IGobject::~IGobject(void)
+IGObject::~IGObject(void)
 {
 	delete conXtor;
 }
 
 bool
-IGobject::SetID(GobID id)
+IGObject::SetID(GobID id)
 {
 	if(this->_idIsSet==false)
 	{
@@ -50,7 +50,7 @@ IGobject::SetID(GobID id)
 }
 
 void
-IGobject::LockID(void)
+IGObject::LockID(void)
 {
 	if(!_idIsSet)
 	{
@@ -62,20 +62,20 @@ IGobject::LockID(void)
 	}
 }
 
-IMeshGobject::IMeshGobject(void)
+IMeshObject::IMeshObject(void)
 {
 	this->transform.scale = Vector3(1,1,1);
 	this->color = Color(128,128,128,255);
 	this->FaceShape = GL_TRIANGLES;
 }
 
-IMeshGobject::~IMeshGobject(void)
+IMeshObject::~IMeshObject(void)
 {
 
 }
 
 void
-IMeshGobject::LoadMesh(const char* objFileName)
+IMeshObject::LoadMesh(const char* objFileName)
 {
 	
 	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
@@ -102,13 +102,13 @@ IMeshGobject::LoadMesh(const char* objFileName)
 }
 
 void
-IMeshGobject::SetColor(Color newColor)
+IMeshObject::SetColor(Color newColor)
 {
 	this->color = newColor;
 }
 
-IGobject*
-IMeshGobject::LoadTexture(const char* textureFile)
+IGObject*
+IMeshObject::LoadTexture(const char* textureFile)
 {
 
 	this->textureID = Utility::loadTexture(textureFile);
@@ -116,7 +116,7 @@ IMeshGobject::LoadTexture(const char* textureFile)
 }
 
 void
-IMeshGobject::InitializeObject(const char* objFile,bool addToSceneGraph)
+IMeshObject::InitializeObject(const char* objFile,bool addToSceneGraph)
 {
 	if(addToSceneGraph)
 		SetID(SCENE->Add(this));
@@ -131,7 +131,7 @@ IMeshGobject::InitializeObject(const char* objFile,bool addToSceneGraph)
 
 
 GobID
-IGobject::GetID(void)
+IGObject::GetID(void)
 {
 	return this->ID;
 }
@@ -139,13 +139,13 @@ IGobject::GetID(void)
 
 
 char* 
-IGobject::GetName(void)
+IGObject::GetName(void)
 {
 	return &this->Name[0];
 }
 
 void
-IGobject::SetName(char* name)
+IGObject::SetName(char* name)
 {
 	int i = 0;
 	while(i<63)
@@ -159,13 +159,13 @@ IGobject::SetName(char* name)
 }
 
 Transform*
-IGobject::getTransform()
+IGObject::getTransform()
 {
 	return &This->transform;
 }
 
 
-IGobject::operator IConnectable(void)
+IGObject::operator IConnectable(void)
 {
 	return *conXtor;
 }
@@ -181,13 +181,13 @@ IGobject::operator IConnectable(void)
 
 
 Vector3
-IMeshGobject::move(Vector3 to)
+IMeshObject::move(Vector3 to)
 {
 	return move(to.x,to.y,to.z);
 }
 
 Vector3
-IMeshGobject::move(float tox,float toy,float toz)
+IMeshObject::move(float tox,float toy,float toz)
 {
 
 	getTransform()->movement.x = (tox - getTransform()->position.x);
@@ -212,21 +212,21 @@ IMeshGobject::move(float tox,float toy,float toz)
 
 
 Vector3
-IMeshGobject::scale(Vector3 to)
+IMeshObject::scale(Vector3 to)
 {
 	getTransform()->scale = to;
 	return getTransform()->scale;
 }
 
 Vector3
-IMeshGobject::rotate(Vector3 to)
+IMeshObject::rotate(Vector3 to)
 {
 	getTransform()->rotation = to;
 	return getTransform()->rotation;
 }
 
 Vector3
-IMeshGobject::rotate(float toiX,float toYps,float toZed)
+IMeshObject::rotate(float toiX,float toYps,float toZed)
 { 
 	rotate(Vector3(toiX,toYps,toZed));
 	//getTransform()->rotation.x = toiX;
@@ -238,7 +238,7 @@ IMeshGobject::rotate(float toiX,float toYps,float toZed)
 }
 
 void
-IMeshGobject::draw()
+IMeshObject::draw()
 {
 
 
@@ -303,7 +303,7 @@ IMeshGobject::draw()
 //#include "DataStructs.h"
 //#include "Utility.h"
 //#include "Connectable.h"
-//#include "IGobject.h"
+//#include "IGObject.h"
 //
 //#define This this->conXtor->Connection()
 //static unsigned objIDs = 99;
@@ -319,7 +319,7 @@ IMeshGobject::draw()
 //}
 //
 //
-//IGobject::IGobject(void)
+//IGObject::IGObject(void)
 //{
 //	IsVisible=false;
 //	this->_idIsSet=false;
@@ -327,7 +327,7 @@ IMeshGobject::draw()
 //}
 //
 //bool
-//IGobject::SetID(GobID id)
+//IGObject::SetID(GobID id)
 //{
 //	if(this->_idIsSet==false)
 //	{
@@ -341,7 +341,7 @@ IMeshGobject::draw()
 //}
 //
 //void
-//IGobject::LockID(void)
+//IGObject::LockID(void)
 //{
 //	if(!_idIsSet)
 //	{
@@ -353,12 +353,12 @@ IMeshGobject::draw()
 //	}
 //}
 //
-//IGobject::~IGobject(void)
+//IGObject::~IGObject(void)
 //{
 //	delete conXtor;
 //}
 //
-//IMeshGobject::IMeshGobject(void)
+//IMeshObject::IMeshObject(void)
 //{
 //
 //	conXtor = new IConnectable();
@@ -366,13 +366,13 @@ IMeshGobject::draw()
 //
 //}
 //
-//IMeshGobject::~IMeshGobject(void)
+//IMeshObject::~IMeshObject(void)
 //{
 //	delete conXtor;
 //}
 //
 //void
-//IMeshGobject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
+//IMeshObject::init(const char* objFile,const char* textureFile,bool addToSceneGraph)
 //{
 //
 //	if(addToSceneGraph)
@@ -383,7 +383,7 @@ IMeshGobject::draw()
 //}
 //
 //void
-//IMeshGobject::init(const char* objFile, const char* textureFile)
+//IMeshObject::init(const char* objFile, const char* textureFile)
 //{
 //	LockID();
 //	Utility::loadObj(objFile,this->verts,this->uvs,this->norms);
@@ -413,7 +413,7 @@ IMeshGobject::draw()
 //
 //
 //GobID
-//IGobject::GetID(void)
+//IGObject::GetID(void)
 //{
 //	return this->ID;
 //}
@@ -421,13 +421,13 @@ IMeshGobject::draw()
 //
 //
 //char* 
-//IGobject::GetName(void)
+//IGObject::GetName(void)
 //{
 //	return &this->Name[0];
 //}
 //
 //void
-//IGobject::SetName(char* name)
+//IGObject::SetName(char* name)
 //{
 //	int i = 0;
 //	while(i<63)
@@ -441,13 +441,13 @@ IMeshGobject::draw()
 //}
 //
 //Transform*
-//IGobject::getTransform()
+//IGObject::getTransform()
 //{
 //	return &This->transform;
 //}
 //
 //
-//IGobject::operator IConnectable(void)
+//IGObject::operator IConnectable(void)
 //{
 //	return *conXtor;
 //}
@@ -463,7 +463,7 @@ IMeshGobject::draw()
 //
 //
 //Vector3
-//IMeshGobject::move(Vector3 to)
+//IMeshObject::move(Vector3 to)
 //{
 //	getTransform()->movement = (to - getTransform()->position);
 //	getTransform()->position = to;
@@ -472,7 +472,7 @@ IMeshGobject::draw()
 //}
 //
 //Vector3
-//IMeshGobject::move(float tox,float toy,float toz)
+//IMeshObject::move(float tox,float toy,float toz)
 //{
 //	getTransform()->movement.x = (tox - getTransform()->position.x);
 //	getTransform()->movement.y = (toy - getTransform()->position.y);
@@ -491,14 +491,14 @@ IMeshGobject::draw()
 //
 //
 //Vector3
-//IMeshGobject::scale(Vector3 to)
+//IMeshObject::scale(Vector3 to)
 //{
 //	getTransform()->scale = to;
 //	return getTransform()->scale;
 //}
 //
 //Vector3
-//IMeshGobject::rotate(Vector3 to)
+//IMeshObject::rotate(Vector3 to)
 //{
 //	getTransform()->rotation = to;
 //	getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
@@ -506,7 +506,7 @@ IMeshGobject::draw()
 //}
 //
 //Vector3
-//IMeshGobject::rotate(float toiX,float toYps,float toZed)
+//IMeshObject::rotate(float toiX,float toYps,float toZed)
 //{
 //	getTransform()->rotation.x = toiX;
 //	getTransform()->rotation.y = toYps;
@@ -517,7 +517,7 @@ IMeshGobject::draw()
 //}
 //
 //void
-//IMeshGobject::draw()
+//IMeshObject::draw()
 //{
 //	if(!IsVisible)
 //		return;

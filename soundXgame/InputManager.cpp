@@ -187,9 +187,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->LeftClick(Mouse.Position);
+				((IClickable*)(*it))->LeftClick(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseQlicks(0,click,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.LEFT.RELEASE)
@@ -197,9 +197,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->LeftRelease(Mouse.Position);
+				((IClickable*)(*it))->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseQlicks(0,click,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 
@@ -208,9 +208,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->RightClick(Mouse.Position);
+				((IClickable*)(*it))->RightClick(Mouse.Position);
 			else
-				((IInteractive*)(*it))->mouseQlicks(1,click,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(1,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.RIGHT.RELEASE)
@@ -218,9 +218,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->LeftRelease(Mouse.Position);
+				((IClickable*)(*it))->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseQlicks(1,false,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(1,false,Mouse.Position);
 		}
 	}
 
@@ -229,9 +229,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->MiddleClick(Mouse.Position);
+				((IClickable*)(*it))->MiddleClick(Mouse.Position);
 			else
-				((IInteractive*)(*it))->mouseQlicks(2,click,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(2,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.MIDDLE.RELEASE)
@@ -239,9 +239,9 @@ InputManager::notifyQlicks(void)
 		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
 		{
 			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IQlickable*)(*it))->MiddleRelease(Mouse.Position);
+				((IClickable*)(*it))->MiddleRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseQlicks(2,false,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(2,false,Mouse.Position);
 		}
 	}
 }
@@ -266,7 +266,7 @@ InputManager::UpdateMouseButtons(int button,int state,int x,int y)
 		for(auto it=mouseClickListener.begin();it!=mouseClickListener.end();it++)
 		{
 			if((*it)->checkForObservability(OBSERVATE_KEYBOARD))
-				((IInteractive*)(*it))->mouseQlicks(button,state==GLUT_DOWN,Mouse.Position);
+				((IInteractive*)(*it))->mouseClicks(button,state==GLUT_DOWN,Mouse.Position);
 		}
 }
 
@@ -500,12 +500,12 @@ IInteractive::observedEvents()
 	return OBSERVATE_MOUSE|OBSERVATE_KEYBOARD;
 }
 
-IQlickable::IQlickable()
+IClickable::IClickable()
 {
 
 }
 int
-IQlickable::observedEvents()
+IClickable::observedEvents()
 {
 	return OBSERVATE_CLICKS|OBSERVATE_MOUSE;
 }

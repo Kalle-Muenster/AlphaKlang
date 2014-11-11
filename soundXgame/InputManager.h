@@ -44,16 +44,16 @@ public:
 	virtual void specialKeyPressed(int key){};
 	virtual void keyPress(char key){};
 	virtual void mouseMotion(int x, int y){};
-	virtual void mouseQlicks(int button,bool IsPressed,glm::vec2 position){};
+	virtual void mouseClicks(int button,bool IsPressed,glm::vec2 position){};
 	virtual void mouseWheel(int wheel,WHEEL state){};
 };
 
-class IQlickable : public IObserver
+class IClickable : public IObserver
 {
 protected:
 	int observedEvents(); 
 public:
-	IQlickable(void);
+	IClickable(void);
 	virtual void LeftClick(glm::vec2 position){};
 	virtual void RightClick(glm::vec2 position){};
 	virtual void MiddleClick(glm::vec2 position){};

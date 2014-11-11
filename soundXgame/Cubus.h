@@ -5,7 +5,7 @@
 
 
 class Cubus :
-	public IMeshGobject
+	public IMeshObject
 {
 public:
 	Cubus(void);

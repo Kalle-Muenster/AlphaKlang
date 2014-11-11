@@ -1,5 +1,5 @@
 #include <vector>
-#include "IGobject.h"
+#include "IGObject.h"
 #include "Cam.h"
 #include "SceneGraph.h"
 
@@ -10,7 +10,7 @@ SceneGraph* scenegraph;
 SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 {
 	camera = new Cam();
-	drawables = std::vector<IGobject*>();
+	drawables = std::vector<IGObject*>();
 
 }
 
@@ -28,14 +28,14 @@ SceneGraph::GetInstance()
 }
 
 unsigned int
-SceneGraph::Add(IGobject* object)
+SceneGraph::Add(IGObject* object)
 {
 	scenegraph->drawables.push_back(object);
 	return (GobID)(scenegraph->drawables.size()-1);
 }
 
 void
-SceneGraph::Remove(IGobject* object)
+SceneGraph::Remove(IGObject* object)
 {
 	//objects.erase(objects.begin());
 
@@ -130,7 +130,7 @@ SceneGraph::ObjectsCount(void)
 	return drawables.size();
 }
 
-IGobject*
+IGObject*
 SceneGraph::Object(const char* name)
 {
 	for(auto it=drawables.begin();it!=drawables.end();it++)
@@ -139,7 +139,7 @@ SceneGraph::Object(const char* name)
 	return NULL;
 }
 
-IGobject*
+IGObject*
 SceneGraph::Object(unsigned int ID)
 {
 	if(drawables.at(ID)->GetID()==ID)

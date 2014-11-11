@@ -110,14 +110,14 @@ void LoadContent(void)
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	
 	ground = Ground::getInstance();
-	ground->Init();
+	//ground->Init();
 
 	fountain = new Fountain();
 	fountain->Init();
 	
 	int i = -1;
 
-	IGobject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
+	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
@@ -152,7 +152,7 @@ void RenderCycle(void)
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	ground->Draw();
+	//ground->Draw();
 
 	SCENE->DrawAll();
 		

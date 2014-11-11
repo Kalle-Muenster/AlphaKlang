@@ -2,7 +2,7 @@
 #define _COMBINATOR_
 
 #include "Connectable.h"
-//#include "IGobject.h"
+//#include "IGObject.h"
 
 
 class Combiner : public IConnectable 

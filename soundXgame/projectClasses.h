@@ -1,7 +1,7 @@
 #ifndef _PROJECTCLASSES_H_
 #define _PROJECTCLASSES_H_
 
-#include "IGobject.h"
+#include "IGObject.h"
 #include "Cubus.h"
 #include "DataStructs.h"
 #include "Cam.h"

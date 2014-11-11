@@ -35,9 +35,6 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="IGobject.cpp">
-      <Filter>Core\Interfaces</Filter>
-    </ClCompile>
     <ClCompile Include="Connectable.cpp">
       <Filter>Core\Interfaces</Filter>
     </ClCompile>
@@ -77,14 +74,14 @@
     <ClCompile Include="UpdateManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Observer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="IvOxject.cpp">
-      <Filter>Core\Interfaces</Filter>
-    </ClCompile>
     <ClCompile Include="IMusicListener.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="IVoxelObject.cpp">
+      <Filter>Core\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IGObject.cpp">
+      <Filter>Core\Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +120,6 @@
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="IGobject.h">
-      <Filter>Core\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Connectable.h">
       <Filter>Core\Interfaces</Filter>
@@ -166,14 +160,14 @@
     <ClInclude Include="UpdateManager.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="IvOxject.h">
-      <Filter>Core\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="IObserver.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="IMusicListener.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="IVoxelObject.h">
+      <Filter>Core\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IGObject.h">
+      <Filter>Core\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

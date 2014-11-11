@@ -21,7 +21,7 @@ struct ListenerData
 	float MAXClampf;
 };
 
-typedef void(*ListenerFunc)(int,ListenerData*,IGobject*);
+typedef void(*ListenerFunc)(int,ListenerData*,IGObject*);
 
 class IMusicListener
 {
@@ -38,14 +38,14 @@ public:
 			void SetClambt(int,float,float);
 			bool Enabled(int,BOOL=3);
 			void SetLineBounds(int line,int lower,int upper,int width);
-			void AddListenerCallback(int,ListenerFunc,IGobject*);
+			void AddListenerCallback(int,ListenerFunc,IGObject*);
 			
 			
 protected:
 	virtual void applyEffect(int line,float lowValue,float highValue);
 	ListenerData Line[NUMBER_OF_LISTENINGLINES];
 	ListenerFunc callbacks[NUMBER_OF_LISTENINGLINES]; 
-	IGobject*    clients[NUMBER_OF_LISTENINGLINES];
+	IGObject*    clients[NUMBER_OF_LISTENINGLINES];
 };
 
 
