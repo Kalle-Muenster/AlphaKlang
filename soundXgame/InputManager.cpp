@@ -22,16 +22,15 @@ bool _HasFlag(unsigned value,unsigned flag)
 
 double _TicksToSeconds(DWORD ticks)
 {
-	return (float)ticks/1000;
+	return (float)ticks/1000.0;
 }
 
 double 
 _updateTimer(void)
 {
-	_timerTicks = GetTickCount();
-	_frameTicks = _timerTicks - _lastTicks;
+	_frameTicks = GetTickCount() - _lastTicks;
 	_clicktimer = ((_clicktimer > 0)&&(_clicktimer<=_doubleClickLength))? (_clicktimer - _frameTicks):0;
-	_lastTicks = _timerTicks;
+	_lastTicks += _frameTicks;
 	return _TicksToSeconds(_frameTicks);
 }
 
@@ -39,10 +38,9 @@ InputManager* InputManager::getInstance()
 {
 	if(!instance) 
 	{
-		_lastTicks = 0;
+		_lastTicks = GetTickCount();
 		_frameTicks = 0;
 		_doubleClickLength = 200;
-		_timerTicks = GetTickCount();
 		instance = new InputManager();
 	}
 

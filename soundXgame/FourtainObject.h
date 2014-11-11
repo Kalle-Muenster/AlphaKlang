@@ -4,7 +4,7 @@
 #include "IGobject.h"
 
 
-#pragma once
+
 class FourtainObject
 	: public IMeshGobject
 {

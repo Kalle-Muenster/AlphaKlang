@@ -96,6 +96,7 @@
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="TestConectables.cpp" />
     <ClCompile Include="TestYeti.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="VoxelVector.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="TestConectables.h" />
     <ClInclude Include="TestYeti.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="UpdateManager.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VoxelVector.h" />

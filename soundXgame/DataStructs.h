@@ -105,6 +105,8 @@ union Data64
 	Data64(void);
 };
 
+
+
 struct Transform
 {
 	Vector3 position;
@@ -119,49 +121,9 @@ struct Transform
 
 };
 
-struct IDimension
-{
-	Vector3 position;
-	Vector3 rotation;
-	Vector3 scale;
 
-	bool DimensionDirty;				// true if this Dimensions have Changed and the Directions need to be Updated..
-	bool CleanDimensions(void);		// Updates the Dimensions...
-};
 
-struct IDirection
-{
-	Vector3 forward;
-	Vector3 right;
-	Vector3 up;
 
-	bool DirectionsDirty;				// true if the Directions have unUpdated changes...
-	bool CleanDirections(void);		// Get's the dirt off...
-};
-
-struct IPhysic
-{
-	Vector3 movement;			// movement is a relative position and shows the difference to the last frame -> it's the Object's moving direction * speed
-	float speed;				// moving-speed
-	float depth;				// amount of matter per qm... 1 means 1Kg per 1m^3
-	float thickness;			// the thicker the harder... 1 means indistructable, 0 means cookie
-
-	float mass(void);			// the Weight of an object: depth*scale;
-
-	bool PhysicsDirty;			// physicaly dirty... 
-	bool SetPhysicClean(void);	// cleanUp...
-};
-
-class FullTransform :
-	IDimension,
-	IDirection,
-	IPhysic
-{
-public:
-	bool IsDirty(void);
-	void SetClean(void);
-
-};
 
 
 

@@ -9,8 +9,6 @@
 
 enum CAM_MODE : int
 {
-	//ORTHOGRAFIC = 0x1,
-	//PERSPECTIVE = 0x2,
 	FIRSTPERSON = 0x1,
 	FOLLOWTARGET = 0x2,
 	FIRSTPERSON_CONTROLLER = 0x4,
@@ -25,7 +23,7 @@ class Cam : public IInteractive, public IConnectable, public IAudioReciever
 private:
 	IGobject*				_target;				//the object the camaera alwas "look's" at if in FOLLOWTARGET-Mode...
 	float					_distanceToTarget;		//hold's the actual distance to the cam's target if in FOLLOWTARGET-Mode...
-	Vector3					*camTarget;				//pasition vector the camera looks at if in FOLLOWTARGET-Mode...
+	Vector3					*camTarget;				//position vector the camera looks at if in FOLLOWTARGET-Mode...
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;

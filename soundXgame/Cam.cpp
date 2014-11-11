@@ -44,6 +44,7 @@ Cam::Cam(void) :
 	INPUT->attachMouseMove(this);
 	INPUT->attachSpecial(this);
 	
+	INPUT->attachMouseWheel(this);
 }
 
 bool
@@ -155,7 +156,7 @@ Cam::UpdateTransform(void)
 {
 	this->move(x, eyeY, z);
 	this->rotate(x+lx, 1.0f, z+lz);
-	this->_transformChanged = TransformDIRTY;
+	this->_transformChanged = false;
 }
 
 Vector3		
@@ -271,7 +272,7 @@ Cam::UpdateDirections(void)
 		Utility::Rotate90(1,transform.right.z,transform.right.x);
 		Utility::Rotate90(1,transform.up.z,transform.up.y);
 
-
+		
 	}
 }
 
@@ -295,15 +296,14 @@ Cam::Update()
 	if(Mode()==FIRSTPERSON)
 	{
 		this->UpdateTransform();
+//		this->_transformChanged = false;
 	}
 
 
 	
 
-		gluLookAt(transform.position.x, transform.position.y, transform.position.z,
-			transform.rotation.x,transform.rotation.y,transform.rotation.z,
-			0, 1, 0);
-		this->_transformChanged = false;
+
+		
 	
 
 
@@ -336,11 +336,7 @@ Cam::Update()
 void
 Cam::WheelVRoll(WHEEL state)
 {
-	transform.position.y-=(float)state/10;
-	FieldOfView(FieldOfView() - state); 
-#ifdef DEBUG_OUTPUT_CAMERA
-	printf("CAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
-#endif
+	
 }
 
 void
@@ -365,6 +361,16 @@ Cam::keyPress(char key)
 			z -= lx * (moveSpeed*-1);
 			break;
 	}
+
+
+	//scaleing the camtarget if grabbet..
+	if(key=='g')
+		_target->scale(_target->getTransform()->scale*1.1f);
+	
+	if(key=='k')
+		_target->scale(_target->getTransform()->scale*0.9f);
+
+
 	// Update Transform
 	UpdateTransform();
 }

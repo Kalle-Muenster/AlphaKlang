@@ -64,13 +64,14 @@ IGobject::LockID(void)
 
 IMeshGobject::IMeshGobject(void)
 {
+	this->transform.scale = Vector3(1,1,1);
 	this->color = Color(128,128,128,255);
 	this->FaceShape = GL_TRIANGLES;
 }
 
 IMeshGobject::~IMeshGobject(void)
 {
-//	delete conXtor;
+
 }
 
 void
@@ -79,13 +80,13 @@ IMeshGobject::LoadMesh(const char* objFileName)
 	
 	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
 
-	glm::vec3 temp1 = glm::vec3(0,0,1);
+	glm::vec3 temp1 = glm::vec3(0,0,-1);
 	glm::vec3 temp2 = glm::vec3(1,0,0);
 	glm::vec3 temp3 = glm::vec3(0,1,0);
 
 	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
-	transform.right = Vector3(temp1.x,temp1.y,temp1.z);
-	transform.up = Vector3(temp1.x,temp1.y,temp1.z);
+	transform.right = temp2;
+	transform.up = temp3;
 
 	verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
 	verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
@@ -94,9 +95,7 @@ IMeshGobject::LoadMesh(const char* objFileName)
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
-	GLvoid** pointerGet=(GLvoid**)&pVertexBuffer;
-	glGetPointerv(GL_VERTEX_ARRAY_POINTER,pointerGet);
-	pVertexBuffer = (glm::vec3*)pointerGet[0];
+
 	glGenBuffers(1, &uvBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
@@ -122,9 +121,6 @@ IMeshGobject::InitializeObject(const char* objFile,bool addToSceneGraph)
 	if(addToSceneGraph)
 		SetID(SCENE->Add(this));
 	LoadMesh(objFile);
-
-
-	//
 	LockID();
 }
 
@@ -187,26 +183,29 @@ IGobject::operator IConnectable(void)
 Vector3
 IMeshGobject::move(Vector3 to)
 {
-	getTransform()->movement = (to - getTransform()->position);
-	getTransform()->position = to;
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
-	return getTransform()->position;
+	return move(to.x,to.y,to.z);
 }
 
 Vector3
 IMeshGobject::move(float tox,float toy,float toz)
 {
+
 	getTransform()->movement.x = (tox - getTransform()->position.x);
 	getTransform()->movement.y = (toy - getTransform()->position.y);
 	getTransform()->movement.z = (toz - getTransform()->position.z);
 
-	getTransform()->position.x = tox;
-	getTransform()->position.y = toy;
-	getTransform()->position.z = toz;
+	if(getTransform()->movement.x!=0||getTransform()->movement.y!=0||getTransform()->movement.x!=0)
+	{
+		getTransform()->position.x = tox;
+		getTransform()->position.y = toy;
+		getTransform()->position.z = toz;
+
+#ifdef DEBUG_OUTPUT_MESHOBJECTS
+	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+#endif
 
 	
-	printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
-
+	}
 
 	return getTransform()->position;
 }
@@ -252,17 +251,22 @@ IMeshGobject::draw()
 
 	glEnable(GL_TEXTURE_2D);
 
-	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-	glTexCoordPointer(2, GL_FLOAT, 0, 0);
-		
+	if(textureID)
+	{
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+	}
+	else
+		glColor4b(*this->color.R,*this->color.G,*this->color.B,*this->color.A);
 
 	glPushMatrix();
 	{
+		
 		//Translate...
 		glTranslatef(this->getTransform()->position.x, this->getTransform()->position.y,this->getTransform()->position.z);
 
@@ -279,7 +283,7 @@ IMeshGobject::draw()
 
 		
 		//Scaleate...
-		//glScalef(this->transform.scale.x,this->transform.scale.y,this->transform.scale.z);
+		glScalef(this->getTransform()->scale.x,this->getTransform()->scale.y,this->getTransform()->scale.z);
 		
 		//Draw
 		glDrawArrays(this->FaceShape, 0, verts.size()-3);

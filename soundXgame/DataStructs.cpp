@@ -1,7 +1,7 @@
 #include "DataStructs.h"
 
-
-
+// Vector3 
+//##################################################
 Vector3::Vector3(void)
 {
 	 x = 0;
@@ -105,7 +105,7 @@ Vector3::distance(Vector3 to)
 Vector3
 Vector3::direction(Vector3 to)
 {
-	return glm::normalize( (glm::vec3)(to - *this));
+	return glm::normalize((glm::vec3)(to - *this));
 }
 
 
@@ -115,9 +115,8 @@ Vector3::direction(Vector3 to)
 
 
 
-
-
-
+//Color and Sample
+//####################################################
 void
 Data32::BaseInitor(void)
 {
@@ -241,3 +240,4 @@ Data64::Data64(void)
 	unionData32[0] = data32();
 	unionData32[1] = data32();
 }
+

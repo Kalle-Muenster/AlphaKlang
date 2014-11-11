@@ -105,8 +105,8 @@ void GlInit(void)
 ConID* testID;
 void LoadContent(void)
 {
-	INPUT->attachMouseWheel(SCENE->camera);
 
+	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	
 	ground = Ground::getInstance();
 	ground->Init();

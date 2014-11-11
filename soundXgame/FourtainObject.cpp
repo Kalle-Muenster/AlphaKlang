@@ -1,5 +1,5 @@
 #include "FourtainObject.h"
-
+#include "projectMacros.h"
 
 FourtainObject::FourtainObject(void) : power(1)
 {
@@ -22,11 +22,13 @@ FourtainObject::~FourtainObject(void)
 void
 FourtainObject::Update(void)
 {
-	float deltaTime = 0.005;
+//	float deltaTime = 0.005;
 
-	timeSinceStart += deltaTime;
+//	timeSinceStart += deltaTime;
+//	power -= deltaTime;
 
-	power -= deltaTime;
+	timeSinceStart += INPUT->FrameTime; //INPUT->FrameTime hold's actual deltaTime in seconds
+	power -= INPUT->FrameTime;
 
 	Transform transform = this->transform;
 	Vector3 pos = transform.position;

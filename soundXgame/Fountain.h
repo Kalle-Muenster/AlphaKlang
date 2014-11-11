@@ -5,7 +5,7 @@
 #include "FourtainObject.h"
 #include "UpdateManager.h"
 
-#pragma once
+
 class Fountain : public IUpdateble
 {
 private:
