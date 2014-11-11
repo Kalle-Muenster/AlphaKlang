@@ -1,5 +1,6 @@
 #include "Cam.h"
 #include "projectMacros.h"
+#include "Ground.h"
 
 #define DEBUG_OUTPUT_CAMERA
 
@@ -285,7 +286,6 @@ Cam::Update()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-//	if(_isFollowingTarget)
 	if(Mode()==FOLLOWTARGET)
 	{
 		this->move(transform.position);
@@ -296,6 +296,15 @@ Cam::Update()
 	{
 		this->UpdateTransform();
 	}
+
+
+	
+
+		gluLookAt(transform.position.x, transform.position.y, transform.position.z,
+			transform.rotation.x,transform.rotation.y,transform.rotation.z,
+			0, 1, 0);
+		this->_transformChanged = false;
+	
 
 
 

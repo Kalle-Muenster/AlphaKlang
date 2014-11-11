@@ -76,7 +76,7 @@ public:
 	IMeshGobject(void);
 	virtual ~IMeshGobject(void);
 	virtual void draw();
-	virtual void InitializeObject(const char* objFile,bool=true);
+	virtual void InitializeObject(const char* objFile,bool addToSceneGraph=true);
 	virtual void LoadMesh(const char* objFileName);
 	virtual IGobject* LoadTexture(const char* textureFileName);
 	virtual void SetColor(Color);

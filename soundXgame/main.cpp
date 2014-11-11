@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 #include "Ground.h"
+#include "Fountain.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -11,6 +12,7 @@ void* font;
 
 //Objects:
 Ground* ground;
+Fountain* fountain;
 
 
 //Functions:
@@ -31,12 +33,9 @@ void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 // unsigned create_shader(const char* shaderCodeFileName,GLenum type);
+
+
 ////////////////////////////////////////////
-
-
-//int atribut_coordinate2;;
-
-
 //Entrypoint:
 int main(int argc,char** argv)
 {
@@ -111,9 +110,12 @@ void LoadContent(void)
 	
 	ground = Ground::getInstance();
 	ground->Init();
-	
+
+	fountain = new Fountain();
+	fountain->Init();
 	
 	int i = -1;
+
 	IGobject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
@@ -148,9 +150,6 @@ void RenderCycle(void)
 {
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Update Camera
-//	SCENE->camera->UpdateView();
 
 	ground->Draw();
 
@@ -189,8 +188,8 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 //Keyboard:
 void keyboardInput(unsigned char key,int x,int y)
 {
-	if(key=='m')
-		testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
+	//if(key=='m')
+	//	testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
 	if(key=='q')
 		glutExit();
 
@@ -230,14 +229,3 @@ void MouseHoverWindow(int)
 
 
 
-//unsigned create_shader(const char* shaderCodeFileName,GLenum type)
-//{
-//	unsigned shaderV =	glCreateShader(type);
-//	FILE* shaderfile = fopen(shaderCodeFileName,"rb");
-//	fseek(shaderfile,0,SEEK_END);
-//	int size = ftell(shaderfile);
-//	fseek(shaderfile,0,SEEK_SET);
-//	unsigned char* shaderCodeString;
-//
-//
-//}

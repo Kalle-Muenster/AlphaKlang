@@ -20,7 +20,6 @@ _IDIsFree(GobID id)
 	return true;
 }
 
-
 IGobject::IGobject(void)
 {
 	IsVisible=false;
@@ -28,6 +27,12 @@ IGobject::IGobject(void)
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
 	IsGrounded=true;
+
+}
+
+IGobject::~IGobject(void)
+{
+	delete conXtor;
 }
 
 bool
@@ -55,11 +60,6 @@ IGobject::LockID(void)
 		itoa(this->ID,&this->Name[0],10);
 		this->_idIsSet=true;
 	}
-}
-
-IGobject::~IGobject(void)
-{
-	delete conXtor;
 }
 
 IMeshGobject::IMeshGobject(void)
@@ -268,11 +268,8 @@ IMeshGobject::draw()
 
 		if(this->IsGrounded)
 		{
-			
-			//float y = this->transform.position.y + Ground::getInstance()->GetGroundY(this->transform.position.x, this->transform.position.z);
 			float y = Ground::getInstance()->GetGroundY(this->transform.position.x, this->transform.position.z);
 			glTranslatef(0, y, 0);
-
 		}
 
 		//Rotate...
