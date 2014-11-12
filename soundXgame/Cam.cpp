@@ -2,11 +2,23 @@
 #include "projectMacros.h"
 #include "Ground.h"
 
+
 #define DEBUG_OUTPUT_CAMERA
 
+#define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
+
+static Cam* _Socket;
 static bool _shareAudioReciever = true;
 bool _targetGRABBED=false;
+static IAttachableCameraMode* _CameraModes[MAXIMUM_NUMBER_OF_CAMERA_MODES];
 
+int _HasCameraMode(size_t t)
+{
+	for(int i = 0;i<MAXIMUM_NUMBER_OF_CAMERA_MODES;i++)
+		if(t==typeid(_CameraModes[i]).hash_code())
+			return i;
+		else return -1;
+}
 
 Cam::Cam(void) :
 	angle(0),
@@ -17,7 +29,8 @@ Cam::Cam(void) :
 	moveSpeed(0.1f),
 	mouseSpeed(1.0f),
 	mouseX(0),
-	mouseY(0)
+	mouseY(0),
+	NumberOfCameraModes(0)
 {
 	this->transform.position.x=0;
 	this->transform.position.y=1;
@@ -45,6 +58,25 @@ Cam::Cam(void) :
 	INPUT->attachSpecial(this);
 	
 	INPUT->attachMouseWheel(this);
+	_Socket = this;
+	int FirstPersonMode = AddModeToCamera<FirstPersonCamera>();
+	FirstPersonCamera::PlugIn(FirstPersonMode);
+	
+}
+
+IAttachableCameraMode*
+IAttachableCameraMode::AddToCameraModes(Cam* camera)
+{
+
+	return camera->ModeSocket = new IAttachableCameraMode(camera);
+}
+
+template<typename CameraMode> int 
+Cam::AddModeToCamera(void)
+{
+	if (!_HasCameraMode(typeid(CameraMode).hash_code()))
+	_CameraModes[NumberOfCameraModes++] = CameraMode::AddToCameraModes(this);
+	return NumberOfCameraModes-1;
 }
 
 bool
@@ -113,7 +145,7 @@ Cam::SetTargetAsFirstPerson(IGObject* personObj)
 	_target = personObj;
 	this->camTarget = &personObj->getTransform()->position;
 	_target->IsVisible=false;
-	Mode(FIRSTPERSON_CONTROLLER);
+//	Mode(FIRSTPERSON_CONTROLLER);
 }
 
 
@@ -252,6 +284,28 @@ Cam::Mode(CAM_MODE mode)
 	return _mode;
 }
 
+BOOL
+Cam::ModeAttached(BOOL option)
+{
+	
+	if((NumberOfCameraModes>0)&&(NumberOfCameraModes>option))
+	{
+		if(option<0)
+		{
+			return CurrentCamMode+1;
+		}
+		else if(option==false)
+		{
+			ModeSocket = NULL;
+		}
+		else if(option>0)
+		{
+			return (CurrentCamMode+1)==option;
+		}
+		return (ModeSocket!=NULL);
+	}
+}
+
 void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
 {
@@ -296,11 +350,20 @@ Cam::Update()
 	if(Mode()==FIRSTPERSON)
 	{
 		this->UpdateTransform();
-//		this->_transformChanged = false;
 	}
 
+	if(ModeAttached())
+	{
+		ModeSocket->Update();
+	}
 
-	
+	if(_targetGRABBED)
+	{
+		_targetGRABBED = !INPUT->Mouse.LEFT.DOUBLE;
+		_target->getTransform()->position = (this->transform.position + (this->transform.forward * GetTargetDistance())) + (INPUT->Mouse.MIDDLE.HOLD? (this->transform.forward * -INPUT->Mouse.Movement.y/10) : Vector3(0,0,0));
+	}
+	else if(INPUT->Mouse.LEFT.DOUBLE)
+		GrabTarget();
 
 
 		
@@ -316,18 +379,12 @@ Cam::Update()
 
 	//update The Position of the attached AudioReciever
 	SetAudioResieverPosition(&transform);
+	TransformDIRTY = false;
+	
+
+
 
 	
-	if(_targetGRABBED)
-	{
-		_targetGRABBED = !INPUT->Mouse.LEFT.DOUBLE;
-		_target->getTransform()->position = (this->transform.position + (this->transform.forward * GetTargetDistance())) + (INPUT->Mouse.MIDDLE.HOLD? (this->transform.forward * -INPUT->Mouse.Movement.y/10) : Vector3(0,0,0));
-	}
-	else if(INPUT->Mouse.LEFT.DOUBLE)
-		GrabTarget();
-
-
-	TransformDIRTY = false;
 
 }
 
@@ -425,4 +482,36 @@ Cam::mouseMotion(int newX, int newY)
 
 	// Update Transform
 	UpdateTransform();
+}
+
+IAttachableCameraMode::IAttachableCameraMode(Cam* thisCam)
+{
+//	_Socket = thisCam;
+}
+
+IAttachableCameraMode::~IAttachableCameraMode(void)
+{
+
+}
+
+void
+IAttachableCameraMode::Update(void)
+{
+
+	//if(IsDirty)
+	//	DirtyUpdate();
+	//IsDirty=false;
+}
+
+void 
+IAttachableCameraMode::PlugOff(void)
+{
+	_Socket->ModeSocket = NULL;
+}
+
+void
+IAttachableCameraMode::PlugIn(int slot)
+{
+	_Socket->ModeSocket = _CameraModes[slot];
+	
 }

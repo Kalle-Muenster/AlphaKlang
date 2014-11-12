@@ -98,6 +98,7 @@ void GlInit(void)
 	
 	// enable Multisample Antialiasing
     glEnable(GL_MULTISAMPLE_ARB);
+	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//shader
@@ -106,9 +107,9 @@ void GlInit(void)
 ConID* testID;
 void LoadContent(void)
 {
-
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-	
+	AUDIO->Play();
+
 	ground = Ground::getInstance();
 	//ground->Init();
 

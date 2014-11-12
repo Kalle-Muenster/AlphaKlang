@@ -93,6 +93,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TestConectables.cpp" />
     <ClCompile Include="TestYeti.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestConectables.h" />
     <ClInclude Include="TestYeti.h" />
     <ClInclude Include="Transform.h" />
@@ -138,6 +140,9 @@
   <ItemGroup>
     <Text Include="cube.obi" />
     <None Include="ClassDiagram3.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\STUFF\Projects\VSC#\Projects\Qallen\Recources\quallen\02\q2\q2_12.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

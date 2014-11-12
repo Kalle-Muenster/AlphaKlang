@@ -9,17 +9,52 @@
 
 enum CAM_MODE : int
 {
-	FIRSTPERSON = 0x1,
-	FOLLOWTARGET = 0x2,
-	FIRSTPERSON_CONTROLLER = 0x4,
+	FIRSTPERSON = 1,
+	FOLLOWTARGET = 2,
+	TARGETGRABBER = 3,
 	CAM_MODE_NULL=NULL
+};
+
+class IAttachableCameraMode //: public IConnectable
+{
+private:
+									IAttachableCameraMode(Cam*);
+
+	static bool						_isActiveMode;
+	
+
+
+protected:
+						//			IAttachableCameraMode(void);
+	virtual							~IAttachableCameraMode(void);
+	virtual void					DirtyUpdate(void){};
+
+public:
+	bool							IsDirty;
+	void							Update(void);
+	static void						PlugOff(void);
+	static void						PlugIn(int slot);
+	static IAttachableCameraMode*   AddToCameraModes(Cam*);
+};
+
+
+class FirstPersonCamera : public IAttachableCameraMode
+{
+private:
+	int						mouseX, mouseY;			// last-frame mouse position within screen
+	float					angle;					// angle of rotation for the camera direction
+	float					lx, lz;					// actual vector representing the camera's direction
+	float					x, z;					// XZ position of the camera
+	float					eyeY;					// head rotation front/back
+	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
+	float					mouseSpeed;				// firstPerson Mouse sensitivity
+	bool					_transformChanged;		// flag if last frame the transform has changed
+	virtual void			DirtyUpdate(void);		// Update move and rotate Transform
+public:
 };
 
 class Cam : public IInteractive, public IConnectable, public IAudioReciever
 {
-
-
-
 private:
 	IGObject*				_target;				//the object the camaera alwas "look's" at if in FOLLOWTARGET-Mode...
 	float					_distanceToTarget;		//hold's the actual distance to the cam's target if in FOLLOWTARGET-Mode...
@@ -28,7 +63,8 @@ private:
 	double					_fieldOfView;
 	GLfloat					_aspect;
 	CAM_MODE				_mode;
-	
+
+
 	int						mouseX, mouseY;			// last-frame mouse position within screen
 	float					angle;					// angle of rotation for the camera direction
 	float					lx, lz;					// actual vector representing the camera's direction
@@ -41,9 +77,12 @@ private:
 	void					UpdateView();			// Update Window and or Viewport Changes...
 	void					UpdateTransform(void);	// Update move and rotate Transform
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
+
+
 protected:
 	virtual bool			IsShared(bool=NULL);
 	bool					TransformDIRTY;
+	
 
 public:
 							Cam(void);
@@ -61,19 +100,21 @@ public:
 	void					followTarget(void);
 	void					StopFollowing(void);
 	void					SetTargetasFirstPerson(void);
-	void					WheelVRoll(WHEEL state);
+	virtual void			WheelVRoll(WHEEL state);
 	Vector3					move(float x,float y,float z);
 	Vector3		   		    move(glm::vec3);
 	Vector3					rotate(float x,float y,float z);
 	Vector3			        rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
-	void					Update(void);
+	virtual void			Update(void);
 	virtual void			keyPress(char key);
 	virtual void			specialKeyPressed(int key);
 	virtual void			mouseMotion(int newX, int newY);
-
-
-	
+	int						NumberOfCameraModes; 
+	IAttachableCameraMode*  ModeSocket;				// reference to attached mode-extensions...
+	BOOL					ModeAttached(BOOL=-1);  // get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
+	int						CurrentCamMode;
+	template<typename CamMode> int AddModeToCamera(void);
 	
 };
 

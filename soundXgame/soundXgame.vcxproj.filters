@@ -83,6 +83,7 @@
     <ClCompile Include="IGObject.cpp">
       <Filter>Core\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="IGObject.h">
       <Filter>Core\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.obi" />
@@ -192,5 +194,8 @@
     <Filter Include="Core\Interfaces">
       <UniqueIdentifier>{0009291f-b283-46b0-a129-f0e53a3fbedb}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\..\STUFF\Projects\VSC#\Projects\Qallen\Recources\quallen\02\q2\q2_12.png" />
   </ItemGroup>
 </Project>
