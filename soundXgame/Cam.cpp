@@ -6,19 +6,20 @@
 #define DEBUG_OUTPUT_CAMERA
 
 #define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
-
+static unsigned _modeID = 0;
 static Cam* _Socket;
 static bool _shareAudioReciever = true;
 bool _targetGRABBED=false;
-static IAttachableCameraMode* _CameraModes[MAXIMUM_NUMBER_OF_CAMERA_MODES];
 
-int _HasCameraMode(size_t t)
-{
-	for(int i = 0;i<MAXIMUM_NUMBER_OF_CAMERA_MODES;i++)
-		if(t==typeid(_CameraModes[i]).hash_code())
-			return i;
-		else return -1;
-}
+IAttachableCameraMode* _modeManager;
+IAttachableCameraMode* ModeManager;
+//int _HasCameraMode(size_t t)
+//{
+//	for(int i = 0;i<MAXIMUM_NUMBER_OF_CAMERA_MODES;i++)
+//		if(t==typeid(_CameraModes[i]).hash_code())
+//			return i;
+//		else return -1;
+//}
 
 Cam::Cam(void) :
 	angle(0),
@@ -30,7 +31,8 @@ Cam::Cam(void) :
 	mouseSpeed(1.0f),
 	mouseX(0),
 	mouseY(0),
-	NumberOfCameraModes(0)
+	NumberOfCameraModes(0),
+	AttachableModesEnabled(false)
 {
 	this->transform.position.x=0;
 	this->transform.position.y=1;
@@ -58,26 +60,84 @@ Cam::Cam(void) :
 	INPUT->attachSpecial(this);
 	
 	INPUT->attachMouseWheel(this);
-	_Socket = this;
-	int FirstPersonMode = AddModeToCamera<FirstPersonCamera>();
-	FirstPersonCamera::PlugIn(FirstPersonMode);
+
+	IAttachableCameraMode::EnableAttachebleModesForCamera(this);
+	FirstPersonCamera::AddModeToCamera();
+	FirstPersonCamera::PlugIn();
 	
 }
 
+bool _modeManagerInitiated = false;
+
+IAttachableCameraMode::IAttachableCameraMode(Cam* camera)
+{
+	camera->AttachableModesEnabled = true;
+}
+
+void
+IAttachableCameraMode::EnableAttachebleModesForCamera(Cam* camera)
+{
+	Initiation();
+	ModeManager->socket=camera;
+	camera->ModeSocket = new IAttachableCameraMode(camera);
+}
+
+IAttachableCameraMode::~IAttachableCameraMode(void)
+{
+
+}
+
+void
+IAttachableCameraMode::Initiation(void)
+{
+	_modeManager= new IAttachableCameraMode();
+	ModeManager = _modeManager; 
+	ModeManager->_numberOfModes = 0;
+	for(int i=0;i<20;i++)
+		ModeManager->instances[i]=NULL;
+	_modeManagerInitiated = true;
+}
+
+unsigned
+IAttachableCameraMode::AddModeToCamera(void)
+{
+	for(int i = 0;i<20;i++)
+		if(ModeManager->instances[i]==NULL)
+		{
+			ModeManager->instances[i] = ModeManager->CreateInstance(i);
+			return i;
+		}
+
+	return 1000;
+}
+
 IAttachableCameraMode*
-IAttachableCameraMode::AddToCameraModes(Cam* camera)
+IAttachableCameraMode::GetInstance(void)
 {
-
-	return camera->ModeSocket = new IAttachableCameraMode(camera);
+	return ModeManager;
 }
 
-template<typename CameraMode> int 
-Cam::AddModeToCamera(void)
+void 
+IAttachableCameraMode::PlugOff(void)
 {
-	if (!_HasCameraMode(typeid(CameraMode).hash_code()))
-	_CameraModes[NumberOfCameraModes++] = CameraMode::AddToCameraModes(this);
-	return NumberOfCameraModes-1;
+	ModeManager->socket->ModeSocket = NULL;
 }
+
+void
+IAttachableCameraMode::PlugIn(void)
+{
+	ModeManager->socket->ModeSocket = ModeManager->GetInstance();
+}
+
+void
+IAttachableCameraMode::Update(void)
+{
+	if(IsDirty)
+		DirtyUpdate();
+	IsDirty=false;
+}
+
+
 
 bool
 Cam::IsShared(bool setter)
@@ -484,34 +544,3 @@ Cam::mouseMotion(int newX, int newY)
 	UpdateTransform();
 }
 
-IAttachableCameraMode::IAttachableCameraMode(Cam* thisCam)
-{
-//	_Socket = thisCam;
-}
-
-IAttachableCameraMode::~IAttachableCameraMode(void)
-{
-
-}
-
-void
-IAttachableCameraMode::Update(void)
-{
-
-	//if(IsDirty)
-	//	DirtyUpdate();
-	//IsDirty=false;
-}
-
-void 
-IAttachableCameraMode::PlugOff(void)
-{
-	_Socket->ModeSocket = NULL;
-}
-
-void
-IAttachableCameraMode::PlugIn(int slot)
-{
-	_Socket->ModeSocket = _CameraModes[slot];
-	
-}

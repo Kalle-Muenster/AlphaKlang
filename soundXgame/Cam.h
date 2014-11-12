@@ -18,29 +18,41 @@ enum CAM_MODE : int
 class IAttachableCameraMode //: public IConnectable
 {
 private:
-									IAttachableCameraMode(Cam*);
-
-	static bool						_isActiveMode;
-	
-
-
+	IAttachableCameraMode(Cam*);
+//	static IAttachableCameraMode*   _modeManager;
+	Cam*							socket;
+	int								_numberOfModes;
+					    
 protected:
-						//			IAttachableCameraMode(void);
+	static void					    Initiation(void);
+//	static IAttachableCameraMode*   ModeManager;
+	IAttachableCameraMode(void){}
+	IAttachableCameraMode*			instances[20];	
+
+
+	static unsigned					getModeID(void);
 	virtual							~IAttachableCameraMode(void);
 	virtual void					DirtyUpdate(void){};
-
-public:
 	bool							IsDirty;
-	void							Update(void);
+	static unsigned					id;
+	virtual IAttachableCameraMode*	CreateInstance(int ID){return new IAttachableCameraMode();}
+	virtual IAttachableCameraMode*  GetInstance(void);
+public:
+	static void						EnableAttachebleModesForCamera(Cam*);
+	static unsigned					AddModeToCamera(void);
+
 	static void						PlugOff(void);
-	static void						PlugIn(int slot);
-	static IAttachableCameraMode*   AddToCameraModes(Cam*);
+	static void						PlugIn(void);
+
+	void					Update(void);
 };
+
 
 
 class FirstPersonCamera : public IAttachableCameraMode
 {
 private:
+	static unsigned			ModeID ;
 	int						mouseX, mouseY;			// last-frame mouse position within screen
 	float					angle;					// angle of rotation for the camera direction
 	float					lx, lz;					// actual vector representing the camera's direction
@@ -49,8 +61,20 @@ private:
 	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
 	float					mouseSpeed;				// firstPerson Mouse sensitivity
 	bool					_transformChanged;		// flag if last frame the transform has changed
+protected:
 	virtual void			DirtyUpdate(void);		// Update move and rotate Transform
+	virtual IAttachableCameraMode* CreateInstance(int ID)
+	{
+		ModeID = ID;
+		return new FirstPersonCamera();
+	}
+	virtual IAttachableCameraMode* GetInstance(void)
+	{
+		return instances[ModeID];
+	}
+
 public:
+
 };
 
 class Cam : public IInteractive, public IConnectable, public IAudioReciever
@@ -110,12 +134,15 @@ public:
 	virtual void			keyPress(char key);
 	virtual void			specialKeyPressed(int key);
 	virtual void			mouseMotion(int newX, int newY);
+
+
 	int						NumberOfCameraModes; 
 	IAttachableCameraMode*  ModeSocket;				// reference to attached mode-extensions...
 	BOOL					ModeAttached(BOOL=-1);  // get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
 	int						CurrentCamMode;
-	template<typename CamMode> int AddModeToCamera(void);
+	template<typename CamMode> unsigned AddModeToCamera(void);
 	
+	bool AttachableModesEnabled;
 };
 
 #endif
