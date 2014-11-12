@@ -114,17 +114,17 @@ void LoadContent(void)
 	//ground->Init();
 
 	fountain = new Fountain();
-	fountain->Init();
+	//fountain->Init();
 	
 	int i = -1;
 
-	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
+	/*IGObject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-
+	*/
 	
 
 	

@@ -66,6 +66,9 @@ public:
 	static GLuint loadTexture(const char *);
 	static void Rotate90(float partOf90,float & A,float & B);
 //	static Vector3 LoadePPMBitmap(const char* filename,Voxel* buffer);
+
+	static float GetRandom(void); // Returns values between 0 and 100
+
 };
 
 #endif

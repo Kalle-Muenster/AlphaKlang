@@ -6,13 +6,16 @@
 #include "UpdateManager.h"
 
 
-class Fountain : public IUpdateble
+class Fountain
+	: public IUpdateble
 {
 private:
 	int size;
+	int spawnLeft;
 	std::vector<FourtainObject*> objects;
+	double timer;
+	void Spawn(void);
 
-	FourtainObject* cube;
 
 public:
 	Fountain(void);
@@ -26,7 +29,6 @@ public:
 	void Clear(void);
 
 	/* Logic */
-	void Init(void);
 	virtual void DoUpdate(void);
 	void Draw(void);
 };

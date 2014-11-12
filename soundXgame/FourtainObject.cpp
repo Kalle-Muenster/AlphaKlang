@@ -1,18 +1,24 @@
 #include "FourtainObject.h"
 #include "projectMacros.h"
 
-FourtainObject::FourtainObject(void) : power(1)
+FourtainObject::FourtainObject(void)
 {
-
-
 	InitializeObject("cube-quads.obi",false);
 	this->LoadTexture("X-512.jpg");
+	
+	// verschiedene start vec3
+	// different scale (0.1 - 0.3)
+	// different power
+	// different timerHeigher
+
+	this->scale(Vector3(0.3f,0.3f,0.3f));
+	this->IsGrounded = false;
+
+	LockID();
 
 	
-	this->IsVisible=true;
+	UpdateManager::getInstance()->SignInForUpdate(this);
 
-	this->move(1.0f, 2.0f, -3.0f);
-	this->scale(Vector3(0.3f,0.3f,0.3f));
 }
 
 
@@ -21,31 +27,42 @@ FourtainObject::~FourtainObject(void)
 }
 
 void
-FourtainObject::Create(void)
+FourtainObject::AddToScene(void)
 {
 	SCENE->Add(this);
+	this->IsVisible=true;
 }
 
 void
 FourtainObject::Clear(void)
 {
 	//SCENE->remove(this);
+	// TODO reset Values
 }
 
 void
-FourtainObject::Update(void)
+FourtainObject::DoUpdate(void)
 {
+	//int id = GetID();
+
+
 //	float deltaTime = 0.005;
 
 //	timeSinceStart += deltaTime;
 //	power -= deltaTime;
 
-	timeSinceStart += INPUT->FrameTime; //INPUT->FrameTime hold's actual deltaTime in seconds
-	power -= INPUT->FrameTime;
+	//timeSinceStart += INPUT->FrameTime; //INPUT->FrameTime hold's actual deltaTime in seconds
+	if(power > 0)
+	{
+		power -= INPUT->FrameTime / 5;
+		if(power < 0)
+			power = 0;
+	}
 
 	Transform transform = this->transform;
 	Vector3 pos = transform.position;
-	pos.y += 0.01f;
+	pos.y += speed * power + gravity;
+	pos += direction / expanding * power;
 	this->move(pos);
 
 }

@@ -470,3 +470,11 @@ Utility::Rotate90(float partOf90,float & A,float & B)
 {
 	_rotate90(partOf90,A,B);
 }
+
+float
+Utility::GetRandom(void)
+{
+	float rand = std::rand() % 100;
+	rand /= 100;
+	return rand;
+}
