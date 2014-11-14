@@ -3,6 +3,7 @@
 
 #include "Observer.h"
 #include "IGObject.h"
+#include "IMeshObject.h"
 #include "Connectable.h"
 #include "IMusicListener.h"
 

@@ -15,67 +15,71 @@ enum CAM_MODE : int
 	CAM_MODE_NULL=NULL
 };
 
-class IAttachableCameraMode //: public IConnectable
+
+
+class CameraMode : public IConnectable
 {
-private:
-	IAttachableCameraMode(Cam*);
-//	static IAttachableCameraMode*   _modeManager;
-	Cam*							socket;
-	int								_numberOfModes;
-					    
 protected:
-	static void					    Initiation(void);
-//	static IAttachableCameraMode*   ModeManager;
-	IAttachableCameraMode(void){}
-	IAttachableCameraMode*			instances[20];	
-
-
-	static unsigned					getModeID(void);
-	virtual							~IAttachableCameraMode(void);
-	virtual void					DirtyUpdate(void){};
-	bool							IsDirty;
-	static unsigned					id;
-	virtual IAttachableCameraMode*	CreateInstance(int ID){return new IAttachableCameraMode();}
-	virtual IAttachableCameraMode*  GetInstance(void);
+	virtual void UpdateMode(void){}
+	
 public:
-	static void						EnableAttachebleModesForCamera(Cam*);
-	static unsigned					AddModeToCamera(void);
-
-	static void						PlugOff(void);
-	static void						PlugIn(void);
-
-	void					Update(void);
-};
-
-
-
-class FirstPersonCamera : public IAttachableCameraMode
-{
-private:
-	static unsigned			ModeID ;
-	int						mouseX, mouseY;			// last-frame mouse position within screen
-	float					angle;					// angle of rotation for the camera direction
-	float					lx, lz;					// actual vector representing the camera's direction
-	float					x, z;					// XZ position of the camera
-	float					eyeY;					// head rotation front/back
-	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
-	float					mouseSpeed;				// firstPerson Mouse sensitivity
-	bool					_transformChanged;		// flag if last frame the transform has changed
-protected:
-	virtual void			DirtyUpdate(void);		// Update move and rotate Transform
-	virtual IAttachableCameraMode* CreateInstance(int ID)
+	Cam* camera;
+	bool IsActive;
+	bool IsDirty;
+	void UpdateAllActiveModes(void)
 	{
-		ModeID = ID;
-		return new FirstPersonCamera();
+		CameraMode* m;
+		for(int i = 0;i<NumberOfConnectedObjects;i++)
+		{
+			m = (CameraMode*)getConnectables(ConIDs[i]-1);
+			if(m->IsActive && m->IsDirty)
+			{	
+				m->UpdateMode();
+				m->IsDirty=false;
+			}
+		}
 	}
-	virtual IAttachableCameraMode* GetInstance(void)
+	
+	char* ModeName;
+	int CamModeID(void)
+		{return (int)this->ConnectionID;}
+
+	virtual void SetConnection(IConnectable* camconnector)
+		{camera=((CameraMode*)camconnector)->camera;}
+
+	template<typename T> T* AddCameraMode(void)
 	{
-		return instances[ModeID];
+
+	Not_hasInitialized();
+		
+	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+		if(ConIDs[i] == 0)
+		{
+			T::StaticCamModeID = i;
+			CameraMode* newcon = new T();
+			newcon->SetConnection(this);
+			newcon->ConnectionID = i+1;
+			newcon->ModeName = (char*)typeid(T).name();
+			setConnectables(i,(T*)newcon);
+			ConIDs[i]=i+1;
+			NumberOfConnectedObjects=ConIDs[i];
+			return (T*)getConnectables(i);
+		}
+		return NULL;
 	}
 
-public:
+	template<typename T> T* GetCameraMode(ConID id)
+	{
+		return (T*)getConnectables(id-1);
+	}
+
+	template<typename T> T* GetCameraModeByStaticID(void)
+	{
+		return (T*)getConnectables(T::StaticCamModeID);
+	}
 
 };
+
 
 class Cam : public IInteractive, public IConnectable, public IAudioReciever
 {
@@ -137,12 +141,10 @@ public:
 
 
 	int						NumberOfCameraModes; 
-	IAttachableCameraMode*  ModeSocket;				// reference to attached mode-extensions...
+	CameraMode*			    ModeSocket;				// reference to attached mode-extensions...
 	BOOL					ModeAttached(BOOL=-1);  // get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
 	int						CurrentCamMode;
-	template<typename CamMode> unsigned AddModeToCamera(void);
-	
-	bool AttachableModesEnabled;
+
 };
 
 #endif

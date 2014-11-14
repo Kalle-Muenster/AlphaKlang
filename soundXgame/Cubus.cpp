@@ -12,6 +12,12 @@ Cubus::Cubus(void)
 	this->IsVisible=true;
 }
 
+Cubus::Cubus(string textureFile,bool transparent)
+{
+	InitializeCubus(textureFile,"03.wav",transparent);
+	this->SetName("Cubus");
+	this->IsVisible=true;
+}
 
 Cubus::~Cubus(void)
 {
@@ -22,21 +28,21 @@ void
 Cubus::InitializeCubus(void)
 {
 	InitializeObject("cube-quads.obi",true);
-//	this->AddConnectable<CamTargetMover>();
 	this->AddConnectable<CamTargetRotator>();
 }
 
 void
-Cubus::InitializeCubus(string texturefile)
+Cubus::InitializeCubus(string texturefile,bool useTransparenz)
 {
 	InitializeCubus();
 	LoadTexture(texturefile);
+	this->UseTransparenz = useTransparenz;
 }
 
 void 
-Cubus::InitializeCubus(string texturefile,string audiofile)
+Cubus::InitializeCubus(string texturefile,string audiofile,bool useTransparenz)
 {
-	InitializeCubus(texturefile);
+	InitializeCubus(texturefile,useTransparenz);
 	SetCollisionSound(audiofile);
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 }

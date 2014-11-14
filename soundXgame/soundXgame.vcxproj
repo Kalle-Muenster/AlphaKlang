@@ -82,10 +82,12 @@
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="Cubus.cpp" />
+    <ClCompile Include="FirstPerson.cpp" />
     <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FourtainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGObject.cpp" />
+    <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="IMusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
@@ -113,10 +115,12 @@
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="Cubus.h" />
+    <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FourtainObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IGObject.h" />
+    <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="IMusicListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />

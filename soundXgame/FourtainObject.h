@@ -2,6 +2,7 @@
 #define __FOURTAINOBJECT_H__
 
 #include "IGObject.h"
+#include "IMeshObject.h"
 #include "UpdateManager.h"
 
 

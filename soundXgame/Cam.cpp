@@ -11,15 +11,6 @@ static Cam* _Socket;
 static bool _shareAudioReciever = true;
 bool _targetGRABBED=false;
 
-IAttachableCameraMode* _modeManager;
-IAttachableCameraMode* ModeManager;
-//int _HasCameraMode(size_t t)
-//{
-//	for(int i = 0;i<MAXIMUM_NUMBER_OF_CAMERA_MODES;i++)
-//		if(t==typeid(_CameraModes[i]).hash_code())
-//			return i;
-//		else return -1;
-//}
 
 Cam::Cam(void) :
 	angle(0),
@@ -31,8 +22,7 @@ Cam::Cam(void) :
 	mouseSpeed(1.0f),
 	mouseX(0),
 	mouseY(0),
-	NumberOfCameraModes(0),
-	AttachableModesEnabled(false)
+	NumberOfCameraModes(0)
 {
 	this->transform.position.x=0;
 	this->transform.position.y=1;
@@ -60,83 +50,7 @@ Cam::Cam(void) :
 	INPUT->attachSpecial(this);
 	
 	INPUT->attachMouseWheel(this);
-
-	IAttachableCameraMode::EnableAttachebleModesForCamera(this);
-	FirstPersonCamera::AddModeToCamera();
-	FirstPersonCamera::PlugIn();
-	
 }
-
-bool _modeManagerInitiated = false;
-
-IAttachableCameraMode::IAttachableCameraMode(Cam* camera)
-{
-	camera->AttachableModesEnabled = true;
-}
-
-void
-IAttachableCameraMode::EnableAttachebleModesForCamera(Cam* camera)
-{
-	Initiation();
-	ModeManager->socket=camera;
-	camera->ModeSocket = new IAttachableCameraMode(camera);
-}
-
-IAttachableCameraMode::~IAttachableCameraMode(void)
-{
-
-}
-
-void
-IAttachableCameraMode::Initiation(void)
-{
-	_modeManager= new IAttachableCameraMode();
-	ModeManager = _modeManager; 
-	ModeManager->_numberOfModes = 0;
-	for(int i=0;i<20;i++)
-		ModeManager->instances[i]=NULL;
-	_modeManagerInitiated = true;
-}
-
-unsigned
-IAttachableCameraMode::AddModeToCamera(void)
-{
-	for(int i = 0;i<20;i++)
-		if(ModeManager->instances[i]==NULL)
-		{
-			ModeManager->instances[i] = ModeManager->CreateInstance(i);
-			return i;
-		}
-
-	return 1000;
-}
-
-IAttachableCameraMode*
-IAttachableCameraMode::GetInstance(void)
-{
-	return ModeManager;
-}
-
-void 
-IAttachableCameraMode::PlugOff(void)
-{
-	ModeManager->socket->ModeSocket = NULL;
-}
-
-void
-IAttachableCameraMode::PlugIn(void)
-{
-	ModeManager->socket->ModeSocket = ModeManager->GetInstance();
-}
-
-void
-IAttachableCameraMode::Update(void)
-{
-	if(IsDirty)
-		DirtyUpdate();
-	IsDirty=false;
-}
-
 
 
 bool
@@ -412,10 +326,10 @@ Cam::Update()
 		this->UpdateTransform();
 	}
 
-	if(ModeAttached())
+	/*if(ModeAttached())
 	{
-		ModeSocket->Update();
-	}
+		ModeSocket->UpdateAllActiveModes();
+	}*/
 
 	if(_targetGRABBED)
 	{

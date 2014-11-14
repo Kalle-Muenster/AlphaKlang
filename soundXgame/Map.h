@@ -2,6 +2,7 @@
 #define __MAP_INCLUDET__
 
 #include "IGObject.h"
+#include "IMeshObject.h"
 
 class Map :
 	public IMeshObject

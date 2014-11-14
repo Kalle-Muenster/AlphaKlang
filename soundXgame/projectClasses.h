@@ -2,7 +2,9 @@
 #define _PROJECTCLASSES_H_
 
 #include "IGObject.h"
+#include "IMeshObject.h"
 #include "Cubus.h"
+#include "Sprite.h"
 #include "DataStructs.h"
 #include "Cam.h"
 #include "Connectable.h"

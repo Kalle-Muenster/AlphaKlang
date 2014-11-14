@@ -113,21 +113,21 @@ void LoadContent(void)
 	ground = Ground::getInstance();
 	//ground->Init();
 
-	fountain = new Fountain();
+	//fountain = new Fountain();
 	//fountain->Init();
 	
 	int i = -1;
 
-	/*IGObject* tempObject = SCENE->camera->SetTarget((new Cubus())->LoadTexture("Deckelblech-2.png"));
+	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->move(i,tempObject->getTransform()->position.y,i++);
-	*/
+	(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	
-
 	
+	(new Sprite())->move(0,2,0);
+	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
 	SCENE->camera->Mode(FIRSTPERSON);
 }

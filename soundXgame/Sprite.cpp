@@ -1,5 +1,5 @@
 #include "Sprite.h"
-
+#include "CamTargetRotator.h"
 
 Sprite::Sprite(void)
 {
@@ -39,9 +39,23 @@ Sprite::Sprite(void)
 
 
 	IGObject::InitializeObject(true);
+
+	SetUp("q2_23.png",true,true);
+	SetName("Sprite");
 }
 
 
 Sprite::~Sprite(void)
 {
+
+}
+
+
+void 
+Sprite::SetUp(string textureFile,bool tranzparent,bool camRotator)
+{
+	LoadTexture(textureFile);
+	this->UseTransparenz = tranzparent;
+	if(camRotator)
+		this->AddConnectable<CamTargetRotator>();
 }
