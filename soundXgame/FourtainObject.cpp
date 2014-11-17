@@ -56,6 +56,11 @@ FourtainObject::DoUpdate(void)
 		power -= INPUT->FrameTime / 5;
 		if(power < 0)
 			power = 0;
+
+		/*if(power <= 0.1f)
+		{
+			UpdateManager::getInstance()->SignOutForUpdate(this);
+		}*/
 	}
 
 	Transform transform = this->transform;

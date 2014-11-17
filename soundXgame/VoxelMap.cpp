@@ -41,31 +41,35 @@ void VoxelMap::ReLoade(char* filename)
 
 	if(filename == "FromDaCode")
 	{
-	mapWidth = BLUOB_BLUE.width;
-	mapHeight = BLUOB_BLUE.height;
-	numberOfVoxelers=BLUOB_BLUE.width*BLUOB_BLUE.height;
+		mapWidth = BLUOB_BLUE.width;
+		mapHeight = BLUOB_BLUE.height;
+		numberOfVoxelers=BLUOB_BLUE.width*BLUOB_BLUE.height;
 
-	MainSizzes.y = (float)size.x/mapWidth;
-	size.y=mapHeight*MainSizzes.y;
-	for(unsigned short I = 0;I<numberOfVoxelers*4;I+=4)
-	  {
-		  int i = I/4;
-		int x = i%mapWidth;
-		int y= i/mapWidth;
+		MainSizzes.y = (float)size.x/mapWidth;
+		size.y=mapHeight*MainSizzes.y;
+		for(unsigned short I = 0;I<numberOfVoxelers*4;I+=4)
+		{
+			int i = I/4;
+			int x = i%mapWidth;
+			int y= i/mapWidth;
 		
-		for(int c=0;c<4;c++)
-			voxels[i].farb.Bytss[c] =  BLUOB_BLUE.pixel_data[I+c];
+			for(int c=0;c<4;c++)
+			{
+				voxels[i].farb.Bytss[c] =  BLUOB_BLUE.pixel_data[I+c];
+			}
 
-		voxels[i].color = voxels[i].farb.s32;	
-		voxels[i].size.ix=voxels[i].size.yps=MainSizzes.y;
-		voxels[i].position.iX=(x*scale)+ *position.x;
-		voxels[i].position.Yps=(y*scale)+ *position.y;
-		voxels[i].MainDimensions = &MainSizzes;
-		voxels[i].factor=127;
-		if(x>0 && x<mapWidth && y>0 && y<mapHeight)
-			voxels[i].SetNeighbours(voxels[(i-1)-mapWidth].color ,voxels[i-(mapWidth-1)].color,voxels[i+1+mapWidth].color,voxels[i+(mapWidth-1)].color);
-	  }
-	loaded=true;
+			voxels[i].color = voxels[i].farb.s32;	
+			voxels[i].size.ix=voxels[i].size.yps=MainSizzes.y;
+			voxels[i].position.iX=(x*scale)+ *position.x;
+			voxels[i].position.Yps=(y*scale)+ *position.y;
+			voxels[i].MainDimensions = &MainSizzes;
+			voxels[i].factor=127;
+			if(x>0 && x<mapWidth && y>0 && y<mapHeight)
+			{
+				voxels[i].SetNeighbours(voxels[(i-1)-mapWidth].color ,voxels[i-(mapWidth-1)].color,voxels[i+1+mapWidth].color,voxels[i+(mapWidth-1)].color);
+			}
+		}
+		loaded=true;
 	}
 	else
 	{

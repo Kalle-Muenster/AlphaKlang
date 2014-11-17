@@ -8,13 +8,9 @@ Fountain::Fountain(void)
 	: size(20), timer(0), delay(1.4f)
 {
 	this->spawnLeft = this->size;
-
 	this->createRange();
 
-	
 
-	//tmp->x = 10.123;
-	//Fountain::release(tmp);
 	UpdateManager::getInstance()->SignInForUpdate(this);
 
 
@@ -75,7 +71,7 @@ Fountain::DoUpdate(void)
 	if(spawnLeft != 0 && timer >= this->delay)
 	{
 		this->Spawn();
-		timer -= this->delay;
+		timer = 0;
 		spawnLeft--;
 	}
 
@@ -83,6 +79,7 @@ Fountain::DoUpdate(void)
 	if(spawnLeft == 0)
 	{
 		// SignOutForUpdate
+		//UpdateManager::getInstance()->SignOutForUpdate(this);
 	}
 
 }
