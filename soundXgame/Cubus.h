@@ -9,10 +9,11 @@ class Cubus :
 {
 public:
 	Cubus(void);
-	Cubus(string textureFile,bool transparent);
+	Cubus(data32 color,bool backfaces=false);
+	Cubus(string textureFile,bool drawBackfaces=false);
 	void InitializeCubus(void);
-	void InitializeCubus(string texturefile,bool useTransparenz = false);
-	void InitializeCubus(string texturefile,string audioFile,bool useTransparenz=false);
+	void InitializeCubus(string texturefile,bool drawBackfaces=false);
+	void InitializeCubus(string texturefile,string audioFile,bool drawBackfaces=false);
 	void SetTexture(string);
 	void SetCollisionSound(string);
 	virtual ~Cubus(void);

@@ -1,32 +1,28 @@
 #include "VoxGrid.h"
+#include "projectMacros.h"
 
 VoxGrid::VoxGrid(void)
 {
-
+	IGObject::InitializeObject(true);
+	Loade("FromDaCode",&Voxlers[0]);
+	SetID(SCENE->Add(this));
+	LockID();
+	IsVisible=true;
 }
 
-VoxGrid::VoxGrid(const char* ppmfile)
+VoxGrid::VoxGrid(string ppmfile)
 {
-	Initiate(ppmfile);
+	InitializeObject((string)ppmfile);
+	SetID(SCENE->Add(this));
+	LockID();
+	IsVisible=true;
 }
 
 
 VoxGrid::~VoxGrid(void)
 {
-
+	delete voxels;
 }
 
-//void
-//VoxGrid::draw(void)
-//{
-	//glPushMatrix();
-//	{
-//		glBegin(GL_PROJECTION);
-//		glLoadIdentity();
 
-//		this->Draw(this->position);
 
-//		glEnd();
-//	}
-//	glPopMatrix();
-//}

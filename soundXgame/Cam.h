@@ -7,6 +7,7 @@
 #include "Connectable.h"
 #include "AudioObject.h"
 
+
 enum CAM_MODE : int
 {
 	FIRSTPERSON = 1,
@@ -32,7 +33,7 @@ public:
 		for(int i = 0;i<NumberOfConnectedObjects;i++)
 		{
 			m = (CameraMode*)getConnectables(ConIDs[i]-1);
-			if(m->IsActive && m->IsDirty)
+			if(m->IsActive || m->IsDirty)
 			{	
 				m->UpdateMode();
 				m->IsDirty=false;
@@ -81,29 +82,30 @@ public:
 };
 
 
-class Cam : public IInteractive, public IConnectable, public IAudioReciever
+
+class Cam : public IWheelee, public IConnectable, public IAudioReciever
 {
 private:
-	IGObject*				_target;				//the object the camaera alwas "look's" at if in FOLLOWTARGET-Mode...
-	float					_distanceToTarget;		//hold's the actual distance to the cam's target if in FOLLOWTARGET-Mode...
-	Vector3					*camTarget;				//position vector the camera looks at if in FOLLOWTARGET-Mode...
+
+	Vector3					*_targetPosition;				//position vector the camera looks at if in FOLLOWTARGET-Mode...
+	IGObject*				_targetObject;
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;
 	CAM_MODE				_mode;
+	float					_distanceToTarget;
 
-
-	int						mouseX, mouseY;			// last-frame mouse position within screen
-	float					angle;					// angle of rotation for the camera direction
-	float					lx, lz;					// actual vector representing the camera's direction
-	float					x, z;					// XZ position of the camera
-	float					eyeY;					// head rotation front/back
-	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
-	float					mouseSpeed;				// firstPerson Mouse sensitivity
-	bool					_transformChanged;		// flag if last frame the transform has changed
+	//int						mouseX, mouseY;			// last-frame mouse position within screen
+	//float					angle;					// angle of rotation for the camera direction
+	//float					lx, lz;					// actual vector representing the camera's direction
+	//float					x, z;					// XZ position of the camera
+	//float					eyeY;					// head rotation front/back
+	//float					moveSpeed;				// firstPerson Keyboard moving sensitivity
+	//float					mouseSpeed;				// firstPerson Mouse sensitivity
+	//bool					_transformChanged;		// flag if last frame the transform has changed
 
 	void					UpdateView();			// Update Window and or Viewport Changes...
-	void					UpdateTransform(void);	// Update move and rotate Transform
+//	void					UpdateTransform(void);	// Update move and rotate Transform
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
 
 
@@ -118,16 +120,15 @@ public:
 	virtual double			FieldOfView(double = _FNan._Double);
 	CAM_MODE                Mode(CAM_MODE = (CAM_MODE)NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
-	Transform               transform;					
-	IGObject*				SetTarget(IGObject*);
-	void					SetTargetAsFirstPerson(IGObject*);
-	IGObject*				GrabTarget(void);
+	Transform               transform;	
+	void		            SetTarget(Vector3* target);
+	IGObject*               SetTarget(IGObject* target);
 	IGObject*				GetTarget(void);
 	Vector3					GetTargetPosition(void);
 	float					GetTargetDistance(void);
 	void					followTarget(void);
-	void					StopFollowing(void);
-	void					SetTargetasFirstPerson(void);
+	void					stopFollowing(void);
+//	void					SetTargetasFirstPerson(void);
 	virtual void			WheelVRoll(WHEEL state);
 	Vector3					move(float x,float y,float z);
 	Vector3		   		    move(glm::vec3);
@@ -135,9 +136,9 @@ public:
 	Vector3			        rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
 	virtual void			Update(void);
-	virtual void			keyPress(char key);
-	virtual void			specialKeyPressed(int key);
-	virtual void			mouseMotion(int newX, int newY);
+	//virtual void			keyPress(char key);
+	//virtual void			specialKeyPressed(int key);
+	//virtual void			mouseMotion(int newX, int newY);
 
 
 	int						NumberOfCameraModes; 

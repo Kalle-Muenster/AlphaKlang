@@ -12,8 +12,10 @@
 IMeshObject::IMeshObject(void)
 {
 	this->transform.scale = Vector3(1,1,1);
-	this->color = Color(128,128,128,255);
+	this->color.u32 = 0xffffffff;
 	this->FaceShape = GL_TRIANGLES;
+	this->NoBackfaceCulling = false;
+	this->UseTexture = false;
 }
 
 IMeshObject::~IMeshObject(void)
@@ -27,17 +29,18 @@ IMeshObject::LoadMesh(const char* objFileName)
 	
 	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
 
-	glm::vec3 temp1 = glm::vec3(0,0,-1);
-	glm::vec3 temp2 = glm::vec3(1,0,0);
-	glm::vec3 temp3 = glm::vec3(0,1,0);
 
-	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
-	transform.right = temp2;
-	transform.up = temp3;
 
-	verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
-	verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
-	verts.push_back(glm::vec3(temp3.x,temp3.y,temp3.z));
+	
+	transform.right	  = glm::vec3(1,0,0);
+	transform.up	  = glm::vec3(0,1,0);
+	transform.forward = glm::vec3(0,0,1);
+
+	//verts.push_back(transform.right);
+	//verts.push_back(transform.up);
+	//verts.push_back(transform.forward);
+
+
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -49,16 +52,26 @@ IMeshObject::LoadMesh(const char* objFileName)
 }
 
 void
-IMeshObject::SetColor(Color newColor)
+IMeshObject::SetColor(data32 newColor)
 {
 	this->color = newColor;
+}
+
+void
+IMeshObject::SetColor(unsigned char r,unsigned char g,unsigned char b,unsigned char a)
+{
+	color.byte[0] = a;
+	color.byte[1] = r;
+	color.byte[2] = g;
+	color.byte[3] = b;
+
 }
 
 IGObject*
 IMeshObject::LoadTexture(const char* textureFile)
 {
-
-	this->textureID = Utility::loadTexture(textureFile);
+	this->texture.ID = Utility::loadTexture(textureFile);
+	UseTexture = true;
 	return this;
 }
 
@@ -134,32 +147,56 @@ IMeshObject::draw(void)
 {
 
 
-
 	if(!IsVisible)
 		return;
 	
 	if(!vertexBufferID)
 		return;
 
-	glEnable(GL_TEXTURE_2D);
-	
-	if(UseTransparenz)
+	if(NoBackfaceCulling)
 		glDisable(GL_CULL_FACE);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
-	
-	if(textureID)
+	else
 	{
-		glBindTexture(GL_TEXTURE_2D, textureID);
-		glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+	}
+
+	//glEnable(GL_TEXTURE_2D);
+	if(UseTexture)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}
 	else
-		glColor4b(*this->color.R,*this->color.G,*this->color.B,*this->color.A);
+	{
+	//	glColor4f(0.1f,0.2f,0.3f,1.0f);
+		glColor4b(color.byte[1],color.byte[2],color.byte[3],color.byte[0]);
+	}
+//	else
+	//	glDisable(GL_TEXTURE_2D);
+
+
+
+
 
 	glPushMatrix();
 	{
+//	if(UseTexture)
+//	{
+		
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+	
+		
+		glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+//	}
+//	else
+//	{
+	//	
+//		glColor4f(*this->color.R/255,*this->color.G/255,*this->color.B/255,*this->color.A/255);
+//	}
 		
 		//Translate...
 		glTranslatef(this->getTransform()->position.x, this->getTransform()->position.y,this->getTransform()->position.z);
@@ -180,15 +217,24 @@ IMeshObject::draw(void)
 		glScalef(this->getTransform()->scale.x,this->getTransform()->scale.y,this->getTransform()->scale.z);
 		
 		//Draw
-		glDrawArrays(this->FaceShape, 0, verts.size()-3);
+		glDrawArrays(this->FaceShape, 0, verts.size());
 	}
 	glPopMatrix();
 
-	if(UseTransparenz)
-	{
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-	}
-	glDisable(GL_TEXTURE_2D);
+    
 
+	if(UseTexture)
+		glDisable(GL_TEXTURE_2D);
+	else
+		glColor4f(1,1,1,1);
+}
+
+//Texture Struct:
+//############################################
+void Texture::Load(string fileName,short Width,short Height,Format textureFormat)
+{
+	ID = Utility::loadTexture(fileName);
+	w=Width;
+	h=Height;
+	format=textureFormat;
 }

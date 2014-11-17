@@ -3,6 +3,7 @@
 
 #include "IGObject.h"
 #include "VoxelMap.h"
+
 struct Vector3;
 
 
@@ -14,34 +15,16 @@ class IVoxelObject : public VoxelMap ,public IGObject
 protected:
 	
 	ConID		  conID;
-	Voxel		  Voxlers[65536];
+	Voxel		  Voxlers[16384+64];
 
 public:
 
 	IVoxelObject(void);
 	virtual ~IVoxelObject(void);
-	virtual void Initiate(const char* ppmFileName);
+	virtual void InitializeObject(string ppmFileName,bool addToScene=true);
 	virtual void draw(void);
-	virtual Vector3 move(float,float,float);
-	virtual Vector3 scale(Vector3){return transform.scale;}
-	virtual Vector3 rotate(float,float,float);
 
-	template<typename C> C* AddConnectable(void)
-	{
-		return this->conXtor->AddConnectable<C>();
-	}
 
-	template<typename C> C* GetConnected(void)
-	{
-		return this->conXtor->GetConnected<C>();
-	}
-
-	template<typename C> bool HasConnectable(void);
-
-	operator Connectable(void)
-	{
-		return this->conXtor;
-	}
 
 };
 

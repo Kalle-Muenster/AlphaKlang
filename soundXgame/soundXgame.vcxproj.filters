@@ -92,6 +92,18 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="TargetGrabber.cpp">
+      <Filter>Core\CameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowTarget.cpp">
+      <Filter>Core\CameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxControl.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Spectator.cpp">
+      <Filter>Core\CameraModes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -187,12 +199,34 @@
     <ClInclude Include="Sprite.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="TargetGrabber.h">
+      <Filter>Core\CameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraModesIncluder.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowTarget.h">
+      <Filter>Core\CameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxControl.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AllConnectablesInclude.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Spectator.h">
+      <Filter>Core\CameraModes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.obi" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
+    <None Include="drei.ppm" />
+    <None Include="drei_.ppm" />
+    <None Include="ich.ppm" />
+    <None Include="tr.ppm" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

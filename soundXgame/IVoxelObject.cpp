@@ -6,57 +6,36 @@
 
 IVoxelObject::IVoxelObject(void)
 {
-	conXtor = new IConnectable();
-	conXtor->SetConnection(this);
 
 	this->position.x = &this->transform.position.x;
 	this->position.y = &this->transform.position.y;
 }
 
 void
-IVoxelObject::Initiate(const char* ppmFileName)
+IVoxelObject::InitializeObject(string ppmFileName,bool addToScene)
 {
 	this->Loade(ppmFileName,SetVoxelerBuffer(&Voxlers[0]));
-	SCENE->Add(this);
+	SetID(SCENE->Add(this));
+	LockID();
 	IsVisible=true;
 }
 
 IVoxelObject::~IVoxelObject(void)
 {
-	delete conXtor;
+	delete voxels;
 }
 
 void
 IVoxelObject::draw(void)
 {
-	this->Draw(this->position);
+	if(!IsVisible)
+		return;
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_CULL_FACE);
+	glColor4b(255,255,255,255);
+	IsGrounded=false;
+	glPushMatrix();
+		this->Draw(this->position);
+	glPopMatrix();
 }
 
-Vector3
-IVoxelObject::move(float iX,float Yps,float Zed)
-{
-	this->transform.position.x = iX;
-	this->transform.position.y = Yps;
-	this->transform.position.z = Zed;
-
-	return this->getTransform()->position;
-}
-
-Vector3
-IVoxelObject::rotate(float iX,float Yps,float Zed)
-{
-	this->getTransform()->rotation.x = iX;
-	this->getTransform()->rotation.y = Yps;
-	this->getTransform()->rotation.z = Zed;
-
-	return	this->getTransform()->rotation;
-}
-	
-template<typename C> bool 
-IVoxelObject::HasConnectable(void)
-{
-	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(this->conXtor->ConIDs[i] == typeid(C))
-			return true;
-	return false;
-}

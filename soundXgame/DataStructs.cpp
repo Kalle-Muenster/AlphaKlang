@@ -1,5 +1,6 @@
 #include "DataStructs.h"
 
+
 // Vector3 
 //##################################################
 Vector3::Vector3(void)
@@ -108,7 +109,11 @@ Vector3::direction(Vector3 to)
 	return glm::normalize((glm::vec3)(to - *this));
 }
 
-
+Vector3
+Vector3::normal(void)
+{
+	return glm::normalize(glm::vec3(x,y,z));
+}
 
 
 
@@ -143,13 +148,12 @@ Data32::~Data32(void)
 
 Color::Color(void)
 {
-	BaseInitor();
+	
 }
 
 void
 Color::initor(void)
 {
-	BaseInitor();
 	R = &data.byte[1];
 	G = &data.byte[2];
 	B = &data.byte[3];
@@ -159,17 +163,17 @@ Color::initor(void)
 
 Color::Color(unsigned uint)
 {
-	initor();
 	data.u32 = uint;
+	initor();
 }
 
 Color::Color(int r,int g, int b, int a)
 {
-	initor();
 	data.byte[0] = a;
 	data.byte[1] = r;
 	data.byte[2] = g;
 	data.byte[3] = b;
+	initor();
 }
 
 chan
@@ -190,14 +194,14 @@ Color::~Color(void)
 
 Sample::Sample(void)
 {
+	data.s16[0]=0;
+	data.s16[1]=0;
 	initor();
 }
 
 void
 Sample::initor(void)
 {
-	BaseInitor();
-	data.u32 = 0;
 	L = &data.s16[0];
 	R = &data.s16[1];
 	Float32 = &data.f32;
@@ -208,6 +212,7 @@ Sample::Sample(short Left,short Right)
 	initor();
 	data.s16[0] = Left;
 	data.s16[1] = Right;
+	
 }
 
 Sample::Sample(float monoSample)

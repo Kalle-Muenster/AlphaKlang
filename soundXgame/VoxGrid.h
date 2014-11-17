@@ -24,10 +24,9 @@ class VoxGrid :
 {
 public:
 	VoxGrid(void);
-	VoxGrid(const char* ppmfile);
-	
+	VoxGrid(string ppmFileName);
 	virtual ~VoxGrid(void);
-//	virtual void draw(void);
+	//virtual void draw(void);
 };
 
 #endif

@@ -7,17 +7,29 @@
 
 Cubus::Cubus(void)
 {
-	InitializeCubus("X-3.png","03.wav");
+	InitializeCubus();
+	SetCollisionSound("03.wav");
+	this->GetConnected<AudioEmitter>()->DoUpdate();
 	this->SetName("Cubus");
 	this->IsVisible=true;
 }
 
-Cubus::Cubus(string textureFile,bool transparent)
+Cubus::Cubus(string textureFile,bool backfaces)
 {
-	InitializeCubus(textureFile,"03.wav",transparent);
+	InitializeCubus(textureFile,"03.wav",backfaces);
 	this->SetName("Cubus");
 	this->IsVisible=true;
 }
+
+Cubus::Cubus(data32 color,bool backfaces)
+{
+	InitializeCubus();
+	this->color=color;
+	this->SetName("Cubus");
+	this->IsVisible=true;
+	this->NoBackfaceCulling = backfaces;
+}
+
 
 Cubus::~Cubus(void)
 {
@@ -29,20 +41,21 @@ Cubus::InitializeCubus(void)
 {
 	InitializeObject("cube-quads.obi",true);
 	this->AddConnectable<CamTargetRotator>();
+	this->NoBackfaceCulling = false;
 }
 
 void
-Cubus::InitializeCubus(string texturefile,bool useTransparenz)
+Cubus::InitializeCubus(string texturefile,bool backfaces)
 {
 	InitializeCubus();
 	LoadTexture(texturefile);
-	this->UseTransparenz = useTransparenz;
+	this->NoBackfaceCulling = backfaces;
 }
 
 void 
-Cubus::InitializeCubus(string texturefile,string audiofile,bool useTransparenz)
+Cubus::InitializeCubus(string texturefile,string audiofile,bool backfaces)
 {
-	InitializeCubus(texturefile,useTransparenz);
+	InitializeCubus(texturefile,backfaces);
 	SetCollisionSound(audiofile);
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 }

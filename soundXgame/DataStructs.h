@@ -18,6 +18,7 @@ public:
 	float distance(Vector3);
 	float GetLength(void);
 	Vector3 direction(Vector3 to);
+	Vector3 normal(void);
 	BASS_3DVECTOR asBassVector(void);
 	operator BASS_3DVECTOR();
 	operator glm::vec3();
@@ -58,8 +59,6 @@ public:
 	data32 GetUnion(void);
 	virtual ~Data32(void);
 };
-
-
 
 typedef short* pcm;
 
@@ -105,8 +104,7 @@ union Data64
 	Data64(void);
 };
 
-
-
+//transform 
 struct Transform
 {
 	Vector3 position;
@@ -120,6 +118,7 @@ struct Transform
 	Vector3 up;
 
 };
+
 
 
 

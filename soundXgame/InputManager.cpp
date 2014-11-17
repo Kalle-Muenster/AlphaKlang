@@ -381,7 +381,7 @@ InputManager::setMouseButtons(void)
 	if(Mouse.LEFT.CLICK)
 	{
 		if(_clicktimer>0)
-			Mouse.LEFT.CLICK = !(Mouse.LEFT.DOUBLE = true);
+		{	Mouse.LEFT.CLICK = !(Mouse.LEFT.DOUBLE = true); }
 		_clicktimer = _doubleClickLength;
 	}
 	else

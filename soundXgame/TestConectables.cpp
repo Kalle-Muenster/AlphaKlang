@@ -1,5 +1,5 @@
 #include "TestConectables.h"
-
+#include "CameraModesIncluder.h"
 
 void
 YetiInteractive::keyPress(char key)

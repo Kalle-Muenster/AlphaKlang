@@ -42,7 +42,7 @@ IConnectable::AddCombiner(IGObject* obje,ConID* id1,ConID* id2,int componentSlot
 IGObject* 
 IConnectable::Connection(void)
 {
-	return (IGObject*)this->connection;
+	return this->connection;
 }
 
 IConnectable*

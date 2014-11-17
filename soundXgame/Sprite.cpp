@@ -52,10 +52,19 @@ Sprite::~Sprite(void)
 
 
 void 
-Sprite::SetUp(string textureFile,bool tranzparent,bool camRotator)
+Sprite::SetUp(string textureFile,bool backFace,bool camRotator)
 {
 	LoadTexture(textureFile);
-	this->UseTransparenz = tranzparent;
+	this->NoBackfaceCulling = backFace;
+	if(camRotator)
+		this->AddConnectable<CamTargetRotator>();
+}
+
+void 
+Sprite::SetUp(Texture texture,bool backFace,bool camRotator)
+{
+	this->texture = texture;
+	this->NoBackfaceCulling = backFace;
 	if(camRotator)
 		this->AddConnectable<CamTargetRotator>();
 }

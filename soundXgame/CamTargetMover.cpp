@@ -1,5 +1,5 @@
 #include "CamTargetMover.h"
-
+#include "FollowTarget.h"
 
 CamTargetMover::CamTargetMover(void)
 {

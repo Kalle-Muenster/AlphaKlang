@@ -1,27 +1,19 @@
 #include "Cam.h"
 #include "projectMacros.h"
 #include "Ground.h"
+#include "CameraModesIncluder.h"
 
-
-#define DEBUG_OUTPUT_CAMERA
+ //#define DEBUG_OUTPUT_CAMERA
 
 #define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
 static unsigned _modeID = 0;
 static Cam* _Socket;
 static bool _shareAudioReciever = true;
-bool _targetGRABBED=false;
 
+
+int _spectator = -1;
 
 Cam::Cam(void) :
-	angle(0),
-	lx(0),
-	lz(-1),
-	x(0),z(5),
-	eyeY(1),
-	moveSpeed(0.1f),
-	mouseSpeed(1.0f),
-	mouseX(0),
-	mouseY(0),
 	NumberOfCameraModes(0)
 {
 	this->transform.position.x=0;
@@ -35,20 +27,20 @@ Cam::Cam(void) :
 	this->transform.movement.z=0;
 
 	InitiateListener(&this->transform);
-	_transformChanged=true;
 
 	_fieldOfView = 55;
 	_aspect = 16.0/9.0;
+
+	ModeSocket = new CameraMode();
+	ModeSocket->camera = this;
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
-	//_mode = CAM_MODE::PERSPECTIVE;
 
-	
-	INPUT->attachKey(this);
-	INPUT->attachMouseMove(this);
-	INPUT->attachSpecial(this);
-	
+	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
+	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
+	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
 	INPUT->attachMouseWheel(this);
 }
 
@@ -75,68 +67,54 @@ Cam::ShareAudio(BOOL setter)
 
 Cam::~Cam(void)
 {
-	delete camTarget;
+	delete _targetPosition;
+	delete _targetObject;
+}
+
+void
+Cam::SetTarget(Vector3 *position)
+{
+	_distanceToTarget = transform.position.distance(*position);
+	_targetPosition = position;
 }
 
 IGObject*
 Cam::SetTarget(IGObject *targetObject)
 {
+	Mode(FOLLOWTARGET);
 	_distanceToTarget = transform.position.distance(targetObject->getTransform()->position);
-	this->camTarget = &targetObject->getTransform()->position;
-	_target = targetObject;
-	_target->IsVisible=true;
-	printf("CAMERA: Set %s-ID:%i As Follow-Target!\n",_target->GetName(),_target->GetID());
-	return targetObject;
+	_targetPosition = &targetObject->getTransform()->position;
+	_targetObject = targetObject;
+	_targetObject->IsVisible=true;
+	
+	printf("CAMERA: FOLLOWTARGET: Set %s-ID:%i As Follow-Target!\n",_targetObject->GetName(),_targetObject->GetID());
+	return _targetObject;
 }
 
 IGObject* 
 Cam::GetTarget(void)
 {
-	return _target;
+	return _targetObject;
 }
 
 void
-Cam::followTarget()
+Cam::followTarget(void)
 {
-	if (this->camTarget)
-	{
+	if(this->_targetPosition)
 		Mode(FOLLOWTARGET);
-		_target->IsVisible=true;
-	}
 }
 
 void
-Cam::StopFollowing()
+Cam::stopFollowing(void)
 {
-	Mode();
-	this->GetTarget()->IsVisible=true;
-//	_target->IsVisible=true;
-}
-
-void
-Cam::SetTargetAsFirstPerson(IGObject* personObj)
-{
-	_target = personObj;
-	this->camTarget = &personObj->getTransform()->position;
-	_target->IsVisible=false;
-//	Mode(FIRSTPERSON_CONTROLLER);
-}
-
-
-
-IGObject*
-Cam::GrabTarget(void)
-{
-	if(!_target)
-		return NULL;
-	_targetGRABBED = true;
-		
+	Mode(CAM_MODE_NULL);
 }
 
 float
 Cam::GetTargetDistance(void)
 {
-	if(_target)
+	
+	if(_targetPosition!=NULL)
 	{
 		if(TransformDIRTY)
 			_distanceToTarget = transform.position.distance(GetTargetPosition());
@@ -149,21 +127,25 @@ Cam::GetTargetDistance(void)
 Vector3		
 Cam::GetTargetPosition(void)
 {
-	if(_target)
-		return *this->camTarget;
+	if(_targetPosition)
+		return *_targetPosition;
 	else
 		return transform.position;
 }
 
+
+
+
 /* * * * Transform * * * */
 
-void
-Cam::UpdateTransform(void)
-{
-	this->move(x, eyeY, z);
-	this->rotate(x+lx, 1.0f, z+lz);
-	this->_transformChanged = false;
-}
+// -> now in ModeUpdates...
+//void
+//Cam::UpdateTransform(void)
+//{
+//	this->move(x, eyeY, z);
+//	this->rotate(x+lx, 1.0f, z+lz);
+//	this->_transformChanged = false;
+//}
 
 Vector3		
 Cam::move(float x,float y,float z)
@@ -187,9 +169,9 @@ Cam::move(glm::vec3  newPosition)
 
 		TransformDIRTY = true;
 
-		#ifdef DEBUG_OUTPUT_CAMERA
-			printf("CAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
-		#endif
+		//#ifdef DEBUG_OUTPUT_CAMERA
+		//	printf("CAMERA: moved to: %f,%f,%f !\n",transform.position.x,transform.position.y,transform.position.z);
+		//#endif
 	}
 	return transform.position;
 }
@@ -209,11 +191,11 @@ Cam::rotate(glm::vec3 newRotation)
 		this->transform.rotation.y = newRotation.y;
 		this->transform.rotation.z = newRotation.z;
 
-		#ifdef DEBUG_OUTPUT_CAMERA
-			printf("CAMERA: forward = %f,%f,%f !\n",transform.forward.x,transform.forward.y,transform.forward.z);
-			printf("CAMERA: right = %f,%f,%f !\n",transform.right.x,transform.right.y,transform.right.z);
-			printf("CAMERA: up = %f,%f,%f !\n",transform.up.x,transform.up.y,transform.up.z);
-		#endif
+		//#ifdef DEBUG_OUTPUT_CAMERA
+		//	printf("CAMERA: forward = %f,%f,%f !\n",transform.forward.x,transform.forward.y,transform.forward.z);
+		//	printf("CAMERA: right = %f,%f,%f !\n",transform.right.x,transform.right.y,transform.right.z);
+		//	printf("CAMERA: up = %f,%f,%f !\n",transform.up.x,transform.up.y,transform.up.z);
+		//#endif
 
 		TransformDIRTY=true;
 	}
@@ -296,11 +278,11 @@ Cam::UpdateDirections(void)
 {
 	if(TransformDIRTY)
 	{
-		transform.forward = transform.right = transform.up = transform.position.direction(transform.rotation);
-		Utility::Rotate90(1,transform.right.z,transform.right.x);
-		Utility::Rotate90(1,transform.up.z,transform.up.y);
-
-		
+	//	transform.forward = transform.position.direction(transform.rotation);
+		transform.forward = (transform.rotation - transform.position).normal();
+//		transform.right =  - transform.forward;
+	//	Utility::Rotate90(1,transform.right.z,transform.right.x);
+	//	Utility::Rotate90(1,transform.up.z,transform.up.y);
 	}
 }
 
@@ -315,39 +297,23 @@ Cam::Update()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+
 	if(Mode()==FOLLOWTARGET)
 	{
-		this->move(transform.position);
-		this->rotate(*camTarget);
+				this->move(transform.position);
+				this->rotate(*_targetPosition);
 	}
 
-	if(Mode()==FIRSTPERSON)
-	{
-		this->UpdateTransform();
-	}
-
-	/*if(ModeAttached())
+	//Mode-Dependant updates...
+	if(ModeAttached())
 	{
 		ModeSocket->UpdateAllActiveModes();
-	}*/
-
-	if(_targetGRABBED)
-	{
-		_targetGRABBED = !INPUT->Mouse.LEFT.DOUBLE;
-		_target->getTransform()->position = (this->transform.position + (this->transform.forward * GetTargetDistance())) + (INPUT->Mouse.MIDDLE.HOLD? (this->transform.forward * -INPUT->Mouse.Movement.y/10) : Vector3(0,0,0));
 	}
-	else if(INPUT->Mouse.LEFT.DOUBLE)
-		GrabTarget();
-
-
-		
-	
-
-
 
 	//update camera position:
 	UpdateDirections();
 	
+	//Set To GL
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z,
 		transform.rotation.x,transform.rotation.y,transform.rotation.z,	0, 1, 0);
 
@@ -367,94 +333,94 @@ Cam::Update()
 void
 Cam::WheelVRoll(WHEEL state)
 {
-	
+	ModeSocket->GetCameraMode<Spectator>(_spectator)->mouseWheel(0,state);
 }
-
-void
-Cam::keyPress(char key)
-{
-	switch(key)
-	{
-		case 119: // W
-			x += lx * moveSpeed;
-			z += lz * moveSpeed;
-			break;
-		case 115: // S
-			x -= lx * moveSpeed;
-			z -= lz * moveSpeed;
-			break;
-		case 97: // A
-			x += lz * moveSpeed;
-			z += lx * (moveSpeed*-1);
-			break;
-		case 100: // D
-			x -= lz * moveSpeed;
-			z -= lx * (moveSpeed*-1);
-			break;
-	}
-
-
-	//scaleing the camtarget if grabbet..
-	if(key=='g')
-		_target->scale(_target->getTransform()->scale*1.1f);
-	
-	if(key=='k')
-		_target->scale(_target->getTransform()->scale*0.9f);
-
-
-	// Update Transform
-	UpdateTransform();
-}
-
-void
-Cam::specialKeyPressed(int key) 
-{
-	switch (key) {
-		case GLUT_KEY_UP:
-			x += lx * moveSpeed;
-			z += lz * moveSpeed;
-			break;
-		case GLUT_KEY_DOWN:
-			x -= lx * moveSpeed;
-			z -= lz * moveSpeed;
-			break;
-		case GLUT_KEY_LEFT:
-			x += lz * moveSpeed;
-			z += lx * (moveSpeed*-1);
-			break;
-		case GLUT_KEY_RIGHT:
-			x -= lz * moveSpeed;
-			z -= lx * (moveSpeed*-1);
-			break;
-	}
-	
-	// Update Transform
-	UpdateTransform();
-}
-
-void
-Cam::mouseMotion(int newX, int newY)
-{
- 	if(mouseX == 0 && mouseX == 0)
-	{
-		mouseX = newX;
-		mouseY = newY;
-	}
-	
-	int diffX = newX - mouseX;
-	int diffY = newY - mouseY;
-
-	angle += 0.005f * diffX * mouseSpeed;
-	lx = sin(angle);
-	lz = -cos(angle);
-	eyeY += (float)diffY / 300;
-	
-	mouseX = newX;
-	mouseY = newY;
-
-	
-
-	// Update Transform
-	UpdateTransform();
-}
+//
+//void
+//Cam::keyPress(char key)
+//{
+//	switch(key)
+//	{
+//		case 119: // W
+//			x += lx * moveSpeed;
+//			z += lz * moveSpeed;
+//			break;
+//		case 115: // S
+//			x -= lx * moveSpeed;
+//			z -= lz * moveSpeed;
+//			break;
+//		case 97: // A
+//			x += lz * moveSpeed;
+//			z += lx * (moveSpeed*-1);
+//			break;
+//		case 100: // D
+//			x -= lz * moveSpeed;
+//			z -= lx * (moveSpeed*-1);
+//			break;
+//	}
+//
+//
+//	//scaleing the camtarget if grabbet..
+//	if(key=='g')
+//		_target->scale(_target->getTransform()->scale*1.1f);
+//	
+//	if(key=='k')
+//		_target->scale(_target->getTransform()->scale*0.9f);
+//
+//
+//	// Update Transform
+//	UpdateTransform();
+//}
+//
+//void
+//Cam::specialKeyPressed(int key) 
+//{
+//	switch (key) {
+//		case GLUT_KEY_UP:
+//			x += lx * moveSpeed;
+//			z += lz * moveSpeed;
+//			break;
+//		case GLUT_KEY_DOWN:
+//			x -= lx * moveSpeed;
+//			z -= lz * moveSpeed;
+//			break;
+//		case GLUT_KEY_LEFT:
+//			x += lz * moveSpeed;
+//			z += lx * (moveSpeed*-1);
+//			break;
+//		case GLUT_KEY_RIGHT:
+//			x -= lz * moveSpeed;
+//			z -= lx * (moveSpeed*-1);
+//			break;
+//	}
+//	
+//	// Update Transform
+//	UpdateTransform();
+//}
+//
+//void
+//Cam::mouseMotion(int newX, int newY)
+//{
+// 	if(mouseX == 0 && mouseX == 0)
+//	{
+//		mouseX = newX;
+//		mouseY = newY;
+//	}
+//	
+//	int diffX = newX - mouseX;
+//	int diffY = newY - mouseY;
+//
+//	angle += 0.005f * diffX * mouseSpeed;
+//	lx = sin(angle);
+//	lz = -cos(angle);
+//	eyeY += (float)diffY / 300;
+//	
+//	mouseX = newX;
+//	mouseY = newY;
+//
+//	
+//
+//	// Update Transform
+//	UpdateTransform();
+//}
 

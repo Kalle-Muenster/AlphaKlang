@@ -7,16 +7,12 @@
 #include "Sprite.h"
 #include "DataStructs.h"
 #include "Cam.h"
-#include "Connectable.h"
-#include "CamTargetRotator.h"
-#include "Combiner.h"
-#include "IMusicListener.h"
-#include "IObserver.h"
-#include "TestConectables.h"
 #include "TestYeti.h"
 #include "Observer.h"
 #include "Map.h"
 #include "VoxelMap.h"
 #include "VoxGrid.h"
+#include "CameraModesIncluder.h"
+#include "AllConnectablesInclude.h"
 
 #endif

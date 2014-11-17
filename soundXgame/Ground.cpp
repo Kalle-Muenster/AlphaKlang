@@ -89,11 +89,11 @@ Ground::Ground(void) :
 	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
 	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
 
-	
 
 	this->SetID(SCENE->Add(this));
 	this->LockID();
 
+	IsVisible=false;
 }
 
 Ground::~Ground(void)

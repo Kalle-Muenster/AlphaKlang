@@ -50,7 +50,8 @@ SceneGraph::DrawAll()
 	this->camera->Update();
 
 	for(auto it = drawables.begin();it!=drawables.end();it++)
-		(*it)->draw();
+		if((*it)->IsVisible)
+			(*it)->draw();
 }
 
 void

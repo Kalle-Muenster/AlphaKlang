@@ -105,8 +105,15 @@ void GlInit(void)
 	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
 ConID* testID;
+int i1,i2,i3;
+int cycle1 = 127;
+int cycle2 = 255;
+int cycle3 = 127;
 void LoadContent(void)
 {
+i1 = -1;
+i2 = -2;
+i3 = 1;
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	AUDIO->Play();
 
@@ -118,25 +125,63 @@ void LoadContent(void)
 	
 	int i = -1;
 
-	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
+	data32 col = data32();
+	col.byte[0] = 255;
+	col.byte[1] = 200;
+	col.byte[2] = 150;
+	col.byte[3] = 100;
+
+	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus(col)));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
+	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	
-	
+	VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	vObject->AddConnectable<VoxControl>();
+	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	vObject->AddConnectable<CamTargetRotator>();
 	(new Sprite())->move(0,2,0);
 	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
 	SCENE->camera->Mode(FIRSTPERSON);
+
+	((Cubus*)SCENE->Object((unsigned)1))->UseTexture = false;
 }
+
+
 
 GobID switcher=0;
 //Main-Cycle:
 ////////////////////////////////////////////////////////
 void UpdateCycle(void)
 {
+	//color test flashing krams....
+	if(cycle1<0||cycle1>255)
+		i1= -i1;
+	if(cycle2<0||cycle2>255)
+		i2= -i2;
+	if(cycle3<0||cycle3>255)
+		i3= -i3;
+
+	cycle1+=i1;
+	cycle2+=i2;
+	cycle3+=i3;
+
+	((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
+	((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
+	((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
+	((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
+
+	data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
+	//printf("color: %i,%i,%i,%i\n",col.byte[1] ,col.byte[2] ,col.byte[3] ,col.byte[0] );
+	//___________________________________________________________
+
+
+
+	//Update:
 	UPDATE->DoAllTheUpdates();
 
 	if(INPUT->Mouse.RIGHT.CLICK)
@@ -195,11 +240,12 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key=='q')
 		glutExit();
 
-	//if(key=='o')
-		//SCENE->camera->Mode(ORTHOGRAFIC);
-
-	//if(key=='p')
-		//SCENE->camera->Mode(PERSPECTIVE);
+	if(key=='o')
+	{	SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=true;
+		SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=false;}
+	if(key=='p')
+	{	SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=true;
+		SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=false;}
 
 	INPUT->notifyKey(key);
 }

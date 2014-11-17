@@ -167,15 +167,16 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 			if(x>0 && x<mapWidth && y>0 && y<mapHeight)
 			voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
 		}
+	
 	}
 }
 
 void VoxelMap::LoadMap(char* filename)
 {
-	Loader data;
-	data.LoadeFile(filename);
-	for(int i=0;i<data.count();i++)
-		this->voxels[i].factor=data.Pixel(i/data.width(),i%data.height())->byte[0];
+	Loader* loader = new Loader(filename);
+	for(int i=0;i<loader->count();i++)
+		this->voxels[i].factor=loader->Pixel(i/loader->width(),i%loader->height())->byte[0];
+
 }
 
 void VoxelMap::Draw(VectorPF position )
@@ -183,7 +184,7 @@ void VoxelMap::Draw(VectorPF position )
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 
-	glPushMatrix();
+
 	glBegin(GL_QUADS);
 
 	for(int f=0;f<256;f++)
@@ -192,7 +193,9 @@ void VoxelMap::Draw(VectorPF position )
 			if(voxels[i].factor==f)
 				voxels[i].fDraw(position);
 	}
-	glPopMatrix();
+
+	glEnd();
+
 }
 
 void VoxelMap::drawBlurre(VectorF position)

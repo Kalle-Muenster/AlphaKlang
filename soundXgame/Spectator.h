@@ -1,11 +1,10 @@
-#ifndef _FIRSTPERSON_CAMERA_
-#define _FIRSTPERSON_CAMERA_
-
+#ifndef	_CAMERAMODE_SPECTATOR_
+#define	_CAMERAMODE_SPECTATOR_
 
 #include "Cam.h"
 //#include "CameraMode.h"
 
-class FirstPerson : public CameraMode , public IInteractive
+class Spectator : public CameraMode , public IInteractive
 {
 
 protected:
@@ -21,15 +20,15 @@ protected:
 
 public:
 
-	FirstPerson(void);
-	virtual ~FirstPerson(void);
+	Spectator(void);
+	virtual ~Spectator(void);
 	static int StaticCamModeID;
 	virtual bool Initialize(void);
 
 	virtual void keyPress(char key);
 	virtual void specialKeyPressed(int key);
 	virtual void mouseMotion(int newX, int newY);
-	virtual void mouseWheel(int wheel,WHEEL state){};
+	virtual void mouseWheel(int wheel,WHEEL state);
 };
 
 #endif

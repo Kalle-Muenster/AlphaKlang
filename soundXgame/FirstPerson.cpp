@@ -19,6 +19,16 @@ FirstPerson::~FirstPerson(void)
 bool
 FirstPerson::Initialize(void)
 {
+	angle		= 0;
+	lx			= 0;
+	lz			= -1;
+	x			= 0;
+	z			= 5;
+	eyeY		= 1;
+	moveSpeed	= 0.1f;
+	mouseSpeed	= 1.0f;
+	mouseX		= 0;
+	mouseY		= 0;
 	INPUT->attachKey(this);
 	INPUT->attachMouseMove(this);
 	INPUT->attachMouseWheel(this);
@@ -30,8 +40,8 @@ FirstPerson::Initialize(void)
 void 
 FirstPerson::UpdateMode(void)
 { 
-	SCENE->camera->move(x, eyeY, z);
-	SCENE->camera->rotate(x+lx, 1.0f, z+lz); 
+	camera->move(x, eyeY, z);
+	camera->rotate(x+lx, 1.0f, z+lz); 
 	this->IsDirty=false;
 }
 

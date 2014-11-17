@@ -1,4 +1,5 @@
 #include "CamTargetRotator.h"
+#include "CameraModesIncluder.h"
 
 CamTargetRotator::CamTargetRotator(void)
 {
