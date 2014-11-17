@@ -116,21 +116,26 @@ void LoadContent(void)
 	ground = Ground::getInstance();
 	//ground->Init();
 
-	//fountain = new Fountain();
+	fountain = new Fountain();
 	//fountain->Init();
 	
-	int i = -1;
 
 	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
-	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
+
+	int i = -1;
+	Vector3 position = Vector3(10, 0, 0);
+	(new Cubus())->LoadTexture("X-7.png")				->move(position.x,position.y,i++);
+	(new Cubus())->LoadTexture("X-512.jpg")				->move(position.x,position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech128-1.png")	->move(position.x,position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech-2s.png")	->move(position.x,position.y,i++);
+	(new Cubus())->LoadTexture("Deckelblech128-2.png")	->move(position.x,position.y,i++);
+	//(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
+	
+	//SCENE->camera->SetTarget(tempObject);
 	
 	
-	(new Sprite())->move(0,2,0);
-	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
+	//(new Sprite())->move(0,2,0);
+	//(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
 	SCENE->camera->Mode(FIRSTPERSON);
 }
@@ -195,7 +200,7 @@ void keyboardInput(unsigned char key,int x,int y)
 {
 	//if(key=='m')
 	//	testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
-	if(key=='q')
+	if(key == 27) // ESC
 		glutExit();
 
 	//if(key=='o')

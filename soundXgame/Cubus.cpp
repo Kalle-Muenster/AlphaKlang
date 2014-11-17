@@ -10,6 +10,7 @@ Cubus::Cubus(void)
 	InitializeCubus("X-3.png","03.wav");
 	this->SetName("Cubus");
 	this->IsVisible=true;
+	this->scale(Vector3(0.5f,0.5f,0.5f));
 }
 
 Cubus::Cubus(string textureFile,bool transparent)
