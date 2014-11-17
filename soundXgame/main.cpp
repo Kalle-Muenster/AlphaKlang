@@ -73,6 +73,9 @@ void Init(void)
 	glutSpecialFunc(processSpecialKeys);
 	glutKeyboardFunc(keyboardInput);
 	glutEntryFunc(MouseHoverWindow);
+
+	// hide mouse cursor
+	glutSetCursor(GLUT_CURSOR_NONE); 
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )

@@ -43,7 +43,9 @@ Cam::Cam(void) :
 	glLoadIdentity();
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 	//_mode = CAM_MODE::PERSPECTIVE;
-
+	
+	mouseX = SCREENWIDTH/2;
+	mouseY = SCREENHEIGHT/2;
 	
 	INPUT->attachKey(this);
 	INPUT->attachMouseMove(this);
@@ -435,23 +437,26 @@ Cam::specialKeyPressed(int key)
 void
 Cam::mouseMotion(int newX, int newY)
 {
- 	if(mouseX == 0 && mouseX == 0)
-	{
-		mouseX = newX;
-		mouseY = newY;
-	}
+	// if mouse have'n change -> return
+	if(newX == mouseX && newY == mouseY)
+		return;
 	
+	// check difference between last-frame mouse pos
 	int diffX = newX - mouseX;
 	int diffY = newY - mouseY;
 
+	// calculate
 	angle += 0.005f * diffX * mouseSpeed;
 	lx = sin(angle);
 	lz = -cos(angle);
 	eyeY += (float)diffY / 300;
 	
-	mouseX = newX;
-	mouseY = newY;
-
+	// set mouse pos center to screen
+	mouseX = SCREENWIDTH/2;
+	mouseY = SCREENHEIGHT/2;
+	
+	// fix to static mouse pos
+	glutWarpPointer(mouseX, mouseY);
 	
 
 	// Update Transform
