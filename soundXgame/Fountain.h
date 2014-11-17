@@ -15,6 +15,7 @@ private:
 	std::vector<FourtainObject*> objects;
 	double timer;
 	void Spawn(void);
+	float delay;
 
 
 public:

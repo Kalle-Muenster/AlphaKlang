@@ -22,7 +22,10 @@ Ground::Ground(void) :
 	heightRange(7.0f),
 	dynamicRange(5.0f),
 
-	drawLines(false),
+	drawPlanes(false), 
+	drawLines(true),
+	coloredTiles(false),
+
 	dynamicToTop(true),
 	dynamicVal(0)
 {
@@ -32,9 +35,9 @@ Ground::Ground(void) :
 	// Config Map
 	int Tmp[5][5]	=	{  100 ,   30 ,   70 ,   90 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   50  ,
-						    50 ,   00 ,   30 ,   25 ,   70  ,
-						     0 ,   10 ,   20 ,   10 ,   40  ,
-						    20 ,   30 ,    5 ,   25 ,   70 
+						    50 ,   10 ,   30 ,   25 ,   70  ,
+						     0 ,    5 ,   15 ,   10 ,   40  ,
+						    00 ,    0 ,    5 ,   25 ,   70 
 						};
 	for (int i = 0; i < 5; i++)
 	{
@@ -244,46 +247,49 @@ void Ground::draw(void)
 
 	glPushMatrix();
 	{
-		if(drawLines == true)
+		if(coloredTiles == false)
 		{
-			glColor3f(1,1,1);
+			glColor3f(0,0,0);
 		}
 
-
-		glBegin(GL_QUADS);
+		// Draw Planes
+		if(drawPlanes == true)
 		{
-
-			// draw
-			for (int nz = 0; nz < count_z; nz++) // z
+			glBegin(GL_QUADS);
 			{
-				for (int nx = 0; nx < count_x; nx++) // x
+
+				// draw
+				for (int nz = 0; nz < count_z; nz++) // z
 				{
-					float heightFrontLeft  =  (float)heightMap[count_z - nz    ][nx    ] / 100 * heightRange;
-					float heightFrontRight =  (float)heightMap[count_z - nz    ][nx + 1] / 100 * heightRange;
-					float heightRearLeft   =  (float)heightMap[count_z - nz - 1][nx    ] / 100 * heightRange;
-					float heightRearRight  =  (float)heightMap[count_z - nz - 1][nx + 1] / 100 * heightRange;
-					
-					heightFrontLeft  +=  (float)dynamicMap[count_z - nz    ][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
-					heightFrontRight +=  (float)dynamicMap[count_z - nz    ][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
-					heightRearLeft   +=  (float)dynamicMap[count_z - nz - 1][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
-					heightRearRight  +=  (float)dynamicMap[count_z - nz - 1][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
-					
-					if(drawLines == false)
+					for (int nx = 0; nx < count_x; nx++) // x
 					{
-						glColor4f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f, 0.4f);
+						float heightFrontLeft  =  (float)heightMap[count_z - nz    ][nx    ] / 100 * heightRange;
+						float heightFrontRight =  (float)heightMap[count_z - nz    ][nx + 1] / 100 * heightRange;
+						float heightRearLeft   =  (float)heightMap[count_z - nz - 1][nx    ] / 100 * heightRange;
+						float heightRearRight  =  (float)heightMap[count_z - nz - 1][nx + 1] / 100 * heightRange;
+					
+						heightFrontLeft  +=  (float)dynamicMap[count_z - nz    ][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
+						heightFrontRight +=  (float)dynamicMap[count_z - nz    ][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
+						heightRearLeft   +=  (float)dynamicMap[count_z - nz - 1][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
+						heightRearRight  +=  (float)dynamicMap[count_z - nz - 1][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
+					
+						if(coloredTiles == true)
+						{
+							glColor4f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f, 0.4f);
+						}
+
+						glVertex3f(x + nx*width + width ,   y + heightRearRight ,  z + nz*depth + depth  );
+						glVertex3f(x + nx*width         ,   y + heightRearLeft ,  z + nz*depth + depth  );
+						glVertex3f(x + nx*width         ,   y + heightFrontLeft ,  z + nz*depth          );
+						glVertex3f(x + nx*width + width ,   y + heightFrontRight ,  z + nz*depth          );
 					}
-
-					glVertex3f(x + nx*width + width ,   y + heightRearRight ,  z + nz*depth + depth  );
-					glVertex3f(x + nx*width         ,   y + heightRearLeft ,  z + nz*depth + depth  );
-					glVertex3f(x + nx*width         ,   y + heightFrontLeft ,  z + nz*depth          );
-					glVertex3f(x + nx*width + width ,   y + heightFrontRight ,  z + nz*depth          );
 				}
+
 			}
-
+			glEnd();
 		}
-		glEnd();
 
-		
+		// Draw Lines
 		if(drawLines == true)
 		{
 			glBegin(GL_LINES);
@@ -309,7 +315,8 @@ void Ground::draw(void)
 						heightRearLeft += 0.01f;
 						heightRearRight += 0.01f;
 
-						glColor3f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f);
+						//glColor3f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f);
+						glColor3f(1,0,0);
 
 						glVertex3f(x + nx*width + width ,   y + heightRearRight ,  z + nz*depth + depth  ); // left-top
 						glVertex3f(x + nx*width         ,   y + heightRearLeft ,  z + nz*depth + depth  ); // right-top

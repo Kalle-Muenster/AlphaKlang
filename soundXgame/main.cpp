@@ -73,6 +73,9 @@ void Init(void)
 	glutSpecialFunc(processSpecialKeys);
 	glutKeyboardFunc(keyboardInput);
 	glutEntryFunc(MouseHoverWindow);
+
+	// hide mouse cursor
+	glutSetCursor(GLUT_CURSOR_NONE); 
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
@@ -120,10 +123,10 @@ i3 = 1;
 	ground = Ground::getInstance();
 	//ground->Init();
 
-	//fountain = new Fountain();
+	fountain = new Fountain();
 	//fountain->Init();
 	
-	int i = -1;
+
 
 	data32 col = data32();
 	col.byte[0] = 255;
@@ -145,6 +148,18 @@ i3 = 1;
 	vObject->AddConnectable<CamTargetRotator>();
 	(new Sprite())->move(0,2,0);
 	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
+
+	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
+
+	int i = -1;
+	
+	
+	SCENE->camera->SetTarget(tempObject);
+	
+	
+	(new Sprite())->move(0,2,0);
+	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
+
 
 	SCENE->camera->Mode(FIRSTPERSON);
 
@@ -235,17 +250,17 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 //Keyboard:
 void keyboardInput(unsigned char key,int x,int y)
 {
-	//if(key=='m')
-	//	testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
-	if(key=='q')
-		glutExit();
-
+	/* Switches Cam-Modes..*/
 	if(key=='o')
 	{	SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=true;
 		SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=false;}
 	if(key=='p')
 	{	SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=true;
 		SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=false;}
+
+	if(key == 27) // ESC
+		glutExit();
+
 
 	INPUT->notifyKey(key);
 }

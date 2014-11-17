@@ -1,3 +1,5 @@
+#include <vector>
+
 #ifndef _UPDATEMANAGER_H_
 #define _UPDATEMANAGER_H_
 
@@ -7,9 +9,8 @@ typedef unsigned UpdateID;
 
 class IUpdateble
 {
-protected:
-	UpdateID UpdID;
 public:
+	UpdateID UpdID;
 	IUpdateble(void);
 	virtual void InitiateUpdatable(void);
 	virtual ~IUpdateble(void);
@@ -21,13 +22,21 @@ public:
 class UpdateManager
 {
 public:
+
 	UpdateManager(void);
 	virtual ~UpdateManager(void);
 	static UpdateManager* getInstance(void);
-	static UpdateID SignInForEarlyUpdate(IUpdateble*);
-	static UpdateID SignInForUpdate(IUpdateble*);
-	static UpdateID SignInForLateUpdate(IUpdateble*);
+	
+	static void SignInForEarlyUpdate(IUpdateble*);
+	static void SignInForUpdate(IUpdateble*);
+	static void SignInForLateUpdate(IUpdateble*);
+	
+	static void SignOutForUpdate(IUpdateble*);
+	static void SignOutForEarlyUpdate(IUpdateble*);
+	static void SignOutForLateUpdate(IUpdateble*);
+
 	static void DoAllTheUpdates(void);
+
 };
 
 #endif

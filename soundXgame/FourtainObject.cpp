@@ -11,8 +11,7 @@ FourtainObject::FourtainObject(void)
 	// different power
 	// different timerHeigher
 
-	this->scale(Vector3(0.3f,0.3f,0.3f));
-	this->IsGrounded = false;
+	//this->IsGrounded = false;
 
 	LockID();
 
@@ -57,12 +56,17 @@ FourtainObject::DoUpdate(void)
 		power -= INPUT->FrameTime / 5;
 		if(power < 0)
 			power = 0;
+
+		/*if(power <= 0.1f)
+		{
+			UpdateManager::getInstance()->SignOutForUpdate(this);
+		}*/
 	}
 
 	Transform transform = this->transform;
 	Vector3 pos = transform.position;
 	pos.y += speed * power + gravity;
-	pos += direction / expanding * power;
+	pos += direction / 200 * expanding * power;
 	this->move(pos);
 
 }

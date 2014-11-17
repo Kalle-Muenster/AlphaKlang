@@ -363,6 +363,9 @@ Utility::Rotate90(float partOf90,float & A,float & B)
 	_rotate90(partOf90,A,B);
 }
 
+/*
+ * Returns a values between 0 and 1
+ */
 float
 Utility::GetRandom(void)
 {
