@@ -30,6 +30,7 @@ private:
 	int** dynamicMap;
 	int* dynamicConfigMap [9];
 
+	bool drawPlanes;
 	bool drawLines;
 	bool coloredTiles;
 	bool dynamicToTop;

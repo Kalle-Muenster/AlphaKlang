@@ -36,6 +36,13 @@ UpdateManager::SignInForUpdate(IUpdateble* updatebleInstance)
 }
 
 UpdateID
+UpdateManager::SignOutForUpdate(IUpdateble* updatebleInstance)
+{
+	updates[NumberOfClients] = updatebleInstance;
+	return ++NumberOfClients;
+}
+
+UpdateID
 UpdateManager::SignInForEarlyUpdate(IUpdateble* updatebleInstance)
 {
 	updates[NumberOfEarlyClients] = updatebleInstance;

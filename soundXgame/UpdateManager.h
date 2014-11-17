@@ -26,6 +26,7 @@ public:
 	static UpdateManager* getInstance(void);
 	static UpdateID SignInForEarlyUpdate(IUpdateble*);
 	static UpdateID SignInForUpdate(IUpdateble*);
+	static UpdateID SignOutForUpdate(IUpdateble*);
 	static UpdateID SignInForLateUpdate(IUpdateble*);
 	static void DoAllTheUpdates(void);
 };

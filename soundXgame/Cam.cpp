@@ -18,10 +18,10 @@ Cam::Cam(void) :
 	lz(-1),
 	x(0),z(5),
 	eyeY(1),
-	moveSpeed(0.1f),
-	mouseSpeed(1.0f),
-	mouseX(0),
-	mouseY(0),
+	moveSpeed(0.3f),
+	mouseSpeed(0.8f),
+	mouseX(SCREENWIDTH/2),
+	mouseY(SCREENHEIGHT/2),
 	NumberOfCameraModes(0)
 {
 	this->transform.position.x=0;
@@ -44,8 +44,6 @@ Cam::Cam(void) :
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 	//_mode = CAM_MODE::PERSPECTIVE;
 	
-	mouseX = SCREENWIDTH/2;
-	mouseY = SCREENHEIGHT/2;
 	
 	INPUT->attachKey(this);
 	INPUT->attachMouseMove(this);

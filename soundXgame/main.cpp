@@ -123,12 +123,12 @@ void LoadContent(void)
 	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
 
 	int i = -1;
-	Vector3 position = Vector3(10, 0, 0);
-	(new Cubus())->LoadTexture("X-7.png")				->move(position.x,position.y,i++);
-	(new Cubus())->LoadTexture("X-512.jpg")				->move(position.x,position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-1.png")	->move(position.x,position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech-2s.png")	->move(position.x,position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-2.png")	->move(position.x,position.y,i++);
+	Vector3 position = Vector3(10, 0.5f, 0);
+	(new Cubus())	->LoadTexture("X-7.png")				->move(position.x + i,position.y,i++);
+	(new Cubus())	->LoadTexture("X-512.jpg")				->move(position.x + i,position.y,i++);
+	(new Cubus())	->LoadTexture("Deckelblech128-1.png")	->move(position.x + i,position.y,i++);
+	(new Cubus())	->LoadTexture("Deckelblech-2s.png")		->move(position.x + i,position.y,i++);
+	(new Cubus())	->LoadTexture("Deckelblech128-2.png")	->move(position.x + i,position.y,i++);
 	//(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	
 	//SCENE->camera->SetTarget(tempObject);

@@ -56,7 +56,7 @@ SceneGraph::DrawAll()
 void
 SceneGraph::DrawSky(void)
 {
-	this->UpdateSky();
+	//this->UpdateSky();
 
 	glClearColor(r/255,g/255,b/255,1.);
 }
