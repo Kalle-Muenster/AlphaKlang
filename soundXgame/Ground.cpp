@@ -22,7 +22,9 @@ Ground::Ground(void) :
 	heightRange(7.0f),
 	dynamicRange(5.0f),
 
-	drawLines(false),
+	drawLines(true),
+	coloredTiles(false),
+
 	dynamicToTop(true),
 	dynamicVal(0)
 {
@@ -244,9 +246,9 @@ void Ground::draw(void)
 
 	glPushMatrix();
 	{
-		if(drawLines == true)
+		if(coloredTiles == false)
 		{
-			glColor3f(1,1,1);
+			glColor3f(0,0,0);
 		}
 
 
@@ -268,7 +270,7 @@ void Ground::draw(void)
 					heightRearLeft   +=  (float)dynamicMap[count_z - nz - 1][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
 					heightRearRight  +=  (float)dynamicMap[count_z - nz - 1][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
 					
-					if(drawLines == false)
+					if(coloredTiles == true)
 					{
 						glColor4f( (0 + nx * (255.0f/count_x) ) /255, (100.0f - nz * (100.0f/count_z)) /255, 0.0f, 0.4f);
 					}

@@ -5,7 +5,7 @@
 #include "projectMacros.h"
 
 Fountain::Fountain(void)
-	: size(10), timer(0)
+	: size(20), timer(0), delay(1.4f)
 {
 	this->spawnLeft = this->size;
 
@@ -70,13 +70,12 @@ Fountain::release(FourtainObject* obj)
 void
 Fountain::DoUpdate(void)
 {
-	float delay = 0.4f;
 	timer += INPUT->FrameTime;
 
-	if(spawnLeft != 0 && timer >= delay)
+	if(spawnLeft != 0 && timer >= this->delay)
 	{
 		this->Spawn();
-		timer -= delay;
+		timer -= this->delay;
 		spawnLeft--;
 	}
 
@@ -91,20 +90,19 @@ Fountain::DoUpdate(void)
 void
 Fountain::Spawn(void)
 {
-	float randX = Utility::GetRandom();;
-	float randZ = Utility::GetRandom();;
-	//float randSpeed = Utility::GetRandom();;
-
-	
+	float randX = Utility::GetRandom() - 0.5f;
+	float randZ = Utility::GetRandom() - 0.5f;
 
 	FourtainObject* cube = Fountain::getObject();
 	cube->move(1.0f, 2.0f, -3.0f);
 	cube->AddToScene();
+	cube->IsGrounded = false;
+	cube->scale(Vector3(0.3f,0.3f,0.3f));
 
 	cube->power = 1.0f;
-	cube->gravity = -0.001;
-	cube->speed = 0.01f;
-	cube->expanding = 100; // ausweiten
+	cube->gravity = -0.015;
+	cube->speed = 0.03f;
+	cube->expanding = 5.0f; // ausweiten: 1=wenig,5=stark
 	cube->direction = Vector3(randX,0,randZ);
 
 }

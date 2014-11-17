@@ -31,6 +31,7 @@ private:
 	int* dynamicConfigMap [9];
 
 	bool drawLines;
+	bool coloredTiles;
 	bool dynamicToTop;
 	float dynamicVal;
 

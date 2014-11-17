@@ -200,14 +200,9 @@ void keyboardInput(unsigned char key,int x,int y)
 {
 	//if(key=='m')
 	//	testID = SCENE->Object(switcher)->conXtor->AddConnection(SCENE->Object(switcher+1));
+
 	if(key == 27) // ESC
 		glutExit();
-
-	//if(key=='o')
-		//SCENE->camera->Mode(ORTHOGRAFIC);
-
-	//if(key=='p')
-		//SCENE->camera->Mode(PERSPECTIVE);
 
 	INPUT->notifyKey(key);
 }
