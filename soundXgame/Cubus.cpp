@@ -12,7 +12,7 @@ Cubus::Cubus(void)
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 	this->SetName("Cubus");
 	this->IsVisible=true;
-	this->scale(Vector3(0.5f,0.5f,0.5f));
+	//this->scale(Vector3(0.5f,0.5f,0.5f));
 }
 
 Cubus::Cubus(string textureFile,bool backfaces)

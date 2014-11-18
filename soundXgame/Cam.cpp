@@ -48,7 +48,7 @@ Cam::Cam(void) :
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 
 
-	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
+	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=false;
 	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
 
@@ -350,7 +350,7 @@ Cam::Update()
 /* * * * User Input * * * */
 
 
-/*
+
 void
 Cam::WheelVRoll(WHEEL state)
 {
