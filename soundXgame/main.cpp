@@ -127,20 +127,20 @@ i3 = 1;
 	//fountain->Init();
 	
 
-
+	Cubus* musikubus;
 	data32 col = data32();
 	col.byte[0] = 255;
 	col.byte[1] = 200;
 	col.byte[2] = 150;
 	col.byte[3] = 100;
-
+	int i = -1;
 	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus(col)));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
 	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
+	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	
 	VoxGrid* vObject = new VoxGrid("drei_.ppm");
 	vObject->AddConnectable<VoxControl>();
@@ -149,9 +149,9 @@ i3 = 1;
 	(new Sprite())->move(0,2,0);
 	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
-	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
+//	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
 
-	int i = -1;
+
 	
 	
 	SCENE->camera->SetTarget(tempObject);
