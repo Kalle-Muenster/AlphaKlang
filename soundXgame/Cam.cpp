@@ -349,13 +349,13 @@ Cam::Update()
 
 /* * * * User Input * * * */
 
-
-/*
 void
 Cam::WheelVRoll(WHEEL state)
 {
 	
 }
+/*
+
 
 
 ////moved to class FirstPerson : CameraMode

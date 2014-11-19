@@ -81,39 +81,23 @@ public:
 
 };
 
-
-
 class Cam : public IWheelee, public IConnectable, public IAudioReciever
 {
 private:
-
-	Vector3					*_targetPosition;				//position vector the camera looks at if in FOLLOWTARGET-Mode...
+	Vector3					*_targetPosition;		//position vector the camera looks at if in FOLLOWTARGET-Mode...
 	IGObject*				_targetObject;
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;
 	CAM_MODE				_mode;
 	float					_distanceToTarget;
-
-	//int						mouseX, mouseY;			// last-frame mouse position within screen
-	//float					angle;					// angle of rotation for the camera direction
-	//float					lx, lz;					// actual vector representing the camera's direction
-	//float					x, z;					// XZ position of the camera
-	//float					eyeY;					// head rotation front/back
-	//float					moveSpeed;				// firstPerson Keyboard moving sensitivity
-	//float					mouseSpeed;				// firstPerson Mouse sensitivity
-	//bool					_transformChanged;		// flag if last frame the transform has changed
-
 	void					UpdateView();			// Update Window and or Viewport Changes...
-//	void					UpdateTransform(void);	// Update move and rotate Transform
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
-
 
 protected:
 	virtual bool			IsShared(bool=NULL);
 	bool					TransformDIRTY;
 	
-
 public:
 							Cam(void);
 	virtual					~Cam(void);
@@ -128,7 +112,6 @@ public:
 	float					GetTargetDistance(void);
 	void					followTarget(void);
 	void					stopFollowing(void);
-//	void					SetTargetasFirstPerson(void);
 	virtual void			WheelVRoll(WHEEL state);
 	Vector3					move(float x,float y,float z);
 	Vector3		   		    move(glm::vec3);
@@ -136,14 +119,9 @@ public:
 	Vector3			        rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
 	virtual void			Update(void);
-	//virtual void			keyPress(char key);
-	//virtual void			specialKeyPressed(int key);
-	//virtual void			mouseMotion(int newX, int newY);
-
-
 	int						NumberOfCameraModes; 
-	CameraMode*			    ModeSocket;				// reference to attached mode-extensions...
-	BOOL					ModeAttached(BOOL=-1);  // get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
+	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
+	BOOL					ModeAttached(BOOL=-1);		// get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
 	int						CurrentCamMode;
 
 };

@@ -2,6 +2,7 @@
 #include "CameraModesIncluder.h"
 
 
+
 TargetGrabber::TargetGrabber(void)
 {
 	_targetGRABBED=false;
@@ -13,6 +14,15 @@ TargetGrabber::~TargetGrabber(void)
 {
 
 }
+
+//TargetGrabber::MODE
+//TargetGrabber::Mode(TargetGrabber::MODE value)
+//{
+//	if(value!=TargetGrabber::MODE::MODE)
+//		_mode=value;
+//
+//	return _mode;
+//}
 
 int 
 TargetGrabber::StaticCamModeID = -1;

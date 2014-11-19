@@ -21,7 +21,7 @@ protected:
 	Transform transform;
 	char Name[64];
 	bool SetID(GobID);
-	void LockID(void);
+	unsigned LockID(void);
 
 public:
 	IGObject(void);

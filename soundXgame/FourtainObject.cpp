@@ -3,7 +3,7 @@
 
 FourtainObject::FourtainObject(void)
 {
-	InitializeObject("cube-quads.obi",false);
+	InitializeObject("cube_quads.obi",false);
 	this->LoadTexture("X-512.jpg");
 	
 	// verschiedene start vec3

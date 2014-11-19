@@ -104,6 +104,13 @@
     <ClCompile Include="Spectator.cpp">
       <Filter>Core\CameraModes</Filter>
     </ClCompile>
+    <ClCompile Include="Musikubus.cpp" />
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MrZylinder.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -217,16 +224,55 @@
     <ClInclude Include="Spectator.h">
       <Filter>Core\CameraModes</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="cube.obi" />
+    <ClInclude Include="Musikubus.h" />
+    <ClInclude Include="Sphere.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MrZylinder.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancibleObjects.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
-    <None Include="drei.ppm" />
-    <None Include="drei_.ppm" />
-    <None Include="ich.ppm" />
-    <None Include="tr.ppm" />
+    <None Include="drei.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="drei_.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="ich.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="tr.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="cube_quads.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="cube_tris.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="cylinder_quads.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="cylinder_tris.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="sphere_quads_high.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="sphere_quads_low.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="sphere_tris_high.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="sphere_tris_low.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -247,8 +293,17 @@
     <Filter Include="Core\CameraModes">
       <UniqueIdentifier>{14f2f646-64e1-4d21-9339-9de273a00a30}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\..\..\STUFF\Projects\VSC#\Projects\Qallen\Recources\quallen\02\q2\q2_12.png" />
+    <Filter Include="Resources">
+      <UniqueIdentifier>{31fdbe64-05f2-44d2-ae92-6ecef6182695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures">
+      <UniqueIdentifier>{14384689-378f-440b-9121-dee75c96d36d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Meshes">
+      <UniqueIdentifier>{5ccf2ab7-e2cf-4827-a9c6-9d1f75ec2ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Waveforms">
+      <UniqueIdentifier>{4712e63d-21fc-400d-9b39-21b43a4b1dd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

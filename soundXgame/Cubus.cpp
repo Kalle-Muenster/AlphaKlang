@@ -40,7 +40,7 @@ Cubus::~Cubus(void)
 void 
 Cubus::InitializeCubus(void)
 {
-	InitializeObject("cube-quads.obi",true);
+	InitializeObject("cube_quads.obi",true);
 	this->AddConnectable<CamTargetRotator>();
 	this->NoBackfaceCulling = false;
 }

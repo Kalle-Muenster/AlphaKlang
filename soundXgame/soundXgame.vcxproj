@@ -95,8 +95,11 @@
     <ClCompile Include="IVoxelObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MrZylinder.cpp" />
+    <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="Spectator.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TargetGrabber.cpp" />
     <ClCompile Include="TestConectables.cpp" />
@@ -131,13 +134,17 @@
     <ClInclude Include="IMusicListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />
+    <ClInclude Include="InstancibleObjects.h" />
     <ClInclude Include="IVoxelObject.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MrZylinder.h" />
+    <ClInclude Include="Musikubus.h" />
     <ClInclude Include="projectClasses.h" />
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="Spectator.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TargetGrabber.h" />
     <ClInclude Include="TestConectables.h" />
@@ -152,15 +159,19 @@
     <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cube_quads.obi" />
+    <None Include="cube_tris.obi" />
+    <None Include="cylinder_quads.obi" />
+    <None Include="cylinder_tris.obi" />
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
     <None Include="ich.ppm" />
+    <None Include="sphere_quads_high.obi" />
+    <None Include="sphere_quads_low.obi" />
+    <None Include="sphere_tris_high.obi" />
+    <None Include="sphere_tris_low.obi" />
     <None Include="tr.ppm" />
-    <Text Include="cube.obi" />
     <None Include="ClassDiagram3.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\..\..\STUFF\Projects\VSC#\Projects\Qallen\Recources\quallen\02\q2\q2_12.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

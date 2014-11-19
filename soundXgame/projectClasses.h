@@ -3,15 +3,8 @@
 
 #include "IGObject.h"
 #include "IMeshObject.h"
-#include "Cubus.h"
-#include "Sprite.h"
 #include "DataStructs.h"
-#include "Cam.h"
-#include "TestYeti.h"
-#include "Observer.h"
-#include "Map.h"
-#include "VoxelMap.h"
-#include "VoxGrid.h"
+#include "InstancibleObjects.h"
 #include "CameraModesIncluder.h"
 #include "AllConnectablesInclude.h"
 

@@ -1,8 +1,7 @@
 #include "projectGrafics.h"
 #include "projectMacros.h"
 #include "projectClasses.h"
-#include "Ground.h"
-#include "Fountain.h"
+
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -137,8 +136,8 @@ i3 = 1;
 	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus(col)));
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
-	(new Cubus())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new MrZylinder())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Sphere())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
 	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	

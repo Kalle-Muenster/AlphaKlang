@@ -329,7 +329,7 @@ Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::v
 		normals.push_back(normale);
 	}
 
-	//returning the Object's name if found in the file,otherwhise a "blank"-strin...g 
+	//returning the Object's name if found in the file,otherwhise a "blank"-string...
 	return &ObjectName[0];
 }
 

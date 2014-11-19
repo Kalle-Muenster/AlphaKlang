@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include "projectMacros.h"
+#include "Connectable.h"
 
 #define NUMBER_OF_LINEVALUES (2)
 

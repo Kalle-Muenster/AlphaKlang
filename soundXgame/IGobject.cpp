@@ -49,7 +49,7 @@ IGObject::SetID(GobID id)
 		return false;
 }
 
-void
+unsigned
 IGObject::LockID(void)
 {
 	if(!_idIsSet)
@@ -59,6 +59,7 @@ IGObject::LockID(void)
 		usedIDs.push_back(this->ID);
 		itoa(this->ID,&this->Name[0],10);
 		this->_idIsSet=true;
+		return this->ID;
 	}
 }
 
