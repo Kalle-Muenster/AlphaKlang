@@ -76,7 +76,7 @@ IGObject::InitializeObject(bool addToSceneGraph)
 GobID
 IGObject::GetID(void)
 {
-		return this->ID;
+	return this->ID;
 }
 
 

@@ -39,7 +39,7 @@ void
 VoxControl::keyPress(char key)
 {
 	SCENE->Object((unsigned)0)->IsVisible=false;
-	this->Connection()->IsGrounded = false;
+	//this->Connection()->IsGrounded = false;
 
 	if(key=='l')
 		this->vConnection()->LoadMap("tr.ppm");

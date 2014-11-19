@@ -14,15 +14,6 @@ static bool _shareAudioReciever = true;
 int _spectator = -1;
 
 Cam::Cam(void) :
-/*	angle(0),
-	lx(0),
-	lz(-1),
-	x(0),z(5),
-	eyeY(1),
-	moveSpeed(0.3f),
-	mouseSpeed(0.8f),
-	mouseX(SCREENWIDTH/2),
-	mouseY(SCREENHEIGHT/2), */
 	NumberOfCameraModes(0)
 {
 	this->transform.position.x=0;
@@ -48,19 +39,11 @@ Cam::Cam(void) :
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 
 
-	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
+	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=false;
 	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
 
-	/*Modes have it's own INPUT-Callbacks now.
-	/ and canl be attached by their constructers...
-	INPUT->attachKey(this);
-	INPUT->attachMouseMove(this);
-	INPUT->attachSpecial(this);
-	
 
-	INPUT->attachMouseWheel(this);
-   	*/
 }
 
 
@@ -155,16 +138,7 @@ Cam::GetTargetPosition(void)
 
 
 
-/* * * * Transform * * * */
 
-// -> now in ModeUpdates...
-//void
-//Cam::UpdateTransform(void)
-//{
-//	this->move(x, eyeY, z);
-//	this->rotate(x+lx, 1.0f, z+lz);
-//	this->_transformChanged = false;
-//}
 
 Vector3		
 Cam::move(float x,float y,float z)
@@ -349,109 +323,11 @@ Cam::Update()
 
 /* * * * User Input * * * */
 
+
 void
 Cam::WheelVRoll(WHEEL state)
 {
 	
 }
-/*
 
-
-
-////moved to class FirstPerson : CameraMode
-/*
-void
-Cam::keyPress(char key)
-{
-	switch(key)
-	{
-		case 119: // W
-			x += lx * moveSpeed;
-			z += lz * moveSpeed;
-			break;
-		case 115: // S
-			x -= lx * moveSpeed;
-			z -= lz * moveSpeed;
-			break;
-		case 97: // A
-			x += lz * moveSpeed;
-			z += lx * (moveSpeed*-1);
-			break;
-		case 100: // D
-			x -= lz * moveSpeed;
-			z -= lx * (moveSpeed*-1);
-			break;
-	}
-
-
-	//scaleing the camtarget if grabbet..
-	if(key=='g')
-		_target->scale(_target->getTransform()->scale*1.1f);
-	
-	if(key=='k')
-		_target->scale(_target->getTransform()->scale*0.9f);
-
-
-	// Update Transform
-	UpdateTransform();
-}
-
-void
-Cam::specialKeyPressed(int key) 
-{
-	switch (key) {
-		case GLUT_KEY_UP:
-			x += lx * moveSpeed;
-			z += lz * moveSpeed;
-			break;
-		case GLUT_KEY_DOWN:
-			x -= lx * moveSpeed;
-			z -= lz * moveSpeed;
-			break;
-		case GLUT_KEY_LEFT:
-			x += lz * moveSpeed;
-			z += lx * (moveSpeed*-1);
-			break;
-		case GLUT_KEY_RIGHT:
-			x -= lz * moveSpeed;
-			z -= lx * (moveSpeed*-1);
-			break;
-	}
-	
-	// Update Transform
-	UpdateTransform();
-}
-*/
-//moved to class FirstPerson : CameraMode
-/*
-void
-Cam::mouseMotion(int newX, int newY)
-{
-	// if mouse have'n change -> return
-	if(newX == mouseX && newY == mouseY)
-		return;
-	
-	// check difference between last-frame mouse pos
-	int diffX = newX - mouseX;
-	int diffY = newY - mouseY;
-
-	// calculate
-	angle += 0.005f * diffX * mouseSpeed;
-	lx = sin(angle);
-	lz = -cos(angle);
-	eyeY += (float)diffY / 300;
-	
-	// set mouse pos center to screen
-	mouseX = SCREENWIDTH/2;
-	mouseY = SCREENHEIGHT/2;
-	
-	// fix to static mouse pos
-	glutWarpPointer(mouseX, mouseY);
-	
-
-	// Update Transform
-	UpdateTransform();
-
- }
-*/
 

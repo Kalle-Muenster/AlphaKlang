@@ -120,6 +120,7 @@ i3 = 1;
 	AUDIO->Play();
 
 	ground = Ground::getInstance();
+	ground->IsVisible = true;
 	//ground->Init();
 
 	fountain = new Fountain();
@@ -133,7 +134,7 @@ i3 = 1;
 	col.byte[2] = 150;
 	col.byte[3] = 100;
 	int i = -1;
-	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus(col)));
+	IGObject* tempObject = new Cubus(col);
 	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
 	(new MrZylinder())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
