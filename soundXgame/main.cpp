@@ -121,10 +121,8 @@ i3 = 1;
 
 	ground = Ground::getInstance();
 	ground->IsVisible = true;
-	//ground->Init();
 
 	fountain = new Fountain();
-	//fountain->Init();
 	
 
 	Cubus* musikubus;
