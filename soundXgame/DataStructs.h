@@ -30,6 +30,7 @@ public:
 	Vector3 operator/(float);
 	void operator +=(Vector3);
 	void operator -=(Vector3);
+	static const Vector3* const Zero;
 };
 
 struct Vector4 : public Vector3

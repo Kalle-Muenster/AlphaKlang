@@ -118,7 +118,7 @@ void LoadContent(void)
 i1 = -1;
 i2 = -2;
 i3 = 1;
-	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+	AUDIO->LoadeBackgroundAudio("testtrack3.mp3");
 	AUDIO->Play();
 
 	ground = Ground::getInstance();
@@ -127,47 +127,37 @@ i3 = 1;
 	fountain = new Fountain();
 	
 
-//	Cubus* musikubus;
 	data32 col = data32();
 	col.byte[0] = 255;
 	col.byte[1] = 200;
 	col.byte[2] = 150;
 	col.byte[3] = 100;
 	int i = -1;
-	IGObject* tempObject = new Cubus(col);
-	(new Cubus(true))->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
-	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
-	(new MrZylinder())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Sphere())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Sphere(true))->LoadTexture("X-7.tga")->move(i,tempObject->getTransform()->position.y,i++);
-//	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
-	
-	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>();
-	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->AddConnectable<CamTargetRotator>();
-	(new Sprite())->move(0,2,0);
-	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
-//	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
+
+	
+	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	//vObject->AddConnectable<VoxControl>();
+	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	//vObject->AddConnectable<CamTargetRotator>();
+
+
+
 
 
 	
 	
-	SCENE->camera->SetTarget(tempObject);
 	
-	
-	(new Sprite())->move(0,2,0);
-	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
-
 
 	SCENE->camera->Mode(FIRSTPERSON);
 
-	((Cubus*)SCENE->Object((unsigned)1))->UseTexture = false;
+
 
 
 	analyzerID = new SpectrumAnalyzer();
-	SCENE->Object(analyzerID->GetID())->move(10,1,10);
+	analyzerID->AddConnectable<CamTargetRotator>();
+	//SCENE->Object(analyzerID->GetID())->move(10,1,10);
+	SCENE->camera->SetTarget(analyzerID);
 }
 
 
@@ -178,23 +168,23 @@ GobID switcher=0;
 void UpdateCycle(void)
 {
 	//color test flashing krams....
-	if(cycle1<0||cycle1>255)
-		i1= -i1;
-	if(cycle2<0||cycle2>255)
-		i2= -i2;
-	if(cycle3<0||cycle3>255)
-		i3= -i3;
+	//if(cycle1<0||cycle1>255)
+	//	i1= -i1;
+	//if(cycle2<0||cycle2>255)
+	//	i2= -i2;
+	//if(cycle3<0||cycle3>255)
+	//	i3= -i3;
 
-	cycle1+=i1;
-	cycle2+=i2;
-	cycle3+=i3;
+	//cycle1+=i1;
+	//cycle2+=i2;
+	//cycle3+=i3;
 
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
 
-	data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
+	//data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
 	//printf("color: %i,%i,%i,%i\n",col.byte[1] ,col.byte[2] ,col.byte[3] ,col.byte[0] );
 	//___________________________________________________________
 
@@ -209,7 +199,13 @@ void UpdateCycle(void)
 		if(++switcher>=SCENE->ObjectsCount())
 			switcher=0;
 	}
-	
+
+	if(INPUT->Mouse.WheelV==WHEEL::UP)
+	{	analyzerID->fallOffAmount += 0.01f;
+	printf("FallOffAmount: %f",analyzerID->fallOffAmount);}
+	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
+	{	analyzerID->fallOffAmount -= 0.01f;
+	printf("FallOffAmount: %f",analyzerID->fallOffAmount);}
 }
 
 void RenderCycle(void)

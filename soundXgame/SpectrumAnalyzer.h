@@ -5,7 +5,7 @@
 #include "Cubus.h"
 #include "UpdateManager.h"
 
-#define SPECTRUM_SIZE (256)
+#define SPECTRUM_SIZE (128)
 
 class SpectrumAnalyzer :
 	public Cubus,
@@ -13,21 +13,26 @@ class SpectrumAnalyzer :
 {
 private: 
 	short bandWidth;
-	Cubus* bands[128];
+	Cubus* bands[SPECTRUM_SIZE];
 	float* fftData;
 	bool _gotThisFrameSpectrumData;
-	virtual void ChangeColor(float bandLevel);
-	virtual void ChangeSize(float bandLevel);
+	
 
+	virtual void ChangeColor(int band,float bandLevel);
+	virtual void ChangeSize(int band,Vector3);
+	
 public:
 	SpectrumAnalyzer(void);
 	virtual ~SpectrumAnalyzer(void);
 	virtual void InitializeSpectrumAnalyzer(void);
+	float fallOffAmount;
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
 	virtual void DoLate(void);
 	virtual void draw(void);
-
+	virtual Vector3 move(float,float,float);
+	virtual Vector3 rotate(float,float,float);
+	virtual Vector3 scale(float,float,float);
 };
 
 #endif

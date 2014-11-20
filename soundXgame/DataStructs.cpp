@@ -3,6 +3,12 @@
 
 // Vector3 
 //##################################################
+
+Vector3 _zeroVec3 = Vector3(0,0,0);
+
+const Vector3*const
+Vector3::Zero = &_zeroVec3;
+
 Vector3::Vector3(void)
 {
 	 x = 0;

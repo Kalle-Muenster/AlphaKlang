@@ -30,9 +30,9 @@ Cubus::Cubus(string textureFile,bool backfaces,bool addToScene)
 	this->IsVisible=true;
 }
 
-Cubus::Cubus(data32 color,bool backfaces,bool addToScene)
+Cubus::Cubus(data32 color,bool backfaces,bool addToScene,Vector3 positionOffset)
 {
-	InitializeCubus(addToScene);
+	InitializeCubus(addToScene,positionOffset);
 	this->color=color;
 	this->SetName("Cubus");
 	this->IsVisible=true;
@@ -48,9 +48,9 @@ Cubus::~Cubus(void)
 
 
 void 
-Cubus::InitializeCubus(bool addToScene)
+Cubus::InitializeCubus(bool addToScene,Vector3 positionOffset)
 {
-	InitializeObject("cube_quads.obi",addToScene);
+	InitializeObject("cube_quads.obi",addToScene,positionOffset);
 	this->AddConnectable<CamTargetRotator>();
 	this->NoBackfaceCulling = false;
 }

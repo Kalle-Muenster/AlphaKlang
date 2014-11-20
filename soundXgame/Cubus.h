@@ -14,10 +14,10 @@ protected:
 public:
 	
 	Cubus(bool initializeed);
-	Cubus(data32 color,bool backfaces=false,bool addToScene = true);
+	Cubus(data32 color,bool backfaces=false,bool addToScene = true,Vector3 positionOffset = *Vector3::Zero);
 	Cubus(string textureFile,bool drawBackfaces=false,bool addToScene = true);
 	//void InitializeCubus(void);
-	void InitializeCubus(bool addToScene = true);
+	void InitializeCubus(bool addToScene = true,Vector3 positionOffset = *Vector3::Zero);
 	void InitializeCubus( string texturefile,bool drawBackfaces=false,bool addToScene = true);
 	void InitializeCubus( string texturefile,string audioFile,bool drawBackfaces=false,bool addToScene = true);
 	void SetTexture(string);

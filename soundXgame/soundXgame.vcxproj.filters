@@ -111,7 +111,9 @@
     <ClCompile Include="MrZylinder.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SpectrumAnalyzer.cpp" />
+    <ClCompile Include="SpectrumAnalyzer.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -235,7 +237,9 @@
     <ClInclude Include="InstancibleObjects.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="SpectrumAnalyzer.h" />
+    <ClInclude Include="SpectrumAnalyzer.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
