@@ -32,7 +32,7 @@ Cubus::Cubus(string textureFile,bool backfaces,bool addToScene)
 
 Cubus::Cubus(data32 color,bool backfaces,bool addToScene)
 {
-	InitializeCubus();
+	InitializeCubus(addToScene);
 	this->color=color;
 	this->SetName("Cubus");
 	this->IsVisible=true;

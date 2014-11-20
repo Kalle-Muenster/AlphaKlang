@@ -31,7 +31,7 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	//Cubus* _1Of128; 
 	//_1Of128 = CreateCuBus(_1Of128,128);
 
-	for(int i = 0; i<SPECTRUM_SIZE;i++)
+	for(int i = 0; i<128;i++)
 	{
 		bands[i]=(new Cubus(color,true,false));//->move(transform.position.x,transform.position.y,transform.position.z+=i);
 		bands[i]->move(temp.x + i * 0.1f,temp.y,temp.z);
@@ -49,7 +49,7 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 void
 SpectrumAnalyzer::DoEarly(void)
 {
-	this->fftData = (float*)AUDIO->GetBackgroundAudioFFT((FFT_SIZE)SPECTRUM_SIZE);
+	this->fftData = (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);
 	_gotThisFrameSpectrumData=true;
 }
 
@@ -90,5 +90,9 @@ SpectrumAnalyzer::DoLate(void)
 void
 SpectrumAnalyzer::draw(void)
 {
-
+	if(IsVisible)
+	{
+	for(int i=0;i<128;i++)
+		bands[i]->draw();
+	}
 }
