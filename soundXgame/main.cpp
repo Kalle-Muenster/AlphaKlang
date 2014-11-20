@@ -36,7 +36,6 @@ int prepareForExit(void);
 // Shader
 int initResourcesShader();
 void OnDisplayShader();
-void OnIdleShader();
 void freeResourceShader();
 
 
@@ -338,9 +337,9 @@ int initResourcesShader()
 
 	GLuint vs, fs;
 
-	if ((vs = Shader::createShader("triangle.v.glsl", GL_VERTEX_SHADER)) == 0)
+	if ((vs = Shader::createShader("data/Shader/triangle.v.glsl", GL_VERTEX_SHADER)) == 0)
 		return 0;
-	if ((fs = Shader::createShader("triangle.f.glsl", GL_FRAGMENT_SHADER)) == 0)
+	if ((fs = Shader::createShader("data/Shader/triangle.f.glsl", GL_FRAGMENT_SHADER)) == 0)
 		return 0;
 
 	// program = Kombination aus Fragment und Vertex Shader
@@ -434,19 +433,6 @@ void OnDisplayShader()
 	glDisableVertexAttribArray(attribute_v_color);
 
 	glUseProgram(0);
-
-}
-
-void OnIdleShader()
-{
-	//float cur_fade = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2 * 3.1415f) / 5) / 2 + 0.5; //0->1->0 every 5 seconds
-	//glUseProgram(program);
-	//glUniform1f(uniform_alpha, cur_fade);
-	
-	//aktuelles fenster noch mal anzeigen nach dem display eigentlich schon aufgerufen wurde
-	//glutPostRedisplay();
-	
-	//glUseProgram(0);
 
 }
 
