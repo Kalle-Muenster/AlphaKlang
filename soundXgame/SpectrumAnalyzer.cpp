@@ -20,11 +20,11 @@ SpectrumAnalyzer::~SpectrumAnalyzer(void)
 void
 SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 {
-	data32 coloro;
-	coloro.byte[1]=0;
-	coloro.byte[2]=255;
-	coloro.byte[3]=127;
-	coloro.byte[0]=63;
+
+	color.byte[1]=0;
+	color.byte[2]=255;
+	color.byte[3]=127;
+	color.byte[0]=10;
 
 
 	Vector3 temp = this->getTransform()->position;
@@ -33,8 +33,8 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
 	{
-		bands[i]=(new Cubus(coloro,true,false));//->move(transform.position.x,transform.position.y,transform.position.z+=i);
-		bands[i]->move(temp.x,temp.y,temp.x+i);
+		bands[i]=(new Cubus(color,true,false));//->move(transform.position.x,transform.position.y,transform.position.z+=i);
+		bands[i]->move(temp.x + i * 0.1f,temp.y,temp.z);
 	}
 	
 
@@ -42,7 +42,7 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	UPDATE->SignInForEarlyUpdate(this);
 	UPDATE->SignInForUpdate(this);
 	UPDATE->SignInForLateUpdate(this);
-
+	this->getTransform()->scale.y=10;
 
 }
 
@@ -56,12 +56,39 @@ SpectrumAnalyzer::DoEarly(void)
 void
 SpectrumAnalyzer::DoUpdate(void)
 {
+	Vector3 sizer = getTransform()->scale;
+	sizer.x = 0.1;
+	sizer.z = 0.25;
 	for(int i=0;i<128;i++)
-		bands[i]->scale(Vector3(1,this->fftData[i],1));
+	{
+		float changeFactor = (this->fftData[i]*((float)i*0.1));
+		sizer.y = changeFactor * this->getTransform()->scale.y;
+		bands[i]->scale(sizer);
+		ChangeColor(changeFactor);
+		bands[i]->SetColor(color);
+	}
+}
+
+void 
+SpectrumAnalyzer::ChangeColor(float bandLevel)
+{
+	color.byte[1] = ((bandLevel*10) * 255.0);
+	color.byte[2] = (1.0 - (bandLevel*10))*255.0;
+}
+void
+SpectrumAnalyzer::ChangeSize(float bandLevel)
+{
+
 }
 
 void
 SpectrumAnalyzer::DoLate(void)
 {
 	
+}
+
+void
+SpectrumAnalyzer::draw(void)
+{
+
 }

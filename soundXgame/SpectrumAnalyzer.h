@@ -13,9 +13,12 @@ class SpectrumAnalyzer :
 {
 private: 
 	short bandWidth;
-	IGObject* bands[SPECTRUM_SIZE];
+	Cubus* bands[128];
 	float* fftData;
 	bool _gotThisFrameSpectrumData;
+	virtual void ChangeColor(float bandLevel);
+	virtual void ChangeSize(float bandLevel);
+
 public:
 	SpectrumAnalyzer(void);
 	virtual ~SpectrumAnalyzer(void);
@@ -23,10 +26,8 @@ public:
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
 	virtual void DoLate(void);
-	virtual void draw(void)
-	{
+	virtual void draw(void);
 
-	}
 };
 
 #endif

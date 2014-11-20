@@ -240,10 +240,20 @@ BassAudio::GetBackgroundAudioFFT(FFT_SIZE size)
 	void* buffer = &_BackgroundFFTbuffer[0];
 	
 	if((!_BackroundFFTcalculated) || (_BackgroundFFTcurrentSize!=size))
-		if(GetChannelFFT(derAudio,buffer,size))
+	{
+		if(GetChannelFFT(derAudio,buffer,size)==0)
 			printf("AUDIO: %s\n",_GetErrorString());
 
+		_BackgroundFFTcurrentSize = size;
+		_BackroundFFTcalculated = true;
+	}
 	return buffer;
+}
+
+void
+BassAudio::PerFrameReset(void)
+{
+	_BackroundFFTcalculated = false;
 }
 
 void*

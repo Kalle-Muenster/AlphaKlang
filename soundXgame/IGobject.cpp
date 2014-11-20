@@ -26,7 +26,7 @@ IGObject::IGObject(void)
 	this->_idIsSet=false;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
-	IsGrounded=true;
+	IsGrounded=false;
 
 }
 

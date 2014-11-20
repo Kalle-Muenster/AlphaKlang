@@ -40,6 +40,7 @@ public:
 	bool ToggleMasterResampling(void);
 	virtual bool MasterResampling(BOOL = 3);
 	void* GetMasterOutFFT(void);
+	void PerFrameReset(void);
 
 private:
 

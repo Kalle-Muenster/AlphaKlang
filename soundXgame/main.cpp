@@ -232,6 +232,7 @@ void OnDisplay(void)
 	UpdateCycle();
 	RenderCycle();
 	INPUT->PerFrameReset();
+	AUDIO->PerFrameReset();
 }
 
 void OnIdle(void)
