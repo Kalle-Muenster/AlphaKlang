@@ -336,7 +336,7 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 0.15f;
+	float speed = 1.5f;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else
