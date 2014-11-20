@@ -31,9 +31,9 @@ public:
 	static void SignInForUpdate(IUpdateble*);
 	static void SignInForLateUpdate(IUpdateble*);
 	
-	static void SignOutForUpdate(IUpdateble*);
-	static void SignOutForEarlyUpdate(IUpdateble*);
-	static void SignOutForLateUpdate(IUpdateble*);
+	static void SignOutFromUpdate(IUpdateble*);
+	static void SignOutFromEarlyUpdate(IUpdateble*);
+	static void SignOutFromLateUpdate(IUpdateble*);
 
 	static void DoAllTheUpdates(void);
 

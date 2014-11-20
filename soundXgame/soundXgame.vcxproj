@@ -99,6 +99,7 @@
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="Spectator.cpp" />
+    <ClCompile Include="SpectrumAnalyzer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TargetGrabber.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="Spectator.h" />
+    <ClInclude Include="SpectrumAnalyzer.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TargetGrabber.h" />

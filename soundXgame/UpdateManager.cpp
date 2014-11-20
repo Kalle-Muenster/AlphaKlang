@@ -58,19 +58,19 @@ UpdateManager::SignInForLateUpdate(IUpdateble* updatebleInstance)
 }
 
 void
-UpdateManager::SignOutForUpdate(IUpdateble* updatebleInstance)
+UpdateManager::SignOutFromUpdate(IUpdateble* updatebleInstance)
 {
 	updates.erase(updates.begin() + updatebleInstance->UpdID); // -1 ??
 }
 
 void
-UpdateManager::SignOutForEarlyUpdate(IUpdateble* updatebleInstance)
+UpdateManager::SignOutFromEarlyUpdate(IUpdateble* updatebleInstance)
 {
 	earlyUpdates.erase(earlyUpdates.begin() + updatebleInstance->UpdID);
 }
 
 void
-UpdateManager::SignOutForLateUpdate(IUpdateble* updatebleInstance)
+UpdateManager::SignOutFromLateUpdate(IUpdateble* updatebleInstance)
 {
 	lateUpdates.erase(lateUpdates.begin() + updatebleInstance->UpdID);
 }

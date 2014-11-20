@@ -10,10 +10,10 @@
 
 enum CAM_MODE : int
 {
+	get = -1,
 	FIRSTPERSON = 1,
 	FOLLOWTARGET = 2,
-	TARGETGRABBER = 3,
-	CAM_MODE_NULL=NULL
+	
 };
 
 
@@ -29,6 +29,9 @@ public:
 	bool IsDirty;
 	void UpdateAllActiveModes(void)
 	{
+		if(NumberOfConnectedObjects<=0)
+			return;
+
 		CameraMode* m;
 		for(int i = 0;i<NumberOfConnectedObjects;i++)
 		{
@@ -59,22 +62,22 @@ public:
 			T::StaticCamModeID = i;
 			CameraMode* newcon = new T();
 			newcon->SetConnection(this);
-			newcon->ConnectionID = i+1;
+			newcon->ConnectionID = ConIDs[i] = i+1;
 			newcon->ModeName = (char*)typeid(T).name();
 			setConnectables(i,(T*)newcon);
-			ConIDs[i]=i+1;
-			NumberOfConnectedObjects=ConIDs[i];
+			NumberOfConnectedObjects++;
+			this->camera->NumberOfModes++;
 			return (T*)getConnectables(i);
 		}
 		return NULL;
 	}
 
-	template<typename T> T* GetCameraMode(ConID id)
+	template<typename T> T* Get(ConID id)
 	{
 		return (T*)getConnectables(id-1);
 	}
 
-	template<typename T> T* GetCameraModeByStaticID(void)
+	template<typename T> T* GetCameraMode(void)
 	{
 		return (T*)getConnectables(T::StaticCamModeID);
 	}
@@ -89,7 +92,7 @@ private:
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;
-	CAM_MODE				_mode;
+	int						_mode;
 	float					_distanceToTarget;
 	void					UpdateView();			// Update Window and or Viewport Changes...
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
@@ -102,7 +105,6 @@ public:
 							Cam(void);
 	virtual					~Cam(void);
 	virtual double			FieldOfView(double = _FNan._Double);
-	CAM_MODE                Mode(CAM_MODE = (CAM_MODE)NULL);
 	virtual GLfloat			Aspect(GLfloat = NULL);
 	Transform               transform;	
 	void		            SetTarget(Vector3* target);
@@ -119,10 +121,9 @@ public:
 	Vector3			        rotate(glm::vec3);
 	bool				    ShareAudio(BOOL=3);
 	virtual void			Update(void);
-	int						NumberOfCameraModes; 
+	int						NumberOfModes; 
+	CAM_MODE                Mode(CAM_MODE = get);
 	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
-	BOOL					ModeAttached(BOOL=-1);		// get(): true if any mode-extensions plugt in. set(false): eject's the active mode-extension..
-	int						CurrentCamMode;
 
 };
 

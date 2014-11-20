@@ -106,6 +106,8 @@ void GlInit(void)
 	//shader
 	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
+
+SpectrumAnalyzer* analyzerID;
 ConID* testID;
 int i1,i2,i3;
 int cycle1 = 127;
@@ -127,7 +129,7 @@ i3 = 1;
 	//fountain->Init();
 	
 
-	Cubus* musikubus;
+//	Cubus* musikubus;
 	data32 col = data32();
 	col.byte[0] = 255;
 	col.byte[1] = 200;
@@ -135,12 +137,12 @@ i3 = 1;
 	col.byte[3] = 100;
 	int i = -1;
 	IGObject* tempObject = new Cubus(col);
-	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Cubus(true))->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
 	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
-	(new MrZylinder())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Sphere())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
+	(new MrZylinder())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Sphere())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
+	(new Sphere(true))->LoadTexture("X-7.tga")->move(i,tempObject->getTransform()->position.y,i++);
+//	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
 	
 	VoxGrid* vObject = new VoxGrid("drei_.ppm");
 	vObject->AddConnectable<VoxControl>();
@@ -164,6 +166,10 @@ i3 = 1;
 	SCENE->camera->Mode(FIRSTPERSON);
 
 	((Cubus*)SCENE->Object((unsigned)1))->UseTexture = false;
+
+
+	analyzerID = new SpectrumAnalyzer();
+	SCENE->Object(analyzerID->GetID())->move(10,1,10);
 }
 
 
@@ -252,12 +258,13 @@ void keyboardInput(unsigned char key,int x,int y)
 {
 	/* Switches Cam-Modes..*/
 	if(key=='o')
-	{	SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=true;
-		SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=false;}
+	{	
+		SCENE->camera->Mode(FIRSTPERSON);
+	}
 	if(key=='p')
-	{	SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=true;
-		SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=false;}
-
+	{	
+		SCENE->camera->Mode(FOLLOWTARGET);
+	}
 	if(key == 27) // ESC
 		glutExit();
 

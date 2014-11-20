@@ -90,6 +90,10 @@ default :
 }
 }
 
+float _BackgroundFFTbuffer[FFT_WINDOW_SIZE];
+bool _BackroundFFTcalculated = false;
+int _BackgroundFFTcurrentSize = FFT_WINDOW_SIZE;
+
 int _GetNumberOfInputDevices(void)
 {
 	BASS_RECORDINFO *info = new BASS_RECORDINFO();
@@ -231,10 +235,14 @@ BassAudio::GetChannelFFT(DWORD channel,void* buffer,FFT_SIZE size)
 }
 
 void*
-BassAudio::GetBackgroundAudioFFT(int size)
+BassAudio::GetBackgroundAudioFFT(FFT_SIZE size)
 {
-	void* buffer;
-	GetChannelFFT(derAudio,buffer,(FFT_SIZE)size);
+	void* buffer = &_BackgroundFFTbuffer[0];
+	
+	if((!_BackroundFFTcalculated) || (_BackgroundFFTcurrentSize!=size))
+		if(GetChannelFFT(derAudio,buffer,size))
+			printf("AUDIO: %s\n",_GetErrorString());
+
 	return buffer;
 }
 

@@ -7,22 +7,30 @@
 
 Cubus::Cubus(void)
 {
-	InitializeCubus();
+	InitializeCubus(true);
 	SetCollisionSound("03.wav");
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 	this->SetName("Cubus");
 	this->IsVisible=true;
-	//this->scale(Vector3(0.5f,0.5f,0.5f));
 }
 
-Cubus::Cubus(string textureFile,bool backfaces)
+Cubus::Cubus(bool intialize)
 {
-	InitializeCubus(textureFile,"03.wav",backfaces);
+	InitializeCubus(intialize);
+	SetCollisionSound("03.wav");
+	this->GetConnected<AudioEmitter>()->DoUpdate();
 	this->SetName("Cubus");
 	this->IsVisible=true;
 }
 
-Cubus::Cubus(data32 color,bool backfaces)
+Cubus::Cubus(string textureFile,bool backfaces,bool addToScene)
+{
+	InitializeCubus(textureFile,"03.wav",backfaces,addToScene);
+	this->SetName("Cubus");
+	this->IsVisible=true;
+}
+
+Cubus::Cubus(data32 color,bool backfaces,bool addToScene)
 {
 	InitializeCubus();
 	this->color=color;
@@ -37,26 +45,28 @@ Cubus::~Cubus(void)
 	delete conXtor;
 }
 
+
+
 void 
-Cubus::InitializeCubus(void)
+Cubus::InitializeCubus(bool addToScene)
 {
-	InitializeObject("cube_quads.obi",true);
+	InitializeObject("cube_quads.obi",addToScene);
 	this->AddConnectable<CamTargetRotator>();
 	this->NoBackfaceCulling = false;
 }
 
 void
-Cubus::InitializeCubus(string texturefile,bool backfaces)
+Cubus::InitializeCubus(string texturefile,bool backfaces,bool addToScene)
 {
-	InitializeCubus();
+	InitializeCubus(addToScene);
 	LoadTexture(texturefile);
 	this->NoBackfaceCulling = backfaces;
 }
 
 void 
-Cubus::InitializeCubus(string texturefile,string audiofile,bool backfaces)
+Cubus::InitializeCubus(string texturefile,string audiofile,bool backfaces,bool addToScene)
 {
-	InitializeCubus(texturefile,backfaces);
+	InitializeCubus(texturefile,backfaces,addToScene);
 	SetCollisionSound(audiofile);
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 }
@@ -66,6 +76,19 @@ Cubus::SetCollisionSound(string file)
 {
 	if(!this->HasConnected<AudioEmitter>())
 		this->AddConnectable<AudioEmitter>();
-	this->GetConnected<AudioEmitter>()->LoadeSample(file);
+	//this->GetConnected<AudioEmitter>()->LoadeSample(file);
 }
 
+//Cubus*
+//Cubus::CreateCuBus(IGObject* parent,int amount)
+//{
+//	theNext = new Cubus(false);
+//	theNext->SetID(amount);
+//	LockID();
+//	theNext->conXtor=parent->conXtor;
+//	theNext->transform = ((Cubus*)parent)->transform;
+//	theNext->transform.position += ((Cubus*)parent)->transform.forward * ((Cubus*)parent)->transform.scale.z;
+//	if(amount > 0)
+//		return CreateCuBus(theNext,--amount);
+//	else return theNext;
+//}

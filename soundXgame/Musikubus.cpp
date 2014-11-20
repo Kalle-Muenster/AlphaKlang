@@ -9,7 +9,7 @@ _CubusOnMusic(int line,ListenerData* data,IGObject* sender)
 Musikubus::Musikubus(void)
 {
 
-	InitializeCubus();
+	InitializeCubus(true);
 
 	MoveIt = &_CubusOnMusic;
 

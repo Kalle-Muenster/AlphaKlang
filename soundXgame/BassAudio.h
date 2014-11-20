@@ -5,6 +5,8 @@
 #include <bass_fx.h>
 #include "DataStructs.h"
 
+#define FFT_WINDOW_SIZE (1024)
+
 	enum FFT_SIZE
 	{Small=256,Medium=512,Large=1024};
 
@@ -32,10 +34,10 @@ public:
 	float Volume(float=2);
 	void* GetChannelBuffer(DWORD channel,int sizeInBytes);
 	unsigned GetChannelFFT(DWORD channel,void* buffer);
-	unsigned GetChannelFFT(DWORD channel,void* buffer, FFT_SIZE size);
+	unsigned GetChannelFFT(DWORD channel,void* buffer, FFT_SIZE);
 	void* GetBackgroundAudioFFT(void);
-	void* GetBackgroundAudioFFT( int);
-	bool ToggleMasterResampling();
+	void* GetBackgroundAudioFFT(FFT_SIZE);
+	bool ToggleMasterResampling(void);
 	virtual bool MasterResampling(BOOL = 3);
 	void* GetMasterOutFFT(void);
 

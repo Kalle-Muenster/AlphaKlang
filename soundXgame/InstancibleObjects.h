@@ -6,3 +6,4 @@
 #include "VoxGrid.h"
 #include "Fountain.h"
 #include "Sprite.h"
+#include "spectrumAnalyzer.h"
