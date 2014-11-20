@@ -33,6 +33,13 @@ void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 // unsigned create_shader(const char* shaderCodeFileName,GLenum type);
 
+// Shader
+int initResourcesShader();
+void OnDisplayShader();
+void OnIdleShader();
+void freeResourceShader();
+
+
 
 ////////////////////////////////////////////
 //Entrypoint:
@@ -40,6 +47,9 @@ int main(int argc,char** argv)
 {
 	glutInit(&argc,argv);
 	Init();
+
+	
+	GLenum glew_status = glewInit();
 
 	glutMainLoop();
 	
@@ -51,7 +61,10 @@ int prepareForExit(void)
 	//deletions:
 	delete font;
 
-	return 0;
+	// Shader
+	freeResourceShader();
+
+	return EXIT_SUCCESS;
 }
 
 void Init(void)
@@ -78,7 +91,12 @@ void Init(void)
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
+	{
 		std::cerr << "Unable to init GLew";
+	}
+	
+	// Shader
+	initResourcesShader();
 
 	GlInit();
 
@@ -211,9 +229,8 @@ void RenderCycle(void)
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//ground->Draw();
-
 	SCENE->DrawAll();
+OnDisplayShader();
 		
 	glutSwapBuffers();
 }
@@ -288,5 +305,156 @@ void MouseHoverWindow(int)
 
 }
 
+
+
+/* * * * * * * * * * S * H * A * D * E * R * * * * * * * * * * * */
+/*
+#define _USE_MATH_DEFINES
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <GL/glew.h>
+// GLUT für Fensterintialisierung
+#include <GL/freeglut.h>
+*/
+
+#include <math.h>
+#include "Shader.h"
+
+GLuint program;
+
+// Attribute + Uniforms für Vertices und Farbe
+GLint attribute_coord2d, attribute_v_color;
+GLint uniform_alpha;
+
+// Buffer für Vertices und Farben
+GLuint vbo_triangle, vbo_triangle_colors;
+
+int initResourcesShader()
+{
+	GLint compile_ok = GL_FALSE;
+	GLint link_ok = GL_FALSE;
+
+	GLuint vs, fs;
+
+	if ((vs = Shader::createShader("triangle.v.glsl", GL_VERTEX_SHADER)) == 0)
+		return 0;
+	if ((fs = Shader::createShader("triangle.f.glsl", GL_FRAGMENT_SHADER)) == 0)
+		return 0;
+
+	// program = Kombination aus Fragment und Vertex Shader
+	// arbeiten zusammen und vertex shader kann zusätzliche daten an fragment shader übermitteln
+	program = glCreateProgram();
+	glAttachShader(program, vs);
+	glAttachShader(program, fs);
+
+	glLinkProgram(program);
+
+	// Parameter eines Programobjekts zurückgeben
+	glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
+
+	if (!link_ok)
+	{
+		//std::cerr << "glLinkProgram:";
+		fprintf(stderr, "glLinkProgram:");
+		return 0;
+	}
+
+	//vermischen von vertex und farbwerten
+	
+	const char* attribute_name = "coord2d";
+
+	// Speicherort eines Attributs zurüchgeben
+	attribute_coord2d = glGetAttribLocation(program, attribute_name);
+
+	if (attribute_coord2d == -1)
+	{
+		//std::cerr << "Could not bind attribute %s\n" << attribute_name;
+		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+		return 0;
+	}
+
+	attribute_name = "v_color";
+	attribute_v_color = glGetAttribLocation(program, attribute_name);
+	if (attribute_v_color == -1)
+	{
+		fprintf(stderr, "Could not find attribute %s\n", attribute_name);
+		return 0;
+	}
+	
+	GLfloat triangle_attributes[] = {
+		 0.0,  0.8,		1.0, 0.0, 0.0,
+		-0.8, -0.8,		0.0, 1.0, 0.0,
+		 0.8, -0.8,		0.0, 0.0, 1.0,
+	};
+
+	glGenBuffers(1, &vbo_triangle);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
+
+	return 1;
+}
+
+void OnDisplayShader()
+{
+	
+	// Program verwenden
+	glUseProgram(program);
+
+	//vertexattributepointer farbe + vertex
+	glEnableVertexAttribArray(attribute_coord2d);
+	glEnableVertexAttribArray(attribute_v_color);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+
+	glVertexAttribPointer(
+		attribute_coord2d,   // attribute
+		2,                   // anzahl der elemente pro vertex
+		GL_FLOAT,            // datentyp der elemente
+		GL_FALSE,            // werte verwenden wie sie sind
+		5 * sizeof(GLfloat), // nächste coord2d erscheint alle 5 elemente
+		0                    // offset vom ersten element
+		);
+	glVertexAttribPointer(
+		attribute_v_color,					// attribute
+		3,									// anzahl der elemente pro vertex
+		GL_FLOAT,							// datentyp der elemente
+		GL_FALSE,							// werte verwenden wie sie sind
+		5 * sizeof(GLfloat),				// nächste coord2d erscheint alle 5 elemente
+		(GLvoid*)(2 * sizeof(GLfloat))		// offset vom ersten element
+		);
+
+	// Grafikprimitive mit Arraydaten zeichnen
+	// Params: mode, startindex, anzahl der indizes die gerendert werden sollen
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	// aktivieren eines vertex attribute arrays
+	glDisableVertexAttribArray(attribute_coord2d);
+	glDisableVertexAttribArray(attribute_v_color);
+
+	glUseProgram(0);
+
+}
+
+void OnIdleShader()
+{
+	//float cur_fade = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2 * 3.1415f) / 5) / 2 + 0.5; //0->1->0 every 5 seconds
+	//glUseProgram(program);
+	//glUniform1f(uniform_alpha, cur_fade);
+	
+	//aktuelles fenster noch mal anzeigen nach dem display eigentlich schon aufgerufen wurde
+	//glutPostRedisplay();
+	
+	//glUseProgram(0);
+
+}
+
+void freeResourceShader()
+{
+	glDeleteProgram(program);
+	glDeleteBuffers(1, &vbo_triangle);
+	glDeleteBuffers(1, &vbo_triangle_colors);
+}
 
 

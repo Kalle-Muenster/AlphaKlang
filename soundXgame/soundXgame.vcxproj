@@ -98,6 +98,7 @@
     <ClCompile Include="MrZylinder.cpp" />
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Spectator.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Spectator.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />

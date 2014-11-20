@@ -111,6 +111,7 @@
     <ClCompile Include="MrZylinder.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="InstancibleObjects.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
