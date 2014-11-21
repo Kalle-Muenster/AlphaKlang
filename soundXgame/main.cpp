@@ -118,7 +118,7 @@ void LoadContent(void)
 i1 = -1;
 i2 = -2;
 i3 = 1;
-	AUDIO->LoadeBackgroundAudio("testtrack3.mp3");
+	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	AUDIO->Play();
 
 	ground = Ground::getInstance();
@@ -136,10 +136,10 @@ i3 = 1;
 
 
 	
-	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	//vObject->AddConnectable<VoxControl>();
-	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	//vObject->AddConnectable<CamTargetRotator>();
+	VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	vObject->AddConnectable<VoxControl>();
+	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	vObject->AddConnectable<CamTargetRotator>();
 
 
 
@@ -195,9 +195,10 @@ void UpdateCycle(void)
 
 	if(INPUT->Mouse.RIGHT.CLICK)
 	{
-		SCENE->camera->SetTarget(SCENE->Object(switcher));
 		if(++switcher>=SCENE->ObjectsCount())
-			switcher=0;
+			switcher=1;
+		
+		SCENE->camera->SetTarget(SCENE->Object(switcher));
 	}
 
 	if(INPUT->Mouse.WheelV==WHEEL::UP)

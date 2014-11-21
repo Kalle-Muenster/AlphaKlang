@@ -37,7 +37,7 @@ Cam::Cam(void) :
 	
 	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
-	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=false;
+	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
 }
 
 

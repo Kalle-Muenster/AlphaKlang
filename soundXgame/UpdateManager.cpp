@@ -2,91 +2,182 @@
 #include <vector>
 #include "UpdateManager.h"
 
-UpdateManager* instance;
+UpdateManager* _instance;
 
-//IUpdateble* earlyUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
-//IUpdateble* updates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/2];
-//IUpdateble* lateUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
+IUpdateble* _earlyUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
+IUpdateble* _updates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/2];
+IUpdateble* _lateUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
 
-//unsigned NumberOfClients = 0;
-//unsigned NumberOfLateClients = 0;
-//unsigned NumberOfEarlyClients = 0;
+unsigned _NumberOfUpdateClients = 0;
+unsigned _NumberOfLateClients = 0;
+unsigned _NumberOfEarlyClients = 0;
 
-static int updateCounter = 0;
-static int updateEarlyCounter = 0;
-static int updateLateCounter = 0;
-
-static std::vector<IUpdateble*> updates;
-static std::vector<IUpdateble*> earlyUpdates;
-static std::vector<IUpdateble*> lateUpdates;
-
+//Constructor
 UpdateManager::UpdateManager(void)
 {
+	_NumberOfEarlyClients =_NumberOfUpdateClients =_NumberOfLateClients = 0;
+	int i;
+	int MAX=MAXIMUM_NUMBER_OF_UPDATECLIENTS/4;
+	for(i=0;i<MAX;i++)
+	{
+		_earlyUpdates[i] = NULL;
+		_updates[i]=NULL;
+		_lateUpdates[i]=NULL;
+	}
+	MAX = MAXIMUM_NUMBER_OF_UPDATECLIENTS/2;
+	for(i;i<MAX;i++)
+		_updates[i]=NULL;
 }
 
-UpdateManager::~UpdateManager(void)
-{
-}
-
-UpdateManager*
+UpdateManager* //Static reference to instance...
 UpdateManager::getInstance(void)
 {
-	if(!instance)
-		instance = new UpdateManager();
-	return instance;
+	if(!_instance)
+		_instance = new UpdateManager();
+	return _instance;
 }
 
+//Destuctor...
+UpdateManager::~UpdateManager(void)
+{
+	delete[] _earlyUpdates;
+	delete[] _updates;
+	delete[] _lateUpdates;
+}
+
+
+// Signing function...
+void // take's a pointer to an Invokationlist and signs in the given client to it..
+_SignIn( // before it will check if the client already is in there...
+		 IUpdateble** InvokationList, 
+		 IUpdateble* client, 
+		 unsigned &CurrentAmountOnClients, 
+		 unsigned MaximumNumberOfClients 
+		 ){
+	int FirstEmptySlotFound = -1;
+	unsigned counter = 0;
+	unsigned index = 0;
+
+	while(counter<CurrentAmountOnClients)
+	{
+		if(InvokationList[index] == NULL)
+			FirstEmptySlotFound = FirstEmptySlotFound<0? index : FirstEmptySlotFound;
+		else if(InvokationList[index] != client)
+			counter++;
+		else 
+			return;
+		index++;
+	}
+
+	if(FirstEmptySlotFound>=0)
+	{
+		InvokationList[FirstEmptySlotFound]=client;
+		InvokationList[FirstEmptySlotFound]->UpdID.Main = FirstEmptySlotFound;
+		CurrentAmountOnClients++; 
+	}
+	else for(index = CurrentAmountOnClients; index < MaximumNumberOfClients ;index++)
+	{
+		if(InvokationList[index]==NULL)
+		{	
+			InvokationList[index]=client;
+			InvokationList[index]->UpdID.Main=index;
+			CurrentAmountOnClients++; 
+			return;
+		}
+	}
+}
+
+
+/* UpdateManager-SignIn's:...  */
 void
 UpdateManager::SignInForUpdate(IUpdateble* updatebleInstance)
 {
-	updates.push_back(updatebleInstance);
-	updatebleInstance->UpdID = ++updateCounter;
+	_SignIn(&_updates[0], updatebleInstance, _NumberOfUpdateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/2);
 }
 
 void
 UpdateManager::SignInForEarlyUpdate(IUpdateble* updatebleInstance)
 {
-	earlyUpdates.push_back(updatebleInstance);
-	updatebleInstance->UpdID = ++updateEarlyCounter;
+	_SignIn(&_earlyUpdates[0], updatebleInstance, _NumberOfEarlyClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4);
 }
 
 void
 UpdateManager::SignInForLateUpdate(IUpdateble* updatebleInstance)
 {
-	lateUpdates.push_back(updatebleInstance);
-	updatebleInstance->UpdID = ++updateLateCounter;
+	_SignIn(&_lateUpdates[0], updatebleInstance, _NumberOfLateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4);
 }
 
+/* SignOut's:.... */
 void
 UpdateManager::SignOutFromUpdate(IUpdateble* updatebleInstance)
 {
-	updates.erase(updates.begin() + updatebleInstance->UpdID); // -1 ??
+	if(_updates[updatebleInstance->UpdID.Main]==updatebleInstance)
+	{
+		_updates[updatebleInstance->UpdID.Main] = NULL;
+		--_NumberOfUpdateClients;
+	}
 }
 
 void
 UpdateManager::SignOutFromEarlyUpdate(IUpdateble* updatebleInstance)
 {
-	earlyUpdates.erase(earlyUpdates.begin() + updatebleInstance->UpdID);
+	if(_earlyUpdates[updatebleInstance->UpdID.Early]==updatebleInstance)
+	{
+		_earlyUpdates[updatebleInstance->UpdID.Early] = NULL;
+		--_NumberOfEarlyClients;
+	}
 }
 
 void
 UpdateManager::SignOutFromLateUpdate(IUpdateble* updatebleInstance)
 {
-	lateUpdates.erase(lateUpdates.begin() + updatebleInstance->UpdID);
+	if(_lateUpdates[updatebleInstance->UpdID.Late] == updatebleInstance)
+	{
+		_lateUpdates[updatebleInstance->UpdID.Late] = NULL;
+		--_NumberOfLateClients;
+	}
 }
 
-void
+
+
+void //Invoking all Update-Clients...
 UpdateManager::DoAllTheUpdates(void)
 {
-	for (unsigned i=0; i < earlyUpdates.size(); ++i)
-		earlyUpdates[i]->DoEarly();
-
-	for (unsigned i=0; i < updates.size(); ++i)
-		updates[i]->DoUpdate();
+	unsigned i,counter;
 	
-	for (unsigned i=0; i < lateUpdates.size(); ++i)
-		lateUpdates[i]->DoLate();
+	i = counter = 0;
+	while(counter<_NumberOfEarlyClients)
+	{
+		if(_earlyUpdates[i]!=NULL)
+			{ _earlyUpdates[i]->DoEarly(); counter++; }
+
+		i++;
+	}
+
+	i = counter = 0;
+	while(counter<_NumberOfUpdateClients)
+	{
+		if(_updates[i]!=NULL)
+			{ _updates[i]->DoUpdate(); counter++; }
+
+		i++;
+	}
+
+	i = counter = 0;
+	while(counter<_NumberOfLateClients)
+	{
+		if(_lateUpdates[i]!=NULL)
+			{ _lateUpdates[i]->DoLate(); counter++;	}
+
+		i++;
+	}
 }
+
+
+
+  //////////////////////////
+/*  IUpdateble-functions:  */
+ //////////////////////////
 
 IUpdateble::IUpdateble(void)
 {
@@ -101,5 +192,5 @@ IUpdateble::~IUpdateble(void)
 void
 IUpdateble::InitiateUpdatable(void)
 {
-	UpdateManager::SignInForUpdate(this);
+	_instance->SignInForUpdate(this);
 }

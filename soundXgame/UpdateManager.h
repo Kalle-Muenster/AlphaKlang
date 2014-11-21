@@ -5,7 +5,11 @@
 
 #define MAXIMUM_NUMBER_OF_UPDATECLIENTS (1000)
 
-typedef unsigned UpdateID;
+typedef unsigned UpID;
+struct UpdateID
+{
+	unsigned Main,Early,Late;
+};
 
 class IUpdateble
 {
@@ -27,15 +31,15 @@ public:
 	virtual ~UpdateManager(void);
 	static UpdateManager* getInstance(void);
 	
-	static void SignInForEarlyUpdate(IUpdateble*);
-	static void SignInForUpdate(IUpdateble*);
-	static void SignInForLateUpdate(IUpdateble*);
+	void SignInForEarlyUpdate(IUpdateble*);
+	void SignInForUpdate(IUpdateble*);
+	void SignInForLateUpdate(IUpdateble*);
 	
-	static void SignOutFromUpdate(IUpdateble*);
-	static void SignOutFromEarlyUpdate(IUpdateble*);
-	static void SignOutFromLateUpdate(IUpdateble*);
+	void SignOutFromUpdate(IUpdateble*);
+	void SignOutFromEarlyUpdate(IUpdateble*);
+	void SignOutFromLateUpdate(IUpdateble*);
 
-	static void DoAllTheUpdates(void);
+	void DoAllTheUpdates(void);
 
 };
 

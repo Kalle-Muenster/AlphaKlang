@@ -15,11 +15,10 @@ private:
 	short bandWidth;
 	Cubus* bands[SPECTRUM_SIZE];
 	float* fftData;
-	bool _gotThisFrameSpectrumData;
-	
-
-	virtual void ChangeColor(int band,float bandLevel);
-	virtual void ChangeSize(int band,Vector3);
+	Vector3 offset;
+	bool _CHANGEDposition,_CHANGEDrotation,_CHANGEDscale;
+	virtual void ChangeColor(int band,float changefactor);
+	virtual void ChangeSize(int band,float changefactor);
 	
 public:
 	SpectrumAnalyzer(void);

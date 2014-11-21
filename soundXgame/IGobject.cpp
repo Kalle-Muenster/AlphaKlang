@@ -4,7 +4,6 @@
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGObject.h"
-#include "kollective.h"
 #include "Ground.h"
 
 #define This this->conXtor->Connection()

@@ -1,6 +1,8 @@
 #ifndef __SCENEGRAPH__
 #define __SCENEGRAPH__
 
+#define MAXIMUM_SXCENE_OBJECT (3000)
+
 class IGObject;
 class Cam;
 
@@ -9,7 +11,7 @@ class SceneGraph
 {
 private:
 	SceneGraph(void);
-	std::vector<IGObject*> drawables;
+//	std::vector<IGObject*> drawables;
 	float r,g,b;
 	void UpdateSky(void);
 
