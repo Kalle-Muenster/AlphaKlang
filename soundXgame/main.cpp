@@ -12,7 +12,7 @@ void* font;
 //Objects:
 Ground* ground;
 Fountain* fountain;
-
+SpectrumAnalyzer* analyzer;
 
 //Functions:
 void Init(void);
@@ -107,7 +107,7 @@ void GlInit(void)
 	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
 
-SpectrumAnalyzer* analyzerID;
+
 ConID* testID;
 int i1,i2,i3;
 int cycle1 = 127;
@@ -136,10 +136,10 @@ i3 = 1;
 
 
 	
-	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>();
-	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->AddConnectable<CamTargetRotator>();
+	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	//vObject->AddConnectable<VoxControl>();
+	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	//vObject->AddConnectable<CamTargetRotator>();
 
 
 
@@ -154,10 +154,12 @@ i3 = 1;
 
 
 
-	analyzerID = new SpectrumAnalyzer();
-	analyzerID->AddConnectable<CamTargetRotator>();
-	//SCENE->Object(analyzerID->GetID())->move(10,1,10);
-	SCENE->camera->SetTarget(analyzerID);
+	analyzer = new SpectrumAnalyzer();
+	analyzer->SetName("SpectrumAnalyzer");
+	analyzer->AddConnectable<CamTargetRotator>();
+	SCENE->Object(analyzer->GetID())->move(1,1,-2);
+	analyzer->IsGrounded = true;
+	SCENE->camera->SetTarget(analyzer);
 }
 
 
@@ -202,11 +204,11 @@ void UpdateCycle(void)
 	}
 
 	if(INPUT->Mouse.WheelV==WHEEL::UP)
-	{	analyzerID->fallOffAmount += 0.01f;
-	printf("FallOffAmount: %f",analyzerID->fallOffAmount);}
+	{	analyzer->fallOffAmount += 0.01f;
+	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
 	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
-	{	analyzerID->fallOffAmount -= 0.01f;
-	printf("FallOffAmount: %f",analyzerID->fallOffAmount);}
+	{	analyzer->fallOffAmount -= 0.01f;
+	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
 }
 
 void RenderCycle(void)
