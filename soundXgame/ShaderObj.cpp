@@ -6,7 +6,8 @@ ShaderObj::ShaderObj(void)
 	//InitializeObject("cube_quads.obi",false);
 	//this->LoadTexture("X-512.jpg");
 	
-	InitializeObject();
+	this->InitializeObject();
+	this->IsVisible = true;
 
 	UpdateManager::getInstance()->SignInForUpdate(this);
 }
@@ -32,9 +33,6 @@ ShaderObj::InitializeObject(void)
 void
 ShaderObj::draw(void)
 {
-	if(!IsVisible)
-		return;
-	
 	this->drawShader();
 
 	/*

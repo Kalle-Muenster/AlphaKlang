@@ -3,7 +3,7 @@
 
 Shader::Shader(void)
 {
-
+	this->initResources("data/Shader/triangle.v.glsl", "data/Shader/triangle.f.glsl");
 }
 
 Shader::~Shader(void)
@@ -14,7 +14,6 @@ Shader::~Shader(void)
 bool 
 Shader::Initialize(void)
 {
-	this->initResources("triangle.v.glsl", "triangle.f.glsl");
 	
 	return true;
 
@@ -123,9 +122,6 @@ Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 	GLint compile_ok = GL_FALSE;
 	GLint link_ok = GL_FALSE;
 	GLuint vs, fs;
-
-	filenameVertex = strcat("data/Shader/",filenameVertex);
-	filenameFragment = strcat("data/Shader/",filenameFragment);
 
 	if ((vs = Shader::createShader(filenameVertex, GL_VERTEX_SHADER)) == 0)
 		return false;

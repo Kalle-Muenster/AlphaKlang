@@ -43,18 +43,21 @@ SceneGraph::Add(IGObject* object)
 
 	//check if the object is already in scenegraph... 
 	while(counter<_NumberOfSceneObjects)
-	{ //will remember if there where free slots, if some object has been removed before...
-		if(_drawables[i]==NULL)
-			FreeSlotFound = FreeSlotFound<0? i : FreeSlotFound;
-		else if(_drawables[i]==object)
+	{
+		//will remember if there where free slots, if some object has been removed before...
+		if(_drawables[i] == NULL)
+			FreeSlotFound = FreeSlotFound < 0 ? i : FreeSlotFound;
+		else if(_drawables[i] == object)
 			return i; //returns if list already contains the object.. 
 		else 
 			counter++;
-		i++; //count up next...
+		//count up next...
+		i++;
 	}
 
 	if(FreeSlotFound>=0)
-	{// if found a free slot before:
+	{
+		// if found a free slot before:
 		_drawables[FreeSlotFound] = object;
 		_NumberOfSceneObjects++;
 		return FreeSlotFound;
