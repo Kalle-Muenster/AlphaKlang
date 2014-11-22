@@ -1,6 +1,25 @@
 #include "Shader.h"
 
 
+Shader::Shader(void)
+{
+
+}
+
+Shader::~Shader(void)
+{
+	this->freeResources();
+}
+
+bool 
+Shader::Initialize(void)
+{
+	this->initResources("triangle.v.glsl", "triangle.f.glsl");
+	
+	return true;
+
+}
+
 char* Shader::readFile(const char* filename)
 {
 	// read file as binar
@@ -88,7 +107,6 @@ GLuint Shader::createShader(const char* filename, GLenum type)
 	if (compile_ok == GL_FALSE)
 	{
 		fprintf(stderr, "%s", filename);
-		//std::cerr << filename;
 
 		// Shader Objekt zerstören
 		glDeleteShader(res);
@@ -99,18 +117,20 @@ GLuint Shader::createShader(const char* filename, GLenum type)
 
 
 
-int
-Shader::initResourcesShader()
+bool
+Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 {
 	GLint compile_ok = GL_FALSE;
 	GLint link_ok = GL_FALSE;
-
 	GLuint vs, fs;
 
-	if ((vs = Shader::createShader("data/Shader/triangle.v.glsl", GL_VERTEX_SHADER)) == 0)
-		return 0;
-	if ((fs = Shader::createShader("data/Shader/triangle.f.glsl", GL_FRAGMENT_SHADER)) == 0)
-		return 0;
+	filenameVertex = strcat("data/Shader/",filenameVertex);
+	filenameFragment = strcat("data/Shader/",filenameFragment);
+
+	if ((vs = Shader::createShader(filenameVertex, GL_VERTEX_SHADER)) == 0)
+		return false;
+	if ((fs = Shader::createShader(filenameFragment, GL_FRAGMENT_SHADER)) == 0)
+		return false;
 
 	// program = Kombination aus Fragment und Vertex Shader
 	// arbeiten zusammen und vertex shader kann zusätzliche daten an fragment shader übermitteln
@@ -127,7 +147,7 @@ Shader::initResourcesShader()
 	{
 		//std::cerr << "glLinkProgram:";
 		fprintf(stderr, "glLinkProgram:");
-		return 0;
+		return false;
 	}
 
 	//vermischen von vertex und farbwerten
@@ -141,7 +161,7 @@ Shader::initResourcesShader()
 	{
 		//std::cerr << "Could not bind attribute %s\n" << attribute_name;
 		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-		return 0;
+		return false;
 	}
 
 	attribute_name = "v_color";
@@ -149,7 +169,7 @@ Shader::initResourcesShader()
 	if (attribute_v_color == -1)
 	{
 		fprintf(stderr, "Could not find attribute %s\n", attribute_name);
-		return 0;
+		return false;
 	}
 	
 	GLfloat triangle_attributes[] = {
@@ -162,14 +182,14 @@ Shader::initResourcesShader()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
 
-	return 1;
+	return true;
 }
 
 void
-Shader::drawShader()
+Shader::drawShader(void)
 {
 	
-	// Program verwenden
+	// use program for shader
 	glUseProgram(program);
 
 	//vertexattributepointer farbe + vertex
@@ -185,7 +205,7 @@ Shader::drawShader()
 		GL_FALSE,            // werte verwenden wie sie sind
 		5 * sizeof(GLfloat), // nächste coord2d erscheint alle 5 elemente
 		0                    // offset vom ersten element
-		);
+	);
 	glVertexAttribPointer(
 		attribute_v_color,					// attribute
 		3,									// anzahl der elemente pro vertex
@@ -193,7 +213,7 @@ Shader::drawShader()
 		GL_FALSE,							// werte verwenden wie sie sind
 		5 * sizeof(GLfloat),				// nächste coord2d erscheint alle 5 elemente
 		(GLvoid*)(2 * sizeof(GLfloat))		// offset vom ersten element
-		);
+	);
 
 	// Grafikprimitive mit Arraydaten zeichnen
 	// Params: mode, startindex, anzahl der indizes die gerendert werden sollen
@@ -203,6 +223,7 @@ Shader::drawShader()
 	glDisableVertexAttribArray(attribute_coord2d);
 	glDisableVertexAttribArray(attribute_v_color);
 
+	// end program
 	glUseProgram(0);
 
 }
