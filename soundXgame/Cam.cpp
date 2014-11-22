@@ -237,7 +237,7 @@ Cam::UpdateView(void)
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(FieldOfView(), Aspect(), 0.1f, 100.0f);
+	gluPerspective(FieldOfView(), Aspect(), 0.1f, 1000.0f);
 	TransformDIRTY = true;
 }
 

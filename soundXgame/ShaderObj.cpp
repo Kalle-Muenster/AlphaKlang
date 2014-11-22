@@ -6,8 +6,9 @@ ShaderObj::ShaderObj(void)
 	
 	this->InitializeObject();
 	
-	//this->LoadTexture("X-512.jpg");
+	this->LoadTexture("X-512.jpg");
 	this->IsVisible = true;
+	this->transform.position = Vector3(1,2,3);
 
 	UpdateManager::getInstance()->SignInForUpdate(this);
 }
