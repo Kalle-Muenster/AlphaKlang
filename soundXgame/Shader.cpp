@@ -11,14 +11,6 @@ Shader::~Shader(void)
 	this->freeResources();
 }
 
-bool 
-Shader::Initialize(void)
-{
-	
-	return true;
-
-}
-
 char* Shader::readFile(const char* filename)
 {
 	// read file as binar
@@ -150,7 +142,7 @@ Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 	
 	const char* attribute_name = "coord2d";
 
-	// Speicherort eines Attributs zurüchgeben
+	// Speicherort eines Attributs zurückgeben
 	attribute_coord2d = glGetAttribLocation(program, attribute_name);
 
 	if (attribute_coord2d == -1)
@@ -169,9 +161,12 @@ Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 	}
 	
 	GLfloat triangle_attributes[] = {
-		 0.0,  0.8,		1.0, 0.0, 0.0,
-		-0.8, -0.8,		0.0, 1.0, 0.0,
-		 0.8, -0.8,		0.0, 0.0, 1.0,
+		 0.5,  0.5,		1.0, 1.0, 0.0, // 1
+		-0.5,  0.5,		1.0, 0.0, 0.0, // 2
+		-0.5, -0.5,		0.0, 1.0, 0.0, // 3
+		 0.5,  0.5,		1.0, 1.0, 0.0, // 1
+		-0.5, -0.5,		0.0, 1.0, 0.0, // 3
+		 0.5, -0.5,		0.0, 0.0, 1.0, // 4
 	};
 
 	glGenBuffers(1, &vbo_triangle);
@@ -212,8 +207,8 @@ Shader::drawShader(void)
 	);
 
 	// Grafikprimitive mit Arraydaten zeichnen
-	// Params: mode, startindex, anzahl der indizes die gerendert werden sollen
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	// Params: mode, startindex, vertices counter
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	// aktivieren eines vertex attribute arrays
 	glDisableVertexAttribArray(attribute_coord2d);

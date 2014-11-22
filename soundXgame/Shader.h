@@ -29,7 +29,6 @@ protected:
 public:
 	Shader(void);
 	~Shader(void);
-	virtual bool Initialize(void);
 
 
 };
