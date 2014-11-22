@@ -1,9 +1,22 @@
 The Experience of Sound
 ==============
 
-Ein interaktives Sound-Erlebnis für Groß und Klein
+* Custom-build Graphics Framework build with C++ and OpenGL
+* 3D Spectrum Analyzer
 
-Credits
+Framework
+===
+
+  * Custom-build C++ Framwork
+  * Rendering: OpenGL
+  * Graphics libraries: freeglut, glew, glm, glsdk
+  * Audio library: BassAudio
+
+3D Spectrum Analyzer
+===
+  * 3D Demo
+
+About
 ======
 
 * Final Project
@@ -12,16 +25,6 @@ Credits
 * Date: 	    2014
 * Copyright (c) 2014
 
-Credits
-======
-
 Development & Programming by
   * Kalle Münster
-  * Dario D. Müller
-
-Infos
-===
-
-  * Custom-build C++ Engine
-  * based on OpenGL
-  * Libraries: freeglut, glew, glm, glsdk
+  * Dario D. Müller (www.dariodomi.de)
