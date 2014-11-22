@@ -20,9 +20,9 @@ private:
 	// Buffer für Vertices und Farben
 	GLuint vbo_triangle, vbo_triangle_colors;
 	
-	char* readFile(const char* filename);
-	GLuint createShader(const char* filename, GLenum type);
 	bool initResources(const char* filenameVertex, const char* filenameFragment);
+	GLuint createShader(const char* filename, GLenum type);
+	char* readFile(const char* filename);
 	void freeResources();
 protected:
 	void drawShader(void);

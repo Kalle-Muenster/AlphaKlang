@@ -3,12 +3,125 @@
 
 Shader::Shader(void)
 {
-	this->initResources("data/Shader/triangle.v.glsl", "data/Shader/triangle.f.glsl");
+	bool status = this->initResources("Data/Shader/triangle.v.glsl", "Data/Shader/triangle.f.glsl");
+	if(status == false)
+	{
+		std::cout << "error while shader initialization" << std::endl;
+	}
 }
 
 Shader::~Shader(void)
 {
 	this->freeResources();
+}
+
+bool
+Shader::initResources(const char* filenameVertex, const char* filenameFragment)
+{
+	GLint compile_ok = GL_FALSE;
+	GLint link_ok = GL_FALSE;
+	GLuint vs, fs;
+
+	if ((vs = Shader::createShader(filenameVertex, GL_VERTEX_SHADER)) == 0)
+		return false;
+	if ((fs = Shader::createShader(filenameFragment, GL_FRAGMENT_SHADER)) == 0)
+		return false;
+
+	// program = Kombination aus Fragment und Vertex Shader
+	// arbeiten zusammen und vertex shader kann zusätzliche daten an fragment shader übermitteln
+	program = glCreateProgram();
+	glAttachShader(program, vs);
+	glAttachShader(program, fs);
+
+	glLinkProgram(program);
+
+	// Parameter eines Programobjekts zurückgeben
+	glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
+
+	if (!link_ok)
+	{
+		//std::cerr << "glLinkProgram:";
+		fprintf(stderr, "glLinkProgram:");
+		return false;
+	}
+
+	//vermischen von vertex und farbwerten
+
+	// Speicherort eines Attributs zurückgeben
+	attribute_coord2d = glGetAttribLocation(program, "coord2d");
+	if (attribute_coord2d == -1)
+	{
+		std::cout << "Could not bind shader attribute coord2d\n";
+		return false;
+	}
+
+	attribute_v_color = glGetAttribLocation(program, "v_color");
+	if (attribute_v_color == -1)
+	{
+		std::cout << "Could not bind shader attribute v_color\n";
+		return false;
+	}
+	
+	GLfloat triangle_attributes[] = {
+		 0.5,  0.5,		1.0, 1.0, 0.0, 1.0,		// 1
+		-0.5,  0.5,		1.0, 0.0, 0.0, 1.0,		// 2
+		-0.5, -0.5,		0.0, 1.0, 0.0, 0.5,		// 3
+		 0.5,  0.5,		1.0, 1.0, 0.0, 1.0,		// 1
+		-0.5, -0.5,		0.0, 1.0, 0.0, 1.0,		// 3
+		 0.5, -0.5,		0.0, 0.0, 1.0, 1.0,		// 4
+	};
+
+	glGenBuffers(1, &vbo_triangle);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
+
+	return true;
+}
+
+GLuint Shader::createShader(const char* filename, GLenum type)
+{
+	const GLchar* source = readFile(filename);
+
+	if (source == NULL)
+	{
+		fprintf(stderr, "Error opening %s. ", filename);
+		//std::cerr << "Error opening " << filename;
+		perror("");
+		return 0;
+	}
+
+	GLuint res = glCreateShader(type);
+
+	const GLchar* sources[2] = {
+		#ifdef GL_ES_VERSION_2_0
+			"#version 100\n"
+			"#define GLES2\n",
+		#else
+			"#version 120\n",
+		#endif
+	source };
+
+	// Source Code in Shader ersetzen
+	glShaderSource(res, 2, sources, NULL);
+
+	// Pointer auf beliebigen Datentyp
+	free((void*)source);
+
+	glCompileShader(res);
+	GLint compile_ok = GL_FALSE;
+
+	// Gib Parameter aus Shader Objekt zurück
+	glGetShaderiv(res, GL_COMPILE_STATUS, &compile_ok);
+
+	if (compile_ok == GL_FALSE)
+	{
+		fprintf(stderr, "%s", filename);
+
+		// Shader Objekt zerstören
+		glDeleteShader(res);
+		return 0;
+	}
+	return res;
 }
 
 char* Shader::readFile(const char* filename)
@@ -60,128 +173,14 @@ char* Shader::readFile(const char* filename)
 	return content;
 }
 
-GLuint Shader::createShader(const char* filename, GLenum type)
-{
-	const GLchar* source = readFile(filename);
-
-	if (source == NULL)
-	{
-		fprintf(stderr, "Error opening %s. ", filename);
-		//std::cerr << "Error opening " << filename;
-		perror("");
-		return 0;
-	}
-
-	GLuint res = glCreateShader(type);
-
-	const GLchar* sources[2] = {
-		#ifdef GL_ES_VERSION_2_0
-			"#version 100\n"
-			"#define GLES2\n",
-		#else
-			"#version 120\n",
-		#endif
-	source };
-
-	// Source Code in Shader ersetzen
-	glShaderSource(res, 2, sources, NULL);
-
-	// Pointer auf beliebigen Datentyp
-	free((void*)source);
-
-	glCompileShader(res);
-	GLint compile_ok = GL_FALSE;
-
-	// Gib Parameter aus Shader Objekt zurück
-	glGetShaderiv(res, GL_COMPILE_STATUS, &compile_ok);
-
-	if (compile_ok == GL_FALSE)
-	{
-		fprintf(stderr, "%s", filename);
-
-		// Shader Objekt zerstören
-		glDeleteShader(res);
-		return 0;
-	}
-	return res;
-}
-
-
-
-bool
-Shader::initResources(const char* filenameVertex, const char* filenameFragment)
-{
-	GLint compile_ok = GL_FALSE;
-	GLint link_ok = GL_FALSE;
-	GLuint vs, fs;
-
-	if ((vs = Shader::createShader(filenameVertex, GL_VERTEX_SHADER)) == 0)
-		return false;
-	if ((fs = Shader::createShader(filenameFragment, GL_FRAGMENT_SHADER)) == 0)
-		return false;
-
-	// program = Kombination aus Fragment und Vertex Shader
-	// arbeiten zusammen und vertex shader kann zusätzliche daten an fragment shader übermitteln
-	program = glCreateProgram();
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-
-	glLinkProgram(program);
-
-	// Parameter eines Programobjekts zurückgeben
-	glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
-
-	if (!link_ok)
-	{
-		//std::cerr << "glLinkProgram:";
-		fprintf(stderr, "glLinkProgram:");
-		return false;
-	}
-
-	//vermischen von vertex und farbwerten
-	
-	const char* attribute_name = "coord2d";
-
-	// Speicherort eines Attributs zurückgeben
-	attribute_coord2d = glGetAttribLocation(program, attribute_name);
-
-	if (attribute_coord2d == -1)
-	{
-		//std::cerr << "Could not bind attribute %s\n" << attribute_name;
-		fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-		return false;
-	}
-
-	attribute_name = "v_color";
-	attribute_v_color = glGetAttribLocation(program, attribute_name);
-	if (attribute_v_color == -1)
-	{
-		fprintf(stderr, "Could not find attribute %s\n", attribute_name);
-		return false;
-	}
-	
-	GLfloat triangle_attributes[] = {
-		 0.5,  0.5,		1.0, 1.0, 0.0, // 1
-		-0.5,  0.5,		1.0, 0.0, 0.0, // 2
-		-0.5, -0.5,		0.0, 1.0, 0.0, // 3
-		 0.5,  0.5,		1.0, 1.0, 0.0, // 1
-		-0.5, -0.5,		0.0, 1.0, 0.0, // 3
-		 0.5, -0.5,		0.0, 0.0, 1.0, // 4
-	};
-
-	glGenBuffers(1, &vbo_triangle);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
-
-	return true;
-}
-
 void
 Shader::drawShader(void)
 {
 	
 	// use program for shader
 	glUseProgram(program);
+
+	//glUniform1f(uniform_alpha, 1.0f);
 
 	//vertexattributepointer farbe + vertex
 	glEnableVertexAttribArray(attribute_coord2d);
@@ -193,17 +192,18 @@ Shader::drawShader(void)
 		attribute_coord2d,   // attribute
 		2,                   // anzahl der elemente pro vertex
 		GL_FLOAT,            // datentyp der elemente
-		GL_FALSE,            // werte verwenden wie sie sind
-		5 * sizeof(GLfloat), // nächste coord2d erscheint alle 5 elemente
+		GL_FALSE,            // werte normalisieren
+		6 * sizeof(GLfloat), // nächste coord2d erscheint alle 5 elemente
 		0                    // offset vom ersten element
 	);
+
 	glVertexAttribPointer(
 		attribute_v_color,					// attribute
-		3,									// anzahl der elemente pro vertex
+		4,									// anzahl der elemente pro vertex
 		GL_FLOAT,							// datentyp der elemente
-		GL_FALSE,							// werte verwenden wie sie sind
-		5 * sizeof(GLfloat),				// nächste coord2d erscheint alle 5 elemente
-		(GLvoid*)(2 * sizeof(GLfloat))		// offset vom ersten element
+		GL_FALSE,							// werte normalisieren
+		6 * sizeof(GLfloat),				// nächste v_color erscheint alle 5 elemente
+		(GLvoid*)(2 * sizeof(GLfloat))		// offset vom dritten element
 	);
 
 	// Grafikprimitive mit Arraydaten zeichnen

@@ -1,15 +1,11 @@
 // VERTEX SHADER
 
-// Aktueller Vertex, Input-Variable
+// input variables for vertex
 attribute vec2 coord2d;
+attribute vec4 v_color;
 
-// time
-
-
-// wird ohne Verwendung nicht funktionieren
-attribute vec3 v_color;		
-
-varying vec3 f_color;					
+// varying for fragment
+varying vec4 f_color;					
 
 void main(void) 
 {								
