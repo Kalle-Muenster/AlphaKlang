@@ -117,6 +117,7 @@
     <ClCompile Include="SpectrumAnalyzer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -246,6 +247,7 @@
     <ClInclude Include="SpectrumAnalyzer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderObj.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
@@ -316,6 +318,9 @@
     </Filter>
     <Filter Include="Resources\Waveforms">
       <UniqueIdentifier>{4712e63d-21fc-400d-9b39-21b43a4b1dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Test">
+      <UniqueIdentifier>{b07766dd-b2f0-4566-93ce-a11212f11a78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

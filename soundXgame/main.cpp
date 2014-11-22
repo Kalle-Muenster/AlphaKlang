@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 
+#include "ShaderObj.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -10,8 +11,6 @@ int wnd;
 void* font;
 
 //Objects:
-Ground* ground;
-Fountain* fountain;
 SpectrumAnalyzer* analyzer;
 
 //Functions:
@@ -33,13 +32,6 @@ void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 // unsigned create_shader(const char* shaderCodeFileName,GLenum type);
 
-// Shader
-int initResourcesShader();
-void OnDisplayShader();
-void freeResourceShader();
-
-
-
 ////////////////////////////////////////////
 //Entrypoint:
 int main(int argc,char** argv)
@@ -59,9 +51,6 @@ int prepareForExit(void)
 {
 	//deletions:
 	delete font;
-
-	// Shader
-	freeResourceShader();
 
 	return EXIT_SUCCESS;
 }
@@ -93,9 +82,7 @@ void Init(void)
 	{
 		std::cerr << "Unable to init GLew";
 	}
-	
-	// Shader
-	initResourcesShader();
+
 
 	GlInit();
 
@@ -132,17 +119,20 @@ int cycle2 = 255;
 int cycle3 = 127;
 void LoadContent(void)
 {
-i1 = -1;
-i2 = -2;
-i3 = 1;
+	i1 = -1;
+	i2 = -2;
+	i3 = 1;
+
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	AUDIO->Play();
 
-	ground = Ground::getInstance();
+	Ground* ground = Ground::getInstance();
 	ground->IsVisible = true;
 
-	fountain = new Fountain();
+	Fountain* fountain = new Fountain();
 	
+	// Shader test
+	ShaderObj* shaderObj = new ShaderObj();
 
 	data32 col = data32();
 	col.byte[0] = 255;
@@ -151,25 +141,12 @@ i3 = 1;
 	col.byte[3] = 100;
 	int i = -1;
 
-
-	
 	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
 	//vObject->AddConnectable<VoxControl>();
 	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
 	//vObject->AddConnectable<CamTargetRotator>();
 
-
-
-
-
-	
-	
-	
-
 	SCENE->camera->Mode(FIRSTPERSON);
-
-
-
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
@@ -221,11 +198,16 @@ void UpdateCycle(void)
 	}
 
 	if(INPUT->Mouse.WheelV==WHEEL::UP)
-	{	analyzer->fallOffAmount += 0.01f;
-	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
+	{
+		analyzer->fallOffAmount += 0.01f;
+		printf("FallOffAmount: %f",analyzer->fallOffAmount);
+	}
+
 	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
-	{	analyzer->fallOffAmount -= 0.01f;
-	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
+	{
+		analyzer->fallOffAmount -= 0.01f;
+		printf("FallOffAmount: %f",analyzer->fallOffAmount);
+	}
 }
 
 void RenderCycle(void)
@@ -234,7 +216,7 @@ void RenderCycle(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SCENE->DrawAll();
-OnDisplayShader();
+	//OnDisplayShader();
 		
 	glutSwapBuffers();
 }
@@ -242,6 +224,7 @@ OnDisplayShader();
 
 //GL-DisplayCallbacks
 ////////////////////////////////////////////////////////
+
 void OnDisplay(void)
 {
 	UpdateCycle();
@@ -267,6 +250,7 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 
 //GL-InputFunctions;
 ///////////////////////////////////////////////////
+
 //Keyboard:
 void keyboardInput(unsigned char key,int x,int y)
 {
@@ -282,9 +266,9 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key == 27) // ESC
 		glutExit();
 
-
 	INPUT->notifyKey(key);
 }
+
 void processSpecialKeys(int key, int xx, int yy)
 {
 	INPUT->notifySpecialKey(key);

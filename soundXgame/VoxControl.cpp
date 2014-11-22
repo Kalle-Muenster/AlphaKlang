@@ -26,13 +26,14 @@ VoxControl::Initialize(void)
 	////}
 	////else
 	////{
-
 	//	return _firstStart = false;
 	//}
-		INPUT->attachKey(this);
-		INPUT->attachMouseMove(this);
-		INPUT->attachMouseWheel(this);
-return true;
+
+	INPUT->attachKey(this);
+	INPUT->attachMouseMove(this);
+	INPUT->attachMouseWheel(this);
+
+	return true;
 }
 
 void 

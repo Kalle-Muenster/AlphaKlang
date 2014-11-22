@@ -59,13 +59,17 @@ SceneGraph::Add(IGObject* object)
 		_NumberOfSceneObjects++;
 		return FreeSlotFound;
 	}
-	else for(i=_NumberOfSceneObjects;i<MAXIMUM_SXCENE_OBJECT;i++)
-	{// else searches the list for next free slot...
-		if(_drawables[i]==NULL)
+	else
+	{
+		// else searches the list for next free slot...
+		for(i=_NumberOfSceneObjects;i<MAXIMUM_SXCENE_OBJECT;i++)
 		{
-			_drawables[i]=object;
-			_NumberOfSceneObjects++;
-			return i;
+			if(_drawables[i]==NULL)
+			{
+				_drawables[i]=object;
+				_NumberOfSceneObjects++;
+				return i;
+			}
 		}
 	}
 
@@ -95,14 +99,17 @@ SceneGraph::DrawAll()
 
 	this->camera->Update();
 
-	while(counter<_NumberOfSceneObjects)
+	while(counter < _NumberOfSceneObjects)
 	{
 		if(_drawables[index]!=NULL)
-		{counter++;
+		{
+			counter++;
 			if(_drawables[index]->IsVisible)
+			{
 				_drawables[index]->draw();
+			}
 		}
-	++index;
+		++index;
 	}
 
 	//for(auto it = drawables.begin();it!=drawables.end();it++)
