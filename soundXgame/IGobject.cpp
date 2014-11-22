@@ -4,7 +4,6 @@
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGObject.h"
-
 #include "Ground.h"
 
 #define This this->conXtor->Connection()
@@ -26,7 +25,7 @@ IGObject::IGObject(void)
 	this->_idIsSet=false;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
-	IsGrounded=true;
+	IsGrounded=false;
 
 }
 

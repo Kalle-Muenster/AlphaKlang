@@ -12,7 +12,7 @@ void* font;
 //Objects:
 Ground* ground;
 Fountain* fountain;
-
+SpectrumAnalyzer* analyzer;
 
 //Functions:
 void Init(void);
@@ -123,6 +123,8 @@ void GlInit(void)
 	//shader
 	//glEnableVertexAttribArray( atribut_coordinate2 );
 }
+
+
 ConID* testID;
 int i1,i2,i3;
 int cycle1 = 127;
@@ -142,43 +144,39 @@ i3 = 1;
 	fountain = new Fountain();
 	
 
-	Cubus* musikubus;
 	data32 col = data32();
 	col.byte[0] = 255;
 	col.byte[1] = 200;
 	col.byte[2] = 150;
 	col.byte[3] = 100;
 	int i = -1;
-	IGObject* tempObject = new Cubus(col);
-	(new Cubus())->LoadTexture("X-512.jpg")->move(i,tempObject->getTransform()->position.y,i++);
-	((Cubus*)SCENE->Object((unsigned)2))->UseTexture =true;;
-	(new MrZylinder())->LoadTexture("Deckelblech128-1.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Sphere())->LoadTexture("Deckelblech-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(new Cubus())->LoadTexture("Deckelblech128-2.png")->move(i,tempObject->getTransform()->position.y,i++);
-	(musikubus=new Cubus("X-7.tga",false))->move(i,tempObject->getTransform()->position.y,i++);
-	
-	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>();
-	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->AddConnectable<CamTargetRotator>();
-	(new Sprite())->move(0,2,0);
-	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
 
-//	IGObject* tempObject = SCENE->camera->SetTarget((new Cubus("X-7.png",true)));
+
+	
+	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	//vObject->AddConnectable<VoxControl>();
+	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	//vObject->AddConnectable<CamTargetRotator>();
+
+
+
 
 
 	
 	
-	SCENE->camera->SetTarget(tempObject);
 	
-	
-	(new Sprite())->move(0,2,0);
-	(new Sprite())->LoadTexture("Deckelblech128.tga")->move(2,2,0);
-
 
 	SCENE->camera->Mode(FIRSTPERSON);
 
-	((Cubus*)SCENE->Object((unsigned)1))->UseTexture = false;
+
+
+
+	analyzer = new SpectrumAnalyzer();
+	analyzer->SetName("SpectrumAnalyzer");
+	analyzer->AddConnectable<CamTargetRotator>();
+	SCENE->Object(analyzer->GetID())->move(1,1,-2);
+	analyzer->IsGrounded = true;
+	SCENE->camera->SetTarget(analyzer);
 }
 
 
@@ -189,23 +187,23 @@ GobID switcher=0;
 void UpdateCycle(void)
 {
 	//color test flashing krams....
-	if(cycle1<0||cycle1>255)
-		i1= -i1;
-	if(cycle2<0||cycle2>255)
-		i2= -i2;
-	if(cycle3<0||cycle3>255)
-		i3= -i3;
+	//if(cycle1<0||cycle1>255)
+	//	i1= -i1;
+	//if(cycle2<0||cycle2>255)
+	//	i2= -i2;
+	//if(cycle3<0||cycle3>255)
+	//	i3= -i3;
 
-	cycle1+=i1;
-	cycle2+=i2;
-	cycle3+=i3;
+	//cycle1+=i1;
+	//cycle2+=i2;
+	//cycle3+=i3;
 
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
-	((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
+	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
 
-	data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
+	//data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
 	//printf("color: %i,%i,%i,%i\n",col.byte[1] ,col.byte[2] ,col.byte[3] ,col.byte[0] );
 	//___________________________________________________________
 
@@ -216,11 +214,18 @@ void UpdateCycle(void)
 
 	if(INPUT->Mouse.RIGHT.CLICK)
 	{
-		SCENE->camera->SetTarget(SCENE->Object(switcher));
 		if(++switcher>=SCENE->ObjectsCount())
-			switcher=0;
+			switcher=1;
+		
+		SCENE->camera->SetTarget(SCENE->Object(switcher));
 	}
-	
+
+	if(INPUT->Mouse.WheelV==WHEEL::UP)
+	{	analyzer->fallOffAmount += 0.01f;
+	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
+	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
+	{	analyzer->fallOffAmount -= 0.01f;
+	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
 }
 
 void RenderCycle(void)
@@ -242,6 +247,7 @@ void OnDisplay(void)
 	UpdateCycle();
 	RenderCycle();
 	INPUT->PerFrameReset();
+	AUDIO->PerFrameReset();
 }
 
 void OnIdle(void)
@@ -266,12 +272,13 @@ void keyboardInput(unsigned char key,int x,int y)
 {
 	/* Switches Cam-Modes..*/
 	if(key=='o')
-	{	SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=true;
-		SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=false;}
+	{	
+		SCENE->camera->Mode(FIRSTPERSON);
+	}
 	if(key=='p')
-	{	SCENE->camera->ModeSocket->GetCameraMode<Spectator>(Spectator::StaticCamModeID)->IsActive=true;
-		SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>(FirstPerson::StaticCamModeID)->IsActive=false;}
-
+	{	
+		SCENE->camera->Mode(FOLLOWTARGET);
+	}
 	if(key == 27) // ESC
 		glutExit();
 

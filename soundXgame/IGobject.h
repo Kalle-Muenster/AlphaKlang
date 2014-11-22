@@ -6,8 +6,11 @@
 #include "DataStructs.h"
 
 class IConnectable;
+//class Kollective;
+//#include "Connectable.h"
 struct Transform;
 struct Vector3;
+
 
 typedef unsigned int GobID;
 
@@ -16,12 +19,13 @@ class IGObject
 private:
 	GobID ID;
 	bool _idIsSet;
-
+	
 protected:
 	Transform transform;
 	char Name[64];
 	bool SetID(GobID);
 	unsigned LockID(void);
+	IGObject* theNext;
 
 public:
 	IGObject(void);
@@ -32,7 +36,7 @@ public:
 	Transform* getTransform(void);
 	virtual Vector3 move(float,float,float) {return Vector3();};//=0;
 	virtual Vector3 rotate(float,float,float) {return Vector3();};//=0;
-	virtual Vector3 scale(Vector3) {return Vector3();};//=0;
+	virtual Vector3 scale(float,float,float) {return Vector3();};//=0;
 	GobID GetID(void);
 	char* GetName(void);
 	void SetName(char*);
@@ -52,6 +56,17 @@ public:
 	{
 		return conXtor->GetConnected<T>()!=NULL;
 	}
+
+	//void through(void)
+	//{
+	//	if(((Kollective*)conXtor)->checkFail())
+	//		return;
+
+	//	if(((Kollective*)theNext->conXtor)->through(GetID()))
+	//		((Kollective*)conXtor)->apear(this);
+	//	else 
+	//		theNext->through();
+	//}
 };
 
 

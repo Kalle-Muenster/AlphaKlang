@@ -2,10 +2,12 @@
 #define _CONNECTABLE_H_
 
 #include "IGObject.h"
+
 //class IGObject;
 struct Transform;
 
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
+#define EMPTY_SLOT (4294967295)
 
 typedef unsigned int ConID;
 
@@ -206,6 +208,8 @@ public:
 	
 };
 
+
+
 class CTransform : 
 	public IConnectable
 {
@@ -222,5 +226,7 @@ public:
 	virtual Transform* getTransform(void);
 	virtual operator Transform*();
 };
+
+
 
 #endif

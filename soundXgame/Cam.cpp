@@ -6,15 +6,12 @@
  //#define DEBUG_OUTPUT_CAMERA
 
 #define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
-static unsigned _modeID = 0;
-static Cam* _Socket;
 static bool _shareAudioReciever = true;
 
 
-int _spectator = -1;
-
 Cam::Cam(void) :
-	NumberOfCameraModes(0)
+	NumberOfModes(0),
+	_mode(1)
 {
 	this->transform.position.x=0;
 	this->transform.position.y=1;
@@ -37,13 +34,10 @@ Cam::Cam(void) :
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
-
-
-	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=false;
+	
 	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
-
-
+	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
 }
 
 
@@ -109,7 +103,7 @@ Cam::followTarget(void)
 void
 Cam::stopFollowing(void)
 {
-	Mode(CAM_MODE_NULL);
+
 }
 
 float
@@ -218,42 +212,23 @@ Cam::Aspect(GLfloat aspect)
 }
 
 CAM_MODE
-Cam::Mode(CAM_MODE mode)
+Cam::Mode(CAM_MODE value)
 {
-	if(mode)
+//get():
+	if(value==get)
+		return (CAM_MODE)_mode;
+//set(value):
+	if(value != (CAM_MODE)_mode)
 	{
-		if(_mode != mode)
-			printf("CAMERA: Set to %s-Mode !\n",
-					mode==FIRSTPERSON?"FirstPerson":
-					mode==FOLLOWTARGET?"FollowTarget":	NULL);
-
-		_mode = mode;
+		ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
+		ModeSocket->Get<CameraMode>(value)->IsActive = true;
+		_mode = value;
+		printf("CAMERA: Set to %s-Mode !\n", ModeSocket->Get<CameraMode>(_mode)->ModeName);
+		
 		UpdateView();
 	}
-	return _mode;
 }
 
-BOOL
-Cam::ModeAttached(BOOL option)
-{
-	
-	if((NumberOfCameraModes>0)&&(NumberOfCameraModes>option))
-	{
-		if(option<0)
-		{
-			return CurrentCamMode+1;
-		}
-		else if(option==false)
-		{
-			ModeSocket = NULL;
-		}
-		else if(option>0)
-		{
-			return (CurrentCamMode+1)==option;
-		}
-		return (ModeSocket!=NULL);
-	}
-}
 
 void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
@@ -293,16 +268,13 @@ Cam::Update()
 
 	if(Mode()==FOLLOWTARGET)
 	{
-				this->move(transform.position);
-				this->rotate(*_targetPosition);
+		this->move(transform.position);
+		this->rotate(*_targetPosition);
 	}
 
 	//Mode-Dependant updates...
-	if(ModeAttached())
-	{
-		ModeSocket->UpdateAllActiveModes();
-	}
-
+	ModeSocket->UpdateAllActiveModes();
+	
 	//update camera position:
 	UpdateDirections();
 	
@@ -313,11 +285,6 @@ Cam::Update()
 	//update The Position of the attached AudioReciever
 	SetAudioResieverPosition(&transform);
 	TransformDIRTY = false;
-	
-
-
-
-	
 
 }
 

@@ -114,6 +114,9 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="SpectrumAnalyzer.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpectrumAnalyzer.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
