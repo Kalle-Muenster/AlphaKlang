@@ -25,7 +25,8 @@ private:
 	char* readFile(const char* filename);
 	void freeResources();
 protected:
-	void drawShader(void);
+	void drawBegin(void);
+	void drawEnd(void);
 public:
 	Shader(void);
 	~Shader(void);

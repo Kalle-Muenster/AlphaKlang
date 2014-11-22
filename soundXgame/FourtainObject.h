@@ -22,7 +22,7 @@ public:
 
 	FourtainObject(void);
 	~FourtainObject(void);
-	void AddToScene(void);
+	//void AddToScene(void);
 	void Clear(void);
 	//void Update(void);
 	virtual void DoUpdate(void);

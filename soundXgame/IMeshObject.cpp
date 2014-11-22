@@ -1,13 +1,12 @@
 #include <iostream>
+
 #include "projectMacros.h"
 #include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGObject.h"
 #include "IMeshObject.h"
-
 #include "Ground.h"
-
 
 IMeshObject::IMeshObject(void)
 {
@@ -60,7 +59,6 @@ IMeshObject::LoadMesh(const char* objFileName,Vector3 positionOffset)
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 }
 
-
 void
 IMeshObject::SetColor(data32 newColor)
 {
@@ -68,13 +66,12 @@ IMeshObject::SetColor(data32 newColor)
 }
 
 void
-IMeshObject::SetColor(unsigned char r,unsigned char g,unsigned char b,unsigned char a)
+IMeshObject::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	color.byte[0] = a;
 	color.byte[1] = r;
 	color.byte[2] = g;
 	color.byte[3] = b;
-
 }
 
 IGObject*
@@ -86,14 +83,13 @@ IMeshObject::LoadTexture(const char* textureFile)
 }
 
 void
-IMeshObject::InitializeObject(const char* objFile,bool addToSceneGraph,Vector3 positionOffset)
+IMeshObject::InitializeObject(const char* objFile, bool addToSceneGraph, Vector3 positionOffset)
 {
 	if(addToSceneGraph)
 		SetID(SCENE->Add(this));
 	LoadMesh(objFile,positionOffset);
 	LockID();
 }
-
 
 Vector3
 IMeshObject::move(Vector3 to)
@@ -102,9 +98,8 @@ IMeshObject::move(Vector3 to)
 }
 
 Vector3
-IMeshObject::move(float tox,float toy,float toz)
+IMeshObject::move(float tox, float toy, float toz)
 {
-
 	getTransform()->movement.x = (tox - getTransform()->position.x);
 	getTransform()->movement.y = (toy - getTransform()->position.y);
 	getTransform()->movement.z = (toz - getTransform()->position.z);
@@ -115,14 +110,13 @@ IMeshObject::move(float tox,float toy,float toz)
 		getTransform()->position.y = toy;
 		getTransform()->position.z = toz;
 
-#ifdef  DEBUG_OUTPUT_MESHOBJECTS
+		#ifdef DEBUG_OUTPUT_MESHOBJECTS
 			printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
-#endif
+		#endif
 	}
 
 	return getTransform()->movement;
 }
-
 
 Vector3
 IMeshObject::scale(Vector3 to)
@@ -153,22 +147,19 @@ IMeshObject::rotate(float toiX,float toYps,float toZed)
 	getTransform()->rotation.y = toYps;
 	getTransform()->rotation.z = toZed;
 	//getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
-	//
 	return getTransform()->rotation;
 }
 
 void
 IMeshObject::draw(void)
 {
-	if(!IsVisible)
-		return;
+	//if(!IsVisible) // <- check already within SceneGraph
+		//return;
 	
 	if(!vertexBufferID)
 		return;
 
-	if(NoBackfaceCulling)
-		glDisable(GL_CULL_FACE);
-	else
+	if(NoBackfaceCulling == false)
 	{
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -179,8 +170,6 @@ IMeshObject::draw(void)
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}
-	else
-		glDisable(GL_TEXTURE_2D);
 		
 	glColor4b(color.byte[1],color.byte[2],color.byte[3],color.byte[0]);
 
@@ -195,30 +184,28 @@ IMeshObject::draw(void)
 
 	glPushMatrix();
 	{
-		//Translate...
-		GLfloat iX  = getTransform()->position.x;
-		GLfloat Zed = getTransform()->position.z;
-		GLfloat Yps = IsGrounded? Ground::getInstance()->GetGroundY(iX, Zed) : getTransform()->position.y;
-		glTranslatef(iX, Yps, Zed);
+		// Translate
+		GLfloat x  = getTransform()->position.x;
+		GLfloat z = getTransform()->position.z;
+		GLfloat y = IsGrounded ? Ground::getInstance()->GetGroundY(x, z) : getTransform()->position.y;
+		glTranslatef(x, y, z);
 
-		//Rotate...
+		// Rotate
 		glRotatef(getTransform()->rotation.x, 1, 0, 0);
 		glRotatef(getTransform()->rotation.y, 0, 1, 0);
 		glRotatef(getTransform()->rotation.z, 0, 0, 1);
 
-		//Scaleate...
+		// Scale
 		glScalef(getTransform()->scale.x,getTransform()->scale.y,getTransform()->scale.z);
 		
-		//Draw
+		// Draw
 		glDrawArrays(FaceShape, 0, verts.size());
 	}
 	glPopMatrix();
 
-    
 
-	//if(UseTexture)
-		
-	//glColor4f(1,1,1,1);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
 }
 
 //Texture Struct:
@@ -226,7 +213,7 @@ IMeshObject::draw(void)
 void Texture::Load(string fileName,short Width,short Height,Format textureFormat)
 {
 	ID = Utility::loadTexture(fileName);
-	w=Width;
-	h=Height;
+	w = Width;
+	h = Height;
 	format=textureFormat;
 }

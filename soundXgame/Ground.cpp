@@ -96,7 +96,7 @@ Ground::Ground(void) :
 	this->SetID(SCENE->Add(this));
 	this->LockID();
 
-	IsVisible=false;
+	IsVisible=true;
 }
 
 Ground::~Ground(void)
@@ -336,7 +336,7 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 1.5f;
+	float speed = 15.0f * INPUT->FrameTime;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else

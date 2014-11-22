@@ -66,9 +66,9 @@ Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 		 0.5,  0.5,		1.0, 1.0, 0.0, 1.0,		// 1
 		-0.5,  0.5,		1.0, 0.0, 0.0, 1.0,		// 2
 		-0.5, -0.5,		0.0, 1.0, 0.0, 0.5,		// 3
-		 0.5,  0.5,		1.0, 1.0, 0.0, 1.0,		// 1
-		-0.5, -0.5,		0.0, 1.0, 0.0, 1.0,		// 3
-		 0.5, -0.5,		0.0, 0.0, 1.0, 1.0,		// 4
+		 0.6,  0.4,		1.0, 1.0, 0.0, 1.0,		// 1
+		-0.4, -0.6,		0.0, 1.0, 0.0, 1.0,		// 3
+		 0.6, -0.6,		0.0, 0.0, 1.0, 1.0,		// 4
 	};
 
 	glGenBuffers(1, &vbo_triangle);
@@ -174,19 +174,17 @@ char* Shader::readFile(const char* filename)
 }
 
 void
-Shader::drawShader(void)
+Shader::drawBegin(void)
 {
 	
 	// use program for shader
 	glUseProgram(program);
 
-	//glUniform1f(uniform_alpha, 1.0f);
-
 	//vertexattributepointer farbe + vertex
 	glEnableVertexAttribArray(attribute_coord2d);
 	glEnableVertexAttribArray(attribute_v_color);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
 
 	glVertexAttribPointer(
 		attribute_coord2d,   // attribute
@@ -208,7 +206,13 @@ Shader::drawShader(void)
 
 	// Grafikprimitive mit Arraydaten zeichnen
 	// Params: mode, startindex, vertices counter
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+ glDrawArrays(GL_TRIANGLES, 0, 6);
+
+}
+
+void
+Shader::drawEnd(void)
+{
 
 	// aktivieren eines vertex attribute arrays
 	glDisableVertexAttribArray(attribute_coord2d);
@@ -216,7 +220,6 @@ Shader::drawShader(void)
 
 	// end program
 	glUseProgram(0);
-
 }
 
 void

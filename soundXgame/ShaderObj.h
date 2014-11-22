@@ -1,6 +1,7 @@
 #ifndef __SHADEROBJ_H__
 #define __SHADEROBJ_H__
 
+#include "IMeshObject.h"
 #include "IGObject.h"
 #include "UpdateManager.h"
 
@@ -8,7 +9,7 @@
 
 
 class ShaderObj :
-	public IGObject, public IUpdateble, public Shader
+	public IMeshObject, public IUpdateble, public Shader
 {
 private:
 public:

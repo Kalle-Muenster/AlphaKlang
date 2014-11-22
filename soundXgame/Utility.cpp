@@ -198,112 +198,111 @@ Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::v
 
 			if(faceShape==GL_QUADS)
 			{
-			unsigned int DataVertexIndex[4];
-			unsigned int DataVertexTextureIndex[4]; 
-			unsigned int DataNormalIndex[4];
+				unsigned int DataVertexIndex[4];
+				unsigned int DataVertexTextureIndex[4]; 
+				unsigned int DataNormalIndex[4];
 
-			tempVertexIndex = &DataVertexIndex[0];
-			tempVertexTextureIndex = &DataVertexTextureIndex[0];
-			tempNormalIndex = &DataNormalIndex[0];
+				tempVertexIndex = &DataVertexIndex[0];
+				tempVertexTextureIndex = &DataVertexTextureIndex[0];
+				tempNormalIndex = &DataNormalIndex[0];
 
-			//Read Quads wth predefined Normals
-			if(HasNormals)
+				//Read Quads wth predefined Normals
+				if(HasNormals)
 				{
-				fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n",
-					&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
-					&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
-					&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2],
-					&tempVertexIndex[3], &tempVertexTextureIndex[3], &tempNormalIndex[3]);
+					fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n",
+						&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
+						&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
+						&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2],
+						&tempVertexIndex[3], &tempVertexTextureIndex[3], &tempNormalIndex[3]);
 
-				vertexIndices.push_back(tempVertexIndex[0]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[0]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[1]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
-				normalIndices.push_back(tempNormalIndex[1]);
+					vertexIndices.push_back(tempVertexIndex[1]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+					normalIndices.push_back(tempNormalIndex[1]);
 
-				vertexIndices.push_back(tempVertexIndex[2]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
-				normalIndices.push_back(tempNormalIndex[2]);
+					vertexIndices.push_back(tempVertexIndex[2]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+					normalIndices.push_back(tempNormalIndex[2]);
 
-				vertexIndices.push_back(tempVertexIndex[3]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[3]);
-				normalIndices.push_back(tempNormalIndex[3]);
+					vertexIndices.push_back(tempVertexIndex[3]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[3]);
+					normalIndices.push_back(tempNormalIndex[3]);
 				}
-			else // Quads without normals..
+				else // Quads without normals..
 				{
-				fscanf(file, "%d/%d %d/%d %d/%d %d/%d\n",
-					&tempVertexIndex[0], &tempVertexTextureIndex[0],// &tempNormalIndex[0],
-					&tempVertexIndex[1], &tempVertexTextureIndex[1],// &tempNormalIndex[1],
-					&tempVertexIndex[2], &tempVertexTextureIndex[2],// &tempNormalIndex[2],
-					&tempVertexIndex[3], &tempVertexTextureIndex[3]);// &tempNormalIndex[3]);
+					fscanf(file, "%d/%d %d/%d %d/%d %d/%d\n",
+						&tempVertexIndex[0], &tempVertexTextureIndex[0],
+						&tempVertexIndex[1], &tempVertexTextureIndex[1],
+						&tempVertexIndex[2], &tempVertexTextureIndex[2],
+						&tempVertexIndex[3], &tempVertexTextureIndex[3]);
 
-				vertexIndices.push_back(tempVertexIndex[0]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[0]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[1]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[1]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[2]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[2]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[3]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[3]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[3]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[3]);
+					normalIndices.push_back(tempNormalIndex[0]);
 				}
 			}
 			else if(faceShape==GL_TRIANGLES)
 			{
-			unsigned int DataVertexIndex[3];
-			unsigned int DataVertexTextureIndex[3]; 
-			unsigned int DataNormalIndex[3];
+				unsigned int DataVertexIndex[3];
+				unsigned int DataVertexTextureIndex[3]; 
+				unsigned int DataNormalIndex[3];
 
-			tempVertexIndex = &DataVertexIndex[0];
-			tempVertexTextureIndex = &DataVertexTextureIndex[0];
-			tempNormalIndex = &DataNormalIndex[0];
+				tempVertexIndex = &DataVertexIndex[0];
+				tempVertexTextureIndex = &DataVertexTextureIndex[0];
+				tempNormalIndex = &DataNormalIndex[0];
 
-			if(HasNormals) //Triangles with predefined normals...
+				if(HasNormals) //Triangles with predefined normals...
 				{
-				fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
-					&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
-					&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
-					&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2]);
-				
+					fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+						&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
+						&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
+						&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2]);
 
-				vertexIndices.push_back(tempVertexIndex[0]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[0]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[1]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
-				normalIndices.push_back(tempNormalIndex[1]);
+					vertexIndices.push_back(tempVertexIndex[1]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+					normalIndices.push_back(tempNormalIndex[1]);
 
-				vertexIndices.push_back(tempVertexIndex[2]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
-				normalIndices.push_back(tempNormalIndex[2]);
+					vertexIndices.push_back(tempVertexIndex[2]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+					normalIndices.push_back(tempNormalIndex[2]);
 				}
-			else//Triangles without normals
+				else//Triangles without normals
 				{
-				fscanf(file, "%d/%d %d/%d %d/%d\n", 
-					&tempVertexIndex[0], &tempVertexTextureIndex[0],// &tempNormalIndex[0],
-					&tempVertexIndex[1], &tempVertexTextureIndex[1],// &tempNormalIndex[1],
-					&tempVertexIndex[2], &tempVertexTextureIndex[2]);// &tempNormalIndex[2]);
+					fscanf(file, "%d/%d %d/%d %d/%d\n", 
+						&tempVertexIndex[0], &tempVertexTextureIndex[0],
+						&tempVertexIndex[1], &tempVertexTextureIndex[1],
+						&tempVertexIndex[2], &tempVertexTextureIndex[2]);
 
-				vertexIndices.push_back(tempVertexIndex[0]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[0]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[1]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[1]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[1]);
+					normalIndices.push_back(tempNormalIndex[0]);
 
-				vertexIndices.push_back(tempVertexIndex[2]);
-				vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
-				normalIndices.push_back(tempNormalIndex[0]);
+					vertexIndices.push_back(tempVertexIndex[2]);
+					vertexTextureIndices.push_back(tempVertexTextureIndex[2]);
+					normalIndices.push_back(tempNormalIndex[0]);
 				}
 			}
 		}

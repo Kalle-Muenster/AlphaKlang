@@ -3,7 +3,7 @@
 
 FourtainObject::FourtainObject(void)
 {
-	InitializeObject("cube_quads.obi",false);
+	InitializeObject("cube_quads.obi",true);
 	this->LoadTexture("X-512.jpg");
 	
 	// verschiedene start vec3
@@ -25,12 +25,12 @@ FourtainObject::~FourtainObject(void)
 {
 }
 
-void
+/*void
 FourtainObject::AddToScene(void)
 {
 	SCENE->Add(this);
 	this->IsVisible=true;
-}
+}*/
 
 void
 FourtainObject::Clear(void)

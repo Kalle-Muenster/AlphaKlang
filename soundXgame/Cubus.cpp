@@ -39,13 +39,10 @@ Cubus::Cubus(data32 color,bool backfaces,bool addToScene,Vector3 positionOffset)
 	this->NoBackfaceCulling = backfaces;
 }
 
-
 Cubus::~Cubus(void)
 {
 	delete conXtor;
 }
-
-
 
 void 
 Cubus::InitializeCubus(bool addToScene,Vector3 positionOffset)
