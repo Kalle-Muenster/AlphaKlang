@@ -34,9 +34,12 @@ public:
 	bool IsVisible;
 	virtual void draw(void)=0;
 	Transform* getTransform(void);
-	virtual Vector3 move(float,float,float) {return Vector3();};//=0;
-	virtual Vector3 rotate(float,float,float) {return Vector3();};//=0;
-	virtual Vector3 scale(float,float,float) {return Vector3();};//=0;
+	virtual Vector3 move(float,float,float){return Vector3();}// =0;
+	virtual Vector3 rotate(float,float,float){return Vector3();}// =0;
+	virtual Vector3 scale(float,float,float){return Vector3();}// =0;
+	virtual Vector3 move(Vector3 m) {return move(m.x,m.y,m.z);};//=0;
+	virtual Vector3 rotate(Vector3 r) {return rotate(r.x,r.y,r.z);};//=0;
+	virtual Vector3 scale(Vector3 s) {return scale(s.x,s.y,s.z);};//=0;
 	GobID  GetID(void);
 	char* GetName(void);
 	void SetName(char*);

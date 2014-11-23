@@ -121,6 +121,11 @@ void LoadContent(void)
 	//ShaderObj* shaderObj = new ShaderObj();
 
 
+	// TEST ... JUST A CUBE - 1
+//	(new Cubus("X-3.png", true, true))->SetName("Brummer");
+	
+
+
 	// Kalle Brummer Cube for Testing
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
@@ -134,6 +139,8 @@ void LoadContent(void)
 	(new Cubus(color,true,false,Vector3(0,0,0)))->scale(Vector3(10,10,10));*/
 
 
+	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
+
 	data32 col = data32();
 	col.byte[0] = 255;
 	col.byte[1] = 200;
@@ -143,19 +150,31 @@ void LoadContent(void)
 
 
 
-	//Voxelplane... 
-	//on runtime use press"X"to choose a an Image file from list (watch console!)
-	//press "R" to loade the sellected image as Image.
-	//press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
-	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
-	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->move(-80,0,150);
-	vObject->MainSizzes.x=0.2;
-	vObject->MainSizzes.y=0.045f;
+	////Voxelplane... 
+	////on runtime use press"X"to choose a an Image file from list (watch console!)
+	////press "R" to loade the sellected image as Image.
+	////press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
+	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	//vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
+	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	//vObject->move(-80,0,150);
+	//vObject->MainSizzes.x=0.2;
+	//vObject->MainSizzes.y=0.045f;
 
-
-
+	unsigned obj;
+	float x,y,z;
+	x=y=z=0;
+	char* brummer="Brummer-";
+	for(int i = 0;i<20;i++)
+	{
+		x-=i;
+		z+=2*i;
+		obj = (new Cubus("CubusX_256.png"))->GetID();
+		SCENE->Object(obj)->move(x,y,z);
+		SCENE->Object(obj)->AddConnectable<Randomover>();
+		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
+		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
+	}
 
 	SCENE->camera->Mode(FIRSTPERSON);
 
@@ -165,7 +184,7 @@ void LoadContent(void)
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
 	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;
-	SCENE->camera->SetTarget(vObject);
+	SCENE->camera->SetTarget(SCENE->Object(obj));
 
 }
 
