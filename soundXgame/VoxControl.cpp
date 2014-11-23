@@ -51,6 +51,8 @@ VoxControl::keyPress(char key)
 	{
 		this->vConnection()->ReLoade(_files[imageIndex=_currentSellection]);
 		printf("Image \"%s\" geloadedt...\n",_files[_currentSellection]);
+		vConnection()->MainSizzes.x=0.2;
+		vConnection()->MainSizzes.y=0.045f;
 	}
 
 	if(key == 'l')

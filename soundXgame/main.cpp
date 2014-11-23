@@ -151,20 +151,18 @@ void LoadContent(void)
 
 
 
-	
+	//Voxelplane... 
+	//on runtime use press"X"to choose a an Image file from list (watch console!)
+	//press "R" to loade the sellected image as Image.
+	//press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
 	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>();
+	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
 	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->move(-10,0,30);
+	vObject->move(-80,0,150);
 	vObject->MainSizzes.x=0.2;;
 	vObject->MainSizzes.y=0.045f;
 
 
-
-
-	
-	
-	
 
 
 	SCENE->camera->Mode(FIRSTPERSON);
