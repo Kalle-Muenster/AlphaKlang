@@ -100,6 +100,7 @@
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="Perceptor.cpp" />
+    <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="projectClasses.h" />
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
+    <ClInclude Include="Randomover.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderObj.h" />
@@ -175,6 +177,7 @@
     <None Include="bluobbber.pix" />
     <None Include="bluobbber.ppm" />
     <None Include="buntbild_128.ppm" />
+    <None Include="ClassDiagram31.cd" />
     <None Include="cube_quads.obi" />
     <None Include="cube_tris.obi" />
     <None Include="cylinder_quads.obi" />

@@ -266,6 +266,7 @@ AudioEmitter::LoadeSample(const char* audioFileName)
 void
 AudioEmitter::PlaySample(HCHANNEL sample,bool loop)
 {
+	audioSource = sample;
 	BASS_ChannelPlay(sample,false);
 }
 

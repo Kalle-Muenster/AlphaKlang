@@ -2,6 +2,7 @@
 #include "Connectable.h"
 #include "VoxControl.h"
 #include "AudioObject.h"
+#include "Randomover.h"
 #include "CamTargetRotator.h"
 #include "IMusicListener.h"
 #include "CamTargetRotator.h"

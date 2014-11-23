@@ -146,8 +146,9 @@ IMeshObject::rotate(float toiX,float toYps,float toZed)
 	getTransform()->rotation.x = toiX;
 	getTransform()->rotation.y = toYps;
 	getTransform()->rotation.z = toZed;
-	//getTransform()->forward = glm::normalize((glm::vec3)getTransform()->rotation);
-	return getTransform()->rotation;
+
+	getTransform()->forward = (getTransform()->rotation - getTransform()->position);
+	return  getTransform()->rotation;
 }
 
 void

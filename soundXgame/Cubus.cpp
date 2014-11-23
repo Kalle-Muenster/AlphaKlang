@@ -28,7 +28,7 @@ Cubus::Cubus(string textureFile,bool backfaces,bool addToScene)
 	InitializeCubus(textureFile,"03.wav",backfaces,addToScene);
 	this->SetName("Cubus");
 	this->IsVisible=true;
-	this->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(0));
+	
 }
 
 Cubus::Cubus(data32 color,bool backfaces,bool addToScene,Vector3 positionOffset)
