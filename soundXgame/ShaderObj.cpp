@@ -67,6 +67,8 @@ ShaderObj::draw(void)
 
 	//this->drawBegin();
 
+	//this->setVariable("coord3d", 0,0,0,0);
+
 	IMeshObject::draw();
 
 	

@@ -118,35 +118,13 @@ void LoadContent(void)
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	Fountain* fountain = new Fountain();
-	//ShaderObj* shaderObj = new ShaderObj();
+	ShaderObj* shaderObj = new ShaderObj();
 
 
-	// TEST ... JUST A CUBE - 1
-//	(new Cubus("X-3.png", true, true))->SetName("Brummer");
-	
 
-
-	// Kalle Brummer Cube for Testing
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
 
-	// TEST ... JUST A CUBE - 2
-	/*data32 color;
-	color.byte[1]=0;
-	color.byte[2]=255;
-	color.byte[3]=127;
-	color.byte[0]=10;
-	(new Cubus(color,true,false,Vector3(0,0,0)))->scale(Vector3(10,10,10));*/
-
-
-	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
-
-	data32 col = data32();
-	col.byte[0] = 255;
-	col.byte[1] = 200;
-	col.byte[2] = 150;
-	col.byte[3] = 100;
-	int i = -1;
 
 
 

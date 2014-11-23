@@ -28,6 +28,7 @@ public:
 protected:
 	void drawBegin(void);
 	void drawEnd(void);
+	bool setVariable(const char* variableName, float x, float y, float z, float w);
 public:
 	Shader(void);
 	~Shader(void);

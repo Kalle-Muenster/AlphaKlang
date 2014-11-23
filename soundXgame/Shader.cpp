@@ -222,6 +222,18 @@ Shader::drawEnd(void)
 	glUseProgram(0);
 }
 
+bool
+Shader::setVariable(const char* variableName, float x, float y, float z, float w) {
+	//use();
+	GLuint location = glGetUniformLocation(program, variableName);
+	if (location < 0) {
+		printf("ERROR getting variable named %s from shader\n", variableName);
+		return false;
+	}
+	glUniform4f(location, x, y, z, w);
+	return true;
+}
+
 void
 Shader::freeResources()
 {
