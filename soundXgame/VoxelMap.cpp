@@ -3,9 +3,6 @@
 #include "Utility.h"
 #include "VoxelMap.h"
 
-
-
-
 VoxelMap::VoxelMap(void) 
 {
 	numberOfVoxelers=0;
@@ -18,12 +15,8 @@ VoxelMap::VoxelMap(void)
 	//position.y=100;
 	size.x = 200;
 	size.y = 200;
-
 	
 }
-
-
-
 
 VoxelMap::~VoxelMap()
 {
@@ -84,23 +77,26 @@ void VoxelMap::ReLoade(char* filename)
 
 		for(int count=0;count<numberOfVoxelers;count++)
 		{
-				int x = count%mapWidth;
-				int y = count/mapWidth;
+			int x = count%mapWidth;
+			int y = count/mapWidth;
 
-				voxels[count].farb.Bytss[0]=loader.Pixel(x,y)->byte[0];
-				voxels[count].farb.Bytss[1]=loader.Pixel(x,y)->byte[1];
-				voxels[count].farb.Bytss[2]=loader.Pixel(x,y)->byte[2];
-				voxels[count].farb.Bytss[3]=loader.Pixel(x,y)->byte[3];
+			voxels[count].farb.Bytss[0]=loader.Pixel(x,y)->byte[0];
+			voxels[count].farb.Bytss[1]=loader.Pixel(x,y)->byte[1];
+			voxels[count].farb.Bytss[2]=loader.Pixel(x,y)->byte[2];
+			voxels[count].farb.Bytss[3]=loader.Pixel(x,y)->byte[3];
 
-				voxels[count].color = voxels[count].farb.s32;  ///????
-				voxels[count].factor=127;
-				voxels[count].size.ix=voxels[count].size.yps=MainSizzes.y;
-				voxels[count].position.iX=(x*scale)+ *position.x;
-				voxels[count].position.Yps=(y*scale)+ *position.y;
-				voxels[count].MainDimensions = &MainSizzes;
+			voxels[count].color = voxels[count].farb.s32;  ///????
+			voxels[count].factor=127;
+			voxels[count].size.ix=voxels[count].size.yps=MainSizzes.y;
+			voxels[count].position.iX=(x*scale)+ *position.x;
+			voxels[count].position.Yps=(y*scale)+ *position.y;
+			voxels[count].MainDimensions = &MainSizzes;
 
 			if(x>0 && x<mapWidth && y>0 && y<mapHeight)
-			voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
+			{
+				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
+			}
+
 		}
 	}
 }
@@ -121,8 +117,8 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 	MainSizzes.y = (float)size.x/mapWidth;
 	size.y=mapHeight*MainSizzes.y;
 	for(unsigned short I = 0;I<numberOfVoxelers*4;I+=4)
-	  {
-		  int i = I/4;
+	{
+		int i = I/4;
 		int x = i%mapWidth;
 		int y= i/mapWidth;
 		
@@ -137,8 +133,8 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 		voxels[i].factor=127;
 		if(x>0 && x<mapWidth && y>0 && y<mapHeight)
 			voxels[i].SetNeighbours(voxels[(i-1)-mapWidth].color ,voxels[i-(mapWidth-1)].color,voxels[i+1+mapWidth].color,voxels[i+(mapWidth-1)].color);
-	  }
-	loaded=true;
+		}
+		loaded=true;
 	}
 	else
 	{
@@ -153,23 +149,25 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 
 		for(int count=0;count<numberOfVoxelers;count++)
 		{
-				int x = count%mapWidth;
-				int y = count/mapWidth;
+			int x = count%mapWidth;
+			int y = count/mapWidth;
 
-				voxels[count].farb.Bytss[0]=loader->Pixel(x,y)->byte[0];
-				voxels[count].farb.Bytss[1]=loader->Pixel(x,y)->byte[1];
-				voxels[count].farb.Bytss[2]=loader->Pixel(x,y)->byte[2];
-				voxels[count].farb.Bytss[3]=loader->Pixel(x,y)->byte[3];
+			voxels[count].farb.Bytss[0]=loader->Pixel(x,y)->byte[0];
+			voxels[count].farb.Bytss[1]=loader->Pixel(x,y)->byte[1];
+			voxels[count].farb.Bytss[2]=loader->Pixel(x,y)->byte[2];
+			voxels[count].farb.Bytss[3]=loader->Pixel(x,y)->byte[3];
 
-				voxels[count].color = voxels[count].farb.s32;  ///????
-				voxels[count].factor=127;
-				voxels[count].size.ix=voxels[count].size.yps=MainSizzes.y;
-				voxels[count].position.iX=(x*scale)+ *position.x;
-				voxels[count].position.Yps=(y*scale)+ *position.y;
-				voxels[count].MainDimensions = &MainSizzes;
+			voxels[count].color = voxels[count].farb.s32;  ///????
+			voxels[count].factor=127;
+			voxels[count].size.ix=voxels[count].size.yps=MainSizzes.y;
+			voxels[count].position.iX=(x*scale)+ *position.x;
+			voxels[count].position.Yps=(y*scale)+ *position.y;
+			voxels[count].MainDimensions = &MainSizzes;
+
 
 			if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
-			voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
+				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
+
 		}
 	
 	}
@@ -188,7 +186,6 @@ void VoxelMap::Draw(VectorPF position )
 {
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
-
 
 	glBegin(GL_QUADS);
 
@@ -215,10 +212,6 @@ void VoxelMap::drawBlurre(VectorPF position)
 	glEnd();
 }
 
-
-
-
-
 void* VoxelMap::SetVoxelerBuffer(Voxel* voxelss)
 {
 	numberOfVoxelers = DINGERBUFFERLENGTH;
@@ -226,12 +219,11 @@ void* VoxelMap::SetVoxelerBuffer(Voxel* voxelss)
 	return &voxelss[0];
 }
 
-
-
 Voxel * VoxelMap::GetVoxel(int x,int y)
 {
 	return &voxels[y*mapWidth+x];
 }
+
 Voxel * VoxelMap::GetVoxel(int index)
 {
 	return &voxels[index];

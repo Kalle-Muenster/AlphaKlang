@@ -92,7 +92,7 @@ Fountain::Spawn(void)
 
 	FourtainObject* cube = Fountain::getObject();
 	cube->move(1.0f, 2.0f, -3.0f);
-	cube->AddToScene();
+	//cube->AddToScene();
 	cube->IsGrounded = false;
 	cube->scale(Vector3(0.3f,0.3f,0.3f));
 

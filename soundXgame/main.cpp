@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 
+#include "ShaderObj.h"
 
 //Global Declerations:
 ////////////////////////////////////////////
@@ -10,14 +11,12 @@ int wnd;
 void* font;
 
 //Objects:
-Ground* ground;
-Fountain* fountain;
 SpectrumAnalyzer* analyzer;
 
 //Functions:
-void Init(void);
-void GlInit(void);
+void InitGlut(void);
 void LoadContent(void);
+void GlInit(void);
 void UpdateCycle(void);
 void RenderCycle(void);
 void OnDisplay(void);
@@ -31,18 +30,20 @@ void keyboardInput(unsigned char,int,int);
 void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
-// unsigned create_shader(const char* shaderCodeFileName,GLenum type);
-
 
 ////////////////////////////////////////////
 //Entrypoint:
 int main(int argc,char** argv)
 {
 	glutInit(&argc,argv);
-	Init();
+
+	InitGlut();
+	GlInit();
+	LoadContent();
+
+	//glewInit(); <-- already in InitGlut() Method
 
 	glutMainLoop();
-	
 	return prepareForExit();
 }
 
@@ -51,10 +52,10 @@ int prepareForExit(void)
 	//deletions:
 	delete font;
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
-void Init(void)
+void InitGlut(void)
 {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowSize(SCREENWIDTH, SCREENHEIGHT);
@@ -78,21 +79,19 @@ void Init(void)
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
+	{
 		std::cerr << "Unable to init GLew";
+	}
 
-	GlInit();
-
-	LoadContent();
 }
 
 void GlInit(void)
 {
-	
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClearDepth(1);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE); // unnötig hier, weil bereits in IMeshObject::draw() ???
 	glCullFace(GL_BACK);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -108,24 +107,40 @@ void GlInit(void)
 }
 
 
-ConID* testID;
-int i1,i2,i3;
-int cycle1 = 127;
-int cycle2 = 255;
-int cycle3 = 127;
+//ConID* testID;
+//int i1,i2,i3;
+//int cycle1 = 127;
+//int cycle2 = 255;
+//int cycle3 = 127;
 void LoadContent(void)
 {
-i1 = -1;
-i2 = -2;
-i3 = 1;
+	//i1 = -1;
+	//i2 = -2;
+	//i3 = 1;
+
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	AUDIO->Play();
 
-	ground = Ground::getInstance();
-	ground->IsVisible = true;
+	// Gameplay Objects
+	Ground* ground = Ground::getInstance();
+	Fountain* fountain = new Fountain();
+	ShaderObj* shaderObj = new ShaderObj();
 
-	fountain = new Fountain();
+
+	// TEST ... JUST A CUBE - 1
+	new Cubus("X-3.png", true, true);
 	
+
+
+	// TEST ... JUST A CUBE - 2
+	data32 color;
+	color.byte[1]=0;
+	color.byte[2]=255;
+	color.byte[3]=127;
+	color.byte[0]=10;
+	(new Cubus(color,true,false,Vector3(0,0,0)))->scale(Vector3(10,10,10));
+
+
 
 	data32 col = data32();
 	col.byte[0] = 255;
@@ -133,6 +148,7 @@ i3 = 1;
 	col.byte[2] = 150;
 	col.byte[3] = 100;
 	int i = -1;
+
 
 
 	
@@ -150,10 +166,8 @@ i3 = 1;
 	
 	
 
+
 	SCENE->camera->Mode(FIRSTPERSON);
-
-
-
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
@@ -209,11 +223,16 @@ void UpdateCycle(void)
 	}
 
 	if(INPUT->Mouse.WheelV==WHEEL::UP)
-	{	analyzer->fallOffAmount += 0.01f;
-	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
+	{
+		analyzer->fallOffAmount += 0.01f;
+		printf("FallOffAmount: %f",analyzer->fallOffAmount);
+	}
+
 	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
-	{	analyzer->fallOffAmount -= 0.01f;
-	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
+	{
+		analyzer->fallOffAmount -= 0.01f;
+		printf("FallOffAmount: %f",analyzer->fallOffAmount);
+	}
 }
 
 //The Main-Draw-Call...
@@ -221,8 +240,6 @@ void RenderCycle(void)
 {
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//ground->Draw();
 
 	SCENE->DrawAll();
 		
@@ -232,6 +249,7 @@ void RenderCycle(void)
 
 //GL-DisplayCallbacks
 ////////////////////////////////////////////////////////
+
 void OnDisplay(void)
 {
 	UpdateCycle();
@@ -258,6 +276,7 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 char lastKey = 0;
 //GL-InputFunctions:
 ///////////////////////////////////////////////////
+
 //Keyboard:
 
 void keyboardInput(unsigned char key,int x,int y)
@@ -277,7 +296,7 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key == 27) // ESC
 		glutExit();
 
-	
+
 	INPUT->notifyKey(key);
 
 	lastKey=key;
@@ -309,6 +328,3 @@ void MouseHoverWindow(int)
 {
 
 }
-
-
-

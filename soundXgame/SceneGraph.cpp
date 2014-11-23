@@ -44,29 +44,36 @@ SceneGraph::Add(IGObject* object)
 
 	//check if the object is already in scenegraph... 
 	while(counter<_NumberOfSceneObjects)
-	{ //will remember if there where free slots, if some object has been removed before...
-		if(_drawables[i]==NULL)
-			FreeSlotFound = FreeSlotFound<0? i : FreeSlotFound;
-		else if(_drawables[i]==object)
+	{
+		//will remember if there where free slots, if some object has been removed before...
+		if(_drawables[i] == NULL)
+			FreeSlotFound = FreeSlotFound < 0 ? i : FreeSlotFound;
+		else if(_drawables[i] == object)
 			return i; //returns if list already contains the object.. 
 		else 
 			counter++;
-		i++; //count up next...
+		//count up next...
+		i++;
 	}
 
 	if(FreeSlotFound>=0)
-	{// if found a free slot before:
+	{
+		// if found a free slot before:
 		_drawables[FreeSlotFound] = object;
 		_NumberOfSceneObjects++;
 		return FreeSlotFound;
 	}
-	else for(i=_NumberOfSceneObjects;i<MAXIMUM_SXCENE_OBJECT;i++)
-	{// else searches the list for next free slot...
-		if(_drawables[i]==NULL)
+	else
+	{
+		// else searches the list for next free slot...
+		for(i=_NumberOfSceneObjects;i<MAXIMUM_SXCENE_OBJECT;i++)
 		{
-			_drawables[i]=object;
-			_NumberOfSceneObjects++;
-			return i;
+			if(_drawables[i]==NULL)
+			{
+				_drawables[i]=object;
+				_NumberOfSceneObjects++;
+				return i;
+			}
 		}
 	}
 
@@ -96,14 +103,17 @@ SceneGraph::DrawAll()
 
 	this->camera->Update();
 
-	while(counter<_NumberOfSceneObjects)
+	while(counter < _NumberOfSceneObjects)
 	{
 		if(_drawables[index]!=NULL)
-		{counter++;
+		{
+			counter++;
 			if(_drawables[index]->IsVisible)
+			{
 				_drawables[index]->draw();
+			}
 		}
-	++index;
+		++index;
 	}
 
 	//for(auto it = drawables.begin();it!=drawables.end();it++)

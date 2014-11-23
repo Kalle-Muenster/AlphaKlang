@@ -18,7 +18,6 @@ class IMeshObject :
 	public IGObject
 {
 
-
 protected:
 
 	GLuint					FaceShape;

@@ -101,6 +101,8 @@
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderObj.cpp" />
     <ClCompile Include="Spectator.cpp" />
     <ClCompile Include="SpectrumAnalyzer.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -150,6 +152,8 @@
     <ClInclude Include="projectGrafics.h" />
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderObj.h" />
     <ClInclude Include="Spectator.h" />
     <ClInclude Include="SpectrumAnalyzer.h" />
     <ClInclude Include="Sphere.h" />

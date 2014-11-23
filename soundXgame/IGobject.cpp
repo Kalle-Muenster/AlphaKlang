@@ -21,7 +21,7 @@ _IDIsFree(GobID id)
 
 IGObject::IGObject(void)
 {
-	IsVisible=false;
+	IsVisible=true;
 	this->_idIsSet=false;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
