@@ -120,7 +120,9 @@
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
-    <ClCompile Include="ShaderObj.cpp" />
+    <ClCompile Include="ShaderObj.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -253,7 +255,9 @@
     <ClInclude Include="Perceptor.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ObjectManagement.h" />
-    <ClInclude Include="ShaderObj.h" />
+    <ClInclude Include="ShaderObj.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
