@@ -13,12 +13,13 @@ class Shader :
 	public IConnectable
 {
 private:
+public:
 	GLuint program;
 	// Attribute + Uniforms für Vertices und Farbe
-	GLint attribute_coord2d, attribute_v_color;
-	GLint uniform_alpha;
+	GLint attribute_coord3d, attribute_v_color;
+	//GLint uniform_alpha;
 	// Buffer für Vertices und Farben
-	GLuint vbo_triangle, vbo_triangle_colors;
+	//GLuint vbo_triangle, vbo_triangle_colors;
 	
 	bool initResources(const char* filenameVertex, const char* filenameFragment);
 	GLuint createShader(const char* filename, GLenum type);

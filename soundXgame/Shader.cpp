@@ -40,40 +40,40 @@ Shader::initResources(const char* filenameVertex, const char* filenameFragment)
 
 	if (!link_ok)
 	{
-		//std::cerr << "glLinkProgram:";
-		fprintf(stderr, "glLinkProgram:");
+		std::cerr << "Error in glLinkProgram";
+		//fprintf(stderr, "glLinkProgram:");
 		return false;
 	}
 
 	//vermischen von vertex und farbwerten
 
 	// Speicherort eines Attributs zurückgeben
-	attribute_coord2d = glGetAttribLocation(program, "coord2d");
-	if (attribute_coord2d == -1)
+	attribute_coord3d = glGetAttribLocation(program, "coord3d");
+	if (attribute_coord3d == -1)
 	{
-		std::cout << "Could not bind shader attribute coord2d\n";
+		std::cout << "Could not bind shader attribute coord3d\n";
 		return false;
 	}
 
-	attribute_v_color = glGetAttribLocation(program, "v_color");
+	/*attribute_v_color = glGetAttribLocation(program, "v_color");
 	if (attribute_v_color == -1)
 	{
 		std::cout << "Could not bind shader attribute v_color\n";
 		return false;
-	}
+	}*/
 	
-	GLfloat triangle_attributes[] = {
+	/*GLfloat triangle_attributes[] = {
 		 0.5,  0.5,		1.0, 1.0, 0.0, 1.0,		// 1
 		-0.5,  0.5,		1.0, 0.0, 0.0, 1.0,		// 2
 		-0.5, -0.5,		0.0, 1.0, 0.0, 0.5,		// 3
 		 0.6,  0.4,		1.0, 1.0, 0.0, 1.0,		// 1
 		-0.4, -0.6,		0.0, 1.0, 0.0, 1.0,		// 3
 		 0.6, -0.6,		0.0, 0.0, 1.0, 1.0,		// 4
-	};
+	};*/
 
-	glGenBuffers(1, &vbo_triangle);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
+//glGenBuffers(1, &vbo_triangle);
+//glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+//glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_attributes), triangle_attributes, GL_STATIC_DRAW);
 
 	return true;
 }
@@ -95,11 +95,11 @@ GLuint Shader::createShader(const char* filename, GLenum type)
 	const GLchar* sources[2] = {
 		#ifdef GL_ES_VERSION_2_0
 			"#version 100\n"
-			"#define GLES2\n",
+			"#define GLES2\n"
 		#else
-			"#version 120\n",
+			"#version 120\n"
 		#endif
-	source };
+	,source };
 
 	// Source Code in Shader ersetzen
 	glShaderSource(res, 2, sources, NULL);
@@ -181,17 +181,17 @@ Shader::drawBegin(void)
 	glUseProgram(program);
 
 	//vertexattributepointer farbe + vertex
-	glEnableVertexAttribArray(attribute_coord2d);
+	glEnableVertexAttribArray(attribute_coord3d);
 	glEnableVertexAttribArray(attribute_v_color);
 
-glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
+//glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
 
 	glVertexAttribPointer(
-		attribute_coord2d,   // attribute
+		attribute_coord3d,   // attribute
 		2,                   // anzahl der elemente pro vertex
 		GL_FLOAT,            // datentyp der elemente
 		GL_FALSE,            // werte normalisieren
-		6 * sizeof(GLfloat), // nächste coord2d erscheint alle 5 elemente
+		6 * sizeof(GLfloat), // nächste coord2d erscheint alle x elemente
 		0                    // offset vom ersten element
 	);
 
@@ -200,13 +200,13 @@ glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle);
 		4,									// anzahl der elemente pro vertex
 		GL_FLOAT,							// datentyp der elemente
 		GL_FALSE,							// werte normalisieren
-		6 * sizeof(GLfloat),				// nächste v_color erscheint alle 5 elemente
+		6 * sizeof(GLfloat),				// nächste v_color erscheint alle x elemente
 		(GLvoid*)(2 * sizeof(GLfloat))		// offset vom dritten element
 	);
 
 	// Grafikprimitive mit Arraydaten zeichnen
 	// Params: mode, startindex, vertices counter
- glDrawArrays(GL_TRIANGLES, 0, 6);
+// glDrawArrays(GL_TRIANGLES, 0, 6);
 
 }
 
@@ -215,7 +215,7 @@ Shader::drawEnd(void)
 {
 
 	// aktivieren eines vertex attribute arrays
-	glDisableVertexAttribArray(attribute_coord2d);
+	glDisableVertexAttribArray(attribute_coord3d);
 	glDisableVertexAttribArray(attribute_v_color);
 
 	// end program
@@ -225,7 +225,12 @@ Shader::drawEnd(void)
 void
 Shader::freeResources()
 {
+	// delete buffer
+	//glDeleteBuffers(1, &vbo_triangle);
+	//glDeleteBuffers(1, &vbo_triangle_colors);
+
+	//glDetachShader(program, vs);
+
+	// delete program
 	glDeleteProgram(program);
-	glDeleteBuffers(1, &vbo_triangle);
-	glDeleteBuffers(1, &vbo_triangle_colors);
 }
