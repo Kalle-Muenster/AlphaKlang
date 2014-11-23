@@ -117,13 +117,10 @@
     <ClCompile Include="SpectrumAnalyzer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
-=======
     <ClCompile Include="ShaderObj.cpp" />
->>>>>>> eb320c9e1cd3babf0c2b4c28add3f2cfb04cca19
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -253,13 +250,10 @@
     <ClInclude Include="SpectrumAnalyzer.h">
       <Filter>Objects</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Perceptor.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ObjectManagement.h" />
-=======
     <ClInclude Include="ShaderObj.h" />
->>>>>>> eb320c9e1cd3babf0c2b4c28add3f2cfb04cca19
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
