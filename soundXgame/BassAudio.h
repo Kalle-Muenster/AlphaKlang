@@ -2,7 +2,11 @@
 #define _BASS_AUIDO_H_INCLUDET
 
 #include <bass.h>
+//#include <baseaudioprocessingobject.h>
+#include <tags.h>
+#include <BASS_DSHOW.h>
 #include <bass_fx.h>
+#include <bassmix.h>
 #include "DataStructs.h"
 
 #define FFT_WINDOW_SIZE (1024)
@@ -20,7 +24,7 @@ class BassAudio
 {
 
 public:
-
+	
 	virtual ~BassAudio(void);
 	static BassAudio* GetInstance(void);
 

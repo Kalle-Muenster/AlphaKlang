@@ -114,7 +114,7 @@ void _printInputDevices(void)
 		printf("\nAUDIO: InputDevice %i: %s",Inputs,_GetInputDeviceTypeString(BASS_RecordGetInput(Inputs,NULL)));
 }
 
-BassAudio* bassaudioInstance;
+
 HSTREAM derAudio;
 HRECORD MasterOutResample;
 bool _IsPlaying = false;
@@ -262,32 +262,39 @@ BassAudio::GetBackgroundAudioFFT(void)
 	return GetBackgroundAudioFFT(Small);
 }
 
+
+
+
 BassAudio::BassAudio(void)
 {
+	 
+
 	initDebug();
 	BASS_Init(-1,44100,BASS_DEVICE_3D|BASS_DEVICE_FREQ,0,NULL);
-	HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",NULL);
-	HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",NULL);
+	std::cout<<_GetErrorString();
+	HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
+	HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",BASS_UNICODE);
+	HPLUGIN plgnBASSDS = BASS_PluginLoad("BASS_DSHOW.dll",NULL);
+	std::cout<<_GetErrorString();
+	HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
 	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, 100);	
 	std::cout<<_GetErrorString();
 	BASS_SetEAXParameters(EAX_PRESET_ARENA);
 	std::cout<<_GetErrorString();
+	const BASS_PLUGININFO* bassMIXinfo = BASS_PluginGetInfo(plgnBASSMIX);
+	std::cout<<_GetErrorString();
+	const BASS_PLUGININFO* bassTAGSinfo = BASS_PluginGetInfo(plgnBASSTAG);
+	std::cout<<_GetErrorString();
+	const BASS_PLUGININFO* bassFXinfo = BASS_PluginGetInfo(plgnBASSFX);
+	std::cout<<_GetErrorString();
+	//const BASS_PLUGININFO* bassDSinfo = BASS_PluginGetInfo(plgnBASSDS);
+	//printf("BASS DirectShow Plugin version: %i\n",bassDSinfo->version);
+	//printf("Audio Devices found: %i \n",xVideo_GetAudioRenderers(NULL,NULL));
+	//std::cout<<_GetErrorString();
 }
 
 
-BassAudio::~BassAudio(void)
-{
-	delete bassaudioInstance;
-}
 
-BassAudio*
-BassAudio::GetInstance(void)
-{
-	if(!bassaudioInstance)
-		bassaudioInstance = new BassAudio();
-	return
-		bassaudioInstance;
-}
 
 bool
 BassAudio::MasterResampling(BOOL Switch)
@@ -323,6 +330,8 @@ BassAudio::SetListenerPosition(Transform* cameraTranform)
 void
 BassAudio::LoadeBackgroundAudio(const char* fileName)
 {
+
+
 	derAudio = _getAudioStreamByFileName((string)fileName,LOAD_2D);
 	BASS_ChannelSetDevice(derAudio,-1);
 	printf("\nAudio: %s loadet as Backgroundmusic !\n",fileName);

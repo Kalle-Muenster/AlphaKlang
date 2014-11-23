@@ -79,6 +79,7 @@ class InputManager
 	//Con-and Destruction....
 private:
 	InputManager(void);
+
 public:
 	static InputManager* getInstance();
 	virtual ~InputManager(void);

@@ -5,7 +5,7 @@
 
 #include <GL\glew.h>
 
-SceneGraph* scenegraph;
+
 
 IGObject* _drawables[MAXIMUM_SXCENE_OBJECT];
 unsigned _NumberOfSceneObjects = 0;
@@ -24,15 +24,6 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 SceneGraph::~SceneGraph(void)
 {
 	delete[] _drawables;
-	//delete scenegraph;
-}
-
-SceneGraph*
-SceneGraph::GetInstance()
-{
-	if(!scenegraph)
-		scenegraph = new SceneGraph();
-	return scenegraph;
 }
 
 GobID // Add's a gameobject to the Scene and returns it's given ID

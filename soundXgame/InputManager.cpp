@@ -9,10 +9,10 @@ DWORD _clicktimer;
 DWORD _doubleClickLength;
 int _fps;
 
-InputManager* instance;
+//InputManager* instance;
 
-Rectangle Viewport;
-Vector3 ViewPortNormalizedMouseCoordinates;
+Rectangle _Viewport;
+Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
 
@@ -35,21 +35,13 @@ _updateTimer(void)
 	return _TicksToSeconds(_frameTicks);
 }
 
-InputManager* InputManager::getInstance() 
-{
-	if(!instance) 
-	{
-		_lastTicks = GetTickCount();
-		_frameTicks = 0;
-		_doubleClickLength = 200;
-		instance = new InputManager();
-	}
-
-	return instance;
-}
 
 InputManager::InputManager(void)
 {
+	_lastTicks = GetTickCount();
+	_frameTicks = 0;
+	_doubleClickLength = 200;
+
 	this->keyListener = std::vector<IObserver*>();
 	this->specialListener = std::vector<IObserver*>();
 	this->mouseMoveListener = std::vector<IObserver*>();
@@ -65,10 +57,10 @@ InputManager::InputManager(void)
 	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
 	Mouse.Movement = glm::vec2(0,0);
 
-	Viewport=*Rectangle::Zero;
-	Viewport.size(1,1);
+	_Viewport=*Rectangle::Zero;
+	_Viewport.size(1,1);
 
-	ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
+	_ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
 
 	Controler1.Enabled=true;
 	Controler1.NumberOfButtons=10;
@@ -93,10 +85,7 @@ InputManager::InputManager(void)
 */
 }
 
-InputManager::~InputManager(void)
-{
-	delete instance;
-}
+
 
 void InputManager::attachMouseMove(IObserver* obs) 
 {
@@ -287,9 +276,9 @@ InputManager::UpdateMouseWheel(int wheel,int state,int x,int y)
 
 //Output Status to Console if MOUSE_TEST_OUTPUT is defined...	
 #ifdef MOUSE_TEST_OUTPUT 
-	if(instance->Mouse.WheelV == WHEEL::UP)
+	if(Mouse.WheelV == WHEEL::UP)
 		std::cout<<"\nWheelUP";
-	if(instance->Mouse.WheelV == WHEEL::DOWN)
+	if(Mouse.WheelV == WHEEL::DOWN)
 		std::cout<<"\nWheelDOWN";
 #endif
 
@@ -332,14 +321,14 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 Rectangle* 
 InputManager::GetViewportRectangle(void)
 {
-	return &Viewport;
+	return &_Viewport;
 }
 
 void 
 InputManager::SaveViewportRectangle(int x,int y,int w,int h)
 {
-	Viewport.position(x,y);
-	Viewport.size(w,h);
+	_Viewport.position(x,y);
+	_Viewport.size(w,h);
 }
 
 void 
@@ -356,10 +345,10 @@ InputManager::setMousePosition(int x,int y)
 	Mouse.Position.x = Mouse.X = x;
 	Mouse.Position.y = Mouse.Y = y;
 
-	ViewPortNormalizedMouseCoordinates.x = 2*(Mouse.Position.x/GetViewportRectangle()->size().x)-1;
-	ViewPortNormalizedMouseCoordinates.y = 2*(1-Mouse.Position.y/GetViewportRectangle()->size().y)-1;
+	_ViewPortNormalizedMouseCoordinates.x = 2*(Mouse.Position.x/GetViewportRectangle()->size().x)-1;
+	_ViewPortNormalizedMouseCoordinates.y = 2*(1-Mouse.Position.y/GetViewportRectangle()->size().y)-1;
 
-	glm::vec4 ray_clip(ViewPortNormalizedMouseCoordinates.x,ViewPortNormalizedMouseCoordinates.y,-1,1);
+	glm::vec4 ray_clip(_ViewPortNormalizedMouseCoordinates.x,_ViewPortNormalizedMouseCoordinates.y,-1,1);
 
 /*
 	
@@ -445,31 +434,31 @@ InputManager::PerFrameReset(void)
 	calculateFPS();
 #endif
 	#ifdef MOUSE_TEST_OUTPUT
-		if(instance->Mouse.LEFT.CLICK)
+		if(Mouse.LEFT.CLICK)
 			std::cout<<"CLICK\n";
-		else if(instance->Mouse.LEFT.RELEASE)
+		else if(Mouse.LEFT.RELEASE)
 			std::cout<<"\n...RELEASE\n\n";
-		else if(instance->Mouse.LEFT.HOLD)
+		else if(Mouse.LEFT.HOLD)
 			std::cout<<"HOLD..";
-		else if(instance->Mouse.LEFT.DOUBLE)
+		else if(Mouse.LEFT.DOUBLE)
 			std::cout<<"DOUBLE-CLICK!!!\n";
 
-		if(instance->Mouse.RIGHT.CLICK)
+		if(Mouse.RIGHT.CLICK)
 			std::cout<<"RIGHT-CLICK\n";
-		else if(instance->Mouse.RIGHT.RELEASE)
+		else if(Mouse.RIGHT.RELEASE)
 			std::cout<<"\n...RIGHT-RELEASE\n\n";
-		else if(instance->Mouse.RIGHT.HOLD)
+		else if(Mouse.RIGHT.HOLD)
 			std::cout<<"RIGHT-HOLD..";
-		else if(instance->Mouse.RIGHT.DOUBLE)
+		else if(Mouse.RIGHT.DOUBLE)
 			std::cout<<"DOUBLE-RIGHT!!!\n";
 
-		if(instance->Mouse.MIDDLE.CLICK)
+		if(Mouse.MIDDLE.CLICK)
 			std::cout<<"MIDDLE-CLICK\n";
-		else if(instance->Mouse.MIDDLE.RELEASE)
+		else if(Mouse.MIDDLE.RELEASE)
 			std::cout<<"\n...MIDDLE-RELEASE\n\n";
-		else if(instance->Mouse.MIDDLE.HOLD)
+		else if(Mouse.MIDDLE.HOLD)
 			std::cout<<"MIDDLE-HOLD..";
-		else if(instance->Mouse.MIDDLE.DOUBLE)
+		else if(Mouse.MIDDLE.DOUBLE)
 			std::cout<<"DOUBLE-MIDDLE!!!\n";
 	#endif
 }
