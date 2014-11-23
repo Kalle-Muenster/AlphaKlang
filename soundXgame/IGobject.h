@@ -37,7 +37,7 @@ public:
 	virtual Vector3 move(float,float,float) {return Vector3();};//=0;
 	virtual Vector3 rotate(float,float,float) {return Vector3();};//=0;
 	virtual Vector3 scale(float,float,float) {return Vector3();};//=0;
-	GobID GetID(void);
+	GobID  GetID(void);
 	char* GetName(void);
 	void SetName(char*);
 	IConnectable* conXtor;

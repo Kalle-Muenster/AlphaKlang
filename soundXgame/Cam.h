@@ -11,9 +11,9 @@
 enum CAM_MODE : int
 {
 	get = -1,
-	FIRSTPERSON = 1,
-	FOLLOWTARGET = 2,
-	
+	FOLLOWTARGET = 1,
+	FIRSTPERSON = 2,
+	SPECTATOR = 3,
 };
 
 
@@ -22,11 +22,17 @@ class CameraMode : public IConnectable
 {
 protected:
 	virtual void UpdateMode(void){}
-	
+	bool isPrimarMode;
 public:
 	Cam* camera;
+	char* ModeName;
 	bool IsActive;
 	bool IsDirty;
+	bool IsPrimarMode(void)
+	{return isPrimarMode;}
+	virtual ~CameraMode(void)
+		{}
+	
 	void UpdateAllActiveModes(void)
 	{
 		if(NumberOfConnectedObjects<=0)
@@ -44,7 +50,6 @@ public:
 		}
 	}
 	
-	char* ModeName;
 	int CamModeID(void)
 		{return (int)this->ConnectionID;}
 
@@ -118,7 +123,7 @@ public:
 	Vector3					move(float x,float y,float z);
 	Vector3		   		    move(glm::vec3);
 	Vector3					rotate(float x,float y,float z);
-	Vector3			        rotate(glm::vec3);
+	Vector3			        rotate(Vector3);
 	bool				    ShareAudio(BOOL=3);
 	virtual void			Update(void);
 	int						NumberOfModes; 

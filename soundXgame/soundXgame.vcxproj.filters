@@ -114,6 +114,9 @@
     <ClCompile Include="SpectrumAnalyzer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Perceptor.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="ObjectManagement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="projectClasses.h" />
@@ -240,6 +243,9 @@
     <ClInclude Include="SpectrumAnalyzer.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Perceptor.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="ObjectManagement.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
@@ -278,6 +284,12 @@
     </None>
     <None Include="sphere_tris_low.obi">
       <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="buntbild_128.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="bluobbber.ppm">
+      <Filter>Resources\Textures</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

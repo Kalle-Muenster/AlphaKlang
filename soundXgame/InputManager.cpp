@@ -1,16 +1,17 @@
 #include "InputManager.h"
 #include "DataStructs.h"
 
-LPSYSTEMTIME _sTime;
+//LPSYSTEMTIME _sTime;
 DWORD _timerTicks;
 DWORD _lastTicks;
 DWORD _frameTicks;
 DWORD _clicktimer;
 DWORD _doubleClickLength;
+int _fps;
 
 InputManager* instance;
 
-glm::vec4 Viewport;
+Rectangle Viewport;
 Vector3 ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
@@ -64,7 +65,9 @@ InputManager::InputManager(void)
 	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
 	Mouse.Movement = glm::vec2(0,0);
 
-	Viewport=glm::vec4(0,0,1,1);
+	Viewport=*Rectangle::Zero;
+	Viewport.size(1,1);
+
 	ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
 
 	Controler1.Enabled=true;
@@ -92,7 +95,7 @@ InputManager::InputManager(void)
 
 InputManager::~InputManager(void)
 {
-	delete _sTime;
+	delete instance;
 }
 
 void InputManager::attachMouseMove(IObserver* obs) 
@@ -326,19 +329,17 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 	}
 }
 
-glm::vec4 
+Rectangle* 
 InputManager::GetViewportRectangle(void)
 {
-	return Viewport;
+	return &Viewport;
 }
 
 void 
 InputManager::SaveViewportRectangle(int x,int y,int w,int h)
 {
-	Viewport.x=x;
-	Viewport.y=y;
-	Viewport.w=w;
-	Viewport.z=h;
+	Viewport.position(x,y);
+	Viewport.size(w,h);
 }
 
 void 
@@ -355,8 +356,8 @@ InputManager::setMousePosition(int x,int y)
 	Mouse.Position.x = Mouse.X = x;
 	Mouse.Position.y = Mouse.Y = y;
 
-	ViewPortNormalizedMouseCoordinates.x = 2*(Mouse.Position.x/GetViewportRectangle().w)-1;
-	ViewPortNormalizedMouseCoordinates.y = 2*(1-Mouse.Position.y/GetViewportRectangle().z)-1;
+	ViewPortNormalizedMouseCoordinates.x = 2*(Mouse.Position.x/GetViewportRectangle()->size().x)-1;
+	ViewPortNormalizedMouseCoordinates.y = 2*(1-Mouse.Position.y/GetViewportRectangle()->size().y)-1;
 
 	glm::vec4 ray_clip(ViewPortNormalizedMouseCoordinates.x,ViewPortNormalizedMouseCoordinates.y,-1,1);
 
@@ -421,7 +422,17 @@ InputManager::setMouseButtons(void)
 	notifyQlicks();
 }
 
-
+int
+InputManager::calculateFPS(void)
+{
+	int fps =  int(1.0/FrameTime);
+	if(fps!=_fps)
+	{
+		printf("FPS = %i ,  lastFrameTime = %f \n",fps,FrameTime);
+		_fps=fps;
+	}
+	return fps;
+}
 
 void
 InputManager::PerFrameReset(void)
@@ -430,7 +441,9 @@ InputManager::PerFrameReset(void)
 
 	setMouseButtons();
 
-
+#ifdef CONSOLE_OUTPUT_FPS
+	calculateFPS();
+#endif
 	#ifdef MOUSE_TEST_OUTPUT
 		if(instance->Mouse.LEFT.CLICK)
 			std::cout<<"CLICK\n";

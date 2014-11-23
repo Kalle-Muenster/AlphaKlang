@@ -86,38 +86,72 @@ Loader::Pixel(int x,int y)
 void*
 Loader::LoadeFile(const char* filename)
 {
+	u32_2s16_4b8 pixel;
+	pixel.u32 = 0;
+	bool read = true;
 	int value=0;
+	int MaximumChannelValue=0;
 	int W=0;
 	int H=0;
 	char readBuffer[32];
 	FILE* file = fopen(filename,"rb");
-//	fseek(file,0,SEEK_SET);
 	fscanf(file,"%s\n",readBuffer);
-	fscanf(file,"%s\n",readBuffer);
-	//fscanf(file,"%s\n",readBuffer);
-	fscanf(file,"%i %i\n",&W,&H);
-	_w=W;
-	_h=H;
-	_length = _w*_h;
-	fscanf(file,"%i\n",&value);
-		if(value==255)
+	if(strcmp(readBuffer,"P3")==0)
+	{// --File is RGB PPM file...
+		bool W_H_ok=false;
+		bool channelValueOk = false;
+		int chanelCount=0;
+		int pixelCount=-1;
+		while(pixelCount<W*H)
 		{
-	for(int i = 0;i<_length;i++)
-	{
-		_Data.push_back(u32_2s16_4b8());
-		int x=i%_w;
-		int y=i/_w;
-		fscanf(file,"%i\n",&value);
-		_Data[i].byte[0]=value;
-		fscanf(file,"%i\n",&value);
-		_Data[i].byte[1]=value;
-		fscanf(file,"%i\n",&value);
-		_Data[i].byte[2]=value;
-		_Data[i].byte[3]=255;
-	}
+		fscanf(file,"%s\n",readBuffer);
+			if(readBuffer[0]=='#')
+			{
+				char readChar='x';
+
+				do{for(int i=0;i<sizeof(readBuffer);i++)
+					{
+						if(readBuffer[i]=='\0')
+							{readChar='\n';break;}
+						}
+					if(readChar!='\n')
+						fscanf(file,"%s\n",readBuffer);
+				}while(readChar!='\n');
+			}
+			else
+			{
+				if((!W_H_ok)||(W==0)||(H==0))
+					{
+						sscanf(readBuffer,"%i",&value);
+						if(W==0)
+							W=value;
+						else if(H==0)
+						{H=value;pixelCount=0;
+							W_H_ok=true;}
+					}
+				else if(!channelValueOk)
+					{sscanf(readBuffer,"%i\n",&MaximumChannelValue);channelValueOk=true;}
+				else 
+				{
+					sscanf(readBuffer,"%i\n",&value);
+					pixel.byte[chanelCount]=value;
+					if(++chanelCount==3)
+					{
+						pixel.byte[chanelCount] = 255;
+						_Data.push_back(pixel);
+						chanelCount=0;
+						pixelCount++;
+					}
+				}
+			}
 		}
-	fclose(file);
-	return data;
+		if(W_H_ok)
+			{ _w = W; _h = H; _length = W*H;}
+		fclose(file);
+		return data;
+	}
+else// other file-type.. later..
+	return NULL;
 }
 
 

@@ -6,18 +6,22 @@
 
 
 class VoxControl :
-	public IConnectable, public IInteractive
+	public IConnectable, public IInteractive, public IUpdateble
 {
 private:
 	bool _firstStart;
+	Vector3 tempvector;
+	int bumpmapchannel;
+	int imageIndex;
+	int bumpmapIndex;
+
 public:
 	VoxControl(void);
 	virtual ~VoxControl(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
-	virtual void mouseMotion(int x,int y);
-	virtual void mouseWheel(int wheel, WHEEL state);
 	virtual IVoxelObject* vConnection(void);
+	virtual void DoUpdate(void);
 };
 
 #endif

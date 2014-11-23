@@ -136,11 +136,12 @@ i3 = 1;
 
 
 	
-	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	//vObject->AddConnectable<VoxControl>();
-	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	//vObject->AddConnectable<CamTargetRotator>();
-
+	VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	vObject->AddConnectable<VoxControl>();
+	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	vObject->move(-10,0,30);
+	vObject->MainSizzes.x=0.2;;
+	vObject->MainSizzes.y=0.045f;
 
 
 
@@ -158,15 +159,19 @@ i3 = 1;
 	analyzer->SetName("SpectrumAnalyzer");
 	analyzer->AddConnectable<CamTargetRotator>();
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
+	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;
-	SCENE->camera->SetTarget(analyzer);
+	SCENE->camera->SetTarget(vObject);
+
 }
 
 
 
 GobID switcher=0;
+
 //Main-Cycle:
 ////////////////////////////////////////////////////////
+/* the Main-Updatecall */
 void UpdateCycle(void)
 {
 	//color test flashing krams....
@@ -211,6 +216,7 @@ void UpdateCycle(void)
 	printf("FallOffAmount: %f",analyzer->fallOffAmount);}
 }
 
+//The Main-Draw-Call...
 void RenderCycle(void)
 {
 	SCENE->DrawSky();
@@ -249,26 +255,35 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 }
 
 
-//GL-InputFunctions;
+char lastKey = 0;
+//GL-InputFunctions:
 ///////////////////////////////////////////////////
 //Keyboard:
+
 void keyboardInput(unsigned char key,int x,int y)
 {
 	/* Switches Cam-Modes..*/
-	if(key=='o')
+	if(key=='p')
 	{	
 		SCENE->camera->Mode(FIRSTPERSON);
 	}
-	if(key=='p')
+	if(key=='f')
 	{	
 		SCENE->camera->Mode(FOLLOWTARGET);
 	}
+	if(key=='o')
+		SCENE->camera->Mode(SPECTATOR);
+
 	if(key == 27) // ESC
 		glutExit();
 
-
+	
 	INPUT->notifyKey(key);
+
+	lastKey=key;
 }
+
+
 void processSpecialKeys(int key, int xx, int yy)
 {
 	INPUT->notifySpecialKey(key);

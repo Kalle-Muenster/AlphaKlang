@@ -661,15 +661,15 @@ public:
 
 	void Loade(const char* filename,void*);
 	void ReLoade(char* filename);
-	void LoadMap(char* filename);
-	void drawBlurre(VectorF position);
+	void LoadMap(char* filename,int channel);
+	void drawBlurre(VectorPF position);
 	void Draw(VectorPF position);
 	float scale;
 	void* SetVoxelerBuffer(Voxel* voxels);
 	Voxel* GetVoxel(int x,int y);
 	Voxel* GetVoxel(int index);
 	Voxel* voxels;
-
+	
 
 	
 	bool loaded;

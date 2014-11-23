@@ -35,7 +35,20 @@ IVoxelObject::draw(void)
 	glColor4b(255,255,255,255);
 	IsGrounded=false;
 	glPushMatrix();
+	switch(mode)
+	{
+	case NORMAL:
 		this->Draw(this->position);
+		break;
+	case BLURED:
+		this->drawBlurre(this->position);
+		break;
+	}
 	glPopMatrix();
 }
 
+void
+IVoxelObject::Mode(ColorMode colorMode)
+{
+	mode=colorMode;
+}

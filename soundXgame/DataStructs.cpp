@@ -90,6 +90,22 @@ Vector3::operator-=(Vector3 other)
 	z-=other.z;
 }
 
+float
+Vector3::dot(Vector3 other)
+{
+	return x*other.x+y*other.y+z*other.z;
+}
+
+Vector3
+Vector3::cros(Vector3 other)
+{
+	other.x = y*other.z-z*other.y;
+	other.y = z*other.x-x*other.z;
+	other.z = x*other.y-y*other.x;
+	return other;
+}
+
+
 BASS_3DVECTOR
 Vector3::asBassVector(void)
 {
@@ -120,7 +136,6 @@ Vector3::normal(void)
 {
 	return glm::normalize(glm::vec3(x,y,z));
 }
-
 
 
 

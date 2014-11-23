@@ -2,8 +2,9 @@
 #ifndef __INPUTMANAGER_H__
 #define __INPUTMANAGER_H__
 
-//Undefine to switch off Console-output of mouse data test
+//Undefine to switch off Console-output of mouse data test or FPS calculation
 #define MOUSE_TEST_OUTPUT (1)
+//#define CONSOLE_OUTPUT_FPS
 
 //Observer Flags
 #define OBSERVATE_CLICKS       (0x1)
@@ -100,7 +101,7 @@ private:
 	void notifyWheel(int wheel);
 	void notifyQlicks(void);
 	void notifyJoystick(int id,int button,bool state,int aX,int aY,int aZ);
-
+	int calculateFPS(void);
 
 	//Public Stuff...........................
 public:
@@ -129,7 +130,7 @@ public:
 	unsigned Buttons;
 	float aX,aY,aR,aZ;
  }	Controler2;
-	glm::vec4 GetViewportRectangle(void);
+	Rectangle* GetViewportRectangle(void);
 	void SetDoubleclickTime(int milliseconds);
 	double FrameTime; //deltaTime...
 

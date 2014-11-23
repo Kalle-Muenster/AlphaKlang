@@ -12,7 +12,7 @@ FourtainObject::FourtainObject(void)
 	// different timerHeigher
 
 	//this->IsGrounded = false;
-
+	SetID(SCENE->Add(this));
 	LockID();
 
 	
@@ -28,7 +28,7 @@ FourtainObject::~FourtainObject(void)
 void
 FourtainObject::AddToScene(void)
 {
-	SCENE->Add(this);
+	
 	this->IsVisible=true;
 }
 

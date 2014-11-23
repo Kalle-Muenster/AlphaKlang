@@ -4,6 +4,7 @@
 #include <GL\freeglut.h>
 #include <glm.hpp>
 #include <bass.h>
+#include "VoxelVector.h"
 
 typedef char* string;
 
@@ -15,6 +16,9 @@ public:
 	Vector3(float,float,float);
 	Vector3(glm::vec3);
 	Vector3(BASS_3DVECTOR);
+	static const Vector3* const Zero;
+	float dot(Vector3);
+	Vector3 cros(Vector3);
 	float distance(Vector3);
 	float GetLength(void);
 	Vector3 direction(Vector3 to);
@@ -30,7 +34,7 @@ public:
 	Vector3 operator/(float);
 	void operator +=(Vector3);
 	void operator -=(Vector3);
-	static const Vector3* const Zero;
+	
 };
 
 struct Vector4 : public Vector3
@@ -38,6 +42,8 @@ struct Vector4 : public Vector3
 public:
 	GLfloat w;
 };
+
+
 
 union data32
 {

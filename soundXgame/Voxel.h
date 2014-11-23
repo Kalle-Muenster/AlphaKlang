@@ -24,13 +24,13 @@ union
     VectorF* MainDimensions;
 	void pDraw(void);
 	void fDraw(VectorPF offset);
-	void fDrawBlure(VectorF offset);
+	void fDrawBlure(VectorPF offset);
 	void SetNeighbours(int ol,int or,int ur,int ul);
 	VectorF GetPosition(void); 
 	void SetPosition(VectorF setter);
 	VectorF GetSize(void); 
 	void SetSize(VectorF setter);
-	
+	GLfloat* TheOtherZED;
 private:
 	int OL;
 	int OR;

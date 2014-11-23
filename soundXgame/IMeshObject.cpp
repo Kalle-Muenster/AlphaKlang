@@ -180,18 +180,18 @@ IMeshObject::draw(void)
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}
 	else
-		glDisable(GL_TEXTURE_2D);
-		
-	glColor4b(color.byte[1],color.byte[2],color.byte[3],color.byte[0]);
+	{
+		glColor4b(color.byte[1],color.byte[2],color.byte[3],color.byte[0]);
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	
-	if(UseTexture)
-	{
+	//if(UseTexture)
+	//{
 		glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-	}
+	//}
 
 	glPushMatrix();
 	{
@@ -214,7 +214,8 @@ IMeshObject::draw(void)
 	}
 	glPopMatrix();
 
-    
+    glDisable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
 
 	//if(UseTexture)
 		

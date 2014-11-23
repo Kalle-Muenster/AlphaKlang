@@ -7,6 +7,7 @@ int FirstPerson::StaticCamModeID = -1;
 FirstPerson::FirstPerson(void)
 {
 	ModeName = "FirstPerson";
+	isPrimarMode=true;
 }
 
 FirstPerson::~FirstPerson(void)
@@ -45,6 +46,9 @@ FirstPerson::UpdateMode(void)
 	camera->move(x, eyeY, z);
 	camera->rotate(x+lx, 1.0f, z+lz); 
 	this->IsDirty=false;
+
+	gluLookAt(camera->transform.position.x, camera->transform.position.y, camera->transform.position.z,
+	camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
 }
 
 

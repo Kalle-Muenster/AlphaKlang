@@ -2,6 +2,8 @@
 #define __SCENEGRAPH__
 
 #define MAXIMUM_SXCENE_OBJECT (3000)
+typedef unsigned int GobID;
+typedef char* string;
 
 class IGObject;
 class Cam;
@@ -18,13 +20,35 @@ private:
 public:
 	~SceneGraph(void);
 	static SceneGraph* GetInstance();
-	unsigned int Add(IGObject* object);
-	void Remove(IGObject* object);
-	void DrawAll();
+	void DrawAll(void);
 	void DrawSky(void);
+
+	//Add's an object to the scene and generate a new ID that will be returned... 
+	unsigned int Add(IGObject* object);
+
+	// removes an object from the scene, but does not distroy it.
+	// use "Destruct(IGObject*)" to delete an object permanently...
+	void Remove(IGObject* object);
+
+	//removes the object with the given ID from the scene and calls it's destructor... 
+	void Destruct(GobID ID);
+
+	//removes the object named "Name" from the scene and calls it's destructor... 
+	void Destruct(string Name);
+
+	//if the Object can be found in the scene, it will be removed and destroyed... 
+	void Destruct(IGObject* Obj);
+
+	// accses to the scene's main-camera...
 	Cam* camera;
-	IGObject* Object(const char* name);
+
+	// Find an object by it's name...
+	IGObject* Object(const char* name);  
+
+	// Find an object by it's ID...
 	IGObject* Object(unsigned int ID);
+
+	// total count on objects in scene...
 	unsigned ObjectsCount(void);
 };
 

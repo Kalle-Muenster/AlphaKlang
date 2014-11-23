@@ -13,7 +13,7 @@ unsigned _NumberOfSceneObjects = 0;
 SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 {
 	camera = new Cam();
-//	drawables = std::vector<IGObject*>();
+	VoxtructsInitiator::initiateVoxtructs();
 
 	for(int i=0;i<MAXIMUM_SXCENE_OBJECT;i++)
 		_drawables[i]=NULL;
@@ -24,6 +24,7 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 SceneGraph::~SceneGraph(void)
 {
 	delete[] _drawables;
+	//delete scenegraph;
 }
 
 SceneGraph*
@@ -191,25 +192,44 @@ SceneGraph::ObjectsCount(void)
 IGObject* // Find a gameobject by it's Name...
 SceneGraph::Object(const char* name)
 {
-	unsigned counter = 0;
-	unsigned index = 0;
-	
+	unsigned counter,index;
+
+	//check's the name case-sensitive...
+	counter = index = 0;
 	while(counter<_NumberOfSceneObjects)
 	{
 		if(_drawables[index] != NULL)
 		{counter++;
-			if(_drawables[index]->GetName() == name)
+		if(std::strcmp(_drawables[index]->GetName(),name)==0)
 				return _drawables[index];
 		}
 		index++;
 	}
+
+	//if "Name" not found,searches case-insensitive...
+	counter = index = 0;
+	while(counter<_NumberOfSceneObjects)
+	{
+		if(_drawables[index] != NULL)
+		{counter++;
+		if(_stricmp(_drawables[index]->GetName(),name)==0)
+				return _drawables[index];
+		}
+		index++;
+	}
+
+	//if "Name" not found...
+	return NULL;
+
+
 	//for(auto it=drawables.begin();it!=drawables.end();it++)
 	//	if((*it)->GetName()==name)
 	//		return (*it);
-	return NULL;
 }
 
-IGObject* // Find a gameobject by it's ID
+
+/* Find a gameobject by it's ID */
+IGObject* 
 SceneGraph::Object(GobID ID)
 {
 	//if(drawables.at(ID)->GetID()==ID)
@@ -223,4 +243,43 @@ SceneGraph::Object(GobID ID)
 		return _drawables[ID];
 	else
 		return NULL;
+}
+
+void
+SceneGraph::Destruct(GobID ID)
+{
+	if(_drawables[ID]->GetID()==ID)
+	{
+			delete _drawables[ID];
+			_drawables[ID] = NULL;
+			--_NumberOfSceneObjects;
+	}
+}
+
+void 
+SceneGraph::Destruct(IGObject* Obj)
+{
+	unsigned counter,index;
+
+	counter = index = 0;
+	while(counter<_NumberOfSceneObjects)
+	{
+		if(_drawables[index]!=NULL)
+		{counter++;
+			if(Obj == _drawables[index])
+			{
+					_drawables[index] = NULL;
+					delete Obj;
+					--_NumberOfSceneObjects;
+					return;
+			}
+		}
+	++index;
+	}
+}
+
+void 
+SceneGraph::Destruct(string name)
+{
+	Destruct(Object(name));
 }

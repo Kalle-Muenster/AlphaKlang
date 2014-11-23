@@ -22,7 +22,12 @@ public:
 class VoxGrid :
 	public IVoxelObject
 {
+private:
+
+	void SetTheZed(void);
+	void Initialize(string PPMfileName="FromDaCode");
 public:
+	
 	VoxGrid(void);
 	VoxGrid(string ppmFileName);
 	virtual ~VoxGrid(void);

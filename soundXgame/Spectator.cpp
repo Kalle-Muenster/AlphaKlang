@@ -1,12 +1,16 @@
 #include "Spectator.h"
 
+
 int Spectator::StaticCamModeID = -1;
 float iX,Yps;
 bool _willMove;
+bool _resetCursor = false;
+float _xmover,_ymover;
 
 Spectator::Spectator(void)
 {
 	ModeName = "Spectator";
+	isPrimarMode=true;
 }
 
 Spectator::~Spectator(void)
@@ -19,19 +23,7 @@ Spectator::~Spectator(void)
 bool
 Spectator::Initialize(void)
 {
-	angle		= 0;
-	lx			= 0;
-	lz			= -1;
-	x			= 0;
-	z			= 5;
-	eyeY		= 1;
-	moveSpeed	= 1.0f;
-	mouseSpeed	= 0.75f;
-	mouseX		= 0;
-	mouseY		= 0;
-	INPUT->attachKey(this);
-	INPUT->attachMouseMove(this);
-	INPUT->attachSpecial(this);
+	_xmover=_ymover=0;
 	StaticCamModeID = this->CamModeID();
 	return true;
 }
@@ -39,21 +31,34 @@ Spectator::Initialize(void)
 void 
 Spectator::UpdateMode(void)
 { 
+	_xmover+=INPUT->Mouse.Movement.y;
+	_ymover+=INPUT->Mouse.Movement.x;
 
-	camera->rotate(x+lx, eyeY, z+lz); 
+	Vector3 direction = (camera->transform.forward + (camera->transform.right * (INPUT->Mouse.Movement.x)) + (camera->transform.up *(INPUT->Mouse.Movement.y)));
+
+	camera->rotate(direction.normal());
+	//	camera->transform.forward = (camera->transform.rotation - camera->transform.position).normal();
+	if(_resetCursor)
+	//	glutWarpPointer(SCREENWIDTH/2,SCREENHEIGHT/2);
 
 	if(_willMove)
 	{
-		camera->transform.forward = (camera->transform.rotation - camera->transform.position).normal();
-	//	camera->transform.forward = camera->transform.position.direction(camera->transform.rotation);
-	//	camera->transform.right = Vector3(camera->transform.forward.z,camera->transform.forward.y,camera->transform.forward.x);
-	//	camera->transform.up = Vector3(camera->transform.forward.x,camera->transform.forward.z,camera->transform.forward.y);
-
+//		camera->transform.forward = (camera->transform.rotation - camera->transform.position).normal();
 		camera->transform.position += camera->transform.forward * Yps;
 		_willMove=false;
 	}
 	
+	_resetCursor=false;
 	this->IsDirty=false;
+	glPushMatrix();
+	glTranslatef(camera->transform.position.x,camera->transform.position.y,camera->transform.position.z);
+	glRotatef(camera->transform.rotation.x,1,0,0);
+	glRotatef(camera->transform.rotation.y,0,1,0);
+	glRotatef(camera->transform.rotation.z,0,0,1);
+
+	gluLookAt(0, 0, 0,
+	0,0,-1,	0, 1, 0);
+	glPopMatrix();
 }
 
 
@@ -111,6 +116,7 @@ Spectator::specialKeyPressed(int key)
 			iX=1;
 			break;
 		}
+	_willMove = Yps!=iX;
 	iX*=delta;
 	Yps*=delta;
 	}
@@ -121,26 +127,7 @@ Spectator::mouseMotion(int newX, int newY)
 {
 	if(IsActive)
 	{
-		if(mouseX == 0 && mouseY == 0)
-		{
-			mouseX = newX;
-			mouseY = newY;
-		}
-		
-		int diffX = newX - mouseX;
-		int diffY = newY - mouseY;
 
-		angle += 0.005f * diffX * mouseSpeed;
-		lx = sin(angle);
-		lz = -cos(angle);
-		eyeY += (float)diffY / 300;
-		
-		mouseX = newX;
-		mouseY = newY;
-
-		IsDirty=true;
-
-		
 	}
 }
 
@@ -148,5 +135,6 @@ Spectator::mouseMotion(int newX, int newY)
 void
 Spectator::mouseWheel(int wheel,WHEEL state)
 {
-	//moveSpeed += (float)state*0.01f;
+	Yps = (float)state * (moveSpeed * INPUT->FrameTime);
+	_willMove=true;
 }

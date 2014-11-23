@@ -168,18 +168,19 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 				voxels[count].position.Yps=(y*scale)+ *position.y;
 				voxels[count].MainDimensions = &MainSizzes;
 
-			if(x>0 && x<mapWidth && y>0 && y<mapHeight)
+			if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
 			voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
 		}
 	
 	}
 }
 
-void VoxelMap::LoadMap(char* filename)
+void VoxelMap::LoadMap(char* filename,int channel)
 {
 	Loader* loader = new Loader(filename);
 	for(int i=0;i<loader->count();i++)
-		this->voxels[i].factor=loader->Pixel(i/loader->width(),i%loader->height())->byte[0];
+		this->voxels[i].factor=loader->Pixel(i)->byte[channel];
+	printf("Loaded bumpmap %s: %i voxels \n",filename,loader->count());
 
 }
 
@@ -202,14 +203,16 @@ void VoxelMap::Draw(VectorPF position )
 
 }
 
-void VoxelMap::drawBlurre(VectorF position)
+void VoxelMap::drawBlurre(VectorPF position)
 {
+	glBegin(GL_QUADS);
 	for(int f=0;f<256;f++)
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
 				voxels[i].fDrawBlure(position);
 	}	
+	glEnd();
 }
 
 

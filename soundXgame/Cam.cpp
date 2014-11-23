@@ -35,9 +35,11 @@ Cam::Cam(void) :
 	glLoadIdentity();
 	gluLookAt(transform.position.x, transform.position.y, transform.position.z, transform.rotation.x,transform.rotation.y,transform.rotation.z, 0, 1, 0);
 	
-	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
+	ModeSocket->AddCameraMode<FollowTarget>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
+	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
 	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
+	
 }
 
 
@@ -65,6 +67,7 @@ Cam::~Cam(void)
 {
 	delete _targetPosition;
 	delete _targetObject;
+	delete ModeSocket;
 }
 
 void
@@ -166,27 +169,21 @@ Cam::move(glm::vec3  newPosition)
 Vector3		
 Cam::rotate(float x,float y,float z)
 {
-	return rotate(Vector3(x,y,z));
+	if(transform.rotation.x != x)
+		{transform.rotation.x=x; TransformDIRTY=true;}
+	if(transform.rotation.y != y)
+		{transform.rotation.y=y; TransformDIRTY=true;}
+	if(transform.rotation.z != z)
+		{transform.rotation.z=z; TransformDIRTY=true;}
+	if(TransformDIRTY)
+		UpdateDirections();
+	return transform.rotation;
 }
 
 Vector3		
-Cam::rotate(glm::vec3 newRotation)
+Cam::rotate(Vector3 newRotation)
 {
-	if(transform.rotation!=newRotation)
-	{
-		this->transform.rotation.x = newRotation.x;
-		this->transform.rotation.y = newRotation.y;
-		this->transform.rotation.z = newRotation.z;
-
-		//#ifdef DEBUG_OUTPUT_CAMERA
-		//	printf("CAMERA: forward = %f,%f,%f !\n",transform.forward.x,transform.forward.y,transform.forward.z);
-		//	printf("CAMERA: right = %f,%f,%f !\n",transform.right.x,transform.right.y,transform.right.z);
-		//	printf("CAMERA: up = %f,%f,%f !\n",transform.up.x,transform.up.y,transform.up.z);
-		//#endif
-
-		TransformDIRTY=true;
-	}
-	return this->transform.rotation;
+	return rotate(newRotation.x,newRotation.y,newRotation.z);
 }
 
 double
@@ -220,10 +217,18 @@ Cam::Mode(CAM_MODE value)
 //set(value):
 	if(value != (CAM_MODE)_mode)
 	{
-		ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
-		ModeSocket->Get<CameraMode>(value)->IsActive = true;
-		_mode = value;
-		printf("CAMERA: Set to %s-Mode !\n", ModeSocket->Get<CameraMode>(_mode)->ModeName);
+		if(ModeSocket->Get<CameraMode>(value)->IsPrimarMode())
+		{
+			ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
+			ModeSocket->Get<CameraMode>(value)->IsActive = true;
+			_mode = value;
+		}
+		else
+		{
+			ModeSocket->Get<CameraMode>(value)->IsActive = true;
+		}
+		
+		printf("CAMERA: Set to %s-Mode !\n", ModeSocket->Get<CameraMode>(value)->ModeName);
 		
 		UpdateView();
 	}
@@ -233,11 +238,11 @@ Cam::Mode(CAM_MODE value)
 void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
 {
-	glViewport(0, 0, INPUT->GetViewportRectangle().w,INPUT->GetViewportRectangle().z);
+	glViewport(0, 0, INPUT->GetViewportRectangle()->size().x,INPUT->GetViewportRectangle()->size().y);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(FieldOfView(), Aspect(), 0.1f, 100.0f);
+	gluPerspective(FieldOfView(), Aspect(), 0.1f, 1000.0f);
 	TransformDIRTY = true;
 }
 
@@ -246,11 +251,9 @@ Cam::UpdateDirections(void)
 {
 	if(TransformDIRTY)
 	{
-	//	transform.forward = transform.position.direction(transform.rotation);
-		transform.forward = (transform.rotation - transform.position).normal();
-//		transform.right =  - transform.forward;
-	//	Utility::Rotate90(1,transform.right.z,transform.right.x);
-	//	Utility::Rotate90(1,transform.up.z,transform.up.y);
+		transform.forward = (transform.rotation - transform.position);
+		transform.right = ( transform.forward - Vector3(0,0,1) + Vector3(0,1,0));
+		transform.up = (transform.forward - Vector3(0,0,1) + Vector3(1,0,0));
 	}
 }
 
@@ -273,14 +276,20 @@ Cam::Update()
 	}
 
 	//Mode-Dependant updates...
-	ModeSocket->UpdateAllActiveModes();
+	//ModeSocket->UpdateAllActiveModes();
 	
 	//update camera position:
 	UpdateDirections();
 	
+	//Mode-Dependant updates...
+	ModeSocket->UpdateAllActiveModes();
+
+
 	//Set To GL
-	gluLookAt(transform.position.x, transform.position.y, transform.position.z,
-		transform.rotation.x,transform.rotation.y,transform.rotation.z,	0, 1, 0);
+	//gluLookAt(transform.position.x, transform.position.y, transform.position.z,
+	//transform.rotation.x,transform.rotation.y,transform.rotation.z,	0, 1, 0);
+
+
 
 	//update The Position of the attached AudioReciever
 	SetAudioResieverPosition(&transform);
