@@ -172,6 +172,7 @@
     <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bluobbber.pix" />
     <None Include="bluobbber.ppm" />
     <None Include="buntbild_128.ppm" />
     <None Include="cube_quads.obi" />
@@ -181,12 +182,36 @@
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
     <None Include="ich.ppm" />
+    <None Include="Scene.fbx" />
     <None Include="sphere_quads_high.obi" />
     <None Include="sphere_quads_low.obi" />
     <None Include="sphere_tris_high.obi" />
     <None Include="sphere_tris_low.obi" />
     <None Include="tr.ppm" />
     <None Include="ClassDiagram3.cd" />
+    <None Include="tri_sphere.fbx" />
+    <None Include="X-7.tga" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="03.wav" />
+    <Media Include="08.wav" />
+    <Media Include="18.wav" />
+    <Media Include="brumm_f32.wav" />
+    <Media Include="brumm_s16.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="brumm_f32.txt">
+      <FileType>Document</FileType>
+    </Text>
+    <Text Include="brumm_s16.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CubusX_256.bmp" />
+    <Image Include="Q2-shiny.png" />
+    <Image Include="q2_23.png" />
+    <Image Include="X-3.png" />
+    <Image Include="X-512.jpg" />
+    <Image Include="X-7.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

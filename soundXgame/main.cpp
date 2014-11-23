@@ -51,7 +51,7 @@ int prepareForExit(void)
 {
 	//deletions:
 	delete font;
-
+	
 	return EXIT_SUCCESS;
 }
 
@@ -117,9 +117,10 @@ void LoadContent(void)
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
-
-	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-	AUDIO->Play();
+	unsigned int brummsound;
+	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
+//	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+//	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
@@ -128,8 +129,9 @@ void LoadContent(void)
 
 
 	// TEST ... JUST A CUBE - 1
-	new Cubus("X-3.png", true, true);
+	(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	
+
 
 
 	// TEST ... JUST A CUBE - 2
@@ -140,7 +142,7 @@ void LoadContent(void)
 	color.byte[0]=10;
 	(new Cubus(color,true,false,Vector3(0,0,0)))->scale(Vector3(10,10,10));
 
-
+	SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
 
 	data32 col = data32();
 	col.byte[0] = 255;
@@ -159,7 +161,7 @@ void LoadContent(void)
 	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
 	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
 	vObject->move(-80,0,150);
-	vObject->MainSizzes.x=0.2;;
+	vObject->MainSizzes.x=0.2;
 	vObject->MainSizzes.y=0.045f;
 
 

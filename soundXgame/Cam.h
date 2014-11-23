@@ -92,6 +92,7 @@ public:
 class Cam : public IWheelee, public IConnectable, public IAudioReciever
 {
 private:
+	static bool				_shareAudioReciever;
 	Vector3					*_targetPosition;		//position vector the camera looks at if in FOLLOWTARGET-Mode...
 	IGObject*				_targetObject;
 	ConID					*targetConID;			
@@ -101,11 +102,11 @@ private:
 	float					_distanceToTarget;
 	void					UpdateView();			// Update Window and or Viewport Changes...
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
-
+	
 protected:
 	virtual bool			IsShared(bool=NULL);
 	bool					TransformDIRTY;
-	
+
 public:
 							Cam(void);
 	virtual					~Cam(void);

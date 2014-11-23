@@ -1,5 +1,6 @@
 #include "BassAudio.h"
 #include <iostream>
+#include <vector>
 
 #define DEBUG
 
@@ -203,7 +204,7 @@ BassAudio::Loade3DSample(const char* filename)
 	fileLength=ftell(file);
 	fseek(file,0,SEEK_SET);
 	offset=0;
-	HSAMPLE sample = BASS_SampleLoad(false,filename,offset,0,5,BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
+	HSAMPLE sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
 	std::cout<<_GetErrorString();
 	HCHANNEL channel = BASS_SampleGetChannel(sample,true);
 	std::cout<<_GetErrorString();
@@ -262,15 +263,33 @@ BassAudio::GetBackgroundAudioFFT(void)
 	return GetBackgroundAudioFFT(Small);
 }
 
+HCHANNEL 
+BassAudio::GetSampleFromBank(unsigned slotNumber)
+{
+	return SampleBank[slotNumber];
+}
 
-
+HCHANNEL 
+BassAudio::LoadeSampleToBank(unsigned& slotNumber,const char* filename)
+{
+	SampleBank.push_back(Loade3DSample(filename));
+	slotNumber = SampleBank.size()-1;
+	return SampleBank[slotNumber];
+}
 
 BassAudio::BassAudio(void)
 {
-	 
-
+	
+	SampleBank = std::vector<HCHANNEL>();
 	initDebug();
-	BASS_Init(-1,44100,BASS_DEVICE_3D|BASS_DEVICE_FREQ,0,NULL);
+	BASS_Init(-1,44100,BASS_DEVICE_3D,GetActiveWindow(),NULL);
+	std::cout<<_GetErrorString();
+	BASS_INFO *info = new BASS_INFO();
+	if( BASS_GetInfo(info))
+	{
+		printf("BASS: info: %i bytes free audiomemory\n           DirectSound version: i%\n",info->hwfree,info->dsver);
+	}
+	BASS_SetConfig(BASS_CONFIG_3DALGORITHM,BASS_3DALG_DEFAULT);
 	std::cout<<_GetErrorString();
 	HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
 	HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",BASS_UNICODE);
@@ -279,7 +298,12 @@ BassAudio::BassAudio(void)
 	HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
 	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, 100);	
 	std::cout<<_GetErrorString();
-	BASS_SetEAXParameters(EAX_PRESET_ARENA);
+	BASS_SetConfig(BASS_CONFIG_SRC_SAMPLE,2);
+	std::cout<<_GetErrorString();
+	//BASS_SetEAXParameters();
+	std::cout<<_GetErrorString();
+	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
+	std::cout<<_GetErrorString();
 	std::cout<<_GetErrorString();
 	const BASS_PLUGININFO* bassMIXinfo = BASS_PluginGetInfo(plgnBASSMIX);
 	std::cout<<_GetErrorString();

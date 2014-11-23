@@ -1,6 +1,7 @@
 #ifndef _BASS_AUDIO_H_INCLUDET
 #define _BASS_AUIDO_H_INCLUDET
 
+#include <vector>
 #include <bass.h>
 //#include <baseaudioprocessingobject.h>
 #include <tags.h>
@@ -26,9 +27,9 @@ class BassAudio
 public:
 	
 	virtual ~BassAudio(void);
+	HCHANNEL GetSampleFromBank(unsigned);
+	HCHANNEL LoadeSampleToBank(unsigned &,const char* fileNaname);
 	static BassAudio* GetInstance(void);
-
-
 	HSTREAM LoadeMusic(const char*,LOAD_MODE);
 	HCHANNEL Loade3DSample(const char*);
 	void LoadeBackgroundAudio(const char*);// or musik...
@@ -47,8 +48,9 @@ public:
 	void PerFrameReset(void);
 
 private:
-
+	std::vector<HCHANNEL> SampleBank;
 	BassAudio(void);
+
 };
 
 #endif

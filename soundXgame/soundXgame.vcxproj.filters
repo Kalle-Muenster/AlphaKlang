@@ -2,29 +2,42 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Cubus.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
+    <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="AudioObject.cpp">
-      <Filter>Audio</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
     <ClCompile Include="BassAudio.cpp">
-      <Filter>Audio</Filter>
+      <Filter>RuntimManagers</Filter>
     </ClCompile>
     <ClCompile Include="Cam.cpp">
-      <Filter>Core</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="CamTargetMover.cpp">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
     <ClCompile Include="CamTargetRotator.cpp">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
     <ClCompile Include="Combiner.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Connectable.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Cubus.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="DataStructs.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="FirstPerson.cpp">
+      <Filter>Objects\CameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowTarget.cpp">
+      <Filter>Objects\CameraModes</Filter>
     </ClCompile>
     <ClCompile Include="Fountain.cpp">
       <Filter>Objects</Filter>
@@ -35,120 +48,127 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Connectable.cpp">
-      <Filter>Core\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
+    <ClCompile Include="IGObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="TestYeti.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGraph.cpp">
+    <ClCompile Include="IMeshObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility.cpp">
+    <ClCompile Include="IVoxelObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="VoxGrid.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="VoxelVector.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxelMap.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Voxel.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="TestConectables.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="UpdateManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="IMusicListener.cpp">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="IVoxelObject.cpp">
-      <Filter>Core\Interfaces</Filter>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>RuntimManagers</Filter>
     </ClCompile>
-    <ClCompile Include="IGObject.cpp">
-      <Filter>Core\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="IMeshObject.cpp">
-      <Filter>Core\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="FirstPerson.cpp">
-      <Filter>Core\CameraModes</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="TargetGrabber.cpp">
-      <Filter>Core\CameraModes</Filter>
-    </ClCompile>
-    <ClCompile Include="FollowTarget.cpp">
-      <Filter>Core\CameraModes</Filter>
-    </ClCompile>
-    <ClCompile Include="VoxControl.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Spectator.cpp">
-      <Filter>Core\CameraModes</Filter>
-    </ClCompile>
-    <ClCompile Include="Musikubus.cpp" />
-    <ClCompile Include="Sphere.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="MrZylinder.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="ObjectManagement.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="Musikubus.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="Perceptor.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGraph.cpp">
+      <Filter>RuntimManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="SpectrumAnalyzer.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Perceptor.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="ObjectManagement.cpp" />
-    <ClCompile Include="ShaderObj.cpp" />
+    <ClCompile Include="Spectator.cpp">
+      <Filter>Objects\CameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetGrabber.cpp">
+      <Filter>Objects\CameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="Voxel.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxelMap.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxelVector.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="VoxControl.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateManager.cpp">
+      <Filter>RuntimManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>RuntimManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConectables.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="TestYeti.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderObj.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="projectClasses.h" />
-    <ClInclude Include="projectGrafics.h" />
-    <ClInclude Include="projectMacros.h" />
-    <ClInclude Include="Cubus.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="AudioObject.h">
-      <Filter>Audio</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="BassAudio.h">
-      <Filter>Audio</Filter>
+      <Filter>RuntimManagers</Filter>
     </ClInclude>
     <ClInclude Include="Cam.h">
-      <Filter>Core</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="CamTargetMover.h">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="CamTargetRotator.h">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Combiner.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Connectable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Cubus.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
     <ClInclude Include="DataStructs.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstPerson.h">
+      <Filter>Objects\CameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowTarget.h">
+      <Filter>Objects\CameraModes</Filter>
     </ClInclude>
     <ClInclude Include="Fountain.h">
       <Filter>Objects</Filter>
@@ -159,116 +179,111 @@
     <ClInclude Include="Ground.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Connectable.h">
-      <Filter>Core\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="IGObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="TestYeti.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGraph.h">
+    <ClInclude Include="IMeshObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility.h">
+    <ClInclude Include="IVoxelObject.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="VoxGrid.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="VoxelVector.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxelMap.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Voxel.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="TestConectables.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="UpdateManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="IMusicListener.h">
-      <Filter>Components</Filter>
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="IVoxelObject.h">
-      <Filter>Core\Interfaces</Filter>
+    <ClInclude Include="InputManager.h">
+      <Filter>RuntimManagers</Filter>
     </ClInclude>
-    <ClInclude Include="IGObject.h">
-      <Filter>Core\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="IMeshObject.h">
-      <Filter>Core\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="FirstPerson.h">
-      <Filter>Core\CameraModes</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetGrabber.h">
-      <Filter>Core\CameraModes</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraModesIncluder.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="FollowTarget.h">
-      <Filter>Core\CameraModes</Filter>
-    </ClInclude>
-    <ClInclude Include="VoxControl.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="AllConnectablesInclude.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Spectator.h">
-      <Filter>Core\CameraModes</Filter>
-    </ClInclude>
-    <ClInclude Include="Musikubus.h" />
-    <ClInclude Include="Sphere.h">
+    <ClInclude Include="Map.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="MrZylinder.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="InstancibleObjects.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="ObjectManagement.h">
+      <Filter>TryesAndUnderConstruction</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Musikubus.h">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="Perceptor.h">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGraph.h">
+      <Filter>RuntimManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="SpectrumAnalyzer.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Perceptor.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="ObjectManagement.h" />
-    <ClInclude Include="ShaderObj.h" />
+    <ClInclude Include="Spectator.h">
+      <Filter>Objects\CameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetGrabber.h">
+      <Filter>Objects\CameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelVector.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Voxel.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxelMap.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="VoxControl.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>RuntimManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateManager.h">
+      <Filter>RuntimManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestConectables.h">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="TestYeti.h">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderObj.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="projectClasses.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="projectGrafics.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="projectMacros.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="AllConnectablesInclude.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraModesIncluder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancibleObjects.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
-    <None Include="drei.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="drei_.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="ich.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
-    <None Include="tr.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
     <None Include="cube_quads.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
@@ -293,46 +308,118 @@
     <None Include="sphere_tris_low.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
-    <None Include="buntbild_128.ppm">
-      <Filter>Resources\Textures</Filter>
+    <None Include="tri_sphere.fbx">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="bluobbber.pix">
+      <Filter>Resources</Filter>
     </None>
     <None Include="bluobbber.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="buntbild_128.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="drei.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="drei_.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="ich.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="tr.ppm">
+      <Filter>Resources\Textures\PPM</Filter>
+    </None>
+    <None Include="X-7.tga">
       <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Scene.fbx">
+      <Filter>Resources\Meshes</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{12865d0b-bad4-4cbd-8e75-605472a8425f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Objects">
-      <UniqueIdentifier>{e74b121b-93c1-46db-8442-b9e36290b108}</UniqueIdentifier>
+      <UniqueIdentifier>{65f41f50-5264-4935-8630-30889426cc76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{4a4c15a1-d4b1-4e5b-8154-987d091efe88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{01362910-b669-4ce3-8579-11218ae52483}</UniqueIdentifier>
+    <Filter Include="RuntimManagers">
+      <UniqueIdentifier>{5ee4c901-92a9-4fb3-bdbc-d4e0a444efd1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core">
-      <UniqueIdentifier>{8d97dacc-39e7-4c9b-b137-e5d6f3762133}</UniqueIdentifier>
+      <UniqueIdentifier>{62bf1e00-a5a8-40e8-8677-87d83222b88a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Interfaces">
-      <UniqueIdentifier>{0009291f-b283-46b0-a129-f0e53a3fbedb}</UniqueIdentifier>
+    <Filter Include="TryesAndUnderConstruction">
+      <UniqueIdentifier>{b39a9bd6-9b4b-41b8-93ee-14e2b5c19cfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\CameraModes">
-      <UniqueIdentifier>{14f2f646-64e1-4d21-9339-9de273a00a30}</UniqueIdentifier>
+    <Filter Include="Objects\ConnectableComponents">
+      <UniqueIdentifier>{fda2fb6f-c16c-4ced-8f70-ed3f09a647e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{31fdbe64-05f2-44d2-ae92-6ecef6182695}</UniqueIdentifier>
+    <Filter Include="include">
+      <UniqueIdentifier>{9ae8b098-b9ed-414e-a5bb-e5ee3f2c581a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\CameraModes">
+      <UniqueIdentifier>{357515cb-d646-467a-ac5b-d216bc68e5ab}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Textures">
-      <UniqueIdentifier>{14384689-378f-440b-9121-dee75c96d36d}</UniqueIdentifier>
+      <UniqueIdentifier>{dfaeece3-00af-4d23-87f6-9297ba820000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sound">
+      <UniqueIdentifier>{31a2590d-268e-4160-a8ad-6cff005ecc6c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Meshes">
-      <UniqueIdentifier>{5ccf2ab7-e2cf-4827-a9c6-9d1f75ec2ccf}</UniqueIdentifier>
+      <UniqueIdentifier>{843c146c-81bf-4043-a7d2-1962282e3a10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Waveforms">
-      <UniqueIdentifier>{4712e63d-21fc-400d-9b39-21b43a4b1dd2}</UniqueIdentifier>
+    <Filter Include="Resources\Textures\PPM">
+      <UniqueIdentifier>{785e9e0d-6cc9-45be-b050-e0c26d36030c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Test">
-      <UniqueIdentifier>{b07766dd-b2f0-4566-93ce-a11212f11a78}</UniqueIdentifier>
-    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="03.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="08.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="18.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="brumm_f32.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="brumm_s16.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="brumm_f32.txt">
+      <Filter>Resources\Sound</Filter>
+    </Text>
+    <Text Include="brumm_s16.txt">
+      <Filter>Resources\Sound</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CubusX_256.bmp">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Q2-shiny.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="q2_23.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="X-3.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="X-512.jpg">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="X-7.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

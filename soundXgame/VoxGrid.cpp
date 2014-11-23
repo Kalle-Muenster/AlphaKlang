@@ -32,7 +32,7 @@ VoxGrid::SetTheZed(void)
 {
 	int count = mapWidth*mapHeight;
 	for(int i=0;i<count;i++)
-		voxels[i].TheOtherZED = &transform.position.x;
+		voxels[i].TheOtherZED = &transform.position.z;
 }
 
 VoxGrid::~VoxGrid(void)

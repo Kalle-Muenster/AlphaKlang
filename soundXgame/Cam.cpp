@@ -6,7 +6,9 @@
  //#define DEBUG_OUTPUT_CAMERA
 
 #define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
-static bool _shareAudioReciever = true;
+
+bool 
+Cam::_shareAudioReciever = true;
 
 
 Cam::Cam(void) :
@@ -68,6 +70,7 @@ Cam::~Cam(void)
 	delete _targetPosition;
 	delete _targetObject;
 	delete ModeSocket;
+	delete IAudioReciever::MasterReciever;
 }
 
 void

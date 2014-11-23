@@ -1,17 +1,20 @@
 #include "AudioObject.h"
 
 
-static IAudioReciever* MasterReciever;
-static bool _IsMasterStable = false;
+//static IAudioReciever* MasterReciever;
+IAudioReciever* 
+AudioReciever::MasterReciever;
+
+static bool _IsMasterStable = true;
 static bool _FFTwindowGettable = false; 
 
 bool
 IAudioReciever::SetAsMasterReciever(IAudioReciever* reciever)
 {
-	if(reciever==MasterReciever)
+	if(reciever==AudioReciever::MasterReciever)
 	{return _IsMasterStable = true;}
 
-	MasterReciever = reciever;
+	AudioReciever::MasterReciever = reciever;
 	_FFTwindowGettable=false;
 	return _IsMasterStable = false;
 }
@@ -34,9 +37,10 @@ IAudioReciever::~IAudioReciever(void)
 void
 IAudioReciever::InitiateListener(Transform* myTransform)
 {
+	IAudioReciever::MasterReciever = this;
 	this->SetAudioResieverPosition(myTransform);
 
-		MasterReciever = this;
+	
 	
 }
 
@@ -235,7 +239,7 @@ IAudioEmitter::GetFFTWindow(int size)
 
 AudioEmitter::AudioEmitter(void)
 {
-	
+
 }
 
 
@@ -257,6 +261,12 @@ AudioEmitter::LoadeSample(const char* audioFileName)
 
 	this->AudioVolume(0.8);
 
+}
+
+void
+AudioEmitter::PlaySample(HCHANNEL sample,bool loop)
+{
+	BASS_ChannelPlay(sample,false);
 }
 
 void

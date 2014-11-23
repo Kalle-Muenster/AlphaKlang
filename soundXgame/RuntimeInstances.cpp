@@ -1,4 +1,18 @@
+/* RuntimeInstances.h
+ *
+ * Instances of all RuntimeManagers are stored and managed here.
+ * and most other global variables and objects should move also
+ * here too. It's "GlobalDistructor" function should be calld to
+ * clean up the whole Aplication-environment whenn Exiting. 
+ * these Runtimemannagement objects cam become quiet large, so
+ * getting their ponters lost at Aplication-Exit or crash,is not
+ * good...
+ */
+
+
+
 #include "projectMacros.h"
+
 
 InputManager*	 _inputManagerInstance;
 BassAudio*		 _bassaudioInstance;

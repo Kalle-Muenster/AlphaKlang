@@ -39,8 +39,8 @@ public:
 /* Connetable of IAudioEmitter */
 class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateble
 {
-
 public:
+	virtual void PlaySample(HCHANNEL sample,bool loop=false);
 	AudioEmitter(void);
 	virtual void LoadeSample(const char*);
 	virtual void LoadeStream(const char*);
@@ -57,8 +57,9 @@ public:
 
 /* Interface, not instanziable */
 class IAudioReciever 
-{
+{	
 protected:
+	static IAudioReciever* MasterReciever;
 	float mutedVolume;
 	bool IsMuted;
 	void SetAudioResieverPosition(Transform*);
@@ -89,6 +90,8 @@ public:
 		virtual void DoEarly(void);
 		virtual void DoUpdate(void);
 		bool TryGetReciever(void);
+
+
 
 };
 #endif

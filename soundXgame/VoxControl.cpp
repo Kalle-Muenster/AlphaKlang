@@ -92,8 +92,8 @@ VoxControl::DoUpdate(void)
 {
 	if(INPUT->Mouse.LEFT.HOLD)
 	{
-		this->vConnection()->MainSizzes.x += INPUT->Mouse.Movement.x/500;
-		if(!__ZedMode)this->vConnection()->MainSizzes.y += INPUT->Mouse.Movement.y/1000;
+		this->vConnection()->MainSizzes.x *= 1-INPUT->Mouse.Movement.x/300;
+		if(!__ZedMode)this->vConnection()->MainSizzes.y *= 1+INPUT->Mouse.Movement.y/600;
 		else this->vConnection()->move(0,0, INPUT->Mouse.Movement.y);
 		printf("MainSizerX: %f ,MainSizerY: %f\n",this->vConnection()->MainSizzes.x,this->vConnection()->MainSizzes.y);
 	}
