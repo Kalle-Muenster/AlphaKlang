@@ -182,7 +182,6 @@
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
     <None Include="ich.ppm" />
-    <None Include="Scene.fbx" />
     <None Include="sphere_quads_high.obi" />
     <None Include="sphere_quads_low.obi" />
     <None Include="sphere_tris_high.obi" />

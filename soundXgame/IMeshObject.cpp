@@ -189,7 +189,8 @@ IMeshObject::draw(void)
 		// Translate
 		GLfloat x  = getTransform()->position.x;
 		GLfloat z = getTransform()->position.z;
-		GLfloat y = IsGrounded ? Ground::getInstance()->GetGroundY(x, z) : getTransform()->position.y;
+		GLfloat y = getTransform()->position.y;
+		y += IsGrounded ? Ground::getInstance()->GetGroundY(x, z) : 0;
 		glTranslatef(x, y, z);
 
 		// Rotate
