@@ -2,8 +2,6 @@
 #include <vector>
 #include "UpdateManager.h"
 
-UpdateManager* _instance;
-
 IUpdateble* _earlyUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
 IUpdateble* _updates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/2];
 IUpdateble* _lateUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
@@ -29,13 +27,6 @@ UpdateManager::UpdateManager(void)
 		_updates[i]=NULL;
 }
 
-UpdateManager* //Static reference to instance...
-UpdateManager::getInstance(void)
-{
-	if(!_instance)
-		_instance = new UpdateManager();
-	return _instance;
-}
 
 //Destuctor...
 UpdateManager::~UpdateManager(void)
@@ -192,5 +183,5 @@ IUpdateble::~IUpdateble(void)
 void
 IUpdateble::InitiateUpdatable(void)
 {
-	_instance->SignInForUpdate(this);
+	UpdateManager::getInstance()->SignInForUpdate(this);
 }
