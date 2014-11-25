@@ -118,7 +118,7 @@ void LoadContent(void)
 	//i2 = -2;
 	//i3 = 1;
 	unsigned int brummsound;
-	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
+//	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 //	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 //	AUDIO->Play();
 
@@ -153,16 +153,16 @@ void LoadContent(void)
 
 
 
-	////Voxelplane... 
-	////on runtime use press"X"to choose a an Image file from list (watch console!)
-	////press "R" to loade the sellected image as Image.
-	////press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
-	//VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	//vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
-	//vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	//vObject->move(-80,0,150);
-	//vObject->MainSizzes.x=0.2;
-	//vObject->MainSizzes.y=0.045f;
+	//Voxelplane... 
+	//on runtime use press"X"to choose a an Image file from list (watch console!)
+	//press "R" to loade the sellected image as Image.
+	//press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
+	VoxGrid* vObject = new VoxGrid("drei_.ppm");
+	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
+	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	vObject->move(-80,0,150);
+	vObject->MainSizzes.x=0.2;
+	vObject->MainSizzes.y=0.045f;
 
 	unsigned obj;
 	float x,y,z;
@@ -172,7 +172,7 @@ void LoadContent(void)
 	{
 		x-=i;
 		z+=2*i;
-		obj = (new Cubus("CubusX_256.png"))->GetID();
+		obj = (new Cubus("CubusX_1.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
