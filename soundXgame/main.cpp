@@ -5,8 +5,6 @@
 #include "ShaderObj.h"
 
 //Global Declerations:
-////////////////////////////////////////////
-//vars:
 int wnd;
 void* font;
 
@@ -31,7 +29,6 @@ void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 
-////////////////////////////////////////////
 //Entrypoint:
 int main(int argc,char** argv)
 {
@@ -40,8 +37,6 @@ int main(int argc,char** argv)
 	InitGlut();
 	GlInit();
 	LoadContent();
-
-	//glewInit(); <-- already in InitGlut() Method
 
 	glutMainLoop();
 	return prepareForExit();
@@ -97,13 +92,11 @@ void GlInit(void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	// enable Multisample Antialiasing
-    glEnable(GL_MULTISAMPLE_ARB);
 	
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//shader
-	//glEnableVertexAttribArray( atribut_coordinate2 );
+    glEnable(GL_MULTISAMPLE_ARB); // enable Multisample Antialiasing
+	glEnable(GL_BLEND); // enable transparency
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // do transparency
 }
 
 
@@ -125,31 +118,14 @@ void LoadContent(void)
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	Fountain* fountain = new Fountain();
-	ShaderObj* shaderObj = new ShaderObj();
-
-
-	// TEST ... JUST A CUBE - 1
-//	(new Cubus("X-3.png", true, true))->SetName("Brummer");
-	
+	//ShaderObj* shaderObj = new ShaderObj();
 
 
 
-	// TEST ... JUST A CUBE - 2
-	data32 color;
-	color.byte[1]=0;
-	color.byte[2]=255;
-	color.byte[3]=127;
-	color.byte[0]=10;
-	///(new Cubus(color,true,false,Vector3(0,0,0)))->scale(Vector3(10,10,10));
-
+	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
 
-	data32 col = data32();
-	col.byte[0] = 255;
-	col.byte[1] = 200;
-	col.byte[2] = 150;
-	col.byte[3] = 100;
-	int i = -1;
+
 
 
 
