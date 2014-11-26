@@ -172,12 +172,18 @@ UpdateManager::DoAllTheUpdates(void)
 
 IUpdateble::IUpdateble(void)
 {
+	UpdID.Early=UpdID.Late=UpdID.Main=NULL;
 	this->InitiateUpdatable();
 }
 
 IUpdateble::~IUpdateble(void)
 {
-
+	if(UpdID.Early)
+		UpdateManager::getInstance()->SignOutFromEarlyUpdate(this);
+	if(UpdID.Main)
+		UpdateManager::getInstance()->SignOutFromUpdate(this);
+	if(UpdID.Late)
+		UpdateManager::getInstance()->SignOutFromLateUpdate(this);
 }
 
 void

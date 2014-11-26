@@ -3,6 +3,7 @@
 #include "projectClasses.h"
 
 #include "ShaderObj.h"
+#include "Musikubus.h"
 
 //Global Declerations:
 int wnd;
@@ -112,8 +113,8 @@ void LoadContent(void)
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-//	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-//	AUDIO->Play();
+	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
@@ -124,9 +125,6 @@ void LoadContent(void)
 
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
-
-
-
 
 
 	//Voxelplane... 
@@ -140,19 +138,27 @@ void LoadContent(void)
 	vObject->MainSizzes.x=0.2;
 	vObject->MainSizzes.y=0.045f;
 
+
+	(new Cubus("X-7.tga"))->SetName("muckubus");
+	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
+	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 0.06f;
+	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
+	
+
 	unsigned obj;
 	float x,y,z;
 	x=y=z=0;
 	char* brummer="Brummer-";
-	for(int i = 0;i<20;i++)
+	for(int i = 0;i<5;i++)
 	{
 		x-=i;
 		z+=2*i;
-		obj = (new Cubus("CubusX_1.png"))->GetID();
+		obj = (new Cubus("X-7.tga"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
+		SCENE->Object(obj)->AddConnectable<MusicListener>();
 	}
 
 	SCENE->camera->Mode(FIRSTPERSON);
@@ -163,7 +169,9 @@ void LoadContent(void)
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
 	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;
-	SCENE->camera->SetTarget(SCENE->Object(obj));
+//	SCENE->camera->SetTarget(SCENE->Object(obj));
+
+	SCENE->camera->SetTarget(SCENE->Object("muckubus"));
 
 }
 

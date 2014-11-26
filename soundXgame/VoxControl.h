@@ -9,11 +9,13 @@ class VoxControl :
 	public IConnectable, public IInteractive, public IUpdateble
 {
 private:
-	bool _firstStart;
+//	int mode;
+//	bool _firstStart;
 	Vector3 tempvector;
 	int bumpmapchannel;
 	int imageIndex;
 	int bumpmapIndex;
+	bool transparenseEnabled;
 
 public:
 	VoxControl(void);

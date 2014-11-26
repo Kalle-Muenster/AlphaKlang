@@ -662,8 +662,11 @@ public:
 	void Loade(const char* filename,void*);
 	void ReLoade(char* filename);
 	void LoadMap(char* filename,int channel);
-	void drawBlurre(VectorPF position);
+	
 	void Draw(VectorPF position);
+	void DrawBunt(VectorPF position);
+	void DrawByte(VectorPF position);
+
 	float scale;
 	void* SetVoxelerBuffer(Voxel* voxels);
 	Voxel* GetVoxel(int x,int y);

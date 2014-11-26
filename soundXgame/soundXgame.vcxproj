@@ -90,7 +90,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
-    <ClCompile Include="IMusicListener.cpp" />
+    <ClCompile Include="IMusicInteractor.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
     <ClCompile Include="IVoxelObject.cpp" />
@@ -99,6 +99,7 @@
     <ClCompile Include="MrZylinder.cpp" />
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
+    <ClCompile Include="ObjectUpdater.cpp" />
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
@@ -140,7 +141,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
-    <ClInclude Include="IMusicListener.h" />
+    <ClInclude Include="IMusicInteractor.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />
     <ClInclude Include="InstancibleObjects.h" />
@@ -148,8 +149,10 @@
     <ClInclude Include="LueckList.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MrZylinder.h" />
+    <ClInclude Include="MusicListener.h" />
     <ClInclude Include="Musikubus.h" />
     <ClInclude Include="ObjectManagement.h" />
+    <ClInclude Include="ObjectUptater.h" />
     <ClInclude Include="Perceptor.h" />
     <ClInclude Include="projectClasses.h" />
     <ClInclude Include="projectGrafics.h" />

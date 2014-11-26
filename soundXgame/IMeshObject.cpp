@@ -168,6 +168,7 @@ IMeshObject::draw(void)
 
 	if(UseTexture)
 	{
+		glColor3f(1,1,1);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}

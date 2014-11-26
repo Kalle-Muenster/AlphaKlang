@@ -3,6 +3,7 @@
 
 #include "VoxelVector.h"
 
+class VoxelMap;
 
  class Voxel
 {
@@ -22,20 +23,22 @@ union
 	GLint  *x,*y;
 	GLshort *w,*h;
     VectorF* MainDimensions;
-	void pDraw(void);
-	void fDraw(VectorPF offset);
-	void fDrawBlure(VectorPF offset);
 	void SetNeighbours(int ol,int or,int ur,int ul);
 	VectorF GetPosition(void); 
 	void SetPosition(VectorF setter);
 	VectorF GetSize(void); 
 	void SetSize(VectorF setter);
 	GLfloat* TheOtherZED;
+	void SetParentVoxmap(VoxelMap* map);
+	void vDraw(VectorPF offset);
+	void vDrawBunt(VectorPF offset);
+	void vDrawByte(VectorPF offset);
 private:
 	int OL;
 	int OR;
 	int UR;
 	int UL;
+	VoxelMap* vMapObject;
 };
 
 

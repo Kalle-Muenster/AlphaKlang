@@ -1,39 +1,62 @@
-#include "Connectable.h"
-#include "IMusicListener.h"
+//#include "Connectable.h"
+#include "IMusicInteractor.h"
 
 
-IMusicListener::IMusicListener(void)
+AMusicInteractor::AMusicInteractor(void)
 {
+	motivatorsUpdated=false;
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 	{
 		Line[i].enabled = false;
-		Line[i].threshold = 0.033f;
+		Line[i].threshold = 0.02f;
 		Line[i].Effect = 1.0f;
 		Line[i].lowerBound = 0;
-		Line[i].upperBound = 96;
+		Line[i].upperBound = 64;
 		Line[i].bandWidth = 32;
-		Line[i].clampf = false;
-		Line[i].MINClampf = -_FInf._Float;
-		Line[i].MAXClampf = _FInf._Float;
-		Line[i].fallOff = 0.1f;
+		Line[i].clampf = true;
+		Line[i].MINClampf = -1.0f;
+		Line[i].MAXClampf = 1.0f;
+		Line[i].fallOff = 0.05f;
 		for(int c=0;c<NUMBER_OF_LINEVALUES;c++)
 			Line[i].value[c] = 0;
 	}
 	Line[0].enabled = true;
 	Line[0].clampf = true;
-	Line[0].MINClampf = -0.5f;
-	Line[0].MAXClampf = 10.0f;
+	Line[0].MINClampf = 0.5f;
+	Line[0].MAXClampf = 5.5f;
+	Line[0].threshold = 0.05;
+	Line[0].fallOff = 0.025f;
 
 
+	Line[1].enabled = true;
+	Line[1].clampf = true;
+	Line[1].MINClampf = -1.0f;
+	Line[1].MAXClampf = 1.0f;
+	Line[1].lowerBound = 32;
+	Line[1].upperBound = 96;
+	Line[1].fallOff = 0.0075f;
+
+	Line[2].enabled = true;
+	Line[2].clampf = true;
+	Line[2].MINClampf = -1.0f;
+	Line[2].MAXClampf = 1.0f;
+	Line[2].bandWidth = 16;
+	Line[2].lowerBound = 64;
+	Line[2].upperBound = 96;
+	Line[2].fallOff = 0.0025f;
+
+	UPDATE->SignInForEarlyUpdate(this);
 }
 
 
-IMusicListener::~IMusicListener(void)
+AMusicInteractor::~AMusicInteractor(void)
 {
+	UPDATE->SignOutFromEarlyUpdate(this);
+	UPDATE->SignOutFromUpdate(this);
 }
 
 bool
-IMusicListener::Enabled(int lineNumber,BOOL enable)
+AMusicInteractor::Enabled(int lineNumber,BOOL enable)
 {
 	if(enable<3)
 		Line[lineNumber].enabled = enable;
@@ -42,7 +65,7 @@ IMusicListener::Enabled(int lineNumber,BOOL enable)
 }
 
 float
-IMusicListener::listenTo(int line, float* fft)
+AMusicInteractor::listenTo(int line, float* fft)
 {
 
 	float lowVal=0;
@@ -57,23 +80,19 @@ IMusicListener::listenTo(int line, float* fft)
 	lowVal /= Line[line].bandWidth;
 	highVal /= (Line[line].bandWidth/2);
 
-	applyEffect(line,lowVal,highVal);
+	calculateEffect(line,lowVal,highVal);
 
 	if(Line[line].clampf)
 		Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
 
-
 	Line[line].value[0]=lowVal;
 	Line[line].value[1]=highVal;
-
-	if(this->callbacks[line])
-		callbacks[line](line,&Line[line],clients[line]);
 
 	return Line[line].Effect;
 }
 
 void
-IMusicListener::applyEffect(int line,float lowValue,float highValue)
+AMusicInteractor::calculateEffect(int line,float lowValue,float highValue)
 {
 	if(lowValue > Line[line].threshold - highValue)
 		Line[line].Effect+=highValue*50*lowValue;
@@ -82,20 +101,20 @@ IMusicListener::applyEffect(int line,float lowValue,float highValue)
 }
 
 float*
-IMusicListener::listen(float *fft)
+AMusicInteractor::listen(float *fft)
 {
-	float lineResults[NUMBER_OF_LISTENINGLINES];
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 		if(Line[i].enabled)
-			lineResults[i] = listenTo(i,fft);
+			motivator[i] = listenTo(i,fft);
 		else
-			lineResults[i] = _FNan._Float;
+			motivator[i] = _FNan._Float;
 
-	return &lineResults[0];
+	motivatorsUpdated=true;
+	return &motivator[0];
 }
 
 ListenerData*
-IMusicListener::GetLineData(int number)
+AMusicInteractor::GetLineData(int number)
 {
 	return &Line[number];
 }
@@ -103,19 +122,19 @@ IMusicListener::GetLineData(int number)
 
 /* trigger, der beim Überschreiten ausgelöst wird */
 void
-IMusicListener::SetThreshold(int line,float value)
+AMusicInteractor::SetThreshold(int line,float value)
 {
 	Line[line].threshold = value;
 }
 
 void
-IMusicListener::SetClambt(int line,bool clamb)
+AMusicInteractor::SetClambt(int line,bool clamb)
 {
 	Line[line].clampf=clamb;
 }
 
 void
-IMusicListener::SetClambt(int line,float min,float max)
+AMusicInteractor::SetClambt(int line,float min,float max)
 {
 	Line[line].clampf=true;
 	Line[line].MINClampf = min;
@@ -123,16 +142,10 @@ IMusicListener::SetClambt(int line,float min,float max)
 }
 
 void
-IMusicListener::SetLineBounds(int line,int lower,int upper,int width)
+AMusicInteractor::SetLineBounds(int line,int lower,int upper,int width)
 {
 	Line[line].bandWidth = width;
 	Line[line].lowerBound = lower;
 	Line[line].upperBound = upper;
 }
 
-void
-IMusicListener::AddListenerCallback(int line,ListenerFunc callback,IGObject* client)
-{
-	this->callbacks[line] = callback;
-	this->clients[line] = client;
-}

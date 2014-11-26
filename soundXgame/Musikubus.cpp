@@ -1,27 +1,29 @@
 #include "Musikubus.h"
+#include "projectMacros.h"
 
-void
-_CubusOnMusic(int line,ListenerData* data,IGObject* sender)
-{
-	((Musikubus*)sender)->MoveOnMusic(line,data);
-}
 
-Musikubus::Musikubus(void)
+Musicubus::Musicubus(void)
 {
 
-	InitializeCubus(true);
-
-	MoveIt = &_CubusOnMusic;
-
+	InitializeCubus("CubusX_2.png");
 	this->musikInput = AddConnectable<MusicListener>();
-	musikInput->AddListenerCallback(0,MoveIt,this);
+	//musikInput->GetLineData(0)->MINClampf = 0.5f;
+	//musikInput->GetLineData(0)->MAXClampf = 1.5f;
+
 
 }
 
-
-Musikubus::~Musikubus(void)
+Musicubus::Musicubus(string textureFile,bool backfaces,bool addToScene)
 {
-	delete motivators;
+	InitializeCubus(textureFile,"03.wav",backfaces,addToScene);
+	this->SetName("MusikCubus");
+	this->IsVisible=true;
+	this->musikInput = AddConnectable<MusicListener>();
+}
+
+Musicubus::~Musicubus(void)
+{
+
 }
 
 //void
@@ -30,15 +32,4 @@ Musikubus::~Musikubus(void)
 //	SCENE->Add(new Musikubus())
 //}
 
-void
-Musikubus::DoEarly(void)
-{
-	float* fftWin = (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Medium);
-	motivators = musikInput->listen(fftWin);
-}
 
-void
-Musikubus::MoveOnMusic(int line ,ListenerData* data)
-{
-	//-> put code hear...
-}

@@ -9,7 +9,7 @@ string _files[5];
 
 VoxControl::VoxControl(void)
 {
-	_firstStart=true;
+//	_firstStart=true;
 	tempvector = *Vector3::Zero;
 	bumpmapchannel=0;
 		_files[0]="buntbild_128.ppm";
@@ -40,7 +40,7 @@ int _currentSellection=0;
 void 
 VoxControl::keyPress(char key)
 {
-	SCENE->Object((unsigned)0)->IsVisible=false;
+//	SCENE->Object((unsigned)0)->IsVisible=false;
 	if(key=='x')
 	{
 		if(++_currentSellection>=5)
@@ -63,16 +63,28 @@ VoxControl::keyPress(char key)
 			bumpmapchannel=0;
 	}
 	if(key=='b')
-		this->vConnection()->Mode(IVoxelObject::ColorMode::BLURED);
+		this->vConnection()->Mode(IVoxelObject::ColorMode::BUNT);
 	if(key=='n')
 		this->vConnection()->Mode(IVoxelObject::ColorMode::NORMAL);
+	if(key=='h')
+		this->vConnection()->Mode(IVoxelObject::ColorMode::BYTE);
 
 	if(key=='v')
 		SCENE->camera->SetTarget(this->Connection());
 
 	if(key=='t')
-		glDisable(GL_BLEND);
-
+	{
+		if(transparenseEnabled)
+		{
+			glDisable(GL_BLEND);
+		}
+		else
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+		transparenseEnabled = !transparenseEnabled;
+	}
 	if(key=='z')
 		__ZedMode=true;
 	else
