@@ -30,8 +30,8 @@ IVoxelObject::draw(void)
 {
 	if(!IsVisible)
 		return;
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_CULL_FACE);
+//	glDisable(GL_TEXTURE_2D);
+//	glDisable(GL_CULL_FACE);
 	glColor4b(255,255,255,255);
 	IsGrounded=false;
 	glPushMatrix();
@@ -40,11 +40,15 @@ IVoxelObject::draw(void)
 	case NORMAL:
 		this->Draw(this->position);
 		break;
-	case BLURED:
-		this->drawBlurre(this->position);
+	case BUNT:
+		this->DrawBunt(this->position);
+		break;
+	case BYTE:
+		this->DrawByte(this->position);
 		break;
 	}
 	glPopMatrix();
+
 }
 
 void

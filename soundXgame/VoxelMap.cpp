@@ -163,7 +163,7 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 			voxels[count].position.iX=(x*scale)+ *position.x;
 			voxels[count].position.Yps=(y*scale)+ *position.y;
 			voxels[count].MainDimensions = &MainSizzes;
-
+			voxels[count].SetParentVoxmap(this);
 
 			if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
 				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
@@ -184,30 +184,40 @@ void VoxelMap::LoadMap(char* filename,int channel)
 
 void VoxelMap::Draw(VectorPF position )
 {
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-
+	
 	glBegin(GL_QUADS);
 
 	for(int f=0;f<256;f++)
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
-				voxels[i].fDraw(position);
+				voxels[i].vDraw(position);
 	}
 
 	glEnd();
 
 }
 
-void VoxelMap::drawBlurre(VectorPF position)
+void VoxelMap::DrawBunt(VectorPF position)
 {
 	glBegin(GL_QUADS);
 	for(int f=0;f<256;f++)
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
-				voxels[i].fDrawBlure(position);
+				voxels[i].vDrawBunt(position);
+	}	
+	glEnd();
+}
+
+void VoxelMap::DrawByte(VectorPF position)
+{
+	glBegin(GL_QUADS);
+	for(int f=0;f<256;f++)
+	{
+		for(int i = 0;i<numberOfVoxelers;i++)
+			if(voxels[i].factor==f)
+				voxels[i].vDrawByte(position);
 	}	
 	glEnd();
 }

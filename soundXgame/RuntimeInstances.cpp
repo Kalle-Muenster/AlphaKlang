@@ -42,7 +42,7 @@ InputManager::getInstance(void)
 
 InputManager::~InputManager(void)
 {
-	delete _inputManagerInstance;
+	GlobalDestructor();
 }
 
 //-------------------------------------------

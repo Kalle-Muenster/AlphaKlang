@@ -14,7 +14,7 @@ class IVoxelObject : public VoxelMap ,public IGObject
 {
 public:
 	enum ColorMode
-	{NORMAL=0,BLURED=1};
+	{NORMAL=0,BUNT=1,BYTE=2};
 	IVoxelObject(void);
 	virtual ~IVoxelObject(void);
 	virtual void	InitializeObject(string ppmFileName,bool addToScene=true);

@@ -14,6 +14,8 @@ struct UpdateID
 class IUpdateble
 {
 public:
+	enum UPDATE_TIME
+	{EARLY=0,MAIN=1,LATE=2};
 	UpdateID UpdID;
 	IUpdateble(void);
 	virtual void InitiateUpdatable(void);

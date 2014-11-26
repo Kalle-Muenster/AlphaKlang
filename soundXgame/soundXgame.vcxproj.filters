@@ -57,9 +57,6 @@
     <ClCompile Include="VoxGrid.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="IMusicListener.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>RuntimManagers</Filter>
     </ClCompile>
@@ -133,6 +130,12 @@
     <ClCompile Include="FountainObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectUpdater.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="IMusicInteractor.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h">
@@ -188,9 +191,6 @@
     </ClInclude>
     <ClInclude Include="VoxGrid.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="IMusicListener.h">
-      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>RuntimManagers</Filter>
@@ -283,6 +283,17 @@
     <ClInclude Include="FountainObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="LueckList.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectUptater.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="IMusicInteractor.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicListener.h" />
+>>>>>>> 3bef3660095da83e3ac7a8445d311aaaf46b3d6d
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />

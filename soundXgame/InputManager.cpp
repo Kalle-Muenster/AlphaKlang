@@ -42,11 +42,11 @@ InputManager::InputManager(void)
 	_frameTicks = 0;
 	_doubleClickLength = 200;
 
-	this->keyListener = std::vector<IObserver*>();
-	this->specialListener = std::vector<IObserver*>();
-	this->mouseMoveListener = std::vector<IObserver*>();
+	this->MouseMotionObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->MouseWheelObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->KeyboardObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->SpecialKeyObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->mouseClickListener = std::vector<IObserver*>();
-	this->mouseWheelListener = std::vector<IObserver*>();
 
 	FrameTime = 0;
 	Mouse.X=Mouse.Y=0;
@@ -90,19 +90,19 @@ InputManager::InputManager(void)
 void InputManager::attachMouseMove(IObserver* obs) 
 {
 	if(obs->checkForObservability(OBSERVATE_MOUSE))
-		this->mouseMoveListener.push_back(obs);
+		this->MouseMotionObservers.Add(obs);
 }
 
 void InputManager::attachKey(IObserver* obs) 
 {
 	if(obs->checkForObservability(OBSERVATE_KEYBOARD))
-		this->keyListener.push_back(obs);
+		this->KeyboardObservers.Add(obs);
 }
 
 void InputManager::attachSpecial(IObserver* obs) 
 {
 	if(obs->checkForObservability(OBSERVATE_KEYBOARD))
-		this->specialListener.push_back(obs);
+		this->SpecialKeyObservers.Add(obs);
 }
 
 void InputManager::attachMouseClick(IObserver* obs)
@@ -114,10 +114,33 @@ void InputManager::attachMouseClick(IObserver* obs)
 void InputManager::attachMouseWheel(IObserver* obs)
 {
 	if(obs->checkForObservability(OBSERVATE_WHEELS))
-		this->mouseWheelListener.push_back(obs);
+		this->MouseWheelObservers.Add(obs);
 }
 
 
+void
+InputManager::DetachMouseMove(IObserver* obs)
+{
+	this->MouseMotionObservers.Remove(obs);
+}
+
+void
+InputManager::DetachKeyboard(IObserver* obs)
+{
+	this->KeyboardObservers.Remove(obs);
+}
+
+void
+InputManager::DetachMouseWheel(IObserver* obs)
+{
+	this->MouseWheelObservers.Remove(obs);
+}
+
+void
+InputManager::DetachSpecialkeys(IObserver* obs)
+{
+	this->SpecialKeyObservers.Remove(obs);
+}
 
 void 
 InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,int AxisZ)
@@ -126,20 +149,22 @@ InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,in
 }
 
 void
-InputManager::notifySpecialKey(int key) 
+InputManager::notifyKey(char key) 
 {
-	for(auto it = this->specialListener.begin(); it != this->specialListener.end(); ++it) 
+	unsigned ID = KeyboardObservers.First();
+	for(int i=0;i<KeyboardObservers.Count();i++)
 	{
-		((IInteractive*)(*it))->specialKeyPressed(key);
+		((IInteractive*)KeyboardObservers[ID])->keyPress(key);
+		ID=KeyboardObservers.Next(ID);
 	}
 }
 
 void
-InputManager::notifyKey(char key) 
+InputManager::notifySpecialKey(int key) 
 {
-	for(auto it = this->keyListener.begin(); it != this->keyListener.end(); ++it) 
+	for(unsigned ID = SpecialKeyObservers.First(); ID <= SpecialKeyObservers.Last(); ID = SpecialKeyObservers.Next(ID))
 	{
-		((IInteractive*)(*it))->keyPress(key);
+		((IInteractive*)SpecialKeyObservers[ID])->specialKeyPressed(key);
 	}
 }
 
@@ -147,26 +172,27 @@ void
 InputManager::notifyMouse(int x, int y) 
 {
 	setMousePosition(x,y);
-	for(auto it = this->mouseMoveListener.begin(); it != this->mouseMoveListener.end(); ++it) 
+
+	for(unsigned ID = MouseMotionObservers.First(); ID <= MouseMotionObservers.Last(); ID = MouseMotionObservers.Next(ID))
 	{
-		((IInteractive*)(*it))->mouseMotion(x,y);
+		((IInteractive*)MouseMotionObservers[ID])->mouseMotion(x,y);
 	}
 }
 
 void
 InputManager::notifyWheel(int wheel)
 {
-	for(auto it=mouseWheelListener.begin();it!=mouseWheelListener.end();it++)
+	for(unsigned ID = MouseWheelObservers.First(); ID <= MouseWheelObservers.Last(); ID = MouseWheelObservers.Next(ID) )
 	{
-		if(!(*it)->checkForObservability(OBSERVATE_MOUSE|OBSERVATE_KEYBOARD))
+		if(MouseWheelObservers[ID]->checkForObservability(OBSERVATE_KEYBOARD))
+			((IInteractive*)MouseWheelObservers[ID])->mouseWheel(wheel,wheel==0?Mouse.WheelV:Mouse.WheelH);
+		else
 		{
 			if(wheel==0)
-				((IWheelee*)(*it))->WheelVRoll(Mouse.WheelV);
+				((IWheelee*)MouseWheelObservers[ID])->WheelVRoll(Mouse.WheelV);
 			else
-				((IWheelee*)(*it))->WheelHRoll(Mouse.WheelH);
+				((IWheelee*)MouseWheelObservers[ID])->WheelHRoll(Mouse.WheelH);
 		}
-		else
-			((IInteractive*)(*it))->mouseWheel(wheel,wheel==0?Mouse.WheelV:Mouse.WheelH);
 	}
 }
 
@@ -499,7 +525,7 @@ IInteractive::IInteractive()
 int
 IInteractive::observedEvents()
 {
-	return OBSERVATE_MOUSE|OBSERVATE_KEYBOARD;
+	return OBSERVATE_MOUSE|OBSERVATE_KEYBOARD|OBSERVATE_WHEELS;
 }
 
 IClickable::IClickable()
@@ -518,5 +544,5 @@ IWheelee::IWheelee()
 int 
 IWheelee::observedEvents()
 {
-	return OBSERVATE_MOUSE|OBSERVATE_WHEELS;
+	return OBSERVATE_WHEELS;
 }
