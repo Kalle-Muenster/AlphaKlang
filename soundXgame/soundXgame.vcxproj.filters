@@ -42,6 +42,9 @@
     <ClCompile Include="Fountain.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="FourtainObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -127,9 +130,6 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
     <ClCompile Include="Randomover.cpp" />
-    <ClCompile Include="FountainObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectUpdater.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
@@ -175,6 +175,9 @@
       <Filter>Objects\CameraModes</Filter>
     </ClInclude>
     <ClInclude Include="Fountain.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FourtainObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
@@ -280,9 +283,6 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Randomover.h" />
-    <ClInclude Include="FountainObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="LueckList.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -293,7 +293,6 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="MusicListener.h" />
->>>>>>> 3bef3660095da83e3ac7a8445d311aaaf46b3d6d
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
