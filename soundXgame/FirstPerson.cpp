@@ -121,32 +121,39 @@ FirstPerson::specialKeyPressed(int key)
 void
 FirstPerson::mouseMotion(int newX, int newY)
 {
-	if(IsActive)
-	{
-		// if mouse have'n change -> return
-		if(newX == mouseX && newY == mouseY)
-			return;
+	if(!IsActive)
+		return;
 
-		// check difference between last-frame mouse pos
-		int diffX = newX - mouseX;
-		int diffY = newY - mouseY;
+	// if mouse haven't change -> return
+	if(newX == mouseX && newY == mouseY)
+		return;
 
-		// calculate
-		angle += 0.005f * diffX * mouseSpeed;
-		lx = sin(angle);
-		lz = -cos(angle);
-		eyeY += (float)diffY / 300;
+	// check difference between last-frame mouse pos
+	int diffX = newX - mouseX;
+	int diffY = newY - mouseY;
+
+	// calculate
+	angle += 0.005f * diffX * mouseSpeed;
+	lx = sin(angle);
+	lz = -cos(angle);
+	eyeY += (float)diffY / 300;
+
+	// set fixed restriction to top and bottom
+	if(eyeY < -0.5f)
+		eyeY = -0.5f;
+	else if(eyeY > 2.5f)
+		eyeY = 2.5f;
+
+	// set mouse pos center to screen
+	mouseX = SCREENWIDTH/2;
+	mouseY = SCREENHEIGHT/2;
 	
-		// set mouse pos center to screen
-		mouseX = SCREENWIDTH/2;
-		mouseY = SCREENHEIGHT/2;
-	
-		// fix to static mouse pos
-		glutWarpPointer(mouseX, mouseY);
+	// fix to static mouse pos
+	glutWarpPointer(mouseX, mouseY);
 
-		// flag check data uptodate
-		IsDirty=true;
-		UpdateMode();
-	}
+	// flag check data uptodate
+	IsDirty=true;
+	UpdateMode();
+
 }
 
