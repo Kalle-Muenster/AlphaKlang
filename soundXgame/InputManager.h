@@ -12,6 +12,9 @@
 #define OBSERVATE_KEYBOARD     (0x4)
 #define OBSERVATE_MOUSE        (0x8)
 
+//Maximum amount on Observers an Event can handle...
+#define MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT (1000)
+
 #include <vector>
 #include "projectGrafics.h"
 //#include "projectMacros.h"
@@ -73,6 +76,7 @@ public:
 	virtual void WheelHRoll(WHEEL state){};
 };
 
+#include "LueckList.h"
 
 class InputManager
 {
@@ -88,11 +92,12 @@ public:
 	//Private Stuff...........................
 private:
 	//Invokation-Lists:
-	std::vector<IObserver*> mouseMoveListener;
-	std::vector<IObserver*> keyListener;
-	std::vector<IObserver*> specialListener;
+	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
+	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
+	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
+	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
 	std::vector<IObserver*> mouseClickListener;
-	std::vector<IObserver*> mouseWheelListener;
+	
 
 	/*private vars and functions
 	 (used for update inputs)*/
@@ -137,17 +142,22 @@ public:
 
     /*attachement functions by wich "IObserver"-objects
     can register on Notification-Events */
-	virtual void attachMouseMove(IObserver* obs);
-	virtual void attachKey(IObserver* obs);
-	virtual void attachSpecial(IObserver* obs);
-	virtual void attachMouseClick(IObserver* obs);
-	virtual void attachMouseWheel(IObserver* obs);
+	void attachMouseMove(IObserver* obs);
+	void attachKey(IObserver* obs);
+	void attachSpecial(IObserver* obs);
+	void attachMouseClick(IObserver* obs);
+	void attachMouseWheel(IObserver* obs);
 
+	/*detach-functions to sign out from lists...*/
+	void DetachMouseMove(IObserver* obs);
+	void DetachKeyboard(IObserver* obs);
+	void DetachSpecialkeys(IObserver* obs);
+	void DetachMouseWheel(IObserver* obs);
 
 	//Update-functions called by main-Api...
-	virtual void notifySpecialKey(int key);
-	virtual void notifyKey(char key);
-	virtual void notifyMouse(int x, int y);
+	void notifySpecialKey(int key);
+	void notifyKey(char key);
+	void notifyMouse(int x, int y);
 	void UpdateMouseButtons(int,int,int,int);
 	void UpdateMouseWheel(int,int,int,int);
 	void SaveViewportRectangle(int x,int y,int w,int h);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -132,6 +132,7 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Randomover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h">
@@ -281,6 +282,10 @@
     <ClInclude Include="Transform.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
+    <ClInclude Include="Randomover.h" />
+    <ClInclude Include="LueckList.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
@@ -335,9 +340,7 @@
     <None Include="X-7.tga">
       <Filter>Resources\Textures</Filter>
     </None>
-    <None Include="Scene.fbx">
-      <Filter>Resources\Meshes</Filter>
-    </None>
+    <None Include="ClassDiagram31.cd" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">

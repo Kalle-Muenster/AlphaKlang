@@ -45,6 +45,7 @@ IVoxelObject::draw(void)
 		break;
 	}
 	glPopMatrix();
+
 }
 
 void

@@ -145,6 +145,7 @@
     <ClInclude Include="DataStructs.h" />
     <ClInclude Include="InstancibleObjects.h" />
     <ClInclude Include="IVoxelObject.h" />
+    <ClInclude Include="LueckList.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MrZylinder.h" />
     <ClInclude Include="Musikubus.h" />
