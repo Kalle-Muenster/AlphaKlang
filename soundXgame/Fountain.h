@@ -2,31 +2,37 @@
 #define __FOUNDTAIN_H__
 
 
-#include "FourtainObject.h"
+#include "FountainObject.h"
 #include "UpdateManager.h"
+#include "Transform.h"
 
 
 class Fountain
 	: public IUpdateble
 {
 private:
-	int size;
-	int spawnLeft;
-	std::vector<FourtainObject*> objects;
-	double timer;
+	double timer, timer2;
 	void Spawn(void);
-	float delay;
+	float spawnDelay;
+	float deleteDelay;
+	Transform transform;
 
+	/* Object Pool */
+	int size;
+	std::vector<FountainObject*> objects;
+	std::vector<FountainObject*> spawnedObjects;
 
 public:
+	//enum { SIZE = 100 };
+
 	Fountain(void);
 	~Fountain(void);
 	
-	/* Design Pattern -> Object Pool */
+	/* Object Pool */
 	void setMaxSize(int i);
 	void createRange(void);
-	FourtainObject* getObject(void);
-	void release(FourtainObject* obj);
+	FountainObject* getObject(void);
+	void release(FountainObject* obj);
 	void Clear(void);
 
 	/* Logic */

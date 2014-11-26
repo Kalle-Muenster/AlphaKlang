@@ -5,14 +5,14 @@
 #include "projectMacros.h"
 
 Fountain::Fountain(void)
-	: size(20), timer(0), delay(1.4f)
+	: timer(0), timer2(0), spawnDelay(1.0f), deleteDelay(2.0f)
 {
-	this->spawnLeft = this->size;
+	size = 20;
 	this->createRange();
+	this->transform.position = Vector3(1.0f, 0.0f, 1.0f);
 
 
 	UpdateManager::getInstance()->SignInForUpdate(this);
-
 
 }
 
@@ -23,85 +23,94 @@ Fountain::~Fountain(void)
 	{
 		delete *it;
 	}
-}
-
-/* Design Pattern -> Object Pool */
-void
-Fountain::setMaxSize(int i)
-{
-	size = i;
+	for (auto it = spawnedObjects.begin(); it != spawnedObjects.end(); ++it)
+	{
+		delete *it;
+	}
 }
 
 void
 Fountain::createRange(void)
 {
-	for(int j = 0; j < this->size; j++)
+	for(int j = 0; j < size; j++)
 	{
-		FourtainObject* tmp = new FourtainObject();
+		FountainObject* tmp = new FountainObject();
 		objects.push_back(tmp);
 	}
+
+
 }
 
-FourtainObject*
+FountainObject*
 Fountain::getObject(void)
 {
+	FountainObject* tmp;
 	if(objects.size() >= 1)
 	{
-		FourtainObject* tmp = objects[0];
+		tmp = objects[0];
 		objects.erase(objects.begin());
-		return tmp;
 	} else {
-		return new FourtainObject();
+		tmp = new FountainObject();
 	}
+	spawnedObjects.push_back(tmp);
+	return tmp;
+
 }
 
 void
-Fountain::release(FourtainObject* obj)
+Fountain::release(FountainObject* obj)
 {
-	obj->Clear(); // Clear method set values to 0 or null
-	objects.push_back(obj);
+	// Clear method set values to 0 or null
+	obj->Clear();
 
+	// set obj back into pool
+	objects.push_back(obj);
 }
 
 void
 Fountain::DoUpdate(void)
 {
 	timer += INPUT->FrameTime;
-
-	if(spawnLeft != 0 && timer >= this->delay)
+	if(timer >= this->spawnDelay)
 	{
 		this->Spawn();
 		timer = 0;
-		spawnLeft--;
+	}
+	
+	// Check delete
+	timer2 += INPUT->FrameTime;
+	if(timer2 >= this->deleteDelay)
+	{
+		timer2 = 0;
+
+		if(spawnedObjects.size() >= 1)
+		{
+			for (int i = (int)spawnedObjects.size() -1; i >= 0; --i)
+			{
+				FountainObject* it = spawnedObjects[i];
+				float y = it->getTransform()->position.y;
+				if(y < -2.0f)
+				{
+				
+					this->release(spawnedObjects[i]);
+				
+					spawnedObjects.erase(spawnedObjects.begin() + i);
+
+				}
+			}
+		}
+
 	}
 
-	// TODO Finish Update
-	if(spawnLeft == 0)
-	{
-		// SignOutForUpdate
-		//UpdateManager::getInstance()->SignOutForUpdate(this);
-	}
 
 }
 
 void
 Fountain::Spawn(void)
 {
-	float randX = Utility::GetRandom() - 0.5f;
-	float randZ = Utility::GetRandom() - 0.5f;
-
-	FourtainObject* cube = Fountain::getObject();
-	cube->move(1.0f, 2.0f, -3.0f);
-	//cube->AddToScene();
-	cube->IsGrounded = false;
-	cube->scale(Vector3(0.3f,0.3f,0.3f));
-
-	cube->power = 1.0f;
-	cube->gravity = -0.015;
-	cube->speed = 0.03f;
-	cube->expanding = 5.0f; // ausweiten: 1=wenig,5=stark
-	cube->direction = Vector3(randX,0,randZ);
-
+	FountainObject* obj = Fountain::getObject();
+	obj->move(this->transform.position);
+	obj->Initialize();
 }
 
 void

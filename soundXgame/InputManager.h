@@ -133,7 +133,7 @@ public:
  }	Controler2;
 	Rectangle* GetViewportRectangle(void);
 	void SetDoubleclickTime(int milliseconds);
-	double FrameTime; //deltaTime...
+	double FrameTime; //FrameTime like deltaTime -> hold's actual timeDiff since last Frame in seconds
 
     /*attachement functions by wich "IObserver"-objects
     can register on Notification-Events */

@@ -8,14 +8,15 @@ class Randomover :
 	public IConnectable ,public IUpdateble
 {
 private:
+	bool rotation, moving;
 	float x,y,z,iX,iY,iZ;
 	float speed;
 protected:
 	virtual bool Initialize(void);
 public:
-//	virtual ~Randomover(void);
-
-
+	void SetRotation(bool status);
+	void SetMoving(bool status);
+	void SetSpeed(float speed);
 	virtual void DoUpdate(void);
 	
 };
