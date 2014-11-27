@@ -4,7 +4,9 @@
 
 AMusicInteractor::AMusicInteractor(void)
 {
-	motivatorsUpdated=false;
+	allMotivatorsEnabled  = false;
+	motivatorsUpdated = false;
+
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 	{
 		Line[i].enabled = false;
@@ -20,13 +22,16 @@ AMusicInteractor::AMusicInteractor(void)
 		for(int c=0;c<NUMBER_OF_LINEVALUES;c++)
 			Line[i].value[c] = 0;
 	}
+
 	Line[0].enabled = true;
 	Line[0].clampf = true;
-	Line[0].MINClampf = 0.5f;
-	Line[0].MAXClampf = 5.5f;
-	Line[0].threshold = 0.05;
-	Line[0].fallOff = 0.025f;
-
+	Line[0].MINClampf = 5.f;
+	Line[0].MAXClampf = 55.f;
+	Line[0].threshold = 1;
+	Line[0].fallOff = 1.5f;
+		Line[0].lowerBound = 0;
+		Line[0].upperBound = 4;
+		Line[0].bandWidth = 3;
 
 	Line[1].enabled = true;
 	Line[1].clampf = true;
@@ -103,14 +108,35 @@ AMusicInteractor::calculateEffect(int line,float lowValue,float highValue)
 float*
 AMusicInteractor::listen(float *fft)
 {
+	allMotivatorsEnabled = true;
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 		if(Line[i].enabled)
 			motivator[i] = listenTo(i,fft);
 		else
+		{
 			motivator[i] = _FNan._Float;
-
+			allMotivatorsEnabled = false;
+		}
 	motivatorsUpdated=true;
 	return &motivator[0];
+}
+
+void 
+AMusicInteractor::DoEarly(void)
+{
+	listen(GetFFTData());
+}
+
+void 
+AMusicInteractor::DoUpdate(void)
+{
+	if(motivatorsUpdated)
+	{
+		for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
+			if(Line[i].enabled)
+				MotivatorFunction(motivator[i],i);
+		motivatorsUpdated=false;
+	}
 }
 
 ListenerData*

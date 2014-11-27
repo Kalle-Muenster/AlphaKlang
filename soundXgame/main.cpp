@@ -146,8 +146,9 @@ void LoadContent(void)
 
 
 	(new Cubus("X-7.tga"))->SetName("muckubus");
+	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
-	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 0.06f;
+	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 1.5;
 	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
 	
 
@@ -155,10 +156,10 @@ void LoadContent(void)
 	float x,y,z;
 	x=y=z=0;
 	char* brummer="Brummer-";
-	for(int i = 0;i<5;i++)
+	for(int i = 0;i<10;i++)
 	{
-		x-=i;
-		z+=2*i;
+		x-=((float)i);
+		z+=(2.f*(float)i/20.0f);
 		obj = (new Cubus("X-7.tga"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();

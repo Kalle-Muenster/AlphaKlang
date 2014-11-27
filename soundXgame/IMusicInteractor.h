@@ -63,29 +63,19 @@ public:
 	bool Enabled(int,BOOL=3);
 	void SetLineBounds(int line,int lower,int upper,int width);
 
-	virtual void DoEarly(void)
-	{
-		listen(GetFFTData());
-	}
-	virtual void DoUpdate(void)
-	{
-		if(motivatorsUpdated)
-		{
-			for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
-				if(Line[i].enabled)
-					MotivatorFunction(i);
-			motivatorsUpdated=false;
-		}
-	}
+	virtual void DoEarly(void);
+	virtual void DoUpdate(void);
 
 protected:
 	bool motivatorsUpdated;
 	virtual float* GetFFTData(void){return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
-	virtual void MotivatorFunction(int lineNumber){}
+	virtual void MotivatorFunction(float motivator,int number)=0;
+	virtual void MotivatorFunction(float[])=0;
 	float listenTo(int,float *fft);
 	float* listen(float *fft);
 	virtual void calculateEffect(int line,float lowValue,float highValue);
 	ListenerData Line[NUMBER_OF_LISTENINGLINES];
+	bool allMotivatorsEnabled;
 };
 
 

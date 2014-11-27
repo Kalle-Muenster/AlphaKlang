@@ -172,7 +172,7 @@ InputManager::registerKeyUp(unsigned char key)
 void
 InputManager::notifyKey() 
 {
-	if(this->keyList.Count != 0)
+	if(this->keyList.Count() != 0)
 	{
 		for(unsigned ID = this->keyList.First(); ID <= this->keyList.Last(); ID = this->keyList.Next(ID))
 		{

@@ -8,9 +8,9 @@ class TargetGrabber :
 	public CameraMode
 {
 public:
-	//enum class MODE : short
-//	{MODE= -1,NONE=0,MOVE=1,ROTATE=2,SCALE=3, };
-	//MODE Mode(MODE = MODE::MODE);
+	enum class MODE : short
+	{get= -1,OFF=0,MOVE=1,ROTATE=2,SCALE=3, };
+	MODE Mode(MODE = MODE::get);
 	TargetGrabber(void);
 	virtual ~TargetGrabber(void);
 	static int StaticCamModeID;
@@ -20,7 +20,7 @@ protected:
 	virtual void UpdateMode(void);
 	bool _targetGRABBED;
 private:
-//	MODE _mode;
+	MODE _mode;
 };
 
 #endif

@@ -89,7 +89,7 @@ public:
 
 };
 
-class Cam : public IWheelee, public IConnectable, public IAudioReciever
+class Cam : public IWheelee,  public IAudioReciever
 {
 private:
 	static bool				_shareAudioReciever;
