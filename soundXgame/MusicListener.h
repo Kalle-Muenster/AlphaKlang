@@ -17,7 +17,7 @@ protected:
 		{return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
 	virtual void MotivatorFunction(float Motivator,int number) 
 		{Vector3 temp2,temp;
-			printf("MusikListener: motivatornumber-%i: %f\n",number,Motivator);
+		//	printf("MusikListener: motivatornumber-%i: %f\n",number,Motivator);
 			switch(number)
 			{
 			case 0:
