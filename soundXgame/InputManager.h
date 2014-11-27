@@ -77,8 +77,10 @@ public:
 };
 
 #include "LueckList.h"
+#include "UpdateManager.h"
 
 class InputManager
+	: public IUpdateble
 {
 	//Con-and Destruction....
 private:
@@ -92,10 +94,11 @@ public:
 	//Private Stuff...........................
 private:
 	//Invokation-Lists:
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
+	LueckList<unsigned char, 30> keyList;
 	std::vector<IObserver*> mouseClickListener;
 	
 
@@ -107,6 +110,7 @@ private:
 	void notifyWheel(int wheel);
 	void notifyQlicks(void);
 	void notifyJoystick(int id,int button,bool state,int aX,int aY,int aZ);
+	void notifyKey();
 	int calculateFPS(void);
 
 	//Public Stuff...........................
@@ -156,13 +160,15 @@ public:
 
 	//Update-functions called by main-Api...
 	void notifySpecialKey(int key);
-	void notifyKey(char key);
+	void registerKey(unsigned char key);
+	void registerKeyUp(unsigned char key);
 	void notifyMouse(int x, int y);
 	void UpdateMouseButtons(int,int,int,int);
 	void UpdateMouseWheel(int,int,int,int);
 	void SaveViewportRectangle(int x,int y,int w,int h);
 	void UpdateJoysticks(int id, unsigned buttons,int AxisX,int AxisY,int AxisZ);
 
+	virtual void DoEarly(void);
 
 	//frameReset: must be called before all other
 	//i.E. as first function in the UpdateFunction 

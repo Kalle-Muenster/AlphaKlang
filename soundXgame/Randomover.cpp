@@ -1,14 +1,6 @@
 #include "Randomover.h"
 #include "projectMacros.h"
 
-//Randomover::Randomover(void)
-//{
-//}
-//
-//
-//Randomover::~Randomover(void)
-//{
-//}
 bool
 Randomover::Initialize(void)
 {
@@ -22,7 +14,6 @@ Randomover::Initialize(void)
 	iZ = 0.001* Utility::GetRandom();
 	return true;
 }
-
 
 void Randomover::DoUpdate(void)
 {
@@ -60,4 +51,3 @@ Randomover::SetSpeed(float speed)
 {
 	this->speed = speed;
 }
-

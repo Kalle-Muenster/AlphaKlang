@@ -13,8 +13,6 @@ FountainObject::FountainObject(void)
 	this->GetConnected<Randomover>()->SetMoving(false);
 	this->GetConnected<Randomover>()->SetSpeed(7.0f);
 
-	
-
 }
 
 FountainObject::~FountainObject(void)
@@ -26,12 +24,6 @@ FountainObject::Initialize(void)
 {
 	float randX = Utility::GetRandom() - 0.5f;
 	float randZ = Utility::GetRandom() - 0.5f;
-	
-	// TODO
-	// verschiedene start vec3
-	// different scale (0.1 - 0.3)
-	// different power
-	// different timerHeigher
 
 	this->power = 2.0f;
 	this->gravity = -0.035f;
@@ -45,13 +37,6 @@ FountainObject::Initialize(void)
 	UPDATE->SignInForUpdate(this);
 
 }
-
-/*void
-FountainObject::AddToScene(void)
-{
-	
-	this->IsVisible=true;
-}*/
 
 // reset Values for set back to object pool
 void
@@ -71,7 +56,6 @@ FountainObject::Clear(void)
 void
 FountainObject::DoUpdate(void)
 {
-	
 	if(power > 0)
 	{
 		power -= (float)INPUT->FrameTime / 2.5f;
