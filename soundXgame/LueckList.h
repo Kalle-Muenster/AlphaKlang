@@ -118,7 +118,7 @@ public:
 				if(id==highestSlotNumberInUse)
 					highestSlotNumberInUse = Prev(id);
 
-				list[id]==NULL;
+				list[id]=NULL;
 				--numberOfMember;
 			}
 		}
@@ -133,7 +133,7 @@ public:
 					if(i==highestSlotNumberInUse)
 						highestSlotNumberInUse=Prev(i);
 
-					list[i]==NULL;
+					list[i]=NULL;
 					--numberOfMember;
 					return;
 				}

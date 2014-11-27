@@ -29,7 +29,19 @@ IConnectable::Not_hasInitialized(void)
 IConnectable::~IConnectable(void)
 {
 	for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-		delete this->Connectables[i];
+	{
+		if(Connectables[i]!=NULL)
+		{
+			int index = 0;
+			while(Connectables[i]->GetNumberOfConnected()>0)
+			{
+				if(Connectables[i]->getConnectables(index)!=NULL)
+					Connectables[i]->RemoveConnected<IConnectable>(Connectables[i]->ConIDs[i]-1);
+			}
+			delete this->Connectables[i];
+			NumberOfConnectedObjects--;
+		}
+	}
 }
 
 

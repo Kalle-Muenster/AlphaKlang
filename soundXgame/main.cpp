@@ -108,6 +108,11 @@ void GlInit(void)
 //int cycle3 = 127;
 void LoadContent(void)
 {
+	Vector3 test = Vector3(0,0,0);
+	glm::vec3 testglm = glm::vec3(0,0,0);
+	printf("Vector3 - size: %i\n",sizeof(Vector3));
+	printf("Vector3 - size: %i\n",sizeof(test));
+	printf("glmvec3 - size: %i\n",sizeof(testglm));
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
@@ -149,7 +154,6 @@ void LoadContent(void)
 	unsigned obj;
 	float x,y,z;
 	x=y=z=0;
-	char* brummer="Brummer-";
 	for(int i = 0;i<10;i++)
 	{
 		x-=((float)i);
@@ -160,6 +164,7 @@ void LoadContent(void)
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicListener>();
+		SCENE->Object(obj)->SetName("Brummer");
 	}
 
 	SCENE->camera->Mode(FIRSTPERSON);
@@ -172,7 +177,7 @@ void LoadContent(void)
 	analyzer->IsGrounded = true;
 //	SCENE->camera->SetTarget(SCENE->Object(obj));
 
-	SCENE->camera->SetTarget(SCENE->Object("muckubus"));
+	SCENE->camera->SetTarget(SCENE->Object(25));
 
 }
 
@@ -293,6 +298,8 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key == 27) // ESC
 		glutExit();
 
+	if(key=='y')
+		SCENE->Object(25)->conXtor->RemoveConnected<Randomover>();
 
 	INPUT->notifyKey(key);
 

@@ -69,6 +69,7 @@ public:
 			newcon->SetConnection(this->connection);	
 			newcon->ConnectionID=typeid(T).hash_code(); 
 			setConnectables(i,(T*)newcon);
+			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
 		return NULL;
@@ -90,6 +91,7 @@ public:
 			newcon->ConnectionID = i+1;
 			setConnectables(i,(T*)newcon);
 			*id=i+1;
+			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
 		return NULL;
@@ -100,8 +102,9 @@ public:
 	//Its slower at Runtime but faster at "Write-time" then calling by ID...
 	template<typename T> T* GetConnected(void)
 	{
+		ConID TypeHash = (ConID)typeid(T).hash_code();
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == (ConID)typeid(T).hash_code())
+			if(ConIDs[i] == TypeHash)
 				return (T*)getConnectables(i);
 		return NULL;
 	}
@@ -119,13 +122,38 @@ public:
 	//previously Addet by Type,.. and not by ID...
 	template<typename T> ConID GetConnectionID(void)
 	{
+		ConID TypeHash = (ConID)typeid(T).hash_code();
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == (ConID)typeid(T).hash_code())
+			if(ConIDs[i] == TypeHash)
 				return ConIDs[i]-1;
 	}
 
+	/*Removes a connected Component by it's type...*/
+	template<typename T> void RemoveConnected(void)
+	{
+		ConID TypeHash = (ConID)typeid(T).hash_code();
+		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+			if(ConIDs[i]==TypeHash)
+			{
+			//	getConnectables(i)->~IConnectable();
+				delete getConnectables(i);
+				ConIDs[i] = NULL;
+				NumberOfConnectedObjects--;
+				printf("%s-ID:%i: connectable %s removed !\n",Connection()->GetName(),Connection()->GetID(),typeid(T).name());
+			}		
+	}
 
-
+	/*Remove a connected Component by it's ID...*/
+	template<typename T> void RemoveConnected(ConID id)
+	{
+		if(typeid((*getConnectables(id))).hash_code()==typeid(T).hash_code())
+		{
+			printf("%s-ID:%i: removing connectable %s !\n",Connection()->GetName(),Connection()->GetID(),typeid(getConnectables(id)).name());
+			delete getConnectables(id);
+			ConIDs[id]==NULL;
+			NumberOfConnectedObjects--;
+		}
+	}
 
 	//UNREADY-SECTION...
 	// helper-functions and "under-construction" stuff...
