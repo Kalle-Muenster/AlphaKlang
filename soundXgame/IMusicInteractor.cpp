@@ -25,11 +25,13 @@ AMusicInteractor::AMusicInteractor(void)
 
 	Line[0].enabled = true;
 	Line[0].clampf = true;
-	Line[0].MINClampf = 0.5f;
-	Line[0].MAXClampf = 5.5f;
-	Line[0].threshold = 0.1;
-	Line[0].fallOff = 0.1f;
-
+	Line[0].MINClampf = 5.f;
+	Line[0].MAXClampf = 55.f;
+	Line[0].threshold = 1;
+	Line[0].fallOff = 1.5f;
+		Line[0].lowerBound = 0;
+		Line[0].upperBound = 4;
+		Line[0].bandWidth = 3;
 
 	Line[1].enabled = true;
 	Line[1].clampf = true;

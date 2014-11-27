@@ -142,7 +142,7 @@ void LoadContent(void)
 	(new Cubus("X-7.tga"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
-	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 0.06f;
+	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 1.5;
 	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
 	
 
