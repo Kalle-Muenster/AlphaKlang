@@ -15,32 +15,31 @@ public:
 protected:
 	virtual float* GettFFTData(void)
 		{return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
-	virtual void MotivatorFunction(int number) 
+	virtual void MotivatorFunction(float Motivator,int number) 
 		{Vector3 temp;
+			printf("MusikListener: motivatornumber-%i: %f\n",number,Motivator);
 			switch(number)
 			{
 			case 0:
-				printf("MusikListener: motivator0: %f\n",motivator[0]);
-				this->Connection()->scale(motivator[0],(motivator[1]+1.5)*2.5f,(motivator[2]+1.5)*2.5f);
+				this->Connection()->scale(Motivator,Motivator,Motivator);
 				break;
 			case 1:
-				printf("MusikListener: motivator1: %f\n",motivator[1]);
 				temp = this->Connection()->getTransform()->rotation;
-				temp.x += motivator[1];
-				temp.y -= motivator[1];
-				temp.z += motivator[0]/5.f;
+				temp.x += Motivator;
+				temp.y -= Motivator;
+				temp.z += Motivator;
 				this->Connection()->rotate(temp);
 				break;
 			case 2:
-				printf("MusikListener: motivator2: %f\n",motivator[2]);
-				temp = this->Connection()->getTransform()->position;
-				temp.x += motivator[2]/5;
-				temp.y += -motivator[2]/3;
-				temp.z += motivator[2]/4;
+				temp = this->Connection()->getTransform()->movement;
+				temp.x *= Motivator/5;
+				temp.y *= -Motivator/3;
+				temp.z *= Motivator/7;
 				this->Connection()->move(temp);
 				break;
 			}
 		}
+	virtual void MotivatorFunction(float Motivator[]){}
 };
 
 #endif

@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="AudioObject.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
@@ -129,12 +128,17 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Randomover.cpp" />
-    <ClCompile Include="ObjectUpdater.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClCompile>
     <ClCompile Include="IMusicInteractor.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeInstances.cpp">
+      <Filter>RuntimManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Randomover.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectUpdater.cpp">
+      <Filter>TryesAndUnderConstruction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -282,17 +286,21 @@
     <ClInclude Include="Transform.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Randomover.h" />
     <ClInclude Include="LueckList.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectUptater.h">
-      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="IMusicInteractor.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="MusicListener.h" />
+    <ClInclude Include="MusicListener.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Randomover.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectUptater.h">
+      <Filter>TryesAndUnderConstruction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram3.cd" />
