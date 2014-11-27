@@ -20,7 +20,7 @@ public:
 	IUpdateble(void);
 	virtual void InitiateUpdatable(void);
 	virtual ~IUpdateble(void);
-	virtual void DoUpdate(void)=0;
+	virtual void DoUpdate(void){};
 	virtual void DoEarly(void){};
 	virtual void DoLate(void){};
 };

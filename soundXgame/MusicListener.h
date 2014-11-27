@@ -21,11 +21,8 @@ protected:
 			switch(number)
 			{
 			case 0:
-					temp2.x=Motivator/10;
-					temp2.y=Motivator/10;
-					temp2.z=Motivator/10;
-					temp2=temp2-(this->Connection()->getTransform()->movement/5);
-					this->Connection()->scale(temp2);
+				//printf("MusikListener: motivator0: %f\n",motivator[0]);
+				this->Connection()->scale(motivator[0],(motivator[1]+1.5)*2.5f,(motivator[2]+1.5)*2.5f);
 				break;
 			case 1:
 				temp = this->Connection()->getTransform()->rotation;

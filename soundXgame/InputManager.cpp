@@ -46,6 +46,7 @@ InputManager::InputManager(void)
 	this->MouseWheelObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->KeyboardObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->SpecialKeyObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->keyList = LueckList<unsigned char, 30>();
 	this->mouseClickListener = std::vector<IObserver*>();
 
 	FrameTime = 0;
@@ -65,7 +66,10 @@ InputManager::InputManager(void)
 	Controler1.Enabled=true;
 	Controler1.NumberOfButtons=10;
 	Controler1.NumberOfAxis=3;
-/*
+
+	UpdateManager::getInstance()->SignInForEarlyUpdate(this);
+
+	/*
 	if(glutGet(GLUT_HAS_JOYSTICK))
 	{
 		Controler1.NumberOfAxis = glutJoystickGetNumAxes(0);
@@ -82,7 +86,7 @@ InputManager::InputManager(void)
 			Controler1.Buttons = glutJoystickGetNumButtons(0);
 		}
 	}
-*/
+	*/
 }
 
 
@@ -149,14 +153,41 @@ InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,in
 }
 
 void
-InputManager::notifyKey(char key) 
+InputManager::registerKey(unsigned char key)
 {
-	unsigned ID = KeyboardObservers.First();
-	for(int i=0;i<KeyboardObservers.Count();i++)
+	std::cout << "down " << key << std::endl;
+
+	this->keyList.Add(key);
+}
+
+void
+InputManager::registerKeyUp(unsigned char key)
+{
+	std::cout << "up " << key << std::endl;
+
+	this->keyList.Remove(key);
+
+}
+
+void
+InputManager::notifyKey() 
+{
+	if(this->keyList.Count() != 0)
 	{
-		((IInteractive*)KeyboardObservers[ID])->keyPress(key);
-		ID=KeyboardObservers.Next(ID);
+		for(unsigned ID = this->keyList.First(); ID <= this->keyList.Last(); ID = this->keyList.Next(ID))
+		{
+			char key = this->keyList[ID];
+			for(unsigned ID2 = this->KeyboardObservers.First(); ID2 <= this->KeyboardObservers.Last(); ID2 = this->KeyboardObservers.Next(ID2))
+			{
+				((IInteractive*)KeyboardObservers[ID2])->keyPress(key);
+			}
+		}
 	}
+}
+void
+InputManager::DoEarly(void)
+{
+	this->notifyKey();
 }
 
 void

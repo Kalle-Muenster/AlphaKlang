@@ -12,6 +12,8 @@ void* font;
 //Objects:
 SpectrumAnalyzer* analyzer;
 
+
+
 //Functions:
 void InitGlut(void);
 void LoadContent(void);
@@ -26,6 +28,7 @@ void MouseClicks(int,int,int,int);
 void MouseWheelFunc(int,int,int,int);
 void processSpecialKeys(int,int,int);
 void keyboardInput(unsigned char,int,int);
+void keyboardUpInput(unsigned char,int,int);
 void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
@@ -67,8 +70,11 @@ void InitGlut(void)
 	glutMouseFunc(MouseClicks);
 	glutMouseWheelFunc(MouseWheelFunc);
 	glutSpecialFunc(processSpecialKeys);
-	glutKeyboardFunc(keyboardInput);
 	glutEntryFunc(MouseHoverWindow);
+
+	// Keyboard
+	glutKeyboardFunc(keyboardInput);
+	glutKeyboardUpFunc(keyboardUpInput);
 
 	// hide mouse cursor
 	glutSetCursor(GLUT_CURSOR_NONE); 
@@ -275,12 +281,11 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 }
 
 
-char lastKey = 0;
 //GL-InputFunctions:
 ///////////////////////////////////////////////////
 
-//Keyboard:
 
+//Keyboard:
 void keyboardInput(unsigned char key,int x,int y)
 {
 	/* Switches Cam-Modes..*/
@@ -301,10 +306,17 @@ void keyboardInput(unsigned char key,int x,int y)
 	if(key=='y')
 		SCENE->Object(25)->conXtor->RemoveConnected<Randomover>();
 
-	INPUT->notifyKey(key);
-
-	lastKey=key;
+	INPUT->registerKey(key);
 }
+
+void keyboardUpInput(unsigned char key,int x,int y)
+{
+
+	INPUT->registerKeyUp(key);
+
+	//std::cout << "up " << key << std::endl;
+}
+
 
 
 void processSpecialKeys(int key, int xx, int yy)
