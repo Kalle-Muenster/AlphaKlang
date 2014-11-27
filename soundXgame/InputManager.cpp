@@ -42,10 +42,10 @@ InputManager::InputManager(void)
 	_frameTicks = 0;
 	_doubleClickLength = 200;
 
-	this->MouseMotionObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
-	this->MouseWheelObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
-	this->KeyboardObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
-	this->SpecialKeyObservers = LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->MouseMotionObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->MouseWheelObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->KeyboardObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->SpecialKeyObservers = LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->mouseClickListener = std::vector<IObserver*>();
 
 	FrameTime = 0;

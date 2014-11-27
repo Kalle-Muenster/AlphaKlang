@@ -21,16 +21,16 @@ public:
 	// Distroy's all the list's members when the list is beeing distroyed... 
 	virtual ~LueckList(void)
 		{
-			for(int i=0;i<MAXIMUM_SIZE;i++)
-			{
-				if(list[i]!=NULL)
-					delete list[i];
-			}
+			//for(int i=0;i<MAXIMUM_SIZE;i++)
+			//{
+			//	if(list[i]!=NULL)
+			//		delete list[i];
+			//}
 		}
 
 	// Add a member to the list and return the memberID 
 	// (slot-number) at wich the object has been addet to...
-	unsigned Add(ListMember* member)
+	unsigned Add(ListMember member)
 		{
 			int FirstEmptySlotFound = -1;
 			unsigned counter = 0;
@@ -77,11 +77,11 @@ public:
 	}
 
 	// make the members accsessable by list[memberID]... 
-	ListMember* operator[](ListMemberID index)
+	ListMember operator[](ListMemberID index)
 		{return list[index];}
 
 	// return the member at position [index] - (the memberID)...
-	ListMember* at(ListMemberID index)
+	ListMember at(ListMemberID index)
 		{return list[index];}
 
 	// Howmany members are contained in the list ?...
@@ -124,7 +124,7 @@ public:
 		}
 
 	// remove's the given member from the list, if it's contained in it..
-	void Remove(ListMember* member)
+	void Remove(ListMember member)
 		{
 			for(int i = 0 ; i<MAXIMUM_SIZE ; i++)
 			{
@@ -141,7 +141,7 @@ public:
 		}
 
 protected:
-	ListMember* list[MAXIMUM_SIZE];
+	ListMember list[MAXIMUM_SIZE];
 	int numberOfMember;
 	ListMemberID highestSlotNumberInUse;
 };

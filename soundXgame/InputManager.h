@@ -92,10 +92,10 @@ public:
 	//Private Stuff...........................
 private:
 	//Invokation-Lists:
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
-	LueckList<IObserver,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
+	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
 	std::vector<IObserver*> mouseClickListener;
 	
 
