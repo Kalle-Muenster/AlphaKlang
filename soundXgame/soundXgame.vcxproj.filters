@@ -3,7 +3,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AudioObject.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="BassAudio.cpp">
       <Filter>RuntimManagers</Filter>
@@ -12,13 +12,13 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="CamTargetMover.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="CamTargetRotator.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="Combiner.cpp">
       <Filter>Core</Filter>
@@ -39,9 +39,6 @@
       <Filter>Objects\CameraModes</Filter>
     </ClCompile>
     <ClCompile Include="Fountain.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="FourtainObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
@@ -105,7 +102,7 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="VoxControl.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="UpdateManager.cpp">
       <Filter>RuntimManagers</Filter>
@@ -123,11 +120,12 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="IMusicInteractor.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
@@ -136,6 +134,19 @@
     </ClCompile>
     <ClCompile Include="Randomover.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
+=======
+    <ClCompile Include="ObjectUpdater.cpp">
+      <Filter>Objects\Connectables</Filter>
+    </ClCompile>
+    <ClCompile Include="IMusicInteractor.cpp">
+      <Filter>Objects\Connectables</Filter>
+    </ClCompile>
+    <ClCompile Include="FountainObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Randomover.cpp">
+      <Filter>Objects\Connectables</Filter>
+>>>>>>> d07d25debeaeae6a589b769b69e4a27c1d1c9b91
     </ClCompile>
     <ClCompile Include="ObjectUpdater.cpp">
       <Filter>TryesAndUnderConstruction</Filter>
@@ -143,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioObject.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="BassAudio.h">
       <Filter>RuntimManagers</Filter>
@@ -152,13 +163,13 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="CamTargetMover.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="CamTargetRotator.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="Combiner.h">
       <Filter>Core</Filter>
@@ -179,9 +190,6 @@
       <Filter>Objects\CameraModes</Filter>
     </ClInclude>
     <ClInclude Include="Fountain.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="FourtainObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
@@ -245,7 +253,7 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="VoxControl.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>RuntimManagers</Filter>
@@ -263,7 +271,7 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="projectClasses.h">
       <Filter>include</Filter>
@@ -284,11 +292,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Objects\ConnectableComponents</Filter>
+      <Filter>Objects\Connectables</Filter>
     </ClInclude>
     <ClInclude Include="LueckList.h">
       <Filter>Core</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="IMusicInteractor.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
@@ -300,6 +309,20 @@
     </ClInclude>
     <ClInclude Include="ObjectUptater.h">
       <Filter>TryesAndUnderConstruction</Filter>
+=======
+    <ClInclude Include="ObjectUptater.h">
+      <Filter>Objects\Connectables</Filter>
+    </ClInclude>
+    <ClInclude Include="IMusicInteractor.h">
+      <Filter>Objects\Connectables</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicListener.h" />
+    <ClInclude Include="FountainObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Randomover.h">
+      <Filter>Objects\Connectables</Filter>
+>>>>>>> d07d25debeaeae6a589b769b69e4a27c1d1c9b91
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -373,9 +396,6 @@
     <Filter Include="TryesAndUnderConstruction">
       <UniqueIdentifier>{b39a9bd6-9b4b-41b8-93ee-14e2b5c19cfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\ConnectableComponents">
-      <UniqueIdentifier>{fda2fb6f-c16c-4ced-8f70-ed3f09a647e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{9ae8b098-b9ed-414e-a5bb-e5ee3f2c581a}</UniqueIdentifier>
     </Filter>
@@ -393,6 +413,9 @@
     </Filter>
     <Filter Include="Resources\Textures\PPM">
       <UniqueIdentifier>{785e9e0d-6cc9-45be-b050-e0c26d36030c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Connectables">
+      <UniqueIdentifier>{fda2fb6f-c16c-4ced-8f70-ed3f09a647e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

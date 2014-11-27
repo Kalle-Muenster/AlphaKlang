@@ -40,7 +40,7 @@ int _currentSellection=0;
 void 
 VoxControl::keyPress(char key)
 {
-//	SCENE->Object((unsigned)0)->IsVisible=false;
+	//SCENE->Object((unsigned)0)->IsVisible=false;
 	if(key=='x')
 	{
 		if(++_currentSellection>=5)

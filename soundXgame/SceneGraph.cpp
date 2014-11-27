@@ -77,7 +77,7 @@ SceneGraph::Remove(IGObject* object)
 {
 	if(_drawables[object->GetID()]==object)
 	{
-		_drawables[object->GetID()]==NULL;
+		_drawables[object->GetID()]=NULL;
 		_NumberOfSceneObjects--;
 	}
 	//objects.erase(objects.begin());

@@ -1,18 +1,18 @@
-#ifndef __FOURTAINOBJECT_H__
-#define __FOURTAINOBJECT_H__
+#ifndef __FountainObject_H__
+#define __FountainObject_H__
 
 #include "IGObject.h"
 #include "IMeshObject.h"
 #include "UpdateManager.h"
+#include "Randomover.h"
 
 
 
-class FourtainObject
+class FountainObject
 	: public IMeshObject, public IUpdateble
 {
 private:
-	
-	//float timeSinceStart;
+	void Release(void);
 public:
 	float power;
 	float gravity;
@@ -20,8 +20,9 @@ public:
 	float expanding; // Power for Directionvector (wie stark ausweiten)
 	Vector3 direction; // Directionvector to Expand
 
-	FourtainObject(void);
-	~FourtainObject(void);
+	FountainObject(void);
+	~FountainObject(void);
+	void Initialize(void);
 	//void AddToScene(void);
 	void Clear(void);
 	//void Update(void);

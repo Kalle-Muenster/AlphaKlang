@@ -86,7 +86,7 @@
     <ClCompile Include="FirstPerson.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
     <ClCompile Include="Fountain.cpp" />
-    <ClCompile Include="FourtainObject.cpp" />
+    <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
@@ -137,7 +137,7 @@
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
-    <ClInclude Include="FourtainObject.h" />
+    <ClInclude Include="FountainObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
