@@ -119,8 +119,8 @@ void Voxel::vDraw(VectorPF P_offset)
 	offset.x = *P_offset.x;
 	offset.y = *P_offset.y;
 
-	GLfloat F=((float)factor/255)+(1.0f-(offset.y/SCREENHEIGHT));
-
+	GLfloat F=((float)factor/255)+(1.0f-(offset.y/SCREENHEIGHT)) * *factorPointer;
+	
 	farb.s32 = color;	
 	glColor4f((GLfloat)farb.Bytss[0]/255,(GLfloat)farb.Bytss[1]/255,(GLfloat)farb.Bytss[2]/255,0.5f);
 	
@@ -134,7 +134,7 @@ void Voxel::vDraw(VectorPF P_offset)
 
 void Voxel::vDrawBunt(VectorPF offset)
 {
-	GLfloat F=((float)factor/255)+(1.0f-(*offset.y/SCREENHEIGHT));
+	GLfloat F=((float)factor/255)+(1.0f-(*offset.y/SCREENHEIGHT)) * *factorPointer;
 	int l = (int)*x-1;
 	l=(l>=0)?l:0;
 	int r = (int)*x+1;
@@ -170,7 +170,7 @@ void Voxel::vDrawBunt(VectorPF offset)
 void Voxel::vDrawByte(VectorPF offset)
 {
 
-		GLfloat F=((float)factor/255)+(1.0f-(*offset.y/SCREENHEIGHT));
+		GLfloat F=((float)factor/255)+(1.0f-(*offset.y/SCREENHEIGHT)) * *factorPointer;
 
 		farb.s32=OL;
 		glColor4b(farb.Bytss[0],farb.Bytss[1],farb.Bytss[2],farb.Bytss[3]);

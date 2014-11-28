@@ -658,7 +658,7 @@ public:
 	VectorF size;
 	float voxelSize;
 	VectorF MainSizzes;
-
+	GLfloat BumpFactor;
 	void Loade(const char* filename,void*);
 	void ReLoade(char* filename);
 	void LoadMap(char* filename,int channel);

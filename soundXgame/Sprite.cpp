@@ -3,6 +3,11 @@
 
 Sprite::Sprite(void)
 {
+
+}
+
+Sprite::Sprite(char* filename)
+{
 	verts.push_back(Vector3(-1,1,0));
 	verts.push_back(Vector3(1,1,0));
 	verts.push_back(Vector3(1,-1,0));
@@ -40,8 +45,8 @@ Sprite::Sprite(void)
 
 	IGObject::InitializeObject(true);
 
-	SetUp("q2_23.png",true,true);
-	SetName("Sprite");
+	SetUp(filename,true,true);
+	SetName(filename);
 }
 
 
@@ -56,8 +61,8 @@ Sprite::SetUp(string textureFile,bool backFace,bool camRotator)
 {
 	LoadTexture(textureFile);
 	this->NoBackfaceCulling = backFace;
-	if(camRotator)
-		this->AddConnectable<CamTargetRotator>();
+	//if(camRotator)
+	//	this->AddConnectable<CamTargetRotator>();
 }
 
 void 
@@ -65,6 +70,6 @@ Sprite::SetUp(Texture texture,bool backFace,bool camRotator)
 {
 	this->texture = texture;
 	this->NoBackfaceCulling = backFace;
-	if(camRotator)
-		this->AddConnectable<CamTargetRotator>();
+	//if(camRotator)
+	//	this->AddConnectable<CamTargetRotator>();
 }

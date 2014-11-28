@@ -8,7 +8,7 @@
 #include "Voxel.h"
 
 
-
+struct Vector3;
 
 
 
@@ -68,9 +68,12 @@ public:
 
 
 //	static Vector3 LoadePPMBitmap(const char* filename,Voxel* buffer);
-
+	 
 	static float GetRandom(void); // Returns values between 0 and 1
-
+	static float Random(void); //..and seeds rand before
+	static float Random(float MAX_float); //... 0 to MAX 
+	static Vector3 RandomDirection(void); // get's a random direction...
+	static Vector3 RandomVector3(void); // get's a Random vector3 between v3(-1,-1,-1) and v3(1,1,1);
 };
 
 #endif

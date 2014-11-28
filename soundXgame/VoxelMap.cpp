@@ -15,7 +15,7 @@ VoxelMap::VoxelMap(void)
 	//position.y=100;
 	size.x = 200;
 	size.y = 200;
-	
+	BumpFactor=0.5;
 }
 
 VoxelMap::~VoxelMap()
@@ -167,7 +167,7 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 
 			if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
 				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
-
+			voxels[count].factorPointer = &BumpFactor;
 		}
 	
 	}

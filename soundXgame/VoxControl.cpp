@@ -1,6 +1,7 @@
 #include "VoxControl.h"
 #include "IVoxelObject.h"
 #include "projectMacros.h"
+#include "CameraModesIncluder.h"
 
 bool __ZedMode = false;
 float _YPS=0.01;
@@ -109,6 +110,7 @@ VoxControl::keyPress(char key)
 		__ZedMode=true;
 	else
 		__ZedMode=false;
+
 }
 
 
@@ -118,32 +120,44 @@ VoxControl::vConnection(void)
 {
 	return (IVoxelObject*)this->connection;
 }
-
+float bumper = 0.0000f;
 void
 VoxControl::DoUpdate(void)
 {
-	if(INPUT->Mouse.LEFT.HOLD)
+	if(SCENE->camera->GetTarget()==this->vConnection())
 	{
-		this->vConnection()->MainSizzes.x *= 1-INPUT->Mouse.Movement.x/300;
-		if(!__ZedMode)this->vConnection()->MainSizzes.y *= 1+INPUT->Mouse.Movement.y/600;
-		else this->vConnection()->move(0,0, INPUT->Mouse.Movement.y);
-		printf("MainSizerX: %f ,MainSizerY: %f\n",this->vConnection()->MainSizzes.x,this->vConnection()->MainSizzes.y);
-	}
-	if(INPUT->Mouse.MIDDLE.HOLD)
-	{
-		tempvector = this->vConnection()->getTransform()->rotation;
-		vConnection()->getTransform()->position.z = ( tempvector.z += INPUT->Mouse.Position.x);
-		tempvector.y += INPUT->Mouse.Movement.y;
-		this->vConnection()->rotate(tempvector.x,tempvector.y,tempvector.z);
-	}
+		if(SCENE->camera->Get<TargetGrabber>()->IsATargetGrabbed())
+			SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::OFF);
+		
+		if(INPUT->Mouse.LEFT.HOLD)
+		{
+			this->vConnection()->MainSizzes.x *= 1-INPUT->Mouse.Movement.x/300;
+			if(!__ZedMode)this->vConnection()->MainSizzes.y *= 1+INPUT->Mouse.Movement.y/600;
+			else this->vConnection()->move(0,0, INPUT->Mouse.Movement.y);
+			printf("MainSizerX: %f ,MainSizerY: %f\n",this->vConnection()->MainSizzes.x,this->vConnection()->MainSizzes.y);
+		}
+		if(INPUT->Mouse.MIDDLE.HOLD)
+		{
+			tempvector = this->vConnection()->getTransform()->rotation;
+			vConnection()->getTransform()->position.z = ( tempvector.z += INPUT->Mouse.Position.x);
+			tempvector.y += INPUT->Mouse.Movement.y;
+			this->vConnection()->rotate(tempvector.x,tempvector.y,tempvector.z);
+		}
 
-	if(INPUT->Mouse.WheelV==WHEEL::UP)
-	{
-		SCENE->camera->transform.position += Vector3(0,_YPS,0);
-	}
-else 
-	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
-	{
-		SCENE->camera->transform.position -= Vector3(0,_YPS,0);
+		if(INPUT->Mouse.WheelV==WHEEL::UP)
+		{
+			if(INPUT->Mouse.LEFT.HOLD)
+				bumper=0.00001;
+			SCENE->camera->transform.position += Vector3(0,_YPS,0);
+		}
+	else 
+		if(INPUT->Mouse.WheelV==WHEEL::DOWN)
+		{
+			if(INPUT->Mouse.LEFT.HOLD)
+				bumper= -0.00001;
+			SCENE->camera->transform.position -= Vector3(0,_YPS,0);
+		}
+
+		vConnection()->BumpFactor += bumper;
 	}
 }

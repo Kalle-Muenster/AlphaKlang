@@ -8,6 +8,7 @@ class TargetGrabber :
 	public CameraMode
 {
 public:
+	
 	enum class MODE : short
 	{get= -1,OFF=0,MOVE=1,ROTATE=2,SCALE=3, };
 	MODE Mode(MODE = MODE::get);
@@ -16,11 +17,13 @@ public:
 	static int StaticCamModeID;
 	virtual bool Initialize(void);
 	IGObject* GrabTarget(void);
+	bool IsATargetGrabbed(void);
+	void ReleaseTarget(void);
+
 protected:
 	virtual void UpdateMode(void);
-	bool _targetGRABBED;
-private:
 	MODE _mode;
+	bool _targetGRABBED;
 };
 
 #endif

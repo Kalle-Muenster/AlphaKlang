@@ -134,7 +134,8 @@ void LoadContent(void)
 	Fountain* fountain = new Fountain();
 	//ShaderObj* shaderObj = new ShaderObj();
 
-
+	Sprite* spriteTest = new Sprite();
+	spriteTest->LoadTexture("Q2-shiny.png");
 
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
@@ -152,7 +153,7 @@ void LoadContent(void)
 	vObject->MainSizzes.y=0.045f;
 
 
-	(new Cubus("X-7.tga"))->SetName("muckubus");
+	(new Cubus("Deckelblech-2s.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
 	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 1.5;
@@ -166,21 +167,24 @@ void LoadContent(void)
 	{
 		x-=((float)i);
 		z+=(2.f*(float)i/20.0f);
-		obj = (new Cubus("X-7.tga"))->GetID();
+		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
+		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicListener>();
+		SCENE->Object(obj)->AddConnectable<MusicListener>()->GetLineData(0)->fallOff;// += (float)i/100; 
 		SCENE->Object(obj)->SetName("Brummer");
+		SCENE->Object(obj)->IsVisible=true;
 	}
 
 	SCENE->camera->Mode(FIRSTPERSON);
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
-	analyzer->AddConnectable<CamTargetRotator>();
+//	analyzer->AddConnectable<CamTargetRotator>();
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
 	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;

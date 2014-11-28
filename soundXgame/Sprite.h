@@ -12,6 +12,7 @@ private:
 	void SetUp(Texture texture,bool backface=true,bool addRotator=false);
 public:
 	Sprite(void);
+	Sprite(char*);
 	virtual ~Sprite(void);
 };
 

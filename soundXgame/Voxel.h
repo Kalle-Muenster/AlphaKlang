@@ -17,6 +17,7 @@ union
 	unsigned char Bytss[4];
 	}farb;
 	GLfloat factor;
+	GLfloat* factorPointer;
 	int color;
 	VectorI position;
 	Vecti size;

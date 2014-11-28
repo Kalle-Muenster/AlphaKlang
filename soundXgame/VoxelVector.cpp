@@ -100,6 +100,14 @@ bool
 		return (x!=other.x || y!=other.y);
 	}
 
+VectorF
+	VectorF::cros(VectorF other)
+{
+	other.x = y*other.x-x*other.y;
+	other.y = x*other.y-y*other.x;
+	return other;
+}
+
 VectorPF::operator VectorI()
 	{
 		VectorI newVector;

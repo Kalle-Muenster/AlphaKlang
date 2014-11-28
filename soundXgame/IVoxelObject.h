@@ -22,7 +22,7 @@ public:
 	void			Mode(ColorMode);
 
 protected:
-
+	GLfloat		  bumpFactor;
 	ColorMode	  mode;
 	ConID		  conID;
 	Voxel		  Voxlers[16384+64];

@@ -51,7 +51,7 @@ Cam::IsShared(bool setter)
 	if(setter!=NULL)
 	{
 		if(setter && !_shareAudioReciever)
-			GetMasterReciever()==this;
+			MasterReciever=this;
 		_shareAudioReciever = setter;
 	}
 	return _shareAudioReciever;

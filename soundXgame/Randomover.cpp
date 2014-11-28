@@ -8,12 +8,12 @@ Randomover::Initialize(void)
 	moving = true;
 
 //	speed = Utility::GetRandom();
-	SetSpeed(Utility::GetRandom());
-	Connection()->rotate(Utility::GetRandom()*10,Utility::GetRandom()*10,Utility::GetRandom()*10);
+	SetSpeed(Utility::Random()/10);
+	Connection()->rotate(Utility::RandomDirection());
 	x=y=z=0;
-	iX = -0.001 * Utility::GetRandom();
-	iY = 0.002 * Utility::GetRandom();
-	iZ = 0.001* Utility::GetRandom();
+	iX =  Utility::Random(0.001);
+	iY =  Utility::Random(0.002);
+	iZ = -Utility::Random(-0.001);
 	return true;
 }
 

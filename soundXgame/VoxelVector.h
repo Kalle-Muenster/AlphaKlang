@@ -37,6 +37,7 @@ public:
 	VectorF operator -(VectorF subtractor);
 	VectorF operator *(float s);
 	VectorF operator /(float s);
+	VectorF cros(VectorF other);
 	bool operator ==(VectorF other);
 	bool operator !=(VectorF other);
 	static const VectorF* const Zero;

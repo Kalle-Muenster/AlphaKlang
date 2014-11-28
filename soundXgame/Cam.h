@@ -85,7 +85,7 @@ public:
 
 	template<typename T> T* GetCameraMode(void)
 	{
-		return (T*)getConnectables(T::StaticCamModeID);
+		return (T*)getConnectables(T::StaticCamModeID-1);
 	}
 
 };
@@ -131,7 +131,10 @@ public:
 	int						NumberOfModes; 
 	CAM_MODE                Mode(CAM_MODE = get);
 	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
-
+	template<typename CMod> CMod* Get(void)
+	{
+		return ModeSocket->GetCameraMode<CMod>();
+	}
 };
 
 #endif

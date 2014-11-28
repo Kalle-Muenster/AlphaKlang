@@ -406,3 +406,39 @@ Utility::GetRandom(void)
 	rand /= 100;
 	return rand;
 }
+
+
+bool _randomizatorSeeded=false;
+//random float from 0 to max;
+
+
+float
+Utility::Random(void)
+{
+	if(!_randomizatorSeeded)
+	{
+		std::srand(GetTickCount());
+		_randomizatorSeeded=true;
+	}
+	int randomfloat = std::rand();
+	return ((float)randomfloat/32767);
+}
+
+float
+Utility::Random(float MAX_float)
+{
+	return Utility::Random()*MAX_float;
+}
+
+Vector3
+Utility::RandomVector3(void)
+{
+	Vector3 vec3 = Vector3(Utility::Random(2.0f)-1.0f,Utility::Random(2.0f)-1.0f,Utility::Random(2.0f)-1.0f);
+	return vec3;
+}
+
+Vector3
+Utility::RandomDirection(void)
+{
+	return Utility::RandomVector3().normal();
+}

@@ -3,9 +3,7 @@
 
 int Spectator::StaticCamModeID = -1;
 float iX,Yps;
-bool _willMove;
-bool _resetCursor = false;
-float _xmover,_ymover;
+
 
 Spectator::Spectator(void)
 {
@@ -23,49 +21,54 @@ Spectator::~Spectator(void)
 bool
 Spectator::Initialize(void)
 {
-	_xmover=_ymover=0;
+	
+	delta=0;
+	rotary3 = *Vector3::Zero;
+	vec = *Vector3::Zero;
 	StaticCamModeID = this->CamModeID();
+
 	return true;
 }
 
 void 
 Spectator::UpdateMode(void)
 { 
-	_xmover+=INPUT->Mouse.Movement.y;
-	_ymover+=INPUT->Mouse.Movement.x;
+	//if(CamCubus == NULL)
+	//	return;
+	//else
+	//{
+	//camera->transform.position = CamCubus->getTransform()->position;
+	//camera->transform.rotation = CamCubus->getTransform()->rotation;
+	//}
+	//if(INPUT->Mouse.WheelV!=WHEEL::NONE)
+	//	delta = (float)INPUT->Mouse.WheelV/10 * INPUT->FrameTime;
+	//if(INPUT->Mouse.MIDDLE.CLICK)
+	//	delta = 0;
 
-	Vector3 direction = (camera->transform.forward + (camera->transform.right * (INPUT->Mouse.Movement.x)) + (camera->transform.up *(INPUT->Mouse.Movement.y)));
+	//vec.x += INPUT->Mouse.Movement.x/1000;
+	//vec.y += -INPUT->Mouse.Movement.y/1000;
 
-	camera->rotate(direction.normal());
-	//	camera->transform.forward = (camera->transform.rotation - camera->transform.position).normal();
-	if(_resetCursor)
-	//	glutWarpPointer(SCREENWIDTH/2,SCREENHEIGHT/2);
+	//glutSetCursor(GLUT_CURSOR_CYCLE);
 
-	if(_willMove)
-	{
-//		camera->transform.forward = (camera->transform.rotation - camera->transform.position).normal();
-		camera->transform.position += camera->transform.forward * Yps;
-		_willMove=false;
-	}
-	
-	_resetCursor=false;
-	this->IsDirty=false;
-	glPushMatrix();
-	glTranslatef(camera->transform.position.x,camera->transform.position.y,camera->transform.position.z);
-	glRotatef(camera->transform.rotation.x,1,0,0);
-	glRotatef(camera->transform.rotation.y,0,1,0);
-	glRotatef(camera->transform.rotation.z,0,0,1);
+	//rotary3.x = -sin(vec.x);
+	//rotary3.z = cos(vec.x);
+	//rotary3.y = sin(vec.y);
 
-	gluLookAt(0, 0, 0,
-	0,0,-1,	0, 1, 0);
-	glPopMatrix();
+	//camera->transform.forward = rotary3;
+	//camera->transform.up = rotary3 - Vector3(0,1,0);
+	//camera->transform.right = rotary3.cros(camera->transform.up);
+	//
+	//rotary3 = camera->move(camera->transform.position+rotary3*delta);
+
+//	gluLookAt(vec.x,vec.y,vec.z,rotary3.x, rotary3.y, rotary3.z, 0, 1,0);
+
 }
 
 
 void 
 Spectator::keyPress(char key)
 {
-	float delta = moveSpeed * INPUT->FrameTime;
+	float delta = camera->transform.speed * INPUT->FrameTime;
 	iX=Yps=0;
 
 	if(IsActive)
@@ -85,7 +88,7 @@ Spectator::keyPress(char key)
 				iX=1;
 				break;
 		}
-		_willMove = Yps!=iX;
+		cameraWillMove = Yps!=iX;
 
 			Yps *= delta;
 			iX  *= delta;
@@ -95,7 +98,7 @@ Spectator::keyPress(char key)
 void
 Spectator::specialKeyPressed(int key)
 {
-	float delta = moveSpeed * INPUT->FrameTime;
+	float delta = camera->transform.speed * INPUT->FrameTime;
 	iX=0;
 	Yps=0;
 
@@ -116,25 +119,17 @@ Spectator::specialKeyPressed(int key)
 			iX=1;
 			break;
 		}
-	_willMove = Yps!=iX;
+	cameraWillMove = Yps!=iX;
 	iX*=delta;
 	Yps*=delta;
 	}
 }
 
-void
-Spectator::mouseMotion(int newX, int newY)
-{
-	if(IsActive)
-	{
-
-	}
-}
 
 
-void
-Spectator::mouseWheel(int wheel,WHEEL state)
-{
-	Yps = (float)state * (moveSpeed * INPUT->FrameTime);
-	_willMove=true;
-}
+//void
+//Spectator::mouseWheel(int wheel,WHEEL state)
+//{
+//	Yps = (float)state * (moveSpeed * INPUT->FrameTime);
+//	_willMove=true;
+//}

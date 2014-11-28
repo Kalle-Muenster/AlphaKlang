@@ -153,7 +153,7 @@ public:
 		{
 			printf("%s-ID:%i: removing connectable %s at slot %i !\n",Connection()->GetName(),Connection()->GetID(),typeid(*getConnectables(id-1)).name(),id-1);
 			delete getConnectables(id-1);
-			ConIDs[id-1]==NULL;
+			ConIDs[id-1]=NULL;
 			NumberOfConnectedObjects--;
 		}
 	//	}
