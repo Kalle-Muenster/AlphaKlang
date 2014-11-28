@@ -31,7 +31,7 @@ void MouseWheelFunc(int,int,int,int);
 void processSpecialKeys(int,int,int);
 void keyboardInput(unsigned char,int,int);
 void keyboardUpInput(unsigned char,int,int);
-void MouseHoverWindow(int);
+//void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 
@@ -72,7 +72,7 @@ void InitGlut(void)
 	glutMouseFunc(MouseClicks);
 	glutMouseWheelFunc(MouseWheelFunc);
 	glutSpecialFunc(processSpecialKeys);
-	glutEntryFunc(MouseHoverWindow);
+	//glutEntryFunc(MouseHoverWindow);
 
 	// Keyboard
 	glutKeyboardFunc(keyboardInput);
@@ -257,15 +257,15 @@ void OnDisplay(void)
 {
 	UpdateCycle();
 
-#ifdef LATE_BEFOR_DRAW
-	UPDATE->DoTheLateUpdates();
-#endif
+	#ifdef LATE_BEFOR_DRAW
+		UPDATE->DoTheLateUpdates();
+	#endif
 
 	RenderCycle();
 
-#ifdef LATE_AFTER_DRAW
-	UPDATE->DoTheLateUpdates();
-#endif
+	#ifdef LATE_AFTER_DRAW
+		UPDATE->DoTheLateUpdates();
+	#endif
 
 	INPUT->PerFrameReset();
 	AUDIO->PerFrameReset();
@@ -313,13 +313,8 @@ void keyboardInput(unsigned char key,int x,int y)
 
 void keyboardUpInput(unsigned char key,int x,int y)
 {
-
 	INPUT->registerKeyUp(key);
-
-	//std::cout << "up " << key << std::endl;
 }
-
-
 
 void processSpecialKeys(int key, int xx, int yy)
 {
@@ -342,7 +337,7 @@ void MouseWheelFunc(int wheel,int state,int X,int Y)
 	INPUT->UpdateMouseWheel(wheel,state,X,Y);
 }
 
-void MouseHoverWindow(int)
+/*void MouseHoverWindow(int)
 {
 
-}
+}*/
