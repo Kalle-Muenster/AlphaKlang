@@ -20,7 +20,7 @@ Ground::Ground(void) :
 	z(10.0f),
 	width(3.5f),
 	heightRange(7.0f),
-	dynamicRange(5.0f),
+	dynamicRange(25.0f),
 
 	drawPlanes(false), 
 	drawLines(true),
@@ -336,7 +336,7 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 15.0f * INPUT->FrameTime;
+	float speed = 35.0f * INPUT->FrameTime;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else

@@ -152,6 +152,8 @@ void LoadContent(void)
 	vObject->MainSizzes.y=0.045f;
 
 
+	// Music Cube
+
 	(new Cubus("X-7.tga"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
@@ -159,9 +161,11 @@ void LoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
 	
 
+	// Just some Music Cubes
 	unsigned obj;
 	float x,y,z;
 	x=y=z=0;
+	x = 10.0f;
 	for(int i = 0;i<10;i++)
 	{
 		x-=((float)i);
@@ -176,16 +180,21 @@ void LoadContent(void)
 		SCENE->Object(obj)->SetName("Brummer");
 	}
 
-	SCENE->camera->Mode(FIRSTPERSON);
+
+	// Spectrum Analyzer
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
 	analyzer->AddConnectable<CamTargetRotator>();
-	SCENE->Object(analyzer->GetID())->move(1,1,-2);
-	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
-	analyzer->IsGrounded = true;
-//	SCENE->camera->SetTarget(SCENE->Object(obj));
+	//SCENE->Object(analyzer->GetID())->move(1,3,-2);
+	analyzer->move(7, 0, -10);
+	//SCENE->Object("SpectrumAnalyzer")->move(1,0,-5);
+	//analyzer->IsGrounded = true;
 
+	// Camera
+
+	SCENE->camera->Mode(FIRSTPERSON);
+//	SCENE->camera->SetTarget(SCENE->Object(obj));
 	SCENE->camera->SetTarget(SCENE->Object(25));
 
 }

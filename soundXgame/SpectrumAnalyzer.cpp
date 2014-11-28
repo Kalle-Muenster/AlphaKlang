@@ -5,6 +5,7 @@
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
+	this->IsGrounded = false;
 	InitializeSpectrumAnalyzer();
 }
 
@@ -25,17 +26,18 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	X-=(SPECTRUM_SIZE*0.5);
 
 	// scale this object to the size each subobject will have.. 
-	this->getTransform()->scale.x=0.1;
-	this->getTransform()->scale.y=0.1;
-	this->getTransform()->scale.z=2;
+	this->getTransform()->scale.x=0.3f;
+	this->getTransform()->scale.y=0.3f;
+	this->getTransform()->scale.z=2.0f;
 
-	// Instanciate as manny Cubes as tere here frequency-bands 
-	// in the used fft-window... for each, increase its possition-ofsett
-	// by its size allned with the offset-direction
+	// Instanciate as many Cubes as there hear frequency-bands 
+	// in they used fft-window... for each, increase its possition-offset
+	// by its size alled with the offset-direction
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
 	{
 		offset.x = X+i;
 		bands[i]=(new Cubus(color,true,false,offset));
+		bands[i]->IsGrounded = true;
 		bands[i]->scale(getTransform()->scale);
 	}
 	
@@ -48,7 +50,6 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	// this sett's the hight of the analyzers chart.
 	// band meshures will multiplied by it.
 	this->getTransform()->scale.y = 3;
-
 
 	//get beeing invoked at EarlyUpdate, to get the FFT-Data...
 	UPDATE->SignInForEarlyUpdate(this);
@@ -81,6 +82,12 @@ SpectrumAnalyzer::DoUpdate(void)
 	}
 }
 
+void
+SpectrumAnalyzer::DoLate(void)
+{
+	//maybe the sub-updates here better...
+}
+
 void 
 SpectrumAnalyzer::ChangeColor(int index,float factor)
 {
@@ -100,20 +107,14 @@ SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 		bands[band]->getTransform()->scale.y = newScaleY;
 }
 
-
-void
-SpectrumAnalyzer::DoLate(void)
-{
-	//maybe the sub-updates here better...
-}
-
 void
 SpectrumAnalyzer::draw(void)
 {
 	if(IsVisible)
 	{
 		if(_CHANGEDposition || _CHANGEDrotation || _CHANGEDscale)
-		{	// Re-Positioning,sizeing and rotating the SubCubes
+		{
+			// Re-Positioning,sizeing and rotating the SubCubes
 			// if the whole analyzerobject has been moved,resized 
 			// or rotated during last update..  -->> maybe this coul'd be don at LateUpdate better... dont know....
 			for(int i=0;i<SPECTRUM_SIZE;i++)
@@ -131,8 +132,9 @@ SpectrumAnalyzer::draw(void)
 			_CHANGEDposition = _CHANGEDrotation = _CHANGEDscale = false;
 			offset = *Vector3::Zero;
 		}
-		else //if there are no changes...
-		{//--Draw all subcubes...
+		else // if there are no changes...
+		{
+			// Draw all subcubes
 			for(int i=0;i<SPECTRUM_SIZE;i++)
 				bands[i]->draw();
 		}
@@ -169,4 +171,5 @@ SpectrumAnalyzer::~SpectrumAnalyzer(void)
 	UPDATE->SignOutFromUpdate(this);
 	UPDATE->SignOutFromLateUpdate(this);
 	delete[] bands;
+	delete fftData;
 }
