@@ -56,6 +56,47 @@ ShaderObj::draw(void)
 		0                    // offset vom ersten element
 	);
 
+	  // Calculate model view transformation
+	//glm::mat4x4 matrix
+    //QMatrix4x4 matrix;
+    //matrix.translate(0.0, 0.0, -5.0);
+    //matrix.rotate(rotation);
+
+	//const GLchar* location = "mvp_matrix";
+	//glGetUniformLocation(program, location);
+	//glUniform4f(location, x, y, z, w);
+
+	//this->setVariable("Scale", 0, 0, 0, 1);
+
+
+	/*glm::mat4 mvp = glm::mat4(
+		glm::vec4(3.0f, 0.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 1.0f, 0.0f),
+		glm::vec4(0.0f, 0.0f, 0.0f, 2.0f)
+	);*/
+	float mvp[16] = {
+		1.0f, 0, 0, 0,
+		0, 1.0f, 0, 0,
+		0, 0, 1.0f, 1,
+		0, 0, 1.0f, 0
+	  };
+
+	GLuint matrix = glGetUniformLocation(program, "mvp");
+	//glUniformMatrix4fv(matrix, 1, GL_FALSE, glm::value_ptr(mvp));
+	//memset(mvp, 0, sizeof(mvp));
+	glUniformMatrix4fv(matrix, 1, GL_FALSE, &mvp[0] );
+		
+
+	GLuint location = glGetUniformLocation(program, "Scale");
+	if(location != -1)
+	{
+		glUniform1f(location, 0.5f);
+	}
+
+    // Set modelview-projection matrix
+    //program.setUniformValue("mvp_matrix", projection * matrix);
+
 	/*glVertexAttribPointer(
 		attribute_v_color,					// attribute
 		3,									// anzahl der elemente pro vertex

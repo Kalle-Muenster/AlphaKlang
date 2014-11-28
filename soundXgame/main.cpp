@@ -31,7 +31,7 @@ void MouseWheelFunc(int,int,int,int);
 void processSpecialKeys(int,int,int);
 void keyboardInput(unsigned char,int,int);
 void keyboardUpInput(unsigned char,int,int);
-void MouseHoverWindow(int);
+//void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
 
@@ -72,7 +72,7 @@ void InitGlut(void)
 	glutMouseFunc(MouseClicks);
 	glutMouseWheelFunc(MouseWheelFunc);
 	glutSpecialFunc(processSpecialKeys);
-	glutEntryFunc(MouseHoverWindow);
+	//glutEntryFunc(MouseHoverWindow);
 
 	// Keyboard
 	glutKeyboardFunc(keyboardInput);
@@ -153,6 +153,11 @@ void LoadContent(void)
 	vObject->MainSizzes.y=0.045f;
 
 
+
+	
+
+	// Music Cube
+
 	(new Cubus("Deckelblech-2s.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
@@ -160,9 +165,11 @@ void LoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
 	
 
+	// Just some Music Cubes
 	unsigned obj;
 	float x,y,z;
 	x=y=z=0;
+	x = 10.0f;
 	for(int i = 0;i<10;i++)
 	{
 		x-=((float)i);
@@ -180,7 +187,8 @@ void LoadContent(void)
 		SCENE->Object(obj)->IsVisible=true;
 	}
 
-	SCENE->camera->Mode(FIRSTPERSON);
+
+	// Spectrum Analyzer
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
@@ -188,9 +196,17 @@ void LoadContent(void)
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
 	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;
+	analyzer->AddConnectable<CamTargetRotator>();
+	//SCENE->Object(analyzer->GetID())->move(1,3,-2);
+	analyzer->move(7, 0, -10);
+	//SCENE->Object("SpectrumAnalyzer")->move(1,0,-5);
+	//analyzer->IsGrounded = true;
+
+	// Camera
+
+	SCENE->camera->Mode(FIRSTPERSON);
 //	SCENE->camera->SetTarget(SCENE->Object(obj));
 
-	SCENE->camera->SetTarget(SCENE->Object(25));
 
 }
 
@@ -261,15 +277,15 @@ void OnDisplay(void)
 {
 	UpdateCycle();
 
-#ifdef LATE_BEFOR_DRAW
-	UPDATE->DoTheLateUpdates();
-#endif
+	#ifdef LATE_BEFOR_DRAW
+		UPDATE->DoTheLateUpdates();
+	#endif
 
 	RenderCycle();
 
-#ifdef LATE_AFTER_DRAW
-	UPDATE->DoTheLateUpdates();
-#endif
+	#ifdef LATE_AFTER_DRAW
+		UPDATE->DoTheLateUpdates();
+	#endif
 
 	INPUT->PerFrameReset();
 	AUDIO->PerFrameReset();
@@ -317,13 +333,8 @@ void keyboardInput(unsigned char key,int x,int y)
 
 void keyboardUpInput(unsigned char key,int x,int y)
 {
-
 	INPUT->registerKeyUp(key);
-
-	//std::cout << "up " << key << std::endl;
 }
-
-
 
 void processSpecialKeys(int key, int xx, int yy)
 {
@@ -346,7 +357,7 @@ void MouseWheelFunc(int wheel,int state,int X,int Y)
 	INPUT->UpdateMouseWheel(wheel,state,X,Y);
 }
 
-void MouseHoverWindow(int)
+/*void MouseHoverWindow(int)
 {
 
-}
+}*/
