@@ -62,7 +62,6 @@ void VoxelMap::ReLoade(char* filename)
 				voxels[i].SetNeighbours(voxels[(i-1)-mapWidth].color ,voxels[i-(mapWidth-1)].color,voxels[i+1+mapWidth].color,voxels[i+(mapWidth-1)].color);
 			}
 		}
-		loaded=true;
 	}
 	else
 	{
@@ -92,12 +91,13 @@ void VoxelMap::ReLoade(char* filename)
 			voxels[count].position.Yps=(y*scale)+ *position.y;
 			voxels[count].MainDimensions = &MainSizzes;
 
-			if(x>0 && x<mapWidth && y>0 && y<mapHeight)
+			if(x>0 && x<mapWidth-1 && y>0 && y<mapHeight-1)
 			{
 				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
 			}
 
 		}
+		delete loader.data;
 	}
 }
 

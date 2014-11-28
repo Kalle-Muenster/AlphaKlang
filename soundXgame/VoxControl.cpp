@@ -35,7 +35,7 @@ VoxControl::Initialize(void)
 		return true;
 }
 
-
+char _lastKey='\0';
 int _currentSellection=0;
 void 
 VoxControl::keyPress(char key)
@@ -43,29 +43,48 @@ VoxControl::keyPress(char key)
 	//SCENE->Object((unsigned)0)->IsVisible=false;
 	if(key=='x')
 	{
-		if(++_currentSellection>=5)
-			_currentSellection=0;
-		printf("File \"%s\" Sellected...\n",_files[_currentSellection]);
+		if(_lastKey!='x')
+		{
+			if(++_currentSellection>=5)
+				_currentSellection=0;
+			printf("File \"%s\" Sellected...\n",_files[_currentSellection]);
+			_lastKey='x';
+		}
 	}
+
+
 	if(key == 'r')
 	{
-		this->vConnection()->ReLoade(_files[imageIndex=_currentSellection]);
-		printf("Image \"%s\" geloadedt...\n",_files[_currentSellection]);
-		vConnection()->MainSizzes.x=0.2;
-		vConnection()->MainSizzes.y=0.045f;
+		if(_lastKey!='r')
+		{
+			this->vConnection()->ReLoade(_files[imageIndex=_currentSellection]);
+			printf("Image \"%s\" geloadedt...\n",_files[_currentSellection]);
+			vConnection()->MainSizzes.x=0.2;
+			vConnection()->MainSizzes.y=0.045f;
+			_lastKey='r';
+		}
 	}
+
 
 	if(key == 'l')
 	{
-		this->vConnection()->LoadMap(_files[bumpmapIndex=_currentSellection],bumpmapchannel);
+		if(_lastKey!='l')
+		{
+			this->vConnection()->LoadMap(_files[bumpmapIndex=_currentSellection],bumpmapchannel);
 		printf("BumpMap file-\"%s\"-Channel %i geloadedt !\n",_files[_currentSellection],bumpmapchannel);
 		if(++bumpmapchannel>3)
 			bumpmapchannel=0;
+		_lastKey='l';
+		}
 	}
+
+
 	if(key=='b')
 		this->vConnection()->Mode(IVoxelObject::ColorMode::BUNT);
+
 	if(key=='n')
 		this->vConnection()->Mode(IVoxelObject::ColorMode::NORMAL);
+
 	if(key=='h')
 		this->vConnection()->Mode(IVoxelObject::ColorMode::BYTE);
 
@@ -85,6 +104,7 @@ VoxControl::keyPress(char key)
 		}
 		transparenseEnabled = !transparenseEnabled;
 	}
+
 	if(key=='z')
 		__ZedMode=true;
 	else

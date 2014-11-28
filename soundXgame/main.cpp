@@ -5,6 +5,8 @@
 #include "ShaderObj.h"
 #include "Musikubus.h"
 
+
+
 //Global Declerations:
 int wnd;
 void* font;
@@ -107,7 +109,7 @@ void GlInit(void)
 }
 
 
-//ConID* testID;
+ConID testID;
 //int i1,i2,i3;
 //int cycle1 = 127;
 //int cycle2 = 255;
@@ -167,6 +169,7 @@ void LoadContent(void)
 		obj = (new Cubus("X-7.tga"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
+		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicListener>();
@@ -220,27 +223,17 @@ void UpdateCycle(void)
 
 
 	//Update:
-	UPDATE->DoAllTheUpdates();
+	UPDATE->DoTheUpdates();
 
 	if(INPUT->Mouse.RIGHT.CLICK)
 	{
-		if(++switcher>=SCENE->ObjectsCount())
-			switcher=1;
-		
+		do{if(++switcher>=SCENE->ObjectsCount())
+				switcher=1;
+		}while(SCENE->Object(switcher)==NULL);
+
 		SCENE->camera->SetTarget(SCENE->Object(switcher));
 	}
 
-	if(INPUT->Mouse.WheelV==WHEEL::UP)
-	{
-		analyzer->fallOffAmount += 0.01f;
-		printf("FallOffAmount: %f",analyzer->fallOffAmount);
-	}
-
-	if(INPUT->Mouse.WheelV==WHEEL::DOWN)
-	{
-		analyzer->fallOffAmount -= 0.01f;
-		printf("FallOffAmount: %f",analyzer->fallOffAmount);
-	}
 }
 
 //The Main-Draw-Call...
@@ -254,6 +247,8 @@ void RenderCycle(void)
 	glutSwapBuffers();
 }
 
+#define LATE_AFTER_DRAW
+//#define LATE_BEFOR_DRAW
 
 //GL-DisplayCallbacks
 ////////////////////////////////////////////////////////
@@ -261,7 +256,17 @@ void RenderCycle(void)
 void OnDisplay(void)
 {
 	UpdateCycle();
+
+#ifdef LATE_BEFOR_DRAW
+	UPDATE->DoTheLateUpdates();
+#endif
+
 	RenderCycle();
+
+#ifdef LATE_AFTER_DRAW
+	UPDATE->DoTheLateUpdates();
+#endif
+
 	INPUT->PerFrameReset();
 	AUDIO->PerFrameReset();
 }
@@ -302,9 +307,6 @@ void keyboardInput(unsigned char key,int x,int y)
 
 	if(key == 27) // ESC
 		glutExit();
-
-	if(key=='y')
-		SCENE->Object(25)->conXtor->RemoveConnected<Randomover>();
 
 	INPUT->registerKey(key);
 }

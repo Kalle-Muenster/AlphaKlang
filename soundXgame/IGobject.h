@@ -59,7 +59,10 @@ public:
 	{
 		return conXtor->GetConnected<T>()!=NULL;
 	}
-
+	template<typename T> void Remove(void)
+	{
+		conXtor->RemoveConnected<T>();
+	}
 	//void through(void)
 	//{
 	//	if(((Kollective*)conXtor)->checkFail())

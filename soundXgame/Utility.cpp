@@ -36,7 +36,7 @@ Loader::Loader(const char* filename)
 
 Loader::~Loader(void)
 {
-	delete data;
+//	delete data;
 }
 
 int

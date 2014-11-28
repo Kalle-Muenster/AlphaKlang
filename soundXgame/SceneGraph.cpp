@@ -239,11 +239,14 @@ SceneGraph::Object(GobID ID)
 	//for(auto it=drawables.begin();it!=drawables.end();it++)
 	//	if((*it)->GetID()==ID)
 	//		return (*it);
+	if(_drawables[ID]!=NULL)
+	{
+		if(ID == _drawables[ID]->GetID())
+			return _drawables[ID];
+	}
+	
+	return NULL;
 
-	if(ID == _drawables[ID]->GetID())
-		return _drawables[ID];
-	else
-		return NULL;
 }
 
 void

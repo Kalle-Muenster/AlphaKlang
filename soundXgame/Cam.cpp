@@ -83,13 +83,13 @@ Cam::SetTarget(Vector3 *position)
 IGObject*
 Cam::SetTarget(IGObject *targetObject)
 {
-	Mode(FOLLOWTARGET);
+	//Mode(FOLLOWTARGET);
 	_distanceToTarget = transform.position.distance(targetObject->getTransform()->position);
 	_targetPosition = &targetObject->getTransform()->position;
 	_targetObject = targetObject;
 	_targetObject->IsVisible=true;
 	
-	printf("CAMERA: FOLLOWTARGET: Set %s-ID:%i As Follow-Target!\n",_targetObject->GetName(),_targetObject->GetID());
+	printf("CAMERA: Set %s-ID:%i As Camera-Target!\n",_targetObject->GetName(),_targetObject->GetID());
 	return _targetObject;
 }
 
@@ -231,7 +231,7 @@ Cam::Mode(CAM_MODE value)
 			ModeSocket->Get<CameraMode>(value)->IsActive = true;
 		}
 		
-		printf("CAMERA: Set to %s-Mode !\n", ModeSocket->Get<CameraMode>(value)->ModeName);
+		printf("CAMERA: Mode: %s activated! !\n", ModeSocket->Get<CameraMode>(value)->ModeName);
 		
 		UpdateView();
 	}

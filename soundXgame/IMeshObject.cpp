@@ -14,10 +14,12 @@ IMeshObject::IMeshObject(void)
 	transform.right	  = glm::vec3(1,0,0);
 	transform.up	  = glm::vec3(0,1,0);
 	transform.forward = glm::vec3(0,0,1);
+	transform.speed=1.f;
 	this->color.u32 = 0xffffffff;
 	this->FaceShape = GL_TRIANGLES;
 	this->NoBackfaceCulling = false;
 	this->UseTexture = false;
+
 }
 
 IMeshObject::~IMeshObject(void)

@@ -4,6 +4,7 @@
 #define _UPDATEMANAGER_H_
 
 #define MAXIMUM_NUMBER_OF_UPDATECLIENTS (1000)
+//#define LATE_AFTER_DRAW
 
 typedef unsigned UpID;
 struct UpdateID
@@ -41,7 +42,8 @@ public:
 	void SignOutFromEarlyUpdate(IUpdateble*);
 	void SignOutFromLateUpdate(IUpdateble*);
 
-	void DoAllTheUpdates(void);
+	void DoTheUpdates(void);
+	void DoTheLateUpdates(void);
 
 };
 

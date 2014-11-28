@@ -125,7 +125,8 @@ public:
 		ConID TypeHash = (ConID)typeid(T).hash_code();
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
 			if(ConIDs[i] == TypeHash)
-				return ConIDs[i]-1;
+			//	return ConIDs[i]-1;
+				return i+1;
 	}
 
 	/*Removes a connected Component by it's type...*/
@@ -146,13 +147,16 @@ public:
 	/*Remove a connected Component by it's ID...*/
 	template<typename T> void RemoveConnected(ConID id)
 	{
-		if(typeid((*getConnectables(id))).hash_code()==typeid(T).hash_code())
+	//	if(typeid((*getConnectables(id))).name()==typeid(T).name())
+	//	{
+		if(getConnectables(id-1)!=NULL)
 		{
-			printf("%s-ID:%i: removing connectable %s !\n",Connection()->GetName(),Connection()->GetID(),typeid(getConnectables(id)).name());
-			delete getConnectables(id);
-			ConIDs[id]==NULL;
+			printf("%s-ID:%i: removing connectable %s at slot %i !\n",Connection()->GetName(),Connection()->GetID(),typeid(*getConnectables(id-1)).name(),id-1);
+			delete getConnectables(id-1);
+			ConIDs[id-1]==NULL;
 			NumberOfConnectedObjects--;
 		}
+	//	}
 	}
 
 	//UNREADY-SECTION...

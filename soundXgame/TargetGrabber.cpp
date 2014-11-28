@@ -97,15 +97,13 @@ TargetGrabber::UpdateMode(void)
 	}
 	else if(INPUT->Mouse.LEFT.DOUBLE)
 	{
-		printf("CAMERA: TARGETGRABBER: target \"%s\" grabbed!...\n",GrabTarget());
+		printf("CAMERA: TARGETGRABBER: target \"%s\" - ID:%i grabbed!...\n",GrabTarget()->GetName(),camera->GetTarget()->GetID());
 	}
 }
 
 IGObject*
 TargetGrabber::GrabTarget(void)
 {
-	if(!camera->GetTarget())
-		return NULL;
-	_targetGRABBED = true;
+	_targetGRABBED = camera->GetTarget()!=NULL;
 	return camera->GetTarget();
 }

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <vector>
-#include "UpdateManager.h"
+//#include "UpdateManager.h"
+#include "projectMacros.h"
+
+
 
 IUpdateble* _earlyUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
 IUpdateble* _updates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/2];
@@ -132,7 +135,7 @@ UpdateManager::SignOutFromLateUpdate(IUpdateble* updatebleInstance)
 
 
 void //Invoking all Update-Clients...
-UpdateManager::DoAllTheUpdates(void)
+UpdateManager::DoTheUpdates(void)
 {
 	unsigned i,counter;
 	
@@ -145,6 +148,8 @@ UpdateManager::DoAllTheUpdates(void)
 		i++;
 	}
 
+	INPUT->FireEvents();
+
 	i = counter = 0;
 	while(counter<_NumberOfUpdateClients)
 	{
@@ -154,6 +159,24 @@ UpdateManager::DoAllTheUpdates(void)
 		i++;
 	}
 
+//#ifdef LATE_BEFOR_DRAW
+//#undef LATE_AFTER_DRAW
+//	i = counter = 0;
+//	while(counter<_NumberOfLateClients)
+//	{
+//		if(_lateUpdates[i]!=NULL)
+//			{ _lateUpdates[i]->DoLate(); counter++;	}
+//
+//		i++;
+//	}
+//#endif
+}
+
+//#ifdef LATE_AFTER_DRAW
+void 
+UpdateManager::DoTheLateUpdates(void)
+{
+	unsigned i,counter;
 	i = counter = 0;
 	while(counter<_NumberOfLateClients)
 	{
@@ -163,6 +186,7 @@ UpdateManager::DoAllTheUpdates(void)
 		i++;
 	}
 }
+//#endif
 
 
 

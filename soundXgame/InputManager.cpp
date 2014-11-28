@@ -67,7 +67,7 @@ InputManager::InputManager(void)
 	Controler1.NumberOfButtons=10;
 	Controler1.NumberOfAxis=3;
 
-	UpdateManager::getInstance()->SignInForEarlyUpdate(this);
+//	UpdateManager::getInstance()->SignInForEarlyUpdate(this);
 
 	/*
 	if(glutGet(GLUT_HAS_JOYSTICK))
@@ -184,8 +184,9 @@ InputManager::notifyKey()
 		}
 	}
 }
+
 void
-InputManager::DoEarly(void)
+InputManager::FireEvents(void)
 {
 	this->notifyKey();
 }

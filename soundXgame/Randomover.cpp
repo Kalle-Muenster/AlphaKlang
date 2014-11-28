@@ -7,7 +7,9 @@ Randomover::Initialize(void)
 	rotation = true;
 	moving = true;
 
-	speed=Utility::GetRandom();
+//	speed = Utility::GetRandom();
+	SetSpeed(Utility::GetRandom());
+	Connection()->rotate(Utility::GetRandom()*10,Utility::GetRandom()*10,Utility::GetRandom()*10);
 	x=y=z=0;
 	iX = -0.001 * Utility::GetRandom();
 	iY = 0.002 * Utility::GetRandom();
@@ -17,6 +19,8 @@ Randomover::Initialize(void)
 
 void Randomover::DoUpdate(void)
 {
+	speed = this->Connection()->getTransform()->speed;
+
 	x+=iX;
 	y+=iY;
 	z+=iZ;
@@ -31,7 +35,7 @@ void Randomover::DoUpdate(void)
 	if(this->rotation)
 		this->Connection()->rotate(getTransform()->rotation.x+x*speed,getTransform()->rotation.y+y*speed,getTransform()->rotation.z+z*speed);
 	if(this->moving)
-		this->Connection()->move(getTransform()->rotation*0.01);
+		this->Connection()->move(getTransform()->rotation*0.005*speed);
 }
 
 void
@@ -49,5 +53,5 @@ Randomover::SetMoving(bool status)
 void
 Randomover::SetSpeed(float speed)
 {
-	this->speed = speed;
+	this->Connection()->getTransform()->speed = speed;
 }

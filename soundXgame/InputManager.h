@@ -80,7 +80,7 @@ public:
 #include "UpdateManager.h"
 
 class InputManager
-	: public IUpdateble
+//	: public IUpdateble
 {
 	//Con-and Destruction....
 private:
@@ -168,7 +168,7 @@ public:
 	void SaveViewportRectangle(int x,int y,int w,int h);
 	void UpdateJoysticks(int id, unsigned buttons,int AxisX,int AxisY,int AxisZ);
 
-	virtual void DoEarly(void);
+	void FireEvents(void);
 
 	//frameReset: must be called before all other
 	//i.E. as first function in the UpdateFunction 

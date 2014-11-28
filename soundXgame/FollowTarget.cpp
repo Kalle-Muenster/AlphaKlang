@@ -55,7 +55,7 @@ FollowTarget::GetTarget(void)
 void
 FollowTarget::follow()
 {
-	camera->followTarget();
+//	camera->followTarget();
 	if(GetTarget()!=NULL)
 		this->IsActive = true;
 }
@@ -64,7 +64,7 @@ void
 FollowTarget::StopFollowing()
 {
 	this->IsActive=false;
-	camera->stopFollowing();
+//	camera->stopFollowing();
 }
 
 float
