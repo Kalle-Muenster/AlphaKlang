@@ -186,8 +186,10 @@ void LoadContent(void)
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
 	analyzer->AddConnectable<CamTargetRotator>();
+	analyzer->move(20.0f, 0, -30.0f);
+	analyzer->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f);
+	analyzer->Initialize();
 	//SCENE->Object(analyzer->GetID())->move(1,3,-2);
-	analyzer->move(7, 0, -10);
 	//SCENE->Object("SpectrumAnalyzer")->move(1,0,-5);
 	//analyzer->IsGrounded = true;
 

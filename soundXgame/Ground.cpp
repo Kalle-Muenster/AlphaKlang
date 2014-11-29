@@ -15,8 +15,8 @@ Ground* Ground::getInstance()
 Ground::Ground(void) :
 	count_x(40),
 	count_z(40),
-	x(-7.0f),
-	y(-1.5f),
+	x(-10.0f),
+	y(-10.0f),
 	z(10.0f),
 	width(3.5f),
 	heightRange(7.0f),
@@ -362,12 +362,18 @@ void Ground::Update(void)
 
 float Ground::GetGroundY(float posX, float posZ)
 {
+//	std::cout << posX << " / " << posZ << std::endl;
 
+	// calculate to index
 	posX -= x;
 	posZ -= z;
 	posX /= width;
 	posZ /= width;
 	posZ *= -1;
+
+	// if element outside ground -> set next to ground
+	posX = (posX < 0) ? posX = 0 : (posX > count_x) ? count_x : posX;
+	posZ = (posZ < 0) ? posZ = 0 : (posZ > count_z) ? count_z : posZ;
 
 	int indexX = (int)posX;
 	int indexZ = (int)posZ;

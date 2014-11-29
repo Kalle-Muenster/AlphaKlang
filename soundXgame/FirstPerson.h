@@ -18,6 +18,7 @@ protected:
 	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
 	float					mouseSpeed;				// firstPerson Mouse sensitivity
 	virtual void			UpdateMode(void);		// Updates all datachanges in this Cam-Mode...
+	bool					accelerate;				// State if currently running faster is enabled, e.g. Shift pressed
 public:
 	float					x, y, z;					// XZ position of the camera
 

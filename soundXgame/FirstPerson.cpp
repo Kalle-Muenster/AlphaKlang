@@ -36,6 +36,7 @@ FirstPerson::Initialize(void)
 	INPUT->attachMouseWheel(this);
 	INPUT->attachSpecial(this);
 	StaticCamModeID = this->CamModeID();
+	accelerate = false;
 	return true;
 }
 
@@ -138,13 +139,11 @@ FirstPerson::mouseMotion(int newX, int newY)
 	lz = -cos(angle);
 	eyeY += (float)diffY / 300;
 
-	std::cout << eyeY << std::endl;
-
 	// set fixed restriction to top and bottom
-	/*(eyeY < -0.5f)
-		eyeY = -0.5f;
-	else if(eyeY > 2.5f)
-		eyeY = 2.5f;*/
+	if(eyeY < -0.5f + y)
+		eyeY = -0.5f+ y;
+	else if(eyeY > 2.5f+ y)
+		eyeY = 2.5f+ y;
 
 	// set mouse pos center to screen
 	mouseX = SCREENWIDTH/2;
