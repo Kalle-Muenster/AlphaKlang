@@ -345,6 +345,19 @@ void Ground::Update(void)
 		dynamicToTop = false;
 	else if(dynamicVal <= 0)
 		dynamicToTop = true;
+
+
+	Cam* cam = SceneGraph::GetInstance()->camera;
+	CAM_MODE modeType = cam->Mode();
+	if(modeType == FIRSTPERSON)
+	{
+		//CameraMode = mode->Get<FIRSTPERSON>();
+		CameraMode* mode = cam->ModeSocket->Get<CameraMode>(2);
+		FirstPerson* firstPerson = dynamic_cast<FirstPerson*>(mode);
+		float y = Ground::getInstance()->GetGroundY(firstPerson->x, firstPerson->z);
+		firstPerson->UpdateHeight(y);
+	}
+
 }
 
 float Ground::GetGroundY(float posX, float posZ)

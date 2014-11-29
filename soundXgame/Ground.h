@@ -9,6 +9,8 @@
 #include <glimg/glimg.h>
 
 #include "IGObject.h"
+#include "Cam.h"
+#include "FirstPerson.h"
 
 
 class Ground : public IGObject
