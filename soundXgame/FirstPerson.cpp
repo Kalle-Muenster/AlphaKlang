@@ -24,7 +24,7 @@ FirstPerson::Initialize(void)
 	lx			= 0;
 	lz			= -1;
 	x			= 0;
-	y			= 1.0f;
+	y			= 0;
 	z			= 5;
 	eyeY		= 1;
 	moveSpeed	= 0.1f;
@@ -44,7 +44,7 @@ FirstPerson::UpdateMode(void)
 { 
 	
 	camera->move(x, eyeY, z);
-	camera->rotate(x+lx, y, z+lz); 
+	camera->rotate(x+lx, y + 1.7f, z+lz); 
 	this->IsDirty=false;
 
 	gluLookAt(camera->transform.position.x, camera->transform.position.y, camera->transform.position.z,
