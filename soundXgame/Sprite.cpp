@@ -1,5 +1,5 @@
 #include "Sprite.h"
-#include "CamTargetRotator.h"
+#include "TargetGrabber.h"
 
 Sprite::Sprite(void)
 {
@@ -18,8 +18,6 @@ Sprite::Sprite(char* filename)
 	uvs.push_back(glm::vec2(1,1));
 	uvs.push_back(glm::vec2(0,1));
 
-	
-	
 	FaceShape=GL_QUADS;
 
 	glm::vec3 temp1 = glm::vec3(0,0,-1);
@@ -30,9 +28,9 @@ Sprite::Sprite(char* filename)
 	transform.right = temp2;
 	transform.up = temp3;
 
-	verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
-	verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
-	verts.push_back(glm::vec3(temp3.x,temp3.y,temp3.z));
+	//verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
+	//verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
+	//verts.push_back(glm::vec3(temp3.x,temp3.y,temp3.z));
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -45,7 +43,7 @@ Sprite::Sprite(char* filename)
 
 	IGObject::InitializeObject(true);
 
-	SetUp(filename,true,true);
+	SetUp(filename,true);
 	SetName(filename);
 }
 
@@ -57,19 +55,19 @@ Sprite::~Sprite(void)
 
 
 void 
-Sprite::SetUp(string textureFile,bool backFace,bool camRotator)
+Sprite::SetUp(string textureFile,bool backFace)
 {
+	SetID(SCENE->Add(this));
+	LockID();
 	LoadTexture(textureFile);
 	this->NoBackfaceCulling = backFace;
-	//if(camRotator)
-	//	this->AddConnectable<CamTargetRotator>();
 }
 
 void 
-Sprite::SetUp(Texture texture,bool backFace,bool camRotator)
+Sprite::SetUp(Texture texture,bool backFace)
 {
+	SetID(SCENE->Add(this));
+	LockID();
 	this->texture = texture;
 	this->NoBackfaceCulling = backFace;
-	//if(camRotator)
-	//	this->AddConnectable<CamTargetRotator>();
 }

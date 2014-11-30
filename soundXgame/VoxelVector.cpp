@@ -1,5 +1,7 @@
 #include "VoxelVector.h"
 
+
+
 #undef Rectangle; 
 
 //Static zero instanses for initializing..
@@ -187,3 +189,4 @@ ProjectMappe::Rectangle::center(void)
 {
 	return Position + HalbSize;
 }
+

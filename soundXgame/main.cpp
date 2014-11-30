@@ -4,7 +4,7 @@
 
 #include "ShaderObj.h"
 #include "Musikubus.h"
-
+#include "ScreenOverlay.h"
 
 
 //Global Declerations:
@@ -13,8 +13,9 @@ void* font;
 
 //Objects:
 SpectrumAnalyzer* analyzer;
+Sprite* Framen;
 
-
+ScreenOverlay* overlay;
 
 //Functions:
 void InitGlut(void);
@@ -34,6 +35,7 @@ void keyboardUpInput(unsigned char,int,int);
 //void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
 int prepareForExit(void);
+//void Render2D(void);
 
 //Entrypoint:
 int main(int argc,char** argv)
@@ -116,21 +118,23 @@ ConID testID;
 //int cycle3 = 127;
 void LoadContent(void)
 {
-	Vector3 test = Vector3(0,0,0);
-	glm::vec3 testglm = glm::vec3(0,0,0);
-	printf("Vector3 - size: %i\n",sizeof(Vector3));
-	printf("Vector3 - size: %i\n",sizeof(test));
-	printf("glmvec3 - size: %i\n",sizeof(testglm));
+	
+	glm::vec3 test = glm::vec3(0,0,0);
+
+
+
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+
 	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
+	Framen = new Sprite("framen_1920x1080.png");
 	Fountain* fountain = new Fountain();
 	//ShaderObj* shaderObj = new ShaderObj();
 
@@ -169,11 +173,11 @@ void LoadContent(void)
 	unsigned obj;
 	float x,y,z;
 	x=y=z=0;
-	x = 10.0f;
-	for(int i = 0;i<10;i++)
+	x = 15.0f;
+	for(int i = 0;i<15;i++)
 	{
 		x-=((float)i);
-		z+=(2.f*(float)i/20.0f);
+		z+=(2.f*(float)i/15.0f);
 		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
@@ -196,18 +200,19 @@ void LoadContent(void)
 	SCENE->Object(analyzer->GetID())->move(1,1,-2);
 	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
 	analyzer->IsGrounded = true;
-	analyzer->AddConnectable<CamTargetRotator>();
+//	analyzer->AddConnectable<CamTargetRotator>();
 	//SCENE->Object(analyzer->GetID())->move(1,3,-2);
 	analyzer->move(7, 0, -10);
 	//SCENE->Object("SpectrumAnalyzer")->move(1,0,-5);
-	//analyzer->IsGrounded = true;
+	analyzer->IsGrounded = true;
 
 	// Camera
 
 	SCENE->camera->Mode(FIRSTPERSON);
-//	SCENE->camera->SetTarget(SCENE->Object(obj));
+	SCENE->camera->SetTarget(SCENE->Object(obj));
 
-
+	overlay = new ScreenOverlay();
+	overlay->Initialize("framen_1920x1080.png");
 }
 
 
@@ -245,14 +250,6 @@ void UpdateCycle(void)
 	//Update:
 	UPDATE->DoTheUpdates();
 
-	if(INPUT->Mouse.RIGHT.CLICK)
-	{
-		do{if(++switcher>=SCENE->ObjectsCount())
-				switcher=1;
-		}while(SCENE->Object(switcher)==NULL);
-
-		SCENE->camera->SetTarget(SCENE->Object(switcher));
-	}
 
 }
 
@@ -263,12 +260,22 @@ void RenderCycle(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SCENE->DrawAll();
-		
+	//Render2D();
+	overlay->draw();
 	glutSwapBuffers();
 }
 
-#define LATE_AFTER_DRAW
-//#define LATE_BEFOR_DRAW
+//void Render2D(void)
+//{
+//	//glPushMatrix();
+//
+//
+//
+//	//glPopMatrix();
+//}
+
+//#define LATE_AFTER_DRAW
+#define LATE_BEFOR_DRAW
 
 //GL-DisplayCallbacks
 ////////////////////////////////////////////////////////
@@ -282,6 +289,8 @@ void OnDisplay(void)
 	#endif
 
 	RenderCycle();
+
+	//Render2D();
 
 	#ifdef LATE_AFTER_DRAW
 		UPDATE->DoTheLateUpdates();

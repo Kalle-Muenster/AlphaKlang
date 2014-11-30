@@ -1,8 +1,7 @@
-#include "Cam.h"
 #include "projectMacros.h"
 #include "Ground.h"
 #include "CameraModesIncluder.h"
-
+#include "Cam.h"
  //#define DEBUG_OUTPUT_CAMERA
 
 #define MAXIMUM_NUMBER_OF_CAMERA_MODES  20
@@ -86,6 +85,8 @@ Cam::SetTarget(IGObject *targetObject)
 	//Mode(FOLLOWTARGET);
 	_distanceToTarget = transform.position.distance(targetObject->getTransform()->position);
 	_targetPosition = &targetObject->getTransform()->position;
+	if(_targetObject!=targetObject)
+		ModeSocket->GetCameraMode<TargetGrabber>()->ReleaseTarget();
 	_targetObject = targetObject;
 	_targetObject->IsVisible=true;
 	
@@ -215,7 +216,7 @@ CAM_MODE
 Cam::Mode(CAM_MODE value)
 {
 //get():
-	if(value==get)
+	if(value==set)
 		return (CAM_MODE)_mode;
 //set(value):
 	if(value != (CAM_MODE)_mode)
@@ -254,9 +255,9 @@ Cam::UpdateDirections(void)
 {
 	if(TransformDIRTY)
 	{
-		transform.forward = (transform.rotation - transform.position);
-		transform.right = ( transform.forward - Vector3(0,0,1) + Vector3(0,1,0));
-		transform.up = (transform.forward - Vector3(0,0,1) + Vector3(1,0,0));
+	//	transform.forward = (transform.rotation - transform.position);
+		//transform.right = ( transform.forward - Vector3(0,0,1) + Vector3(0,1,0));
+	//	transform.up = (transform.forward - Vector3(0,0,1) + Vector3(1,0,0));
 	}
 }
 

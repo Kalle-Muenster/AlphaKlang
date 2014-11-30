@@ -216,10 +216,10 @@ IMeshObject::draw(void)
 
 //Texture Struct:
 //############################################
-void Texture::Load(string fileName,short Width,short Height,Format textureFormat)
+void Texture::Loade(string fileName,short Width,short Height,Format textureFormat)
 {
 	ID = Utility::loadTexture(fileName);
 	w = Width;
 	h = Height;
-	format=textureFormat;
+	format=(int)textureFormat;
 }

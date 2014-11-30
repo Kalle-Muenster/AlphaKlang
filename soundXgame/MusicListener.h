@@ -39,31 +39,30 @@ protected:
 				//printf("MusikListener: motivator0: %f\n",motivator[0]);
 		//		this->Connection()->scale(motivator[0],(motivator[1]+1.5)*2.5f,(motivator[2]+1.5)*2.5f);
 				DataField = Connection()->getTransform()->scale;
-				DataField.x=Motivator/3.32;
-				value = Motivator<40?Motivator<10?0.1f:0.75f:Motivator>48?1.6f:0.5f;
+				DataField.x=Motivator/3.3;
+				value = Motivator<40?Motivator<10?1.f:2.5f:Motivator<50?4.f:Motivator>54?2.f:6.f;
 				break;
 			case 1:
 				temp = this->Connection()->getTransform()->rotation;
-				DataField.y=(Motivator+1.5f);
-				temp.x += Motivator*value/0.8;
-				temp.y -= Motivator*value/2;
-				temp.z += Motivator*value/1.5;
+				DataField.y=(Motivator+1.5f)/3;
+				temp.x += Motivator*value/2;
+				temp.y -= Motivator*value/2.2;
+				temp.z += Motivator*value/1.8;
 				this->Connection()->rotate(temp);
 				
 				break;
 			case 2:
 				temp = this->Connection()->getTransform()->movement;
-				temp.x *= Motivator/5;
-				temp.y *= -Motivator/2;
+				temp.x *= Motivator/3;
+				temp.y *= -Motivator/3;
 				temp.z *= Motivator/3;
 				this->Connection()->move(temp);
 
-				DataField.z=(Motivator+1.5f);
+				DataField.z=(Motivator+1.5f)/3;
 				this->Connection()->scale(DataField);
 
-				this->GetLineData(0)->fallOff=Motivator>0.75f?0.7f:2.8f;
-				this->GetLineData(0)->threshold=Motivator>0.75f?0.6f:value/3.3f;
-				break;
+				this->GetLineData(0)->fallOff=Motivator>0.75f?5.f:1.f;
+				this->GetLineData(0)->threshold=Motivator>0.25f?value/24.f:value/2.5f;
 			}
 		}
 	virtual void MotivatorFunction(float Motivator[]){}

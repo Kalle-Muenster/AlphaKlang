@@ -126,7 +126,7 @@ VoxControl::DoUpdate(void)
 {
 	if(SCENE->camera->GetTarget()==this->vConnection())
 	{
-		if(SCENE->camera->Get<TargetGrabber>()->IsATargetGrabbed())
+		if(SCENE->camera->mode<TargetGrabber>()->IsATargetGrabbed())
 			SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::OFF);
 		
 		if(INPUT->Mouse.LEFT.HOLD)

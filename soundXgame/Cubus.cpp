@@ -1,9 +1,8 @@
-#include "Cubus.h"
+#include "IGObject.h"
 #include "Utility.h"
 #include "projectMacros.h"
 #include "AudioObject.h"
-#include "CamTargetMover.h"
-#include "CamTargetRotator.h"
+#include "CameraModesIncluder.h"
 
 Cubus::Cubus(void)
 {

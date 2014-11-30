@@ -13,7 +13,7 @@ class SceneGraph
 {
 private:
 	SceneGraph(void);
-//	std::vector<IGObject*> drawables;
+	LueckList<IGObject*,MAXIMUM_SXCENE_OBJECT> *drawables;
 	float r,g,b;
 	void UpdateSky(void);
 
@@ -22,6 +22,9 @@ public:
 	static SceneGraph* GetInstance();
 	void DrawAll(void);
 	void DrawSky(void);
+
+	//Activate Colorflashing Sky drawer !...
+	bool SkyFlasherActive;
 
 	//Add's an object to the scene and generate a new ID that will be returned... 
 	unsigned int Add(IGObject* object);
@@ -50,6 +53,10 @@ public:
 
 	// total count on objects in scene...
 	unsigned ObjectsCount(void);
+
+	// returns the GobID with the highest value that is contained in the scenegraph...
+	// its's the ID of the last Object at the end of the scene-draw-List...
+	GobID HighestID(void);
 };
 
 #endif

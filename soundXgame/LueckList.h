@@ -21,11 +21,12 @@ public:
 	// Distroy's all the list's members when the list is beeing distroyed... 
 	virtual ~LueckList(void)
 	{
-		//for(int i=0;i<MAXIMUM_SIZE;i++)
-		//{
-			//if(list[i] != NULL)
-			//	delete list[i];
-		//}
+		if(typeid(ListMember).name()=="pointer-to")
+			for(int i=0;i<MAXIMUM_SIZE;i++)
+			{
+				if(list[i] != NULL)
+					delete (ListMember*)list[i];
+			}
 	}
 
 	// Add a member to the list and return the memberID 

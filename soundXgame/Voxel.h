@@ -1,21 +1,23 @@
 #ifndef __DING__
 #define __DING__
 
-#include "VoxelVector.h"
+//#include "VoxelVector.h"
+#include "DataStructs.h"
 
 class VoxelMap;
 
  class Voxel
 {
 public:
+
 	Voxel(void);
 	~Voxel(void);
 	
-union 
+  union 
 	{
 	int s32;
 	unsigned char Bytss[4];
-	}farb;
+	} farb;
 	GLfloat factor;
 	GLfloat* factorPointer;
 	int color;
@@ -34,6 +36,7 @@ union
 	void vDraw(VectorPF offset);
 	void vDrawBunt(VectorPF offset);
 	void vDrawByte(VectorPF offset);
+
 private:
 	int OL;
 	int OR;
@@ -41,10 +44,6 @@ private:
 	int UL;
 	VoxelMap* vMapObject;
 };
-
-
-
-
 
 #endif
 

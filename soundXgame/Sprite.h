@@ -8,8 +8,8 @@ class Sprite :
 	public IMeshObject
 {
 private:
-	void SetUp(string textureFile,bool backface=true,bool addCamRotator=false); 
-	void SetUp(Texture texture,bool backface=true,bool addRotator=false);
+	void SetUp(string textureFile,bool backface=true); 
+	void SetUp(Texture texture,bool backface=true);
 public:
 	Sprite(void);
 	Sprite(char*);

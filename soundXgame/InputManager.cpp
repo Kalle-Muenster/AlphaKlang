@@ -11,7 +11,7 @@ int _fps;
 
 //InputManager* instance;
 
-Rectangle _Viewport;
+ProjectMappe::Rectangle _Viewport;
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
@@ -58,7 +58,7 @@ InputManager::InputManager(void)
 	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
 	Mouse.Movement = glm::vec2(0,0);
 
-	_Viewport=*Rectangle::Zero;
+	_Viewport=*ProjectMappe::Rectangle::Zero;
 	_Viewport.size(1,1);
 
 	_ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
@@ -376,7 +376,7 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 	}
 }
 
-Rectangle* 
+ProjectMappe::Rectangle* 
 InputManager::GetViewportRectangle(void)
 {
 	return &_Viewport;

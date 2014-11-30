@@ -28,6 +28,7 @@ public:
 	int current;
 	int NumberOfConnectedObjects;
 	virtual Transform* getTransform(void);
+	bool IsActive;
 
 public:
 	IConnectable(void)

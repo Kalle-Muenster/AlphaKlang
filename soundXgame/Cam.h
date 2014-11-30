@@ -1,5 +1,5 @@
-#ifndef __CAMERA__
-#define __CAMERA__
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
 
 #include "Utility.h"
 #include "InputManager.h"
@@ -10,7 +10,7 @@
 
 enum CAM_MODE : int
 {
-	get = -1,
+	set = -1,
 	FOLLOWTARGET = 1,
 	FIRSTPERSON = 2,
 	SPECTATOR = 3,
@@ -129,11 +129,13 @@ public:
 	bool				    ShareAudio(BOOL=3);
 	virtual void			Update(void);
 	int						NumberOfModes; 
-	CAM_MODE                Mode(CAM_MODE = get);
+	CAM_MODE                Mode(CAM_MODE = set);
 	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
-	template<typename CMod> CMod* Get(void)
+	template<class cM> cM*	mode(CAM_MODE value=set)
 	{
-		return ModeSocket->GetCameraMode<CMod>();
+		if(value==set)
+			return ModeSocket->Get<cM>(Mode(set));
+		return ModeSocket->Get<cM>(value);
 	}
 };
 

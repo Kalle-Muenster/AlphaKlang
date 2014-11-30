@@ -6,12 +6,12 @@
 struct Texture 
 {
 	enum class Format
-	{DUAL=1,GRAY=16,RGB=24,RGBA=32};
+	{DUAL=1,GRAY=16,RGB=24,RGBA=GL_RGBA};
 	GLuint ID;
 	short w,h;
-	Format format;
-
-	void Load(string fileName,short Width,short Height, Format textureFormat=Format::RGBA);
+	GLint format;
+	void* pData;
+	void Loade(string fileName,short Width,short Height, Format textureFormat=Format::RGBA);
 };
 
 class IMeshObject : 

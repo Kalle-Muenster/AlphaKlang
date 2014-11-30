@@ -15,7 +15,7 @@ IConnectable::Not_hasInitialized(void)
 		this->NumberOfConnectedObjects = 0;
 		this->current = -1;
 
-		this->_initialized=true;
+		this->_initialized=IsActive=true;
 		return this->_initialized;
 	}
 

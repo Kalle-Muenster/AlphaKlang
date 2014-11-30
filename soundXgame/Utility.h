@@ -4,12 +4,12 @@
 #include <vector>
 #include <iostream>
 
-#include "projectGrafics.h"
+//#include "projectGrafics.h"
 #include "Voxel.h"
+#include "VoxelVector.h"
 
-
-struct Vector3;
-
+//struct Vector3;
+#include "DataStructs.h"
 
 
 

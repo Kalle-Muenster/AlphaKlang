@@ -1,12 +1,14 @@
 #ifndef __TRANSFORM__
 #define __TRANSFORM__
 
-#include <GL\freeglut.h>
-#include <glm.hpp>
+
 #include <bass.h>
+#include "projectGrafics.h"
 #include "VoxelVector.h"
 
 typedef char* string;
+
+
 
 struct Vector3 
 {
@@ -114,6 +116,7 @@ union Data64
 //transform 
 struct Transform
 {
+
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
@@ -125,14 +128,6 @@ struct Transform
 	Vector3 up;
 
 };
-
-
-
-
-
-
-
-
 
 
 

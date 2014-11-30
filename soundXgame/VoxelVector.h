@@ -1,8 +1,7 @@
 #ifndef __VECTOR__F
 #define __VECTOR__F
 
-//#include <GL\freeglut.h>
-//#include <glm.hpp>
+//#include "DataStructs.h"
 
 class VoxtructsInitiator
 {
@@ -75,6 +74,6 @@ namespace ProjectMappe
 	};
 }
 
-#define Rectangle ProjectMappe::Rectangle
+//#define Rectangle ProjectMappe::Rectangle
 
 #endif

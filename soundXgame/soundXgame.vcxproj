@@ -50,6 +50,8 @@
       <SDLCheck>false</SDLCheck>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <BrowseInformation>true</BrowseInformation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -77,8 +79,6 @@
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="BassAudio.cpp" />
     <ClCompile Include="Cam.cpp" />
-    <ClCompile Include="CamTargetMover.cpp" />
-    <ClCompile Include="CamTargetRotator.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
@@ -104,6 +104,7 @@
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObj.cpp" />
     <ClCompile Include="Spectator.cpp" />
@@ -128,8 +129,6 @@
     <ClInclude Include="BassAudio.h" />
     <ClInclude Include="Cam.h" />
     <ClInclude Include="CameraModesIncluder.h" />
-    <ClInclude Include="CamTargetMover.h" />
-    <ClInclude Include="CamTargetRotator.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
@@ -159,6 +158,7 @@
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="Randomover.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="ScreenOverlay.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderObj.h" />
     <ClInclude Include="Spectator.h" />
@@ -213,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="CubusX_256.bmp" />
+    <Image Include="framen_1920x1080.png" />
     <Image Include="Q2-shiny.png" />
     <Image Include="q2_23.png" />
     <Image Include="X-3.png" />

@@ -8,12 +8,6 @@
     <ClCompile Include="AudioObject.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="CamTargetMover.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="CamTargetRotator.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
@@ -140,6 +134,7 @@
     <ClCompile Include="Transform.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
+    <ClCompile Include="ScreenOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -152,12 +147,6 @@
     </ClInclude>
     <ClInclude Include="CameraModesIncluder.h" />
     <ClInclude Include="AudioObject.h">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="CamTargetMover.h">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="CamTargetRotator.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
@@ -289,6 +278,7 @@
     <ClInclude Include="Transform.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenOverlay.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -324,6 +314,9 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="X-7.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="framen_1920x1080.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>

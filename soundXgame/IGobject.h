@@ -13,6 +13,7 @@ struct Vector3;
 
 
 typedef unsigned int GobID;
+typedef unsigned int ConID;
 
 class IGObject
 {
@@ -49,19 +50,36 @@ public:
 
 	template<typename T> T* AddConnectable(void)
 	{
+		if(conXtor->GetConnected<T>()!=NULL)
+			return conXtor->GetConnected<T>();
+
 		return conXtor->AddConnectable<T>();
 	}
-	template<typename T> T* GetConnected(void)
+	template<typename T> T* AddConnectable(ConID*id)
 	{
-		return conXtor->GetConnected<T>();
+			return conXtor->AddConnectable<T>(id);
+	}
+	template<typename T> T* GetConnected(ConID id=NULL)
+	{
+		if(id)
+			return conXtor->GetConnected<T>(id);
+		else
+			return conXtor->GetConnected<T>();
 	}
 	template<typename T> bool HasConnected(void)
 	{
 		return conXtor->GetConnected<T>()!=NULL;
 	}
-	template<typename T> void Remove(void)
+	template<typename T> void Remove(ConID id=NULL)
 	{
-		conXtor->RemoveConnected<T>();
+		if(this==NULL)
+			return;
+		if(id)
+			conXtor->RemoveConnected<T>(id);
+		else
+			conXtor->RemoveConnected<T>();
+		
+		
 	}
 	//void through(void)
 	//{

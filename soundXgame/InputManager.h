@@ -140,7 +140,7 @@ public:
 	unsigned Buttons;
 	float aX,aY,aR,aZ;
  }	Controler2;
-	Rectangle* GetViewportRectangle(void);
+	ProjectMappe::Rectangle* GetViewportRectangle(void);
 	void SetDoubleclickTime(int milliseconds);
 	double FrameTime; //FrameTime like deltaTime -> hold's actual timeDiff since last Frame in seconds
 

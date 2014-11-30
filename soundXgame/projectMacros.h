@@ -34,9 +34,9 @@
 // INPUT->
 /* 
    handles everything thats got to do with user-input: 		
-   contains actual Mouse- ,keybord-, controller- States,													
-   also Timers and actual delta-FrameTime and some other 													
-   helpul stuff can be found here. 													 
+   contains actual Mouse- ,keybord-, controller- States,	
+   also Timers and actual delta-FrameTime and some other 	
+   helpul stuff can be found here. 							
    It also handles InvokationList where IObserver-derived
    objects can be attatched to, to be calld when Input ocurres.. 
 */
