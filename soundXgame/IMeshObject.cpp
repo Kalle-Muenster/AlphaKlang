@@ -19,7 +19,8 @@ IMeshObject::IMeshObject(void)
 	this->FaceShape = GL_TRIANGLES;
 	this->NoBackfaceCulling = false;
 	this->UseTexture = false;
-
+	this->GroundedWithPivot = false;
+	this->Pivot = *Vector3::Zero;
 }
 
 IMeshObject::~IMeshObject(void)
@@ -30,21 +31,15 @@ IMeshObject::~IMeshObject(void)
 void
 IMeshObject::LoadMesh(const char* objFileName)
 {
-	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
-
-	glGenBuffers(1, &vertexBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
-
-	glGenBuffers(1, &uvBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	this->LoadObj(objFileName);
+	this->DoObjBuffer();
 }
 
 void
 IMeshObject::LoadMesh(const char* objFileName,Vector3 positionOffset)
 {
-	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
+	this->LoadObj(objFileName);
+	this->Pivot = positionOffset;
 	int count = verts.size();
 	for(int i = 0;i < count;i++)
 	{
@@ -52,6 +47,18 @@ IMeshObject::LoadMesh(const char* objFileName,Vector3 positionOffset)
 		verts.at(i).y += positionOffset.y;
 		verts.at(i).z += positionOffset.z;
 	}
+	this->DoObjBuffer();
+}
+
+void
+IMeshObject::LoadObj(const char* objFileName)
+{
+	this->SetName(Utility::loadObj(objFileName,this->verts,this->uvs,this->norms,this->FaceShape));
+}
+
+void
+IMeshObject::DoObjBuffer(void)
+{
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
@@ -106,7 +113,7 @@ IMeshObject::move(float tox, float toy, float toz)
 	getTransform()->movement.y = (toy - getTransform()->position.y);
 	getTransform()->movement.z = (toz - getTransform()->position.z);
 
-	if(getTransform()->movement.x!=0||getTransform()->movement.y!=0||getTransform()->movement.x!=0)
+	if(getTransform()->movement.x!=0||getTransform()->movement.y!=0||getTransform()->movement.z!=0)
 	{
 		getTransform()->position.x = tox;
 		getTransform()->position.y = toy;
@@ -194,7 +201,16 @@ IMeshObject::draw(void)
 		GLfloat x  = getTransform()->position.x;
 		GLfloat z = getTransform()->position.z;
 		GLfloat y = getTransform()->position.y;
-		y += IsGrounded ? Ground::getInstance()->GetGroundY(x, z) : 0;
+
+		// Grounded
+		if(IsGrounded)
+		{
+			if(GroundedWithPivot)
+				y += Ground::getInstance()->GetGroundY(x + Pivot.x * getTransform()->scale.x, z + Pivot.z * getTransform()->scale.z);
+			else
+				y += Ground::getInstance()->GetGroundY(x, z);
+		}
+		
 		glTranslatef(x, y, z);
 
 		// Rotate
