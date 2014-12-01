@@ -15,8 +15,8 @@ Ground* Ground::getInstance()
 Ground::Ground(void) :
 	count_x(40),
 	count_z(40),
-	x(-10.0f),
-	y(-10.0f),
+	x(-20.0f),
+	y(-20.0f),
 	z(10.0f),
 	width(3.5f),
 	heightRange(7.0f),
@@ -342,16 +342,21 @@ void Ground::Update(void)
 	else
 		dynamicVal -= speed;
 	if(dynamicVal >= 100)
+	{
+		dynamicVal = 100;
 		dynamicToTop = false;
+	}
 	else if(dynamicVal <= 0)
+	{
+		dynamicVal = 0;
 		dynamicToTop = true;
+	}
 
-
+	// Update First Person Camera
 	Cam* cam = SceneGraph::GetInstance()->camera;
 	CAM_MODE modeType = cam->Mode();
 	if(modeType == FIRSTPERSON)
 	{
-		//CameraMode = mode->Get<FIRSTPERSON>();
 		CameraMode* mode = cam->ModeSocket->Get<CameraMode>(2);
 		FirstPerson* firstPerson = dynamic_cast<FirstPerson*>(mode);
 		float y = Ground::getInstance()->GetGroundY(firstPerson->x, firstPerson->z);

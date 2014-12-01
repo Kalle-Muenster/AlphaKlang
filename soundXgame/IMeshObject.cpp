@@ -206,9 +206,14 @@ IMeshObject::draw(void)
 		if(IsGrounded)
 		{
 			if(GroundedWithPivot)
+			{
+				y += Pivot.y * getTransform()->scale.y;
 				y += Ground::getInstance()->GetGroundY(x + Pivot.x * getTransform()->scale.x, z + Pivot.z * getTransform()->scale.z);
+			}
 			else
+			{
 				y += Ground::getInstance()->GetGroundY(x, z);
+			}
 		}
 		
 		glTranslatef(x, y, z);

@@ -20,11 +20,12 @@ SpectrumAnalyzer::Initialize(void)
 	// Setting up an offset-vector 
 	// (will be addet to each Sybobject's vertices)  
 	offset = this->getTransform()->position;
-	offset.y += 0.5;
-	float X = offset.x;
-	X -= (SPECTRUM_SIZE /* * this->getTransform()->scale.x*/ * 0.5);
+	offset.y += 0.5f;
 
-// Instanciate as many Cubes as there hear frequency-bands 
+	float X = offset.x;
+	X -= (SPECTRUM_SIZE * 0.5f);
+
+	// Instanciate as many Cubes as there hear frequency-bands 
 	// in they used fft-window... for each, increase its possition-offset
 	// by its size alled with the offset-direction
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
@@ -32,6 +33,7 @@ SpectrumAnalyzer::Initialize(void)
 		offset.x = X + i;
 		bands[i]=(new Cubus(color,true,false,offset));
 		bands[i]->IsGrounded = true;
+		bands[i]->GroundedWithPivot = true;
 		bands[i]->scale(getTransform()->scale);
 	}
 	
@@ -138,8 +140,7 @@ Vector3
 SpectrumAnalyzer::move(float X,float Y,float Z)
 {
 	offset += IMeshObject::move(X,Y,Z);
-	if(offset!=*Vector3::Zero)
-		_CHANGEDposition=true;
+	_CHANGEDposition=true;
 	return getTransform()->movement;
 }
 
