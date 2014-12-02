@@ -234,7 +234,7 @@ int** Ground::CalculateMap(int** assignMap, int** config, int size)
 	//heightMap = assignMap;
 	return assignMap;
 	
-	// zwischenwerte berechnen erfolgte mit in der vertikal-berechnung
+	// zwischenwerte berechnen erfolgt zusammen mit der vertikal-berechnung
 	// TODO zur verfeinerung bei zwischenwerten den durchschnitt zwischen vertikal und horizontal mit einschließen
 
 }
@@ -336,7 +336,8 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 35.0f * INPUT->FrameTime;
+	//float speed = 35.0f * INPUT->FrameTime;
+	float speed = 0;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else
@@ -365,11 +366,12 @@ void Ground::Update(void)
 
 }
 
+// this method returns collision height while object is placing on ground
 float Ground::GetGroundY(float posX, float posZ)
 {
-//	std::cout << posX << " / " << posZ << std::endl;
+	std::cout << posX << " / " << posZ << std::endl;
 
-	// calculate to index
+	// prepare to index
 	posX -= x;
 	posZ -= z;
 	posX /= width;
@@ -380,12 +382,52 @@ float Ground::GetGroundY(float posX, float posZ)
 	posX = (posX < 0) ? posX = 0 : (posX > count_x) ? count_x : posX;
 	posZ = (posZ < 0) ? posZ = 0 : (posZ > count_z) ? count_z : posZ;
 
-	int indexX = (int)posX;
-	int indexZ = (int)posZ;
-	
+	// floats to ints for index
+	int indexX1 = (int)posX;
+	int indexZ1 = (int)posZ;
+
+	// calculate next index for values between two tiles
+	int indexX2 = (indexX1 < count_x) ? indexX1 + 1 : indexX1;
+	int indexZ2 = (indexZ1 < count_z) ? indexZ1 + 1 : indexZ1;
+
+	// calculate rest
+	float restX = posX - indexX1;
+	float restZ = posZ - indexZ1;
+
+	// calculate index height
 	float posY = y;
-	posY += (float)heightMap[count_z - indexZ][indexX] / 100 * heightRange;
-	posY += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
+
+	/*
+	1     2
+	x-----x
+	|     |
+	|     |
+	x-----x
+	3     4
+	*/
+
+	float point1 = (float)heightMap[count_z - indexZ2][indexX1] / 100 * heightRange;
+	float point2 = (float)heightMap[count_z - indexZ2][indexX2] / 100 * heightRange;
+	float point3 = (float)heightMap[count_z - indexZ1][indexX1] / 100 * heightRange;
+	float point4 = (float)heightMap[count_z - indexZ1][indexX2] / 100 * heightRange;
+
+	float line12 = (point1 - point2) * restX;
+	float line34 = (point3 - point4) * restX;
+	float line13 = (point3 - point1) * restZ;
+	float line24 = (point4 - point2) * restZ;
+
+	float averageX = (line34 + line12) / 2 *-1;
+	float averageZ = (line13 + line24) / 2 *-1;
+
+	std::cout << averageX << " / " << averageZ << std::endl;
+
+
+	float averageTotal = averageX + averageZ;
+
+	posY += (float)dynamicMap[count_z - indexZ1][indexX1] / 100 * dynamicRange / 100 * dynamicVal;
+	posY += averageTotal;
+
+	//float posDynY1 += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
 
 	return posY;
 

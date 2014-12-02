@@ -31,7 +31,7 @@ SpectrumAnalyzer::Initialize(void)
 	{
 		offset.x = X + i;
 		bands[i]=(new Cubus(color,true,false,offset));
-		bands[i]->IsGrounded = true;
+		bands[i]->IsGrounded = false;
 		bands[i]->GroundedWithPivot = true;
 		bands[i]->scale(getTransform()->scale);
 	}
