@@ -17,9 +17,10 @@ struct Texture
 class IMeshObject : 
 	public IGObject
 {
-
+private:
+	void LoadObj(const char* objFileName);
+	void DoObjBuffer(void);
 protected:
-
 	GLuint					FaceShape;
 	GLuint					vertexBufferID;
 	GLuint					uvBufferID;
@@ -29,15 +30,17 @@ protected:
 	std::vector<glm::vec3>	verts;
 	std::vector<glm::vec2>	uvs;
 	std::vector<glm::vec3>	norms;
+	Vector3					Pivot;
 
 public:
-			IMeshObject(void);
-	void	InitializeObject(const char* objFile,bool addToSceneGraph=true,Vector3 positionOffset = *Vector3::Zero);
-	virtual ~IMeshObject(void);
-
-
 	data32				color;
 	Texture	        	GetTexture(void);
+	bool				GroundedWithPivot;
+
+						IMeshObject(void);
+	void				InitializeObject(const char* objFile,bool addToSceneGraph=true,Vector3 positionOffset = *Vector3::Zero);
+	virtual				 ~IMeshObject(void);
+
 	virtual void		LoadMesh(const char* objFileName);
 	virtual void		LoadMesh(const char* objFileName,Vector3 positionOffset);
 	virtual IGObject*	LoadTexture(const char* textureFileName);

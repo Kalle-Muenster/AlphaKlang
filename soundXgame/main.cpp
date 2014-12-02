@@ -194,13 +194,14 @@ void LoadContent(void)
 
 
 	// Spectrum Analyzer
-
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
-	analyzer->move(7, 0, -10);
-	analyzer->IsGrounded = false;
-	// Camera
+	analyzer->AddConnectable<CamTargetRotator>();
+	analyzer->move(52.5f, 0, -65.0f);
+	analyzer->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 40 ground-tiles * 3.5m width * 128 bands
+	analyzer->Initialize();
 
+	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object(obj));
 

@@ -5,12 +5,11 @@
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
-	this->IsGrounded = false;
-	InitializeSpectrumAnalyzer();
+	this->ChartHeight = 3.0f;
 }
 
 void
-SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
+SpectrumAnalyzer::Initialize(void)
 {
 	//Setting up a color...
 	color.byte[1]=0;
@@ -24,22 +23,20 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	offset.y += 0.5;
 	float X = offset.x;
 	X-=(SPECTRUM_SIZE*0.5);
-
-	// scale this object to the size each subobject will have.. 
-	this->getTransform()->scale.x=0.3f;
-	this->getTransform()->scale.y=0.3f;
-	this->getTransform()->scale.z=2.0f;
-
+	
 	// Instanciate as many Cubes as there are frequency-bands 
 	// in the used fft-window... for each, increase its possition-offset
 	// by its size allong the offset-direction.
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
 	{
-		offset.x = X+i;
+		offset.x = X + i;
 		bands[i]=(new Cubus(color,true,false,offset));
 		bands[i]->IsGrounded = true;
+		bands[i]->GroundedWithPivot = true;
 		bands[i]->scale(getTransform()->scale);
 	}
+	
+		transform.movement = *Vector3::Zero;
 	
 	/* Setting the Meters "FallOff"...
 	 * as lower the value, as slower the visuals will
@@ -48,7 +45,7 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	
 	// this set's the hight of the analyzers chart.
 	// band meshures will multiplied by it.
-	this->getTransform()->scale.y = 3;
+	this->getTransform()->scale.y = this->ChartHeight;
 
 	//get beeing invoked at EarlyUpdate, to get the FFT-Data...
 	UPDATE->SignInForEarlyUpdate(this);
@@ -112,34 +109,33 @@ SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 void
 SpectrumAnalyzer::draw(void)
 {
-	if(IsVisible)
+	if(!IsVisible)
+		return;
+
+	if(_CHANGEDposition || _CHANGEDrotation || _CHANGEDscale)
 	{
-		if(_CHANGEDposition || _CHANGEDrotation || _CHANGEDscale)
+		// Re-Positioning,sizeing and rotating the SubCubes
+		// if the whole analyzerobject has been moved,resized 
+		// or rotated during last update..  -->> maybe this coul'd be don at LateUpdate better... dont know....
+		for(int i=0;i<SPECTRUM_SIZE;i++)
 		{
-			// Re-Positioning,sizeing and rotating the SubCubes
-			// if the whole analyzerobject has been moved,resized 
-			// or rotated during last update..  -->> maybe this coul'd be done at LateUpdate better... dont know....
-			for(int i=0;i<SPECTRUM_SIZE;i++)
-			{
-				if(_CHANGEDposition)
-					bands[i]->getTransform()->position += transform.movement;
-				if(_CHANGEDrotation)
-					bands[i]->getTransform()->rotation = getTransform()->rotation;
-				if(_CHANGEDscale)
-					bands[i]->scale(transform.scale.x,bands[i]->getTransform()->scale.y,transform.scale.z);
-				
-				//draw each subcube....
-				bands[i]->draw();
-			}
-			_CHANGEDposition = _CHANGEDrotation = _CHANGEDscale = false;
-			transform.movement = *Vector3::Zero;
+			if(_CHANGEDposition)
+				bands[i]->getTransform()->position += transform.movement;
+				//bands[i]->getTransform()->position += offset;
+			if(_CHANGEDrotation)
+				bands[i]->getTransform()->rotation = getTransform()->rotation;
+			if(_CHANGEDscale)
+				bands[i]->scale(transform.scale.x,bands[i]->getTransform()->scale.y,transform.scale.z);
 		}
-		else // if there are no changes...
-		{
-			// Draw all subcubes
-			for(int i=0;i<SPECTRUM_SIZE;i++)
-				bands[i]->draw();
-		}
+		_CHANGEDposition = _CHANGEDrotation = _CHANGEDscale = false;
+		transform.movement = *Vector3::Zero;
+	}
+
+	//draw each subcube....
+	for(int i=0;i<SPECTRUM_SIZE;i++)
+	{
+		//bands[i]->getTransform()->position.y = Ground::getInstance()->GetGroundY(bands[i]->getTransform()->position.x, bands[i]->getTransform()->position.z);
+		bands[i]->draw();
 	}
 }
 
@@ -147,8 +143,7 @@ Vector3
 SpectrumAnalyzer::move(float X,float Y,float Z)
 {
 	IMeshObject::move(X,Y,Z);
-	if(getTransform()->movement!=*Vector3::Zero)
-		_CHANGEDposition=true;
+	_CHANGEDposition=true;
 	return getTransform()->position;
 }
 
@@ -159,6 +154,7 @@ SpectrumAnalyzer::rotate(float X,float Y,float Z)
 	return IMeshObject::rotate(X,Y,Z);
 }
 
+// scale this object to the size each subobject will have.. 
 Vector3
 SpectrumAnalyzer::scale(float X,float Y,float Z)
 {

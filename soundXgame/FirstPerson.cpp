@@ -24,12 +24,11 @@ FirstPerson::Initialize(void)
 	lx			= 0;
 	lz			= -1;
 	x			= 0;
+	y			= 0;
 	z			= 5;
 	eyeY		= 1;
-	moveSpeed	= 0.1f;
+	moveSpeed	= 1.1f;
 	mouseSpeed	= 1.0f;
-	mouseX		= 0;
-	mouseY		= 0;
 	mouseX = SCREENWIDTH/2;
 	mouseY = SCREENHEIGHT/2;
 	INPUT->attachKey(this);
@@ -37,14 +36,16 @@ FirstPerson::Initialize(void)
 	INPUT->attachMouseWheel(this);
 	INPUT->attachSpecial(this);
 	StaticCamModeID = this->CamModeID();
+	accelerate = false;
 	return true;
 }
 
 void 
 FirstPerson::UpdateMode(void)
 { 
+	
 	camera->move(x, eyeY, z);
-	camera->rotate(x+lx, 1.0f, z+lz); 
+	camera->rotate(x+lx, y + 1.7f, z+lz); 
 	this->IsDirty=false;
 
 	gluLookAt(camera->transform.position.x, camera->transform.position.y, camera->transform.position.z,
@@ -139,10 +140,10 @@ FirstPerson::mouseMotion(int newX, int newY)
 	eyeY += (float)diffY / 300;
 
 	// set fixed restriction to top and bottom
-	if(eyeY < -0.5f)
-		eyeY = -0.5f;
-	else if(eyeY > 2.5f)
-		eyeY = 2.5f;
+	if(eyeY < -0.5f + y)
+		eyeY = -0.5f+ y;
+	else if(eyeY > 2.5f+ y)
+		eyeY = 2.5f+ y;
 
 	// set mouse pos center to screen
 	mouseX = SCREENWIDTH / 2;
@@ -157,3 +158,10 @@ FirstPerson::mouseMotion(int newX, int newY)
 
 }
 
+void
+FirstPerson::UpdateHeight(float y)
+{
+	float diffEyeY = y - this->y;
+	this->y = y;
+	eyeY += diffEyeY;
+}

@@ -4,6 +4,7 @@
 #include "igobject.h"
 #include "Cubus.h"
 #include "UpdateManager.h"
+#include "Ground.h"
 
 #define SPECTRUM_SIZE (128)
 
@@ -21,9 +22,10 @@ private:
 	virtual void ChangeSize(int band,float changefactor);
 	
 public:
+	float ChartHeight;
 	SpectrumAnalyzer(void);
 	virtual ~SpectrumAnalyzer(void);
-	virtual void InitializeSpectrumAnalyzer(void);
+	virtual void Initialize(void);
 	float fallOffAmount;
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
