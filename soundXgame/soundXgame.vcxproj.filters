@@ -208,9 +208,6 @@
     <ClInclude Include="IVoxelObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="LueckList.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -283,6 +280,9 @@
     <ClInclude Include="ScreenOverlay.h" />
     <ClInclude Include="FogMachine.h" />
     <ClInclude Include="GuiObject.h" />
+    <ClInclude Include="List.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

@@ -3,7 +3,7 @@
 
 #define MAXIMUM_NUMBER_OF_PARTICLES	(1000)
 
-#include "LueckList.h"
+#include "List.h"
 #include "Sprite.h"
 #include "UpdateManager.h"
 
@@ -12,7 +12,7 @@ class FogMachine :
 	public IUpdateble
 	{
 	protected:
-		LueckList<Sprite*,MAXIMUM_NUMBER_OF_PARTICLES> fogs;
+		List<Sprite*,MAXIMUM_NUMBER_OF_PARTICLES> fogs;
 		Texture texture;
 		bool particlesAlwaysFaceCamera;
 	public:

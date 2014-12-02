@@ -10,8 +10,8 @@ class GuiObject :
 {
 protected:
 	Texture texture;
-	LueckList<glm::vec3*,4> verts;
-	LueckList<glm::vec2*,4> uvs;
+	List<glm::vec3*,4> verts;
+	List<glm::vec2*,4> uvs;
 	data32 color;
 
 public:

@@ -5,7 +5,7 @@
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
-	this->ChartHeight = 3.0f;
+	this->ChartHeight = 30.0f;
 }
 
 void
@@ -15,7 +15,7 @@ SpectrumAnalyzer::Initialize(void)
 	color.byte[1]=0;
 	color.byte[2]=255;
 	color.byte[3]=127;
-	color.byte[0]=10;
+	color.byte[0]=100;
 
 	// Setting up an offset-vector 
 	// (will be addet to each Subobject's vertices)  
@@ -41,7 +41,7 @@ SpectrumAnalyzer::Initialize(void)
 	/* Setting the Meters "FallOff"...
 	 * as lower the value, as slower the visuals will
 	 * Fall back to Zero if there's no signal. */
-	fallOffAmount = 0.05f;
+	fallOffAmount = 0.05f / 3.0f * this->ChartHeight;
 	
 	// this set's the hight of the analyzers chart.
 	// band meshures will multiplied by it.

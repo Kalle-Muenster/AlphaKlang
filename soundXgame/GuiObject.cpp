@@ -15,8 +15,8 @@ GuiObject::~GuiObject(void)
 void
 GuiObject::Initialize(void)
 {
-	verts = LueckList<glm::vec3*,4>();
-	uvs = LueckList<glm::vec2*,4>();
+	verts = List<glm::vec3*,4>();
+	uvs = List<glm::vec2*,4>();
 
 	verts.Add(new glm::vec3(0,0,0));
 	verts.Add(new glm::vec3(1,0,0));

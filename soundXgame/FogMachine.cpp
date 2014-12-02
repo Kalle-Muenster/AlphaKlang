@@ -5,7 +5,7 @@
 
 FogMachine::FogMachine(void)
 {
-	fogs = LueckList<Sprite*,MAXIMUM_NUMBER_OF_PARTICLES>();
+	fogs = List<Sprite*,MAXIMUM_NUMBER_OF_PARTICLES>();
 	for(int i=0;i<MAXIMUM_NUMBER_OF_PARTICLES;i++)
 	{
 		fogs.Add(new Sprite());

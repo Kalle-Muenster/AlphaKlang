@@ -16,7 +16,7 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 	camera = new Cam();
 	VoxtructsInitiator::initiateVoxtructs();
 
-	drawables = new LueckList<IGObject*,MAXIMUM_SXCENE_OBJECT>();
+	drawables = new List<IGObject*,MAXIMUM_SXCENE_OBJECT>();
 
 	//for(int i=0;i<MAXIMUM_SXCENE_OBJECT;i++)
 	//	_drawables[i]=NULL;

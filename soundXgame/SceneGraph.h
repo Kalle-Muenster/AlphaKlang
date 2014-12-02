@@ -13,7 +13,7 @@ class SceneGraph
 {
 private:
 	SceneGraph(void);
-	LueckList<IGObject*,MAXIMUM_SXCENE_OBJECT> *drawables;
+	List<IGObject*,MAXIMUM_SXCENE_OBJECT> *drawables;
 	float r,g,b;
 	void UpdateSky(void);
 

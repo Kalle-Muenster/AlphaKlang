@@ -76,7 +76,7 @@ public:
 	virtual void WheelHRoll(WHEEL state){};
 };
 
-#include "LueckList.h"
+#include "List.h"
 #include "UpdateManager.h"
 
 class InputManager
@@ -94,11 +94,11 @@ public:
 	//Private Stuff...........................
 private:
 	//Invokation-Lists:
-	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
-	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
-	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
-	LueckList<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
-	LueckList<unsigned char, 30> keyList;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
+	List<unsigned char, 30> keyList;
 	std::vector<IObserver*> mouseClickListener;
 	
 

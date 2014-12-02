@@ -4,13 +4,13 @@
 #include <stdio.h>
 
 //A List of variables from type [ListMember] , with a maximum amount of [MAXIMUM_SIZE] 
-template<class ListMember,const unsigned MAXIMUM_SIZE> class LueckList
+template<class ListMember,const unsigned MAXIMUM_SIZE> class List
 {
 public:
 	typedef unsigned ListMemberID;
 	
 	// Constructs a new list-instance..
-	LueckList(void)
+	List(void)
 	{
 		numberOfMember = 0;
 		highestSlotNumberInUse = 0;
@@ -19,7 +19,7 @@ public:
 	}
 
 	// Distroy's all the list's members when the list is beeing distroyed... 
-	virtual ~LueckList(void)
+	virtual ~List(void)
 	{
 		if(typeid(ListMember).name()=="pointer-to")
 			for(int i=0;i<MAXIMUM_SIZE;i++)
