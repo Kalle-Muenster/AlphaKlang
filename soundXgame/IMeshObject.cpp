@@ -19,7 +19,6 @@ IMeshObject::IMeshObject(void)
 	this->FaceShape = GL_TRIANGLES;
 	this->NoBackfaceCulling = false;
 	this->UseTexture = false;
-
 }
 
 IMeshObject::~IMeshObject(void)
@@ -93,6 +92,12 @@ IMeshObject::InitializeObject(const char* objFile, bool addToSceneGraph, Vector3
 	LockID();
 }
 
+Texture
+IMeshObject::GetTexture(void)
+{
+	return texture;
+}
+
 Vector3
 IMeshObject::move(Vector3 to)
 {
@@ -102,9 +107,9 @@ IMeshObject::move(Vector3 to)
 Vector3
 IMeshObject::move(float tox, float toy, float toz)
 {
-	getTransform()->movement.x = (tox - getTransform()->position.x);
-	getTransform()->movement.y = (toy - getTransform()->position.y);
-	getTransform()->movement.z = (toz - getTransform()->position.z);
+	getTransform()->movement.x += (tox - getTransform()->position.x);
+	getTransform()->movement.y += (toy - getTransform()->position.y);
+	getTransform()->movement.z += (toz - getTransform()->position.z);
 
 	if(getTransform()->movement.x!=0||getTransform()->movement.y!=0||getTransform()->movement.x!=0)
 	{
@@ -117,7 +122,7 @@ IMeshObject::move(float tox, float toy, float toz)
 		#endif
 	}
 
-	return getTransform()->movement;
+	return getTransform()->position;
 }
 
 Vector3

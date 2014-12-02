@@ -84,10 +84,12 @@
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="FirstPerson.cpp" />
+    <ClCompile Include="FogMachine.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
     <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="GuiObject.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="IMusicInteractor.cpp" />
@@ -134,10 +136,12 @@
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="Cubus.h" />
     <ClInclude Include="FirstPerson.h" />
+    <ClInclude Include="FogMachine.h" />
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FountainObject.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="GuiObject.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="IMusicInteractor.h" />
@@ -184,11 +188,10 @@
     <None Include="ClassDiagram31.cd" />
     <None Include="cube_quads.obi" />
     <None Include="cube_tris.obi" />
-    <None Include="cylinder_quads.obi" />
-    <None Include="cylinder_tris.obi" />
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
     <None Include="ich.ppm" />
+    <None Include="Modus Grau.ppm" />
     <None Include="sphere_quads_high.obi" />
     <None Include="sphere_quads_low.obi" />
     <None Include="sphere_tris_high.obi" />
@@ -196,6 +199,7 @@
     <None Include="tr.ppm" />
     <None Include="ClassDiagram3.cd" />
     <None Include="tri_sphere.fbx" />
+    <None Include="cylinder_quads.obi" />
     <None Include="X-7.tga" />
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="CubusX_256.bmp" />
+    <Image Include="Der Blaue Dunst.png" />
     <Image Include="framen_1920x1080.png" />
+    <Image Include="Modus Grau_512x512.png" />
     <Image Include="Q2-shiny.png" />
     <Image Include="q2_23.png" />
+    <Image Include="testbild_1600x900.png" />
     <Image Include="X-3.png" />
     <Image Include="X-512.jpg" />
     <Image Include="X-7.png" />

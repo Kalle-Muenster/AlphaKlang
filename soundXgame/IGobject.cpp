@@ -7,6 +7,7 @@
 #include "Ground.h"
 
 #define This this->conXtor->Connection()
+
 static unsigned objIDs = 99;
 std::vector<GobID> usedIDs = std::vector<GobID>();
 
@@ -26,7 +27,7 @@ IGObject::IGObject(void)
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
 	IsGrounded=false;
-
+	
 }
 
 IGObject::~IGObject(void)

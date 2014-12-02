@@ -14,7 +14,8 @@ public:
 	virtual ~ScreenOverlay(void);
 	void LoadeImage(char* filename);
 	virtual void draw(void);
-	VectorF scale;
+	VectorF scalefactor;
+	virtual Vector3 scale(float,float,float);
 };
 
 #endif

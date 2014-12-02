@@ -176,7 +176,7 @@ CamTargetMover::mouseMotion(int x,int y)
 				float distance = SCENE->camera->GetTargetDistance();
 				Vector3 targetDestination =  SCENE->camera->transform.position.direction(SCENE->camera->transform.rotation);
 				
-				this->Connection()->getTransform()->position = SCENE->camera->transform.position + (targetDestination * distance);
+				this->Connection()->move((SCENE->camera->transform.position + (targetDestination * distance)));
 			}
 			else
 				INPUT->DetachMouseMove(this);

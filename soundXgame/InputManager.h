@@ -48,7 +48,7 @@ public:
 	virtual void specialKeyPressed(int key){};
 	virtual void keyPress(char key){};
 	virtual void mouseMotion(int x, int y){};
-	virtual void mouseClicks(int button,bool IsPressed,glm::vec2 position){};
+	virtual void mouseClicks(int button,bool IsPressed,VectorF position){};
 	virtual void mouseWheel(int wheel,WHEEL state){};
 };
 
@@ -58,12 +58,12 @@ protected:
 	int observedEvents(); 
 public:
 	IClickable(void);
-	virtual void LeftClick(glm::vec2 position){};
-	virtual void RightClick(glm::vec2 position){};
-	virtual void MiddleClick(glm::vec2 position){};
-	virtual void LeftRelease(glm::vec2 position){};
-	virtual void RightRelease(glm::vec2 position){};
-	virtual void MiddleRelease(glm::vec2 position){};
+	virtual void LeftClick(VectorF){};
+	virtual void RightClick(VectorF){};
+	virtual void MiddleClick(VectorF){};
+	virtual void LeftRelease(VectorF){};
+	virtual void RightRelease(VectorF){};
+	virtual void MiddleRelease(VectorF){};
 };
 
 class IWheelee : public IObserver
@@ -122,8 +122,8 @@ public:
 	MouseButton LEFT;
 	MouseButton RIGHT;
 	MouseButton MIDDLE;
-	glm::vec2 Movement; //deltaMove
-	glm::vec2 Position;
+	VectorF Movement; //deltaMove
+	VectorF Position;
 	int X,Y;
 }   Mouse; 
  struct { //GameControler 1:

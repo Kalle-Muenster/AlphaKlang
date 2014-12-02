@@ -15,7 +15,7 @@ private:
 	short bandWidth;
 	Cubus* bands[SPECTRUM_SIZE];
 	float* fftData;
-	Vector3 offset;
+//	Vector3 offset;
 	bool _CHANGEDposition,_CHANGEDrotation,_CHANGEDscale;
 	virtual void ChangeColor(int band,float changefactor);
 	virtual void ChangeSize(int band,float changefactor);

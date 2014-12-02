@@ -51,6 +51,7 @@ public:
 	operator VectorI();
 	VectorPF operator *(float s);
 	VectorPF operator /(float s);
+	static const VectorPF* const Zero;
 };
 
 namespace ProjectMappe

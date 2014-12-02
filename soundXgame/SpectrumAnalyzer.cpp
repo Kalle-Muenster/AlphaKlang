@@ -19,8 +19,8 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	color.byte[0]=10;
 
 	// Setting up an offset-vector 
-	// (will be addet to each Sybobject's vertices)  
-	offset = this->getTransform()->position;
+	// (will be addet to each Subobject's vertices)  
+	Vector3 offset = this->getTransform()->position;
 	offset.y += 0.5;
 	float X = offset.x;
 	X-=(SPECTRUM_SIZE*0.5);
@@ -30,9 +30,9 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 	this->getTransform()->scale.y=0.3f;
 	this->getTransform()->scale.z=2.0f;
 
-	// Instanciate as many Cubes as there hear frequency-bands 
-	// in they used fft-window... for each, increase its possition-offset
-	// by its size alled with the offset-direction
+	// Instanciate as many Cubes as there are frequency-bands 
+	// in the used fft-window... for each, increase its possition-offset
+	// by its size allong the offset-direction.
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
 	{
 		offset.x = X+i;
@@ -41,13 +41,12 @@ SpectrumAnalyzer::InitializeSpectrumAnalyzer(void)
 		bands[i]->scale(getTransform()->scale);
 	}
 	
-	// Setting the Meters "FallOff"...
-	// as lower the value, as slower the v
-	// visuals will Fall back to Zero if there's no signal.
+	/* Setting the Meters "FallOff"...
+	 * as lower the value, as slower the visuals will
+	 * Fall back to Zero if there's no signal. */
 	fallOffAmount = 0.05f;
-	offset = *Vector3::Zero;
-
-	// this sett's the hight of the analyzers chart.
+	
+	// this set's the hight of the analyzers chart.
 	// band meshures will multiplied by it.
 	this->getTransform()->scale.y = 3;
 
@@ -73,7 +72,7 @@ SpectrumAnalyzer::DoUpdate(void)
 		//scaling datavalues to the desired size...
 		//also let's flatten the scale and maybe do some compression 
 		//to make the chart look's more strait, and the bands 
-		//geting a more equivalent look then real spectrumdata will...  
+		//look'n more equivalent then real spectrum-data will do...  
 
 	//	changeFactor = (this->fftData[i]*((float)i*0.1));
 		changeFactor = (this->fftData[i]*((float)1+i*0.128));         
@@ -101,9 +100,12 @@ SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 {   
 	//apllie the measured and compressed signalvalues to the
 	//Subcube's Transform scale's if the values have changed...
+
+	//if the new value is lower than the old value,
+	//shrink the cube's Y-Axis by the "Fallback"-value...
 	if(newScaleY < bands[band]->getTransform()->scale.y)
 		bands[band]->getTransform()->scale.y -= fallOffAmount;
-	else
+	else  // if th new value is higher than the old one, just set it's Y-scale to the new value...
 		bands[band]->getTransform()->scale.y = newScaleY;
 }
 
@@ -116,11 +118,11 @@ SpectrumAnalyzer::draw(void)
 		{
 			// Re-Positioning,sizeing and rotating the SubCubes
 			// if the whole analyzerobject has been moved,resized 
-			// or rotated during last update..  -->> maybe this coul'd be don at LateUpdate better... dont know....
+			// or rotated during last update..  -->> maybe this coul'd be done at LateUpdate better... dont know....
 			for(int i=0;i<SPECTRUM_SIZE;i++)
 			{
 				if(_CHANGEDposition)
-					bands[i]->getTransform()->position += offset;
+					bands[i]->getTransform()->position += transform.movement;
 				if(_CHANGEDrotation)
 					bands[i]->getTransform()->rotation = getTransform()->rotation;
 				if(_CHANGEDscale)
@@ -130,7 +132,7 @@ SpectrumAnalyzer::draw(void)
 				bands[i]->draw();
 			}
 			_CHANGEDposition = _CHANGEDrotation = _CHANGEDscale = false;
-			offset = *Vector3::Zero;
+			transform.movement = *Vector3::Zero;
 		}
 		else // if there are no changes...
 		{
@@ -144,10 +146,10 @@ SpectrumAnalyzer::draw(void)
 Vector3
 SpectrumAnalyzer::move(float X,float Y,float Z)
 {
-	offset += IMeshObject::move(X,Y,Z);
-	if(offset!=*Vector3::Zero)
+	IMeshObject::move(X,Y,Z);
+	if(getTransform()->movement!=*Vector3::Zero)
 		_CHANGEDposition=true;
-	return getTransform()->movement;
+	return getTransform()->position;
 }
 
 Vector3

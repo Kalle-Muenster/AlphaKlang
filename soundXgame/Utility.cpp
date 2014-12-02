@@ -442,3 +442,19 @@ Utility::RandomDirection(void)
 {
 	return Utility::RandomVector3().normal();
 }
+
+Vector3
+Utility::GetScalevectorByAspect(int width,int height,float zDepth)
+{
+	Vector3 result = *Vector3::Zero;
+			result.x=zDepth;
+			result.y=zDepth;
+			result.z=zDepth;
+
+	if(width > height)
+		result.y=((float)height/width);
+	else if(width < height)
+		result.x=((float)width/height);
+
+	return result;
+}

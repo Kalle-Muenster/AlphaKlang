@@ -145,8 +145,8 @@ FirstPerson::mouseMotion(int newX, int newY)
 		eyeY = 2.5f;
 
 	// set mouse pos center to screen
-	mouseX = SCREENWIDTH/2;
-	mouseY = SCREENHEIGHT/2;
+	mouseX = SCREENWIDTH / 2;
+	mouseY = SCREENHEIGHT / 2;
 	
 	// fix to static mouse pos
 	glutWarpPointer(mouseX, mouseY);

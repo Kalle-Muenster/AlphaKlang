@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 //A List of variables from type [ListMember] , with a maximum amount of [MAXIMUM_SIZE] 
-template<class ListMember,const int MAXIMUM_SIZE> class LueckList
+template<class ListMember,const unsigned MAXIMUM_SIZE> class LueckList
 {
 public:
 	typedef unsigned ListMemberID;
@@ -25,7 +25,7 @@ public:
 			for(int i=0;i<MAXIMUM_SIZE;i++)
 			{
 				if(list[i] != NULL)
-					delete (ListMember*)list[i];
+					delete (ListMember*)&list[i];
 			}
 	}
 

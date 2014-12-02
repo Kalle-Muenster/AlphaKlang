@@ -1,9 +1,12 @@
 #include "Sprite.h"
 #include "TargetGrabber.h"
 
+
+
+
 Sprite::Sprite(void)
 {
-
+	
 }
 
 Sprite::Sprite(char* filename)
@@ -42,7 +45,7 @@ Sprite::Sprite(char* filename)
 
 
 	IGObject::InitializeObject(true);
-
+	
 	SetUp(filename,true);
 	SetName(filename);
 }
@@ -56,18 +59,26 @@ Sprite::~Sprite(void)
 
 void 
 Sprite::SetUp(string textureFile,bool backFace)
-{
-	SetID(SCENE->Add(this));
-	LockID();
+{	
+	int i = -1;
+	while((++i<64)&&(textureFile[i]!='_'));
+	if(i<64)
+		sscanf(&textureFile[i],"_%ix%i.",&texture.w,&texture.h);
+		
 	LoadTexture(textureFile);
 	this->NoBackfaceCulling = backFace;
+
+	transform.scale =Utility::GetScalevectorByAspect(texture.w,texture.h);
+	transform.position.x=0;
+	transform.position.y=1;
+	transform.position.z=4;
 }
 
 void 
 Sprite::SetUp(Texture texture,bool backFace)
 {
-	SetID(SCENE->Add(this));
-	LockID();
 	this->texture = texture;
 	this->NoBackfaceCulling = backFace;
+
+	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
 }

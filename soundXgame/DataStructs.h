@@ -5,6 +5,7 @@
 #include <bass.h>
 #include "projectGrafics.h"
 #include "VoxelVector.h"
+#include "LueckList.h"
 
 typedef char* string;
 

@@ -9,9 +9,8 @@
 #include "BassAudio.h"
 #include "ObjectManagement.h"
 
-
-#define SCREENWIDTH (800)
-#define SCREENHEIGHT (600)
+#define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()->size().x
+#define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->size().y
 #define DINGERBUFFERLENGTH (16384)
 #define CONTROLERPOLLINTERVAL (50)
 
@@ -64,7 +63,7 @@
 	Playing Background-Musik and controling the master-output.
 	also Provides Getting FFT-Data for any audio chanel in Scene..
 */
-#define AUDIO	BassAudio::GetInstance()
+#define AUDIO  BassAudio::GetInstance()
 
 #define OBJECT	ObjectManagement::getInstance();
 

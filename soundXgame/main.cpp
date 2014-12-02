@@ -5,7 +5,7 @@
 #include "ShaderObj.h"
 #include "Musikubus.h"
 #include "ScreenOverlay.h"
-
+#include "GuiObject.h"
 
 //Global Declerations:
 int wnd;
@@ -14,7 +14,7 @@ void* font;
 //Objects:
 SpectrumAnalyzer* analyzer;
 Sprite* Framen;
-
+GuiObject* guiding;
 ScreenOverlay* overlay;
 
 //Functions:
@@ -60,8 +60,9 @@ int prepareForExit(void)
 
 void InitGlut(void)
 {
+			
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
-	glutInitWindowSize(SCREENWIDTH, SCREENHEIGHT);
+	glutInitWindowSize(SCREENWIDTH,SCREENHEIGHT);
 	wnd = glutCreateWindow("-soundXgame-");
 	font = GLUT_BITMAP_HELVETICA_18;
 
@@ -119,7 +120,8 @@ ConID testID;
 void LoadContent(void)
 {
 	
-	glm::vec3 test = glm::vec3(0,0,0);
+	guiding = new GuiObject();
+	guiding->LoadTexture("testbild_1600x900.png");
 
 
 
@@ -134,12 +136,11 @@ void LoadContent(void)
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
-	Framen = new Sprite("framen_1920x1080.png");
+	//Framen = new Sprite("framen_1920x1080.png");
 	Fountain* fountain = new Fountain();
 	//ShaderObj* shaderObj = new ShaderObj();
 
-	Sprite* spriteTest = new Sprite();
-	spriteTest->LoadTexture("Q2-shiny.png");
+
 
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
@@ -196,23 +197,15 @@ void LoadContent(void)
 
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
-//	analyzer->AddConnectable<CamTargetRotator>();
-	SCENE->Object(analyzer->GetID())->move(1,1,-2);
-	SCENE->Object("SpectrumAnalyzer")->move(1,10,-2);
-	analyzer->IsGrounded = true;
-//	analyzer->AddConnectable<CamTargetRotator>();
-	//SCENE->Object(analyzer->GetID())->move(1,3,-2);
 	analyzer->move(7, 0, -10);
-	//SCENE->Object("SpectrumAnalyzer")->move(1,0,-5);
-	analyzer->IsGrounded = true;
-
+	analyzer->IsGrounded = false;
 	// Camera
 
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object(obj));
 
-	overlay = new ScreenOverlay();
-	overlay->Initialize("framen_1920x1080.png");
+	//overlay = new ScreenOverlay();
+	//overlay->Initialize("framen_1920x1080.png");
 }
 
 
@@ -252,7 +245,22 @@ void UpdateCycle(void)
 
 
 }
+void DrawGui(void)
+{
+	 	glMatrixMode(GL_PROJECTION); 
+		glPushMatrix(); 
+		glLoadIdentity(); 
+		gluOrtho2D(0,SCREENWIDTH,0,SCREENHEIGHT);
 
+		glBegin(GL_QUADS);
+
+		guiding->draw();
+		
+		glEnd();
+
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+}
 //The Main-Draw-Call...
 void RenderCycle(void)
 {
@@ -261,7 +269,7 @@ void RenderCycle(void)
 
 	SCENE->DrawAll();
 	//Render2D();
-	overlay->draw();
+	DrawGui();
 	glutSwapBuffers();
 }
 

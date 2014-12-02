@@ -10,8 +10,8 @@ DWORD _doubleClickLength;
 int _fps;
 
 //InputManager* instance;
-
-ProjectMappe::Rectangle _Viewport;
+			
+ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(0,0,1600, 900);
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
@@ -56,10 +56,10 @@ InputManager::InputManager(void)
 	Mouse.LEFT.CLICK=Mouse.RIGHT.CLICK=Mouse.MIDDLE.CLICK=false;
 	Mouse.LEFT.HOLD=Mouse.RIGHT.HOLD=Mouse.MIDDLE.HOLD=false;
 	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
-	Mouse.Movement = glm::vec2(0,0);
+	Mouse.Movement = *VectorF::Zero;
 
-	_Viewport=*ProjectMappe::Rectangle::Zero;
-	_Viewport.size(1,1);
+	//_Viewport=*ProjectMappe::Rectangle::Zero;
+	//_Viewport.size(1,1);
 
 	_ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
 

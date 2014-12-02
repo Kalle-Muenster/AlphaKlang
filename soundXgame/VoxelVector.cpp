@@ -11,7 +11,8 @@ VectorF _VectorFZero = VectorF();
 const VectorF* const VectorF::Zero = &_VectorFZero;
 Vecti _VectiZero = Vecti();
 const Vecti* const Vecti::Zero = &_VectiZero;
-
+VectorPF _VectorPFzero = VectorPF();
+const VectorPF* const VectorPF::Zero = &_VectorPFzero;
 
 
 ProjectMappe::Rectangle _RectangleZero = ProjectMappe::Rectangle();
@@ -24,6 +25,10 @@ VoxtructsInitiator::initiateVoxtructs(void)
 	_VectorIZero.Yps = _VectorIZero.iX = 0;
 	_VectorFZero.x = _VectorFZero.y = 0;
 	_VectiZero.yps = _VectiZero.ix = 0;
+	_VectorPFzero.x = 0;
+	_VectorPFzero.y = 0;
+	_RectangleZero.position(*VectorF::Zero);
+	_RectangleZero.size(*VectorF::Zero);
 }
 
 
@@ -130,7 +135,7 @@ VectorPF::operator *(float s)
 VectorPF
 VectorPF::operator /(float s)
 	{
-		VectorPF newVector;
+		VectorPF newVector = *VectorPF::Zero;
 		*newVector.x=*x/s;
 		*newVector.y=*y/s;
 		return newVector;
@@ -141,6 +146,16 @@ ProjectMappe::Rectangle::Rectangle(void)
 {
 	Position = *VectorF::Zero;
 	HalbSize = *VectorF::Zero;
+}
+
+ProjectMappe::Rectangle::Rectangle(float pX,float pY,float width,float height)
+{
+	Position = *VectorF::Zero;
+	HalbSize = *VectorF::Zero;
+	Position.x=pX;
+	Position.y=pY;
+	HalbSize.x=width/2;
+	HalbSize.y=height/2;
 }
 
 VectorF

@@ -135,6 +135,8 @@
       <Filter>UnderConstruction</Filter>
     </ClCompile>
     <ClCompile Include="ScreenOverlay.cpp" />
+    <ClCompile Include="FogMachine.cpp" />
+    <ClCompile Include="GuiObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -279,6 +281,8 @@
       <Filter>UnderConstruction</Filter>
     </ClInclude>
     <ClInclude Include="ScreenOverlay.h" />
+    <ClInclude Include="FogMachine.h" />
+    <ClInclude Include="GuiObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -319,6 +323,15 @@
     <Image Include="framen_1920x1080.png">
       <Filter>Resources\Textures</Filter>
     </Image>
+    <Image Include="Der Blaue Dunst.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Modus Grau_512x512.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="testbild_1600x900.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram31.cd" />
@@ -347,12 +360,6 @@
     <None Include="ich.ppm">
       <Filter>Resources\Textures</Filter>
     </None>
-    <None Include="cylinder_tris.obi">
-      <Filter>Resources\Meshes</Filter>
-    </None>
-    <None Include="cylinder_quads.obi">
-      <Filter>Resources\Meshes</Filter>
-    </None>
     <None Include="sphere_quads_high.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
@@ -372,6 +379,12 @@
       <Filter>Resources\Textures</Filter>
     </None>
     <None Include="tri_sphere.fbx">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="Modus Grau.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="cylinder_quads.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
   </ItemGroup>

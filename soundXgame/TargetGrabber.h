@@ -1,11 +1,6 @@
 #ifndef _TARGETGRABBER_H_
 #define _TARGETGRABBER_H_
-//////////////////////////////////////////
-/*This are tree helper classes for the 
- *TargetGrabber-Camera-Mode. the TargetGrabber
- *will connect these "connectables" to the 
- *grabbed Object that will be edited. 
- */ 
+
 #include "UpdateManager.h"
 #include "UpdateManager.h"
 #include "Connectable.h"
@@ -45,7 +40,11 @@ protected:
 	int targetSwitcher;
 };
 
-
+//////////////////////////////////////////
+/*This are tree helper classes for the 
+ *TargetGrabber-Camera-Mode. the TargetGrabber
+ *will connect these "connectables" to the 
+ *grabbed Object that will be edited. */ 
 class CamTargetRotator : 
 	public IConnectable,
 	public IUpdateble
