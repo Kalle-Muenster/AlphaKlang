@@ -369,7 +369,7 @@ void Ground::Update(void)
 // this method returns collision height while object is placing on ground
 float Ground::GetGroundY(float posX, float posZ)
 {
-	std::cout << posX << " / " << posZ << std::endl;
+	//std::cout << posX << " / " << posZ << std::endl;
 
 	// prepare to index
 	posX -= x;
@@ -398,31 +398,43 @@ float Ground::GetGroundY(float posX, float posZ)
 	float posY = y;
 
 	/*
-	1     2
-	x-----x
-	|     |
-	|     |
-	x-----x
 	3     4
+	x-----x
+	|     |
+	|     |
+	x-----x
+	1     2
 	*/
+	
+	float point1 = (float)heightMap[count_z - indexZ1][indexX1] / 100 * heightRange;
+	float point2 = (float)heightMap[count_z - indexZ1][indexX2] / 100 * heightRange;
+	float point3 = (float)heightMap[count_z - indexZ2][indexX1] / 100 * heightRange;
+	float point4 = (float)heightMap[count_z - indexZ2][indexX2] / 100 * heightRange;
 
-	float point1 = (float)heightMap[count_z - indexZ2][indexX1] / 100 * heightRange;
-	float point2 = (float)heightMap[count_z - indexZ2][indexX2] / 100 * heightRange;
-	float point3 = (float)heightMap[count_z - indexZ1][indexX1] / 100 * heightRange;
-	float point4 = (float)heightMap[count_z - indexZ1][indexX2] / 100 * heightRange;
+	float line12 = (point3 - point4) * restX;
+	float line34 = (point1 - point2) * restX;
+	float line13 = (point1 - point3) * restZ;
+	float line24 = (point2 - point4) * restZ;
 
-	float line12 = (point1 - point2) * restX;
-	float line34 = (point3 - point4) * restX;
-	float line13 = (point3 - point1) * restZ;
-	float line24 = (point4 - point2) * restZ;
+	//float heightX = (line34 + line12) / 2 *-1;
+	//float heightZ = (line13 + line24) / 2 *-1;
 
-	float averageX = (line34 + line12) / 2 *-1;
-	float averageZ = (line13 + line24) / 2 *-1;
+	float normalX = (line34 > line12) ? line12 : line34;
+	line34 -= normalX;
+	line12 -= normalX;
+	float heightX = line12 + (line34 - line12) * restZ + normalX;
 
-	std::cout << averageX << " / " << averageZ << std::endl;
+	float normalZ = (line24 > line13) ? line13 : line24;
+	line24 -= normalZ;
+	line13 -= normalZ;
+	float heightZ = line13 + (line24 - line13) * restZ + normalX;
+
+	
+
+	//std::cout << heightX << " / " << heightZ << std::endl;
 
 
-	float averageTotal = averageX + averageZ;
+	float averageTotal = (heightX + heightZ) / 2;
 
 	posY += (float)dynamicMap[count_z - indexZ1][indexX1] / 100 * dynamicRange / 100 * dynamicVal;
 	posY += averageTotal;
