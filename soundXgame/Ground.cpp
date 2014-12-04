@@ -29,7 +29,7 @@ Ground::Ground(void) :
 	dynamicVal(0),
 
 	// states
-	drawPlanes(false), 
+	drawPlanes(true), 
 	drawLines(true),
 	coloredTiles(false),
 	dynamicToTop(true)
@@ -137,6 +137,11 @@ Ground::~Ground(void)
 {
 	delete[] configMap;
 	delete[] heightMap;
+	delete[] dynamicConfigMap;
+	delete[] dynamicMap;
+	delete[] mapList;
+	delete[] rangeList;
+	delete[] valueList;
 }
 
 

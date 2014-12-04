@@ -197,7 +197,7 @@ void LoadContent(void)
 	analyzer = new SpectrumAnalyzer();
 	analyzer->SetName("SpectrumAnalyzer");
 	analyzer->AddConnectable<CamTargetRotator>();
-	analyzer->move(0, 0, -80.0f);
+	analyzer->move(0, 0, -88.0f);
 	analyzer->scale(90.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	analyzer->Initialize();
 
