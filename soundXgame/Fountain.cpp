@@ -4,13 +4,15 @@
 #include "Fountain.h"
 #include "projectMacros.h"
 
-Fountain::Fountain(void)
-	: timer(0), timer2(0), spawnDelay(1.0f), deleteDelay(2.0f)
+Fountain::Fountain(void) :
+	timer(0),
+	timer2(0),
+	spawnDelay(1.0f),
+	deleteDelay(2.0f)
 {
 	size = 20;
 	this->createRange();
-	this->transform.position = Vector3(1.0f, 0.0f, 1.0f);
-
+	this->transform.position = Vector3(0, 0, 0);
 
 	UpdateManager::getInstance()->SignInForUpdate(this);
 
@@ -109,7 +111,9 @@ void
 Fountain::Spawn(void)
 {
 	FountainObject* obj = Fountain::getObject();
-	obj->move(this->transform.position);
+	Vector3 pos = this->transform.position;
+	pos.y += Ground::getInstance()->GetGroundY(pos.x, pos.z);
+	obj->move(pos);
 	obj->Initialize();
 }
 

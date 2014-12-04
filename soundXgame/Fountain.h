@@ -5,6 +5,7 @@
 #include "FountainObject.h"
 #include "UpdateManager.h"
 #include "Transform.h"
+#include "Ground.h"
 
 
 class Fountain

@@ -25,7 +25,7 @@ FountainObject::Initialize(void)
 	float randX = Utility::GetRandom() - 0.5f;
 	float randZ = Utility::GetRandom() - 0.5f;
 
-	this->power = 2.0f;
+	this->power = 3.0f;
 	this->gravity = -0.035f;
 	this->speed = 0.04f;
 	this->expanding = 6.0f; // expanding: 1=low,5=high
