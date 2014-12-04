@@ -27,7 +27,7 @@ FirstPerson::Initialize(void)
 	y			= 0;
 	z			= 5;
 	eyeY		= 1;
-	moveSpeed	= 0.1f;
+	moveSpeed	= 0.5f;
 	mouseSpeed	= 1.0f;
 	mouseX = SCREENWIDTH/2;
 	mouseY = SCREENHEIGHT/2;

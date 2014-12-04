@@ -19,25 +19,35 @@ Ground::Ground(void) :
 	y(-20.0f),
 	z(10.0f),
 	width(3.5f),
-	heightRange(27.0f),
-	dynamicRange(25.0f),
 
+	// ranges
+	heightRange(15.0f),
+	dynamicRange(30.0f),
+
+	// height values
+	heightVal(100),
+	dynamicVal(0),
+
+	// states
 	drawPlanes(false), 
 	drawLines(true),
 	coloredTiles(false),
-
-	dynamicToTop(true),
-	dynamicVal(0)
+	dynamicToTop(true)
 {
+	// individuell vars
 	depth = width * -1;
-	
 
-	// Config Map
-	int Tmp[5][5]	=	{  100 ,   30 ,   70 ,   90 ,  100  ,
-						    70 ,   20 ,   50 ,   50 ,   50  ,
-						    50 ,   10 ,   30 ,   25 ,   70  ,
-						     0 ,    5 ,   15 ,   10 ,   40  ,
-						    00 ,    0 ,    5 ,   25 ,   70 
+	// settings
+	this->SetID(SCENE->Add(this));
+	this->LockID();
+	IsVisible=true;
+
+	// Base Height Map
+	int Tmp[5][5]	=	{  100 ,    0 ,  100 ,   40 ,  100  ,
+						    70 ,   20 ,   50 ,   10 ,   30  ,
+						    20 ,    0 ,   30 ,   40 ,   80  ,
+						     0 ,   25 ,   35 ,    0 ,   40  ,
+						    65 ,   40 ,   85 ,   35 ,  100 
 						};
 	for (int i = 0; i < 5; i++)
 	{
@@ -48,15 +58,13 @@ Ground::Ground(void) :
 		configMap[i][3] = Tmp[i][3];
 		configMap[i][4] = Tmp[i][4];
 	}
-
-	// Height Map
 	heightMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
 	{
 		heightMap[i] = new int [count_x+1];
 	}
 
-	// Dynamic Config Map
+	// Dynamic Height Map
 	int Tmp2[9][9]	=	{  100 ,  100 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
 						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
@@ -80,23 +88,25 @@ Ground::Ground(void) :
 		dynamicConfigMap[i][7] = Tmp2[i][7];
 		dynamicConfigMap[i][8] = Tmp2[i][8];
 	}
-	
-	// Dynamic Map
 	dynamicMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
 	{
 		dynamicMap[i] = new int [count_x+1];
 	}
 
+	// save both array to list
+	mapList[0] = heightMap;
+	mapList[1] = dynamicMap;
+	rangeList[0] = heightRange;
+	rangeList[1] = dynamicRange;
+	valueList[0] = &heightVal;
+	valueList[1] = &dynamicVal;
 	
+
+	// initize map once
 	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
 	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
 
-
-	this->SetID(SCENE->Add(this));
-	this->LockID();
-
-	IsVisible=true;
 }
 
 Ground::~Ground(void)
@@ -336,8 +346,8 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	//float speed = 35.0f * INPUT->FrameTime;
-	float speed = 0;
+	float speed = 35.0f * (float)INPUT->FrameTime;
+	//float speed = 0;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else
@@ -394,37 +404,39 @@ float Ground::GetGroundY(float posX, float posZ)
 
 	// calculate index height
 	float posY = y;
-
-	/*
-	3     4
-	x-----x
-	|     |
-	|     |
-	x-----x
-	1     2
-	*/
 	
-	// get points
-	float point1 = (float)heightMap[count_z - indexZ1][indexX1] / 100 * heightRange;
-	float point2 = (float)heightMap[count_z - indexZ1][indexX2] / 100 * heightRange;
-	float point3 = (float)heightMap[count_z - indexZ2][indexX1] / 100 * heightRange;
-	float point4 = (float)heightMap[count_z - indexZ2][indexX2] / 100 * heightRange;
-	
-	// Calculating for HeightMap
-	float line12 =						(point2 - point1) * restX;
-	float line34 = (point3 - point1) -	(point3 - point4) * restX;
-	float normalized = (line34 > line12) ? line12 : line34;
-	line34 -= normalized;
-	line12 -= normalized;
-	float heightX = ((line34 - line12) * restZ + normalized);
+	// loop map list
+	for(int i = 0; i < (sizeof(mapList)/sizeof(*mapList)); i++)
+	{
 
-	
+		// get points
+		float point1 = (float)mapList[i][count_z - indexZ1][indexX1] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point2 = (float)mapList[i][count_z - indexZ1][indexX2] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point3 = (float)mapList[i][count_z - indexZ2][indexX1] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point4 = (float)mapList[i][count_z - indexZ2][indexX2] / 100 * rangeList[i] / 100 * *valueList[i];
 
-	posY += point1;
-	//posY += (float)dynamicMap[count_z - indexZ1][indexX1] / 100 * dynamicRange / 100 * dynamicVal;
-	posY += heightX;
+		/*
+		Points
+		3     4
+		x-----x
+		|     |
+		x-----x
+		1     2
+		*/
+	
+		// Calculating real Tile-Height with observance of each individual heights point
+		float line12 = (point2 - point1) * restX;
+		float line34 = (point3 - point1) - (point3 - point4) * restX;
+		float normalized = (line34 > line12) ? line12 : line34;
+		line34 -= normalized;
+		line12 -= normalized;
+		float heightX = ((line34 - line12) * restZ + normalized);
 
 	//float posDynY1 += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
+		posY += point1;
+		posY += heightX;
+	}
+
 
 	return posY;
 
