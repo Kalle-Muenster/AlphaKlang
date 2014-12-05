@@ -15,7 +15,7 @@ Ground* Ground::getInstance()
 Ground::Ground(void) :
 	count_x(40),
 	count_z(40),
-	x(-45.0f*3.5f),
+	x(-20.0f*3.5f),
 	y(-5.0f),
 	z(20.0f*3.5f),
 	width(3.5f),
