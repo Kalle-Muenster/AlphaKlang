@@ -162,22 +162,22 @@ void LoadContent(void)
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 1-Kit-808.wav");
 	SCENE->Object("AUDIO01")->move(2,0,-2);
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO01")->IsGrounded=true;
+//	SCENE->Object("AUDIO01")->IsGrounded(true);
 	(new Cubus("X-7.png"))->SetName("AUDIO02");
 	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 2-Kit-808.wav");
 	SCENE->Object("AUDIO02")->move(8,0,-2);
 	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO02")->IsGrounded=true;
+//	SCENE->Object("AUDIO02")->IsGrounded(true);
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 3-Kit-808.wav");
 	SCENE->Object("AUDIO03")->move(12,0,-2);
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO03")->IsGrounded=true;
+//	SCENE->Object("AUDIO03")->IsGrounded(true);
 	(new Cubus("X-7.png"))->SetName("AUDIO04");
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 4-Kit-808.wav");
 	SCENE->Object("AUDIO04")->move(20,0,-2);
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO04")->IsGrounded=true;
+//	SCENE->Object("AUDIO04")->IsGrounded(true);
 
 
 	// Music Cube
