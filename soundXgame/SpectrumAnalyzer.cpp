@@ -5,7 +5,7 @@
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
-	this->ChartHeight = 30.0f;
+	this->ChartHeight = 50.0f;
 }
 
 void
@@ -15,7 +15,7 @@ SpectrumAnalyzer::Initialize(void)
 	color.byte[1]=0;
 	color.byte[2]=255;
 	color.byte[3]=127;
-	color.byte[0]=100;
+	color.byte[0]=60;
 
 	// Setting up an offset-vector 
 	// (will be addet to each Subobject's vertices)  
@@ -31,12 +31,13 @@ SpectrumAnalyzer::Initialize(void)
 	{
 		offset.x = X + i;
 		bands[i]=(new Cubus(color,true,false,offset));
-		bands[i]->IsGrounded = true;
+		bands[i]->IsGrounded(true);
 		bands[i]->GroundedWithPivot = true;
 		bands[i]->scale(getTransform()->scale);
 	}
 	
-		transform.movement = *Vector3::Zero;
+	// reset movement every step you select it for executing with bands
+	transform.movement = *Vector3::Zero;
 	
 	/* Setting the Meters "FallOff"...
 	 * as lower the value, as slower the visuals will

@@ -27,15 +27,21 @@ private:
 	const float heightRange;
 	const float dynamicRange;
 
-	int** heightMap;
 	int* configMap [5];
-	int** dynamicMap;
+	int** heightMap;
 	int* dynamicConfigMap [9];
+	int** dynamicMap;
+
+	// list for dynamic access
+	int** mapList [2];
+	float rangeList[2];
+	float* valueList[2];
 
 	bool drawPlanes;
 	bool drawLines;
 	bool coloredTiles;
 	bool dynamicToTop;
+	float heightVal;
 	float dynamicVal;
 
 	int** CalculateMap(int** assignMap, int** config, int size);

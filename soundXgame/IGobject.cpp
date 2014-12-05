@@ -1,6 +1,6 @@
 #include <iostream>
 #include "projectMacros.h"
-#include "DataStructs.h"
+//#include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGObject.h"
@@ -26,8 +26,11 @@ IGObject::IGObject(void)
 	this->_idIsSet=false;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
-	IsGrounded=false;
 	
+	GroundValue = 0;
+	IsGrounded(false);
+	UpdateManager::getInstance()->SignInForLateUpdate(this);
+
 }
 
 IGObject::~IGObject(void)
@@ -78,6 +81,34 @@ GobID
 IGObject::GetID(void)
 {
 	return this->ID;
+}
+
+// Ground
+bool
+IGObject::IsGrounded()
+{
+	return _isGrounded;
+}
+
+void
+IGObject::IsGrounded(bool status)
+{
+	_isGrounded = status;
+}
+
+void
+IGObject::DoLate(void)
+{
+	GLfloat x  = this->getTransform()->position.x;
+	GLfloat* y = &this->getTransform()->position.y;
+	GLfloat z = this->getTransform()->position.z;
+
+	if(IsGrounded())
+	{
+		*y -= this->GroundValue;
+		this->GroundValue = Ground::getInstance()->GetGroundY(x, z);
+		*y += this->GroundValue;
+	}
 }
 
 

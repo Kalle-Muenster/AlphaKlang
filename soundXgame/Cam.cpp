@@ -27,7 +27,7 @@ Cam::Cam(void) :
 	InitiateListener(&this->transform);
 
 	_fieldOfView = 55;
-	_aspect = 16.0/9.0;
+	_aspect = 16.0f/9.0f;
 
 	ModeSocket = new CameraMode();
 	ModeSocket->camera = this;

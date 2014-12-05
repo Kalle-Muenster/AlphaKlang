@@ -4,6 +4,7 @@
 #include <vector>
 #include "projectGrafics.h"
 #include "DataStructs.h"
+#include "UpdateManager.h"
 
 class IConnectable;
 //class Kollective;
@@ -15,20 +16,27 @@ struct Vector3;
 typedef unsigned int GobID;
 typedef unsigned int ConID;
 
-class IGObject
+class IGObject : public IUpdateble
 {
 private:
 	GobID ID;
 	bool _idIsSet;
+	bool _isGrounded;
 	
 protected:
+
 	Transform	transform;
 	char		Name[64];
 	bool		SetID(GobID);
 	unsigned	LockID(void);
-//	IGObject*	theNext;
+
 	void*		pUserData;
 	
+
+	// Ground
+	float GroundValue;
+
+
 public:
 	IGObject(void);
 	virtual ~IGObject(void);
@@ -47,8 +55,15 @@ public:
 	void			SetName(char*);
 	IConnectable*	conXtor;
 	operator IConnectable();
-	bool			IsGrounded;
+
 	float			SomeValue;
+
+
+	// Ground
+	bool IsGrounded();
+	void IsGrounded(bool status);
+	virtual void DoLate(void);
+
 
 	template<typename T> T* AddConnectable(void)
 	{

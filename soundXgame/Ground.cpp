@@ -11,27 +11,38 @@ Ground* Ground::getInstance()
 	return instance;
 }
 
-
+  
 Ground::Ground(void) :
 	count_x(40),
 	count_z(40),
-	x(-20.0f),
-	y(-20.0f),
-	z(10.0f),
+	x(-45.0f*3.5f),
+	y(-5.0f),
+	z(20.0f*3.5f),
 	width(3.5f),
-	heightRange(7.0f),
-	dynamicRange(25.0f),
 
-	drawPlanes(false), 
+	// ranges
+	heightRange(5.0f),
+	dynamicRange(17.0f),
+
+	// height values
+	heightVal(100),
+	dynamicVal(0),
+
+	// states
+	drawPlanes(true), 
 	drawLines(true),
 	coloredTiles(false),
-
-	dynamicToTop(true),
-	dynamicVal(0)
+	dynamicToTop(true)
 {
+	// individuell vars
 	depth = width * -1;
-	
 
+	// settings
+	this->SetID(SCENE->Add(this));
+	this->LockID();
+	IsVisible=true;
+
+	
 	// Config Map
 	int Tmp[5][5]	=	{  100 ,   30 ,   70 ,   90 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   50  ,
@@ -39,24 +50,41 @@ Ground::Ground(void) :
 						     0 ,    5 ,   15 ,   10 ,   40  ,
 						    00 ,    0 ,    5 ,   25 ,   70 
 						};
+
+	// Base Height Map
+	/*int Tmp[10][10]	=	{  100 ,    0 ,  100 ,   40 ,  100 ,    0 ,  100 ,   40 ,  100,  100  ,
+						    70 ,   20 ,   50 ,   10 ,   30 ,   20 ,   50 ,   10 ,   30,   30  ,
+						    20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  ,
+						     0 ,   25 ,   35 ,    0 ,   40 ,   25 ,   35 ,    0 ,   40,   40  ,
+						    65 ,   40 ,   85 ,   35 ,  100 ,   40 ,   85 ,   35 ,  100,  100  ,
+							70 ,   20 ,   50 ,   10 ,   30 ,   20 ,   50 ,   10 ,   30,   30  ,
+							20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  ,
+							 0 ,   25 ,   35 ,    0 ,   40 ,   25 ,   35 ,    0 ,   40,   40  ,
+							65 ,   40 ,   85 ,   35 ,  100 ,   40 ,   85 ,   35 ,  100,  100  ,
+							20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  
+						};*/
 	for (int i = 0; i < 5; i++)
 	{
-		configMap[i] = new int [5];
+		configMap[i] = new int [10];
 		configMap[i][0] = Tmp[i][0];
 		configMap[i][1] = Tmp[i][1];
 		configMap[i][2] = Tmp[i][2];
 		configMap[i][3] = Tmp[i][3];
 		configMap[i][4] = Tmp[i][4];
+		/*configMap[i][5] = Tmp[i][5];
+		configMap[i][6] = Tmp[i][6];
+		configMap[i][7] = Tmp[i][7];
+		configMap[i][8] = Tmp[i][8];
+		configMap[i][9] = Tmp[i][9];*/
 	}
-
-	// Height Map
 	heightMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
 	{
 		heightMap[i] = new int [count_x+1];
 	}
 
-	// Dynamic Config Map
+	// Dynamic Height Map
+	
 	int Tmp2[9][9]	=	{  100 ,  100 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
 						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
@@ -67,9 +95,27 @@ Ground::Ground(void) :
 						    30 ,   30 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,  100  ,
 						    20 ,   30 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 
 						};
+	/*
+	int Tmp2[16][16] =	{  100 ,   90 ,   60 ,   80 ,  100 ,   40 ,   80 ,  100 ,   50 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
+						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
+						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
+						    20 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
+						    40 ,   10 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50  ,
+						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70  ,
+						    50 ,   10 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90  ,
+						    30 ,   30 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,   10 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,  100  ,
+						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
+						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
+						    20 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
+						    40 ,   10 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50  ,
+						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70  ,
+						    50 ,   10 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90  ,
+						    30 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
+						    20 ,   30 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 
+						};*/
 	for (int i = 0; i < 9; i++)
 	{
-		dynamicConfigMap[i] = new int [9];
+		dynamicConfigMap[i] = new int [16];
 		dynamicConfigMap[i][0] = Tmp2[i][0];
 		dynamicConfigMap[i][1] = Tmp2[i][1];
 		dynamicConfigMap[i][2] = Tmp2[i][2];
@@ -79,30 +125,44 @@ Ground::Ground(void) :
 		dynamicConfigMap[i][6] = Tmp2[i][6];
 		dynamicConfigMap[i][7] = Tmp2[i][7];
 		dynamicConfigMap[i][8] = Tmp2[i][8];
+		/*dynamicConfigMap[i][9] = Tmp2[i][9];
+		dynamicConfigMap[i][10] = Tmp2[i][10];
+		dynamicConfigMap[i][11] = Tmp2[i][11];
+		dynamicConfigMap[i][12] = Tmp2[i][12];
+		dynamicConfigMap[i][13] = Tmp2[i][13];
+		dynamicConfigMap[i][14] = Tmp2[i][14];
+		dynamicConfigMap[i][15] = Tmp2[i][15];*/
 	}
-	
-	// Dynamic Map
 	dynamicMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
 	{
 		dynamicMap[i] = new int [count_x+1];
 	}
 
+	// save both array to list
+	mapList[0] = heightMap;
+	mapList[1] = dynamicMap;
+	rangeList[0] = heightRange;
+	rangeList[1] = dynamicRange;
+	valueList[0] = &heightVal;
+	valueList[1] = &dynamicVal;
 	
+
+	// initize map once
 	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
 	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
 
-
-	this->SetID(SCENE->Add(this));
-	this->LockID();
-
-	IsVisible=true;
 }
 
 Ground::~Ground(void)
 {
 	delete[] configMap;
 	delete[] heightMap;
+	delete[] dynamicConfigMap;
+	delete[] dynamicMap;
+	delete[] mapList;
+	delete[] rangeList;
+	delete[] valueList;
 }
 
 
@@ -234,7 +294,7 @@ int** Ground::CalculateMap(int** assignMap, int** config, int size)
 	//heightMap = assignMap;
 	return assignMap;
 	
-	// zwischenwerte berechnen erfolgte mit in der vertikal-berechnung
+	// zwischenwerte berechnen erfolgt zusammen mit der vertikal-berechnung
 	// TODO zur verfeinerung bei zwischenwerten den durchschnitt zwischen vertikal und horizontal mit einschließen
 
 }
@@ -336,7 +396,8 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 35.0f * INPUT->FrameTime;
+	float speed = 35.0f * (float)INPUT->FrameTime;
+	//float speed = 0;
 	if(dynamicToTop)
 		dynamicVal += speed;
 	else
@@ -365,11 +426,10 @@ void Ground::Update(void)
 
 }
 
+// this method returns collision height while object is placing on ground
 float Ground::GetGroundY(float posX, float posZ)
 {
-//	std::cout << posX << " / " << posZ << std::endl;
-
-	// calculate to index
+	// prepare to index
 	posX -= x;
 	posZ -= z;
 	posX /= width;
@@ -380,12 +440,53 @@ float Ground::GetGroundY(float posX, float posZ)
 	posX = (posX < 0) ? posX = 0 : (posX > count_x) ? count_x : posX;
 	posZ = (posZ < 0) ? posZ = 0 : (posZ > count_z) ? count_z : posZ;
 
-	int indexX = (int)posX;
-	int indexZ = (int)posZ;
-	
+	// floats to ints for index
+	int indexX1 = (int)posX;
+	int indexZ1 = (int)posZ;
+
+	// calculate next index for values between two tiles
+	int indexX2 = (indexX1 < count_x) ? indexX1 + 1 : indexX1;
+	int indexZ2 = (indexZ1 < count_z) ? indexZ1 + 1 : indexZ1;
+
+	// calculate rest
+	float restX = posX - indexX1;
+	float restZ = posZ - indexZ1;
+
+	// calculate index height
 	float posY = y;
-	posY += (float)heightMap[count_z - indexZ][indexX] / 100 * heightRange;
-	posY += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
+	
+	// loop map list
+	for(int i = 0; i < (sizeof(mapList)/sizeof(*mapList)); i++)
+	{
+
+		// get points
+		float point1 = (float)mapList[i][count_z - indexZ1][indexX1] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point2 = (float)mapList[i][count_z - indexZ1][indexX2] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point3 = (float)mapList[i][count_z - indexZ2][indexX1] / 100 * rangeList[i] / 100 * *valueList[i];
+		float point4 = (float)mapList[i][count_z - indexZ2][indexX2] / 100 * rangeList[i] / 100 * *valueList[i];
+
+		/*
+		Points
+		3     4
+		x-----x
+		|     |
+		x-----x
+		1     2
+		*/
+	
+		// Calculating real Tile-Height with observance of each individual heights point
+		float line12 = (point2 - point1) * restX;
+		float line34 = (point3 - point1) - (point3 - point4) * restX;
+		float normalized = (line34 > line12) ? line12 : line34;
+		line34 -= normalized;
+		line12 -= normalized;
+		float heightX = ((line34 - line12) * restZ + normalized);
+
+	//float posDynY1 += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
+		posY += point1;
+		posY += heightX;
+	}
+
 
 	return posY;
 
