@@ -11,7 +11,7 @@ Ground* Ground::getInstance()
 	return instance;
 }
 
-
+  
 Ground::Ground(void) :
 	count_x(90),
 	count_z(90),
@@ -21,7 +21,7 @@ Ground::Ground(void) :
 	width(3.5f),
 
 	// ranges
-	heightRange(15.0f),
+	heightRange(5.0f),
 	dynamicRange(30.0f),
 
 	// height values
