@@ -33,7 +33,7 @@ IVoxelObject::draw(void)
 //	glDisable(GL_TEXTURE_2D);
 //	glDisable(GL_CULL_FACE);
 	glColor4b(255,255,255,255);
-	IsGrounded=false;
+	IsGrounded(false);
 	glPushMatrix();
 	switch(mode)
 	{

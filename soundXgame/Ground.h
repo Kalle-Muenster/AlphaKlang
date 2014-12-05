@@ -27,9 +27,9 @@ private:
 	const float heightRange;
 	const float dynamicRange;
 
-	int* configMap [10];
+	int* configMap [5];
 	int** heightMap;
-	int* dynamicConfigMap [16];
+	int* dynamicConfigMap [9];
 	int** dynamicMap;
 
 	// list for dynamic access

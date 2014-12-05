@@ -6,7 +6,7 @@ FountainObject::FountainObject(void)
 	InitializeObject("cube_quads.obi",true);
 	this->LoadTexture("X-512.jpg");
 
-	this->IsGrounded = false;
+	//this->IsGrounded(false);
 	this->scale(Vector3(0.3f,0.3f,0.3f));
 
 	this->AddConnectable<Randomover>();

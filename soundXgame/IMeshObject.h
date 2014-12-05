@@ -53,6 +53,7 @@ public:
 	virtual Vector3		scale(Vector3);
 	virtual Vector3		scale(float,float,float);
 	virtual void		draw(void);
+	virtual void		DoLate(void);
 
 };
 //class Kollective : 

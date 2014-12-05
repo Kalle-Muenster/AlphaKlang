@@ -207,19 +207,6 @@ IMeshObject::draw(void)
 		GLfloat x  = getTransform()->position.x;
 		GLfloat z = getTransform()->position.z;
 		GLfloat y = getTransform()->position.y;
-
-		// Grounded
-		if(IsGrounded)
-		{
-			if(GroundedWithPivot)
-			{
-				y += Ground::getInstance()->GetGroundY(x + Pivot.x * getTransform()->scale.x, z + Pivot.z * getTransform()->scale.z);
-			}
-			else
-			{
-				y += Ground::getInstance()->GetGroundY(x, z);
-			}
-		}
 		
 		glTranslatef(x, y, z);
 
@@ -238,6 +225,27 @@ IMeshObject::draw(void)
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void
+IMeshObject::DoLate(void)
+{
+	GLfloat x  = this->getTransform()->position.x;
+	GLfloat* y = &this->getTransform()->position.y;
+	GLfloat z = this->getTransform()->position.z;
+
+	*y -= this->GroundValue;
+	
+	if(GroundedWithPivot)
+	{
+		this->GroundValue = Ground::getInstance()->GetGroundY(x + Pivot.x * getTransform()->scale.x, z + Pivot.z * getTransform()->scale.z);
+	}
+	else
+	{
+		this->GroundValue = Ground::getInstance()->GetGroundY(x, z);
+	}
+
+	*y += this->GroundValue;
 }
 
 //Texture Struct:
