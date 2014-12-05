@@ -23,8 +23,12 @@ class FogMachine :
 		float varianz;
 		float accselleration;
 		float emittingAngle;
+		float lifetime;
+		float emittingFrequency;
+		float timer;
+		int lastActivatedParticle;
 
-		void Loade(char* nebelFile);
+		void LoadeParticle(char* nebelFile);
 		void MachDampf(void);
 		virtual void draw(void);
 		virtual void DoUpdate(void);

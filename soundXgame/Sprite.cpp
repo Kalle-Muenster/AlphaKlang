@@ -9,7 +9,7 @@ Sprite::Sprite(void)
 	
 }
 
-Sprite::Sprite(char* filename)
+Sprite::Sprite(char* filename,bool addToScene)
 {
 	verts.push_back(Vector3(-1,1,0));
 	verts.push_back(Vector3(1,1,0));
@@ -44,10 +44,12 @@ Sprite::Sprite(char* filename)
 	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
 
 
-	IGObject::InitializeObject(true);
+	IGObject::InitializeObject(addToScene);
 	
 	SetUp(filename,true);
 	SetName(filename);
+	if(!addToScene)
+		LockID();
 }
 
 
@@ -56,6 +58,17 @@ Sprite::~Sprite(void)
 
 }
 
+Texture*
+Sprite::GetTexture(void)
+{
+	return pTexture;
+}
+
+void 
+Sprite::SetTexture(Texture* tex)
+{
+	pTexture=tex;
+}
 
 void 
 Sprite::SetUp(string textureFile,bool backFace)
@@ -69,9 +82,6 @@ Sprite::SetUp(string textureFile,bool backFace)
 	this->NoBackfaceCulling = backFace;
 
 	transform.scale =Utility::GetScalevectorByAspect(texture.w,texture.h);
-	transform.position.x=0;
-	transform.position.y=1;
-	transform.position.z=4;
 }
 
 void 

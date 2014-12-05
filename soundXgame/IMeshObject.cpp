@@ -100,10 +100,16 @@ IMeshObject::InitializeObject(const char* objFile, bool addToSceneGraph, Vector3
 	LockID();
 }
 
-Texture
+Texture*
 IMeshObject::GetTexture(void)
 {
-	return texture;
+	return &texture;
+}
+
+void 
+IMeshObject::SetTexture(Texture* tex)
+{
+	 texture = *tex;
 }
 
 Vector3

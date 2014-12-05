@@ -10,9 +10,13 @@ class Sprite :
 private:
 	void SetUp(string textureFile,bool backface=true); 
 	void SetUp(Texture texture,bool backface=true);
+protected:
+	Texture* pTexture;
 public:
+	virtual Texture* GetTexture(void);
+	virtual void	 SetTexture(Texture*);
 	Sprite(void);
-	Sprite(char*);
+	Sprite(char*,bool addToScene = true);
 	virtual ~Sprite(void);
 };
 

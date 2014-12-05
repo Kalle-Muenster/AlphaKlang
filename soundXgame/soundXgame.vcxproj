@@ -208,6 +208,31 @@
     <Media Include="18.wav" />
     <Media Include="brumm_f32.wav" />
     <Media Include="brumm_s16.wav" />
+    <Media Include="DaRioGame v03 1-Kit-808.wav" />
+    <Media Include="DaRioGame v03 10-Nanopad.wav" />
+    <Media Include="DaRioGame v03 11-Audio.wav" />
+    <Media Include="DaRioGame v03 12-Audio.wav" />
+    <Media Include="DaRioGame v03 13-Audio.wav" />
+    <Media Include="DaRioGame v03 14-Audio.wav" />
+    <Media Include="DaRioGame v03 15-Audio.wav" />
+    <Media Include="DaRioGame v03 16-Audio.wav" />
+    <Media Include="DaRioGame v03 17-Audio.wav" />
+    <Media Include="DaRioGame v03 18-Audio.wav" />
+    <Media Include="DaRioGame v03 19-Audio.wav" />
+    <Media Include="DaRioGame v03 2-Kit-808.wav" />
+    <Media Include="DaRioGame v03 20-Audio.wav" />
+    <Media Include="DaRioGame v03 21-Audio.wav" />
+    <Media Include="DaRioGame v03 22-Audio.wav" />
+    <Media Include="DaRioGame v03 3-Kit-808.wav" />
+    <Media Include="DaRioGame v03 4-Kit-808.wav" />
+    <Media Include="DaRioGame v03 5-TeeBee Ultralight.wav" />
+    <Media Include="DaRioGame v03 6-CZ_ToogBass.wav" />
+    <Media Include="DaRioGame v03 7-Kit-808.wav" />
+    <Media Include="DaRioGame v03 8-Sforzando.wav" />
+    <Media Include="DaRioGame v03 9-Brite Strings.wav" />
+    <Media Include="DaRioGame v03 A-Reverb.wav" />
+    <Media Include="DaRioGame v03 B-Delay.wav" />
+    <Media Include="DaRioGame v03.wav" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="brumm_f32.txt">
@@ -220,6 +245,7 @@
     <Image Include="Der Blaue Dunst.png" />
     <Image Include="framen_1920x1080.png" />
     <Image Include="Modus Grau_512x512.png" />
+    <Image Include="Modus Grau_64x64.png" />
     <Image Include="Q2-shiny.png" />
     <Image Include="q2_23.png" />
     <Image Include="testbild_1600x900.png" />

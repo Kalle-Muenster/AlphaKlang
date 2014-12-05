@@ -94,6 +94,7 @@ default :
 float _BackgroundFFTbuffer[FFT_WINDOW_SIZE];
 bool _BackroundFFTcalculated = false;
 int _BackgroundFFTcurrentSize = FFT_WINDOW_SIZE;
+bool _BackgroundAudioIsPlaying = false;
 
 int _GetNumberOfInputDevices(void)
 {
@@ -240,7 +241,7 @@ BassAudio::GetBackgroundAudioFFT(FFT_SIZE size)
 {
 	void* buffer = &_BackgroundFFTbuffer[0];
 	
-	if((!_BackroundFFTcalculated) || (_BackgroundFFTcurrentSize!=size))
+	if((_IsPlaying)&&((!_BackroundFFTcalculated) || (_BackgroundFFTcurrentSize!=size)))
 	{
 		if(GetChannelFFT(derAudio,buffer,size)==0)
 			printf("AUDIO: %s\n",_GetErrorString());

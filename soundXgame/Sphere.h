@@ -11,6 +11,7 @@ public:
 //	Sphere(void);
 	Sphere(bool drawBackfaces=false);
 	virtual ~Sphere(void);
+
 };
 
 #endif

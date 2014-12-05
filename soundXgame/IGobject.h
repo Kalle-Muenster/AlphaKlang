@@ -22,31 +22,33 @@ private:
 	bool _idIsSet;
 	
 protected:
-	Transform transform;
-	char Name[64];
-	bool SetID(GobID);
-	unsigned LockID(void);
-	IGObject* theNext;
-
+	Transform	transform;
+	char		Name[64];
+	bool		SetID(GobID);
+	unsigned	LockID(void);
+//	IGObject*	theNext;
+	void*		pUserData;
+	
 public:
 	IGObject(void);
 	virtual ~IGObject(void);
-	void InitializeObject(bool addToSceneGraph=true);
-	bool IsVisible;
-	virtual void draw(void)=0;
-	Transform* getTransform(void);
+	void			InitializeObject(bool addToSceneGraph=true);
+	bool			IsVisible;
+	virtual void	draw(void)=0;
+	Transform*		getTransform(void);
 	virtual Vector3 move(float,float,float){return Vector3();}// =0;
 	virtual Vector3 rotate(float,float,float){return Vector3();}// =0;
 	virtual Vector3 scale(float,float,float){return Vector3();}// =0;
 	virtual Vector3 move(Vector3 m) {return move(m.x,m.y,m.z);};//=0;
 	virtual Vector3 rotate(Vector3 r) {return rotate(r.x,r.y,r.z);};//=0;
 	virtual Vector3 scale(Vector3 s) {return scale(s.x,s.y,s.z);};//=0;
-	GobID  GetID(void);
-	char* GetName(void);
-	void SetName(char*);
-	IConnectable* conXtor;
+	GobID			GetID(void);
+	char*			GetName(void);
+	void			SetName(char*);
+	IConnectable*	conXtor;
 	operator IConnectable();
-	bool IsGrounded;
+	bool			IsGrounded;
+	float			SomeValue;
 
 	template<typename T> T* AddConnectable(void)
 	{

@@ -34,7 +34,8 @@ protected:
 
 public:
 	data32				color;
-	Texture	        	GetTexture(void);
+	virtual Texture*  	GetTexture(void);
+	virtual void		SetTexture(Texture*);
 	bool				GroundedWithPivot;
 
 						IMeshObject(void);

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <bass.h>
-//#include <baseaudioprocessingobject.h>
 #include <tags.h>
 #include <BASS_DSHOW.h>
 #include <bass_fx.h>

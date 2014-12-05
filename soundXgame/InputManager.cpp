@@ -11,7 +11,7 @@ int _fps;
 
 //InputManager* instance;
 			
-ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(0,0,1600, 900);
+ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(0,0,800, 600);
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];

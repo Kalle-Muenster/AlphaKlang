@@ -67,9 +67,10 @@ void
 IGObject::InitializeObject(bool addToSceneGraph)
 {
 	if(addToSceneGraph)
+	{
 		SetID(SCENE->Add(this));
-
-	LockID();
+		LockID();
+	}
 }
 
 

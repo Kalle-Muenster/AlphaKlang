@@ -6,6 +6,7 @@
 #include "Musikubus.h"
 #include "ScreenOverlay.h"
 #include "GuiObject.h"
+#include "FogMachine.h"
 
 //Global Declerations:
 int wnd;
@@ -120,8 +121,8 @@ ConID testID;
 void LoadContent(void)
 {
 	
-	guiding = new GuiObject();
-	guiding->LoadTexture("testbild_1600x900.png");
+	//guiding = new GuiObject();
+	//guiding->LoadTexture("testbild_1600x900.png");
 
 
 
@@ -132,7 +133,7 @@ void LoadContent(void)
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 
-	AUDIO->Play();
+//	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
@@ -157,9 +158,27 @@ void LoadContent(void)
 	vObject->MainSizzes.x=0.2;
 	vObject->MainSizzes.y=0.045f;
 
+	(new Cubus("X-7.png"))->SetName("AUDIO01");
+	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 1-Kit-808.wav");
+	SCENE->Object("AUDIO01")->move(2,0,-2);
+	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO01")->IsGrounded=true;
+	(new Cubus("X-7.png"))->SetName("AUDIO02");
+	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 2-Kit-808.wav");
+	SCENE->Object("AUDIO02")->move(8,0,-2);
+	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO02")->IsGrounded=true;
+	(new Cubus("X-7.png"))->SetName("AUDIO03");
+	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 3-Kit-808.wav");
+	SCENE->Object("AUDIO03")->move(12,0,-2);
+	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO03")->IsGrounded=true;
+	(new Cubus("X-7.png"))->SetName("AUDIO04");
+	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 4-Kit-808.wav");
+	SCENE->Object("AUDIO04")->move(20,0,-2);
+	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO04")->IsGrounded=true;
 
-
-	
 
 	// Music Cube
 
@@ -200,6 +219,10 @@ void LoadContent(void)
 	analyzer->move(52.5f, 0, -65.0f);
 	analyzer->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 40 ground-tiles * 3.5m width * 128 bands
 	analyzer->Initialize();
+
+	(new FogMachine())->SetName("DasNebel");
+	SCENE->Object("DasNebel")->move(10,0,5);
+	((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
@@ -248,19 +271,19 @@ void UpdateCycle(void)
 }
 void DrawGui(void)
 {
-	 	glMatrixMode(GL_PROJECTION); 
-		glPushMatrix(); 
-		glLoadIdentity(); 
-		gluOrtho2D(0,SCREENWIDTH,0,SCREENHEIGHT);
+	 //	glMatrixMode(GL_PROJECTION); 
+		//glPushMatrix(); 
+		//glLoadIdentity(); 
+		//gluOrtho2D(0,SCREENWIDTH,0,SCREENHEIGHT);
 
-		glBegin(GL_QUADS);
+		//glBegin(GL_QUADS);
 
-		guiding->draw();
-		
-		glEnd();
+		//guiding->draw();
+		//
+		//glEnd();
 
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
+		//glPopMatrix();
+		//glMatrixMode(GL_MODELVIEW);
 }
 //The Main-Draw-Call...
 void RenderCycle(void)
