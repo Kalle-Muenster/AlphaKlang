@@ -124,8 +124,8 @@ void LoadContent(void)
 	//guiding = new GuiObject();
 	//guiding->LoadTexture("testbild_1600x900.png");
 
-
-
+	AUDIO->Set3D_DopplerFXFactor(0.25f);
+	AUDIO->Set3D_DistanceFactor(0.25f);
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
@@ -159,28 +159,68 @@ void LoadContent(void)
 	vObject->MainSizzes.y=0.045f;
 
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
-	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 1-Kit-808.wav");
+	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
 	SCENE->Object("AUDIO01")->move(2,0,-2);
-	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
-//	SCENE->Object("AUDIO01")->IsGrounded(true);
+
 	(new Cubus("X-7.png"))->SetName("AUDIO02");
-	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 2-Kit-808.wav");
+	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("mp3/10-Nanopad.mp3");
 	SCENE->Object("AUDIO02")->move(8,0,-2);
-	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
-//	SCENE->Object("AUDIO02")->IsGrounded(true);
+
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
-	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 3-Kit-808.wav");
+	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("mp3/11-Audio.mp3");
 	SCENE->Object("AUDIO03")->move(12,0,-2);
-	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->PlayAudio();
-//	SCENE->Object("AUDIO03")->IsGrounded(true);
+
 	(new Cubus("X-7.png"))->SetName("AUDIO04");
-	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("DaRioGame v03 4-Kit-808.wav");
+	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("mp3/18-Audio.mp3");
 	SCENE->Object("AUDIO04")->move(20,0,-2);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO05");
+	SCENE->Object("AUDIO05")->GetConnected<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
+	SCENE->Object("AUDIO05")->move(2,0,-10);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO06");
+	SCENE->Object("AUDIO06")->GetConnected<AudioEmitter>()->LoadeSample("mp3/06-CZ_ToogBass.mp3");
+	SCENE->Object("AUDIO06")->move(8,0,-10);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO07");
+	SCENE->Object("AUDIO07")->GetConnected<AudioEmitter>()->LoadeSample("mp3/19-Audio.mp3");
+	SCENE->Object("AUDIO07")->move(12,0,-10);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO08");
+	SCENE->Object("AUDIO08")->GetConnected<AudioEmitter>()->LoadeSample("mp3/21-Audio.mp3");
+	SCENE->Object("AUDIO08")->move(20,0,-10);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO09");
+	SCENE->Object("AUDIO09")->GetConnected<AudioEmitter>()->LoadeSample("mp3/08-Sforzando.mp3");
+	SCENE->Object("AUDIO09")->move(2,0,-18);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO10");
+	SCENE->Object("AUDIO10")->GetConnected<AudioEmitter>()->LoadeSample("mp3/12-Audio.mp3");
+	SCENE->Object("AUDIO10")->move(8,0,-18);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO11");
+	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->LoadeSample("mp3/05-TeeBee Ultralight.mp3");
+	SCENE->Object("AUDIO11")->move(12,0,-18);
+
+	(new Cubus("X-7.png"))->SetName("AUDIO12");
+	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->LoadeSample("mp3/09-Brite Strings.mp3");
+	SCENE->Object("AUDIO12")->move(20,0,-18);
+
+
+	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->PlayAudio();
-//	SCENE->Object("AUDIO04")->IsGrounded(true);
+	SCENE->Object("AUDIO05")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO06")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO07")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO08")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO09")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO10")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->PlayAudio();
 
-
-	// Music Cube
+	/* Music Cube
 
 	(new Cubus("Deckelblech-2s.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
@@ -210,7 +250,7 @@ void LoadContent(void)
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
 	}
-
+	   */
 
 	// Spectrum Analyzer
 	analyzer = new SpectrumAnalyzer();
@@ -226,7 +266,7 @@ void LoadContent(void)
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
-	SCENE->camera->SetTarget(SCENE->Object(obj));
+	SCENE->camera->SetTarget(SCENE->Object("AUDIO01"));
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");

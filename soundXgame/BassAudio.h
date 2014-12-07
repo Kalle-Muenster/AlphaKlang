@@ -45,10 +45,16 @@ public:
 	virtual bool MasterResampling(BOOL = 3);
 	void* GetMasterOutFFT(void);
 	void PerFrameReset(void);
-
+	float Set3D_DistanceFactor(float distanceFactor);
+	float Set3D_RollOffFactor(float rollOffFactor);
+	float Set3D_DopplerFXFactor(float dopplerFxFactor);
 private:
+	float distance;
+	float rollOff;
+	float doppler;
 	std::vector<HCHANNEL> SampleBank;
 	BassAudio(void);
+	
 
 };
 

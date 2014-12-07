@@ -375,6 +375,93 @@
     <Media Include="DaRioGame v03 2-Kit-808.wav">
       <Filter>Resources\Sounds</Filter>
     </Media>
+    <Media Include="mono 4-Kit-808.wav">
+      <Filter>Resources\Sounds</Filter>
+    </Media>
+    <Media Include="mono 3-Kit-808.wav">
+      <Filter>Resources\Sounds</Filter>
+    </Media>
+    <Media Include="mono 2-Kit-808.wav">
+      <Filter>Resources\Sounds</Filter>
+    </Media>
+    <Media Include="mono 1-Kit-808.wav">
+      <Filter>Resources\Sounds</Filter>
+    </Media>
+    <Media Include="mp3\01-Kit-808.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\02-Kit-808.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\03-Kit-808.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\04-Kit-808.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\05-TeeBee Ultralight.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\06-CZ_ToogBass.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\07-Kit-808.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\08-Sforzando.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\09-Brite Strings.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\10-Nanopad.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\11-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\12-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\13-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\14-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\15-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\16-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\17-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\18-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\19-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\20-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\21-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\22-Audio.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\A-Reverb.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\B-Delay.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
+    <Media Include="mp3\unnamed.mp3">
+      <Filter>Resources\Sounds\MP3</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <Image Include="q2_23.png">
@@ -504,6 +591,9 @@
     </Filter>
     <Filter Include="Resources\Meshes">
       <UniqueIdentifier>{bff61cc8-b6d5-4064-9408-c1be1760ffd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sounds\MP3">
+      <UniqueIdentifier>{735abafb-4186-4430-a971-eb6b570e5cb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

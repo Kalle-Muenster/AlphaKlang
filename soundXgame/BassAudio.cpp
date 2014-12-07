@@ -101,8 +101,9 @@ int _GetNumberOfInputDevices(void)
 	BASS_RECORDINFO *info = new BASS_RECORDINFO();
 	if(!BASS_RecordGetInfo(info))
 	{
-		std::cout<<"\nAUDIO: Error-> ";
+		std::cout<<"AUDIO: Error-> ";
 		std::cout<<_GetErrorString();
+		std::cout<<"\n";
 		return -1;
 	}
 	else
@@ -113,7 +114,7 @@ void _printInputDevices(void)
 {
 	int Inputs = _GetNumberOfInputDevices();
 	for (--Inputs;Inputs > -1;Inputs--)
-		printf("\nAUDIO: InputDevice %i: %s",Inputs,_GetInputDeviceTypeString(BASS_RecordGetInput(Inputs,NULL)));
+		printf("AUDIO: InputDevice %i: %s\n",Inputs,_GetInputDeviceTypeString(BASS_RecordGetInput(Inputs,NULL)));
 }
 
 
@@ -123,6 +124,34 @@ bool _IsPlaying = false;
 bool _IsRecordingMaster = false;
 bool _backgroundAudioLoadet = false;
 bool _recordingInitiated = false;
+
+void
+_get3Dfactors(float& dist,float& rollOff,float& dopplerF)
+{
+	 if(BASS_Get3DFactors(&dist,&rollOff,&dopplerF))
+	{
+		std::cout<<"AUDIO: 3D-settings:\n";
+		std::cout<<"         Distance-factor: ";
+		printf("%f\n",dist);
+		std::cout<<"          RollOff-factor: ";
+		printf("%f\n",rollOff);
+		std::cout<<"          Doppler-factor: ";
+		printf("%f\n\n",dopplerF);
+	}
+}
+
+bool
+_set3Dfactors(float distance,float rollOff,float doppler)
+{
+	 bool result = BASS_Set3DFactors(distance,rollOff,doppler);
+
+	 if(!result)
+		printf("AUDIO: %s\n",_GetErrorString());
+	 else
+		BASS_Apply3D();
+
+	 return result;
+}
 
 int _getMasterOutForRecord(void)
 {
@@ -135,7 +164,7 @@ int _getMasterOutForRecord(void)
 			return i;
 		}
 	}
-	printf("\nAUDIO: Try open InputDevice:0 for Recording...");
+	printf("AUDIO: Try open InputDevice:0 for Recording...\n");
 	return 0;
 }
 
@@ -144,11 +173,11 @@ bool _ToggleRecordFromMasterOut(void)
 	if(!_recordingInitiated)
 	{
 		BASS_RecordInit(-1);
-		printf("\nAUDIO: %s",_GetErrorString());
+		printf("AUDIO: %s\n",_GetErrorString());
 		BASS_RecordSetInput(_getMasterOutForRecord(), BASS_INPUT_ON, 1);
-		printf("\nAUDIO: %s",_GetErrorString());
+		printf("AUDIO: %s\n",_GetErrorString());
 		MasterOutResample = BASS_RecordStart(44100,2,BASS_RECORD_PAUSE,NULL,NULL);
-		printf("\nAUDIO: %s",_GetErrorString());
+		printf("AUDIO: %s\n",_GetErrorString());
 		_recordingInitiated=true;
 	}
 
@@ -205,13 +234,20 @@ BassAudio::Loade3DSample(const char* filename)
 	fileLength=ftell(file);
 	fseek(file,0,SEEK_SET);
 	offset=0;
-	HSAMPLE sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
+	HSAMPLE sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
+	
+	if(sample!=NULL)
+	{
+		HCHANNEL channel = BASS_SampleGetChannel(sample,true);
+		if(channel!=NULL)
+		{
+			BASS_Apply3D();
+			return channel;
+		}
+	}
+
 	std::cout<<_GetErrorString();
-	HCHANNEL channel = BASS_SampleGetChannel(sample,true);
-	std::cout<<_GetErrorString();
-	BASS_Apply3D();
-	std::cout<<_GetErrorString();
-	return channel;
+	return NULL;
 }
 
 
@@ -280,45 +316,72 @@ BassAudio::LoadeSampleToBank(unsigned& slotNumber,const char* filename)
 
 BassAudio::BassAudio(void)
 {
-	
+	distance=rollOff=doppler=0;
 	SampleBank = std::vector<HCHANNEL>();
 	initDebug();
 	BASS_Init(-1,44100,BASS_DEVICE_3D,GetActiveWindow(),NULL);
-	std::cout<<_GetErrorString();
+	printf("Loading BASS-AUDIO: %s", _GetErrorString());
 	BASS_INFO *info = new BASS_INFO();
 	if( BASS_GetInfo(info))
-	{
-		printf("BASS: info: %i bytes free audiomemory\n           DirectSound version: i%\n",info->hwfree,info->dsver);
-	}
+		printf("DirectSound version: %i\n",info->dsver);
 	BASS_SetConfig(BASS_CONFIG_3DALGORITHM,BASS_3DALG_DEFAULT);
-	std::cout<<_GetErrorString();
-	HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
-	HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",BASS_UNICODE);
-	HPLUGIN plgnBASSDS = BASS_PluginLoad("BASS_DSHOW.dll",NULL);
-	std::cout<<_GetErrorString();
-	HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
-	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, 100);	
-	std::cout<<_GetErrorString();
-	BASS_SetConfig(BASS_CONFIG_SRC_SAMPLE,2);
-	std::cout<<_GetErrorString();
-	//BASS_SetEAXParameters();
-	std::cout<<_GetErrorString();
-	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
-	std::cout<<_GetErrorString();
-	std::cout<<_GetErrorString();
-	const BASS_PLUGININFO* bassMIXinfo = BASS_PluginGetInfo(plgnBASSMIX);
-	std::cout<<_GetErrorString();
-	const BASS_PLUGININFO* bassTAGSinfo = BASS_PluginGetInfo(plgnBASSTAG);
-	std::cout<<_GetErrorString();
-	const BASS_PLUGININFO* bassFXinfo = BASS_PluginGetInfo(plgnBASSFX);
-	std::cout<<_GetErrorString();
-	//const BASS_PLUGININFO* bassDSinfo = BASS_PluginGetInfo(plgnBASSDS);
-	//printf("BASS DirectShow Plugin version: %i\n",bassDSinfo->version);
-	//printf("Audio Devices found: %i \n",xVideo_GetAudioRenderers(NULL,NULL));
 	//std::cout<<_GetErrorString();
+	//HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
+	//HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",BASS_UNICODE);
+	//HPLUGIN plgnBASSDS = BASS_PluginLoad("BASS_DSHOW.dll",NULL);
+	//HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
+	//std::cout<<_GetErrorString();
+	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, 100);	
+//	std::cout<<_GetErrorString();
+//	BASS_SetConfig(BASS_CONFIG_SRC_SAMPLE,2);
+//	std::cout<<_GetErrorString();
+	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
+//	std::cout<<_GetErrorString();
+//	const BASS_PLUGININFO* bassMIXinfo = BASS_PluginGetInfo(plgnBASSMIX);
+//	std::cout<<_GetErrorString();
+//	const BASS_PLUGININFO* bassTAGSinfo = BASS_PluginGetInfo(plgnBASSTAG);
+//	std::cout<<_GetErrorString();
+//	const BASS_PLUGININFO* bassFXinfo = BASS_PluginGetInfo(plgnBASSFX);
+//	std::cout<<_GetErrorString();
+	
+	_get3Dfactors(distance,rollOff,doppler);
+
 }
 
 
+
+float
+BassAudio::Set3D_DistanceFactor(float distanceFactor)
+{
+	 this->distance = distanceFactor;
+	 if(!_set3Dfactors(this->distance,this->rollOff,this->doppler))
+		  _get3Dfactors(this->distance,this->rollOff,this->doppler); 
+	 else
+		 printf("AUDIO: 3D-DistanceFactor set to: %f \n",this->distance);
+	 return this->distance;
+}
+
+float
+BassAudio::Set3D_RollOffFactor(float rollOffFactor)
+{
+	 this->rollOff = rollOffFactor;
+	 if(!_set3Dfactors(this->distance,this->rollOff,this->doppler))
+		  _get3Dfactors(this->distance,this->rollOff,this->doppler);
+	 else
+		 printf("AUDIO: 3D-RollOff-Factor set to: %f \n",this->rollOff);
+	 return this->rollOff;
+}
+
+float
+BassAudio::Set3D_DopplerFXFactor(float dopplerFxFactor)
+{
+	this->doppler = dopplerFxFactor;
+	if(!_set3Dfactors(this->distance,this->rollOff,this->doppler))
+		  _get3Dfactors(this->distance,this->rollOff,this->doppler);
+	else
+		 printf("AUDIO: 3D-DopplerFactor set to: %f \n",this->doppler);
+	return this->doppler;
+}
 
 
 bool
@@ -348,18 +411,16 @@ void
 BassAudio::SetListenerPosition(Transform* cameraTranform)
 {
 	BASS_Set3DPosition(&cameraTranform->position.asBassVector(),&cameraTranform->movement.asBassVector(),&cameraTranform->forward.asBassVector(),&cameraTranform->up.asBassVector());
-	printf("\nAUDIO: %s",_GetErrorString());
+	printf("AUDIO: %s\n",_GetErrorString());
 	BASS_Apply3D();
 }
 
 void
 BassAudio::LoadeBackgroundAudio(const char* fileName)
 {
-
-
 	derAudio = _getAudioStreamByFileName((string)fileName,LOAD_2D);
 	BASS_ChannelSetDevice(derAudio,-1);
-	printf("\nAudio: %s loadet as Backgroundmusic !\n",fileName);
+	printf("AUDIO: %s loadet as Backgroundmusic !\n",fileName);
 	_backgroundAudioLoadet = true;
 }
 
@@ -371,10 +432,10 @@ BassAudio::Play(void)
 		if(BASS_ChannelPlay(derAudio,true))
 		{
 			_IsPlaying=true;
-			std::cout<<"\nAudio:  PLAYING\n";
+			std::cout<<"AUDIO:  PLAYING\n";
 		}
 		else
-			printf("Audio: %s",_GetErrorString());
+			printf("AUDIO: %s\n",_GetErrorString());
 	}
 }
 
@@ -385,7 +446,7 @@ BassAudio::Pause(void)
 	{
 		BASS_ChannelPause(derAudio);
 		_IsPlaying= false;
-		std::cout<<"\nAudio:  PAUSED\n";
+		std::cout<<"AUDIO:  PAUSED\n";
 	}
 }
 
@@ -394,8 +455,9 @@ BassAudio::Volume(float vol)
 {
 	if (vol<=1)
 		BASS_SetVolume(vol);
-	
-	return BASS_GetVolume();
+	vol = BASS_GetVolume();
+	printf("AUDIO: set master-volume to: %f\n",vol);
+	return vol; 
 }
 
 void*
@@ -404,7 +466,7 @@ BassAudio::GetMasterOutFFT(void)
 	void* buffer;
 	if(_IsRecordingMaster)
 		GetChannelFFT(MasterOutResample,buffer,Small);
-	printf("\nAUDIO: %s",_GetErrorString());
+	printf("AUDIO: %s\n",_GetErrorString());
 	return buffer;
 }
 
