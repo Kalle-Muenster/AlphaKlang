@@ -169,6 +169,7 @@ SpectrumAnalyzer::~SpectrumAnalyzer(void)
 	UPDATE->SignOutFromEarlyUpdate(this);
 	UPDATE->SignOutFromUpdate(this);
 	UPDATE->SignOutFromLateUpdate(this);
-	delete[] bands;
-	delete fftData;
+	for(int i = SPECTRUM_SIZE-1;i>=0;i--)
+		bands[i]->~Cubus();
+	//delete fftData;
 }

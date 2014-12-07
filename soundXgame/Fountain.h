@@ -6,10 +6,11 @@
 #include "UpdateManager.h"
 #include "Transform.h"
 #include "Ground.h"
-
+#include "MusicListener.h"
 
 class Fountain
-	: public IUpdateble
+	: public IUpdateble,
+	 public MusicListener
 {
 private:
 	double timer, timer2;

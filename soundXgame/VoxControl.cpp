@@ -10,7 +10,7 @@ string _files[5];
 
 VoxControl::VoxControl(void)
 {
-//	_firstStart=true;
+	timer = 0;
 	tempvector = *Vector3::Zero;
 	bumpmapchannel=0;
 		_files[0]="buntbild_128.ppm";
@@ -41,7 +41,7 @@ int _currentSellection=0;
 void 
 VoxControl::keyPress(char key)
 {
-	//SCENE->Object((unsigned)0)->IsVisible=false;
+
 	if(key=='x')
 	{
 		if(_lastKey!='x')
@@ -90,20 +90,30 @@ VoxControl::keyPress(char key)
 		this->vConnection()->Mode(IVoxelObject::ColorMode::BYTE);
 
 	if(key=='v')
-		SCENE->camera->SetTarget(this->Connection());
+	{
+		if(_lastKey!='v')
+		{
+			SCENE->camera->SetTarget(this->Connection());
+			_lastKey='v';
+		}
+	}
 
 	if(key=='t')
 	{
-		if(transparenseEnabled)
+		if(_lastKey!='t')
 		{
-			glDisable(GL_BLEND);
+			if(transparenseEnabled)
+			{
+				glDisable(GL_BLEND);
+			}
+			else
+			{
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			}
+			transparenseEnabled = !transparenseEnabled;
+			_lastKey='t';
 		}
-		else
-		{
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		}
-		transparenseEnabled = !transparenseEnabled;
 	}
 
 	if(key=='z')
@@ -124,10 +134,19 @@ float bumper = 0.0000f;
 void
 VoxControl::DoUpdate(void)
 {
+	if(_lastKey!='\0')
+	{
+		timer+=INPUT->FrameTime;
+		if(timer>0.33)
+		{
+			timer=0;
+			_lastKey='\0';
+		}
+	}
 	if(SCENE->camera->GetTarget()==this->vConnection())
 	{
-		if(SCENE->camera->mode<TargetGrabber>()->IsATargetGrabbed())
-			SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::OFF);
+		//if(SCENE->camera->mode<TargetGrabber>()->IsATargetGrabbed())
+		//	SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::OFF);
 		
 		if(INPUT->Mouse.LEFT.HOLD)
 		{

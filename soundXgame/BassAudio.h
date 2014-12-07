@@ -30,12 +30,13 @@ public:
 	HCHANNEL LoadeSampleToBank(unsigned &,const char* fileNaname);
 	static BassAudio* GetInstance(void);
 	HSTREAM LoadeMusic(const char*,LOAD_MODE);
-	HCHANNEL Loade3DSample(const char*);
+	HCHANNEL Loade3DSample(const char*,bool loop = true);
 	void LoadeBackgroundAudio(const char*);// or musik...
 	void Play(void);
 	void Pause(void);
 	void SetListenerPosition(Transform*);
-	float Volume(float=2);
+	float Volume(float=2.f);
+	float BackgroundMusicVolume(float=2.f);
 	void* GetChannelBuffer(DWORD channel,int sizeInBytes);
 	unsigned GetChannelFFT(DWORD channel,void* buffer);
 	unsigned GetChannelFFT(DWORD channel,void* buffer, FFT_SIZE);

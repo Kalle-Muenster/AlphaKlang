@@ -85,7 +85,13 @@ public:
 	}
 	template<typename T> bool HasConnected(void)
 	{
-		return conXtor->GetConnected<T>()!=NULL;
+		int i = -1;
+		size_t t = typeid(T).hash_code();
+		while((conXtor->ConIDs[++i]!=t)	&& (i<IConnectable::MaximumNumberOfConnectioms));
+		if(i<IConnectable::MaximumNumberOfConnectioms)
+			return true;
+		else
+			return false;
 	}
 	template<typename T> void Remove(ConID id=NULL)
 	{

@@ -156,13 +156,13 @@ Ground::Ground(void) :
 
 Ground::~Ground(void)
 {
-	delete[] configMap;
+//	delete[] configMap;
 	delete[] heightMap;
-	delete[] dynamicConfigMap;
+//	delete[] dynamicConfigMap;
 	delete[] dynamicMap;
-	delete[] mapList;
-	delete[] rangeList;
-	delete[] valueList;
+//	delete[] mapList;
+//	delete[] rangeList;
+//	delete[] valueList;
 }
 
 

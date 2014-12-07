@@ -7,17 +7,19 @@
 #include "ScreenOverlay.h"
 #include "GuiObject.h"
 #include "FogMachine.h"
+#include "MusicInteractor.h"
+#include "MusicScaler.h"
 
 //Global Declerations:
 int wnd;
 void* font;
-
+bool EXIT = false; 
 //Objects:
-SpectrumAnalyzer* analyzer;
+//SpectrumAnalyzer* analyzer;
 Sprite* Framen;
 GuiObject* guiding;
 ScreenOverlay* overlay;
-
+Fountain* fountain;
 //Functions:
 void InitGlut(void);
 void LoadContent(void);
@@ -54,8 +56,14 @@ int main(int argc,char** argv)
 int prepareForExit(void)
 {
 	//deletions:
+	ProjectMappe::GlobalDestructor();
+	//delete analyzer;
+	delete Framen;
+	delete overlay; 
+	delete guiding;
+	font = NULL;
 	delete font;
-	
+	glutExit();
 	return EXIT_SUCCESS;
 }
 
@@ -76,8 +84,9 @@ void InitGlut(void)
 	glutMouseFunc(MouseClicks);
 	glutMouseWheelFunc(MouseWheelFunc);
 	glutSpecialFunc(processSpecialKeys);
-	//glutEntryFunc(MouseHoverWindow);
 
+	//glutEntryFunc(MouseHoverWindow);
+		
 	// Keyboard
 	glutKeyboardFunc(keyboardInput);
 	glutKeyboardUpFunc(keyboardUpInput);
@@ -125,20 +134,24 @@ void LoadContent(void)
 	//guiding->LoadTexture("testbild_1600x900.png");
 
 	AUDIO->Set3D_DopplerFXFactor(0.25f);
-	AUDIO->Set3D_DistanceFactor(0.25f);
+	AUDIO->Set3D_DistanceFactor(0.75f);
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-
-//	AUDIO->Play();
+	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+	AUDIO->Volume(0.01);
+	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	//Framen = new Sprite("framen_1920x1080.png");
-	Fountain* fountain = new Fountain();
+	fountain = new Fountain();
+	fountain->SetLineBounds(0,0,4,3);
+	fountain->SetClambt(0,-1,1);
+	fountain->SetThreshold(0,0.33);
+	fountain->sensitivity = 5;
 	//ShaderObj* shaderObj = new ShaderObj();
 
 
@@ -161,14 +174,17 @@ void LoadContent(void)
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
 	SCENE->Object("AUDIO01")->move(2,0,-2);
+	SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
 
 	(new Cubus("X-7.png"))->SetName("AUDIO02");
 	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("mp3/10-Nanopad.mp3");
 	SCENE->Object("AUDIO02")->move(8,0,-2);
+	SCENE->Object("AUDIO02")->AddConnectable<MusicScaler>();
 
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("mp3/11-Audio.mp3");
 	SCENE->Object("AUDIO03")->move(12,0,-2);
+	SCENE->Object("AUDIO03")->AddConnectable<MusicScaler>();
 
 	(new Cubus("X-7.png"))->SetName("AUDIO04");
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("mp3/18-Audio.mp3");
@@ -181,6 +197,10 @@ void LoadContent(void)
 	(new Cubus("X-7.png"))->SetName("AUDIO06");
 	SCENE->Object("AUDIO06")->GetConnected<AudioEmitter>()->LoadeSample("mp3/06-CZ_ToogBass.mp3");
 	SCENE->Object("AUDIO06")->move(8,0,-10);
+	SCENE->Object("AUDIO06")->AddConnectable<MusicScaler>();
+	SCENE->Object("AUDIO06")->GetConnected<MusicScaler>()->sensitivity=15;
+	SCENE->Object("AUDIO06")->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+	SCENE->Object("AUDIO06")->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO07");
 	SCENE->Object("AUDIO07")->GetConnected<AudioEmitter>()->LoadeSample("mp3/19-Audio.mp3");
@@ -194,9 +214,12 @@ void LoadContent(void)
 	SCENE->Object("AUDIO09")->GetConnected<AudioEmitter>()->LoadeSample("mp3/08-Sforzando.mp3");
 	SCENE->Object("AUDIO09")->move(2,0,-18);
 
-	(new Cubus("X-7.png"))->SetName("AUDIO10");
+	(new Cubus("X-7.png",true,true))->SetName("AUDIO10");
 	SCENE->Object("AUDIO10")->GetConnected<AudioEmitter>()->LoadeSample("mp3/12-Audio.mp3");
 	SCENE->Object("AUDIO10")->move(8,0,-18);
+	SCENE->Object("AUDIO10")->AddConnectable<MusicScaler>();
+	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->sensitivity=2;
+	SCENE->Object("AUDIO06")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->LoadeSample("mp3/05-TeeBee Ultralight.mp3");
@@ -220,14 +243,17 @@ void LoadContent(void)
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->PlayAudio();
 
-	/* Music Cube
+	AUDIO->Play();
+	// Music Cube
 
 	(new Cubus("Deckelblech-2s.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
-	SCENE->Object("muckubus")->AddConnectable<MusicListener>();
-	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(0)->threshold = 1.5;
-	SCENE->Object("muckubus")->GetConnected<MusicListener>()->GetLineData(1)->threshold = 0.03f;
-	
+	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(0)->threshold = 1.5;
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(1)->threshold = 0.03f;
+	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
+	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
 
 	// Just some Music Cubes
 	unsigned obj;
@@ -243,26 +269,29 @@ void LoadContent(void)
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
-		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("brumm_s16.wav");
+		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("mp3/03-Kit-808.mp3",false);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
-		SCENE->Object(obj)->AddConnectable<MusicListener>();
-		SCENE->Object(obj)->AddConnectable<MusicListener>()->GetLineData(0)->fallOff;// += (float)i/100; 
+		SCENE->Object(obj)->AddConnectable<MusicInteractor>();
+		SCENE->Object(obj)->AddConnectable<MusicInteractor>()->GetLineData(0)->fallOff;// += (float)i/100; 
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
+		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
 	}
-	   */
+	   
 
 	// Spectrum Analyzer
-	analyzer = new SpectrumAnalyzer();
-	analyzer->SetName("SpectrumAnalyzer");
-	analyzer->AddConnectable<CamTargetRotator>();
-	analyzer->move(0, 0, -30.0f);
-	analyzer->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
-	analyzer->Initialize();
+	//analyzer = new SpectrumAnalyzer();
+	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
+	//analyzer->SetName("SpectrumAnalyzer");
+	//analyzer->AddConnectable<CamTargetRotator>();
+	SCENE->Object("SpectrumAnalyzer")->AddConnectable<CamTargetRotator>();
+	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -30.0f);
+	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
 
-	(new FogMachine())->SetName("DasNebel");
-	SCENE->Object("DasNebel")->move(10,0,5);
-	((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
+	//(new FogMachine())->SetName("DasNebel");
+	//SCENE->Object("DasNebel")->move(10,0,5);
+	//((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
@@ -270,6 +299,8 @@ void LoadContent(void)
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
+	AUDIO->Volume(0.8);
+	AUDIO->BackgroundMusicVolume(0.2);
 }
 
 
@@ -370,6 +401,9 @@ void OnDisplay(void)
 
 	INPUT->PerFrameReset();
 	AUDIO->PerFrameReset();
+	
+	if(EXIT)
+		prepareForExit();
 }
 
 void OnIdle(void)
@@ -407,8 +441,10 @@ void keyboardInput(unsigned char key,int x,int y)
 		SCENE->camera->Mode(SPECTATOR);
 
 	if(key == 27) // ESC
-		glutExit();
-
+	{
+		//glutExit();
+		EXIT=true;
+	}
 	INPUT->registerKey(key);
 }
 
@@ -419,6 +455,17 @@ void keyboardUpInput(unsigned char key,int x,int y)
 
 void processSpecialKeys(int key, int xx, int yy)
 {
+	if(key==GLUT_KEY_UP)
+	{
+		fountain->sensitivity += 1;
+		printf("fountain-sensitivity: %f\n",fountain->sensitivity);
+	}
+	if(key==GLUT_KEY_DOWN)
+	{
+		fountain->sensitivity -= 1;
+		printf("fountain-sensitivity: %f\n",fountain->sensitivity);
+	}
+
 	INPUT->notifySpecialKey(key);
 }
 

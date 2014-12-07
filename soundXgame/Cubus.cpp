@@ -44,14 +44,13 @@ Cubus::Cubus(data32 color,bool backfaces,bool addToScene,Vector3 positionOffset)
 
 Cubus::~Cubus(void)
 {
-	delete conXtor;
+//	delete conXtor;
 }
 
 void 
 Cubus::InitializeCubus(bool addToScene,Vector3 positionOffset)
 {
 	InitializeObject("cube_quads.obi",addToScene,positionOffset);
-	this->AddConnectable<CamTargetRotator>();
 	this->NoBackfaceCulling = false;
 }
 

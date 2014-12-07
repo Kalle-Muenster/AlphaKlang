@@ -47,9 +47,6 @@
     <ClCompile Include="IMeshObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="IMusicInteractor.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Core\RuntimeManagers</Filter>
     </ClCompile>
@@ -137,6 +134,10 @@
     <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="FogMachine.cpp" />
     <ClCompile Include="GuiObject.cpp" />
+    <ClCompile Include="MusicListener.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicScaler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -183,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="Cam.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="IMusicInteractor.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="IGObject.h">
       <Filter>Core</Filter>
@@ -283,6 +281,14 @@
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="MusicListener.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicInteractor.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicListener.h" />
+    <ClInclude Include="MusicScaler.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

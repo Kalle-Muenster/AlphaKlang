@@ -37,7 +37,7 @@ VoxGrid::SetTheZed(void)
 
 VoxGrid::~VoxGrid(void)
 {
-	delete voxels;
+	
 }
 
 

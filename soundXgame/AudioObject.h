@@ -24,9 +24,9 @@ public:
 	HCHANNEL audioSource;
 	IAudioEmitter(void);
 	virtual ~IAudioEmitter(void)=0;
-	virtual void LoadeSample(const char*);
+	virtual void LoadeSample(const char*,bool loop = true);
 	virtual void LoadeStream(const char*);
-	virtual void PlayAudio(void);
+	virtual void PlayAudio(bool restart = true);
 	virtual void AudioPause(void);
 	virtual float AudioVolume(float=2);
 	virtual float PitchAudio(float=2);
@@ -42,7 +42,7 @@ class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateb
 public:
 	virtual void PlaySample(HCHANNEL sample,bool loop=false);
 	AudioEmitter(void);
-	virtual void LoadeSample(const char*);
+	virtual void LoadeSample(const char*,bool loop = true);
 	virtual void LoadeStream(const char*);
 	virtual void DoUpdate(void)
 	{

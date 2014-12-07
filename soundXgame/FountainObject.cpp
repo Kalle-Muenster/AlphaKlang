@@ -11,7 +11,7 @@ FountainObject::FountainObject(void)
 
 	this->AddConnectable<Randomover>();
 	this->GetConnected<Randomover>()->SetMoving(false);
-	this->GetConnected<Randomover>()->SetSpeed(7.0f);
+	this->GetConnected<Randomover>()->SetSpeed(10.0f);
 
 }
 
@@ -25,9 +25,12 @@ FountainObject::Initialize(void)
 	float randX = Utility::GetRandom() - 0.5f;
 	float randZ = Utility::GetRandom() - 0.5f;
 
-	this->power = 3.0f;
-	this->gravity = -0.035f;
-	this->speed = 0.04f;
+	//this->power = 3.0f;
+	//this->gravity = -0.035f;
+	//this->speed = 0.04f;
+	this->power = 4.0f;
+	this->gravity = -0.1f;
+	this->speed = 0.1f;
 	this->expanding = 6.0f; // expanding: 1=low,5=high
 	this->direction = Vector3(randX,0,randZ);
 

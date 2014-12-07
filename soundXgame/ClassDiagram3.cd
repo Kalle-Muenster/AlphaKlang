@@ -10,14 +10,14 @@
   <Class Name="AudioEmitter" Collapsed="true">
     <Position X="11.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAAAAAAAAAAAAEAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>ACAAAAAAAAAABAAAAAAAEAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>AudioObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IAudioReciever" Collapsed="true">
     <Position X="9.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAIAAAAIAAAACAAAIgEAABAEABAAMAAAAAEACAA=</HashCode>
+      <HashCode>AAACAAIAAAAIAAAACAAAIgEAABAEABAAMAAAgAEACAA=</HashCode>
       <FileName>AudioObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -31,32 +31,14 @@
   <Class Name="BassAudio" Collapsed="true">
     <Position X="24.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAggAAAAABEAAgAAAAAAAAABBAAAAQAoBMAAAACAAA=</HashCode>
+      <HashCode>GgAggAAAAAJEAAgAEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cam" Collapsed="true">
     <Position X="7.75" Y="12" Width="1.5" />
-    <InheritanceLine Type="IInteractive" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.125" Y="10.941" />
-        <Point X="3.125" Y="11.5" />
-        <Point X="5.167" Y="11.5" Type="JumpStart" />
-        <Point X="5.333" Y="11.5" Type="JumpEnd" />
-        <Point X="8.375" Y="11.5" />
-        <Point X="8.375" Y="12" />
-      </Path>
-    </InheritanceLine>
-    <InheritanceLine Type="IConnectable" FixedFromPoint="true">
-      <Path>
-        <Point X="7.688" Y="1.812" />
-        <Point X="7.688" Y="2.187" />
-        <Point X="8.5" Y="2.187" />
-        <Point X="8.5" Y="12" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>IAQAAQiAEIQRQEGAAkgQAEEAQAgEEACTEABmBQBQBCY=</HashCode>
+      <HashCode>IIQAAUDgAIQUQECAAgAQAAEAEAAEAQBCABAgBAAQBCI=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,14 +48,10 @@
       <Path>
         <Point X="7.5" Y="1.812" />
         <Point X="7.5" Y="5.587" />
-        <Point X="8.094" Y="5.587" Type="JumpStart" />
-        <Point X="8.26" Y="5.587" Type="JumpEnd" />
         <Point X="8.417" Y="5.587" Type="JumpStart" />
         <Point X="8.583" Y="5.587" Type="JumpEnd" />
         <Point X="8.715" Y="5.587" Type="JumpStart" />
         <Point X="8.881" Y="5.587" Type="JumpEnd" />
-        <Point X="9.417" Y="5.587" Type="JumpStart" />
-        <Point X="9.583" Y="5.587" Type="JumpEnd" />
         <Point X="12.5" Y="5.587" />
         <Point X="12.5" Y="6.25" />
       </Path>
@@ -86,7 +64,7 @@
   <Class Name="IConnectable" Collapsed="true">
     <Position X="6.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAIIgAACIAIEEwCACBIAAAgDAAACAAAAIBAFAAAAA=</HashCode>
+      <HashCode>AACAIIgAACIAIUEwHACBIAAAgDAAACAAAAIBQFAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -96,14 +74,10 @@
       <Path>
         <Point X="7.25" Y="1.812" />
         <Point X="7.25" Y="5.816" />
-        <Point X="8.094" Y="5.816" Type="JumpStart" />
-        <Point X="8.26" Y="5.816" Type="JumpEnd" />
         <Point X="8.417" Y="5.816" Type="JumpStart" />
         <Point X="8.583" Y="5.816" Type="JumpEnd" />
         <Point X="8.715" Y="5.816" Type="JumpStart" />
         <Point X="8.881" Y="5.816" Type="JumpEnd" />
-        <Point X="9.417" Y="5.816" Type="JumpStart" />
-        <Point X="9.583" Y="5.816" Type="JumpEnd" />
         <Point X="10.5" Y="5.816" />
         <Point X="10.5" Y="6.25" />
       </Path>
@@ -116,22 +90,22 @@
   <Class Name="Ground" Collapsed="true">
     <Position X="26.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAACgAAAAgAAQAAAIAAAgAAAUCQNAgBiIQAAFCA=</HashCode>
+      <HashCode>AAQAAAACgAAAAAAAQAIIIAAAgAAAUCQNAoBgIQCAFCA=</HashCode>
       <FileName>Ground.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IGObject" Collapsed="true">
     <Position X="2.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAAAkEDCAAIQgAQCAAAECAAAAAACQFAgBQA=</HashCode>
+      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAAAECAAAAgAGSFA0FQA=</HashCode>
       <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMeshObject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAQAAAAACCQAIQAAACAAAAAhGAAAgAAEAQAiA=</HashCode>
-      <FileName>IGObject.h</FileName>
+      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEAWIiA=</HashCode>
+      <FileName>IMeshObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMusicListener" Collapsed="true">
@@ -162,11 +136,12 @@
       <FileName>IMusicListener.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MusicListener" Collapsed="true">
+  <Class Name="MusicInteractor" Collapsed="true">
     <Position X="5.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IMusicListener.h</FileName>
+      <HashCode>AABAAAAAAAgAAAAAAAAAQAAAAAAACCAAAAAgAAAAAAA=</HashCode>
+      <FileName>MusicInteractor.h</FileName>
+      <NewMemberFileName>IMusicInteractor.h</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IObserver" Collapsed="true">
@@ -202,7 +177,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>ABBAAAAAIEAAAAAAAAAAAAAAAAAQAAAAAAAOAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAIEAAAAAAAAAAAAAAAAAQAAAAAAAOABAAAAA=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -224,22 +199,14 @@
   <Class Name="InputManager" Collapsed="true">
     <Position X="28" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEYQAGAABBgAsEQAIDIBEAkAAEAAUgAgwAIAAACAc=</HashCode>
+      <HashCode>ABAmYQAGAAFBgAsEUCADIBEAAAQEQAUgAgQAIAAECEc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IVoxelObject" Collapsed="true">
     <Position X="0.5" Y="4.5" Width="1.5" />
-    <InheritanceLine Type="IGObject" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="2.938" Y="3.562" />
-        <Point X="2.938" Y="4.125" />
-        <Point X="1.5" Y="4.125" />
-        <Point X="1.5" Y="4.5" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAQAAgAAAAACAAAIQAACCIAAAAAAAAARAAFAAABA=</HashCode>
+      <HashCode>AAAAAAAAgIAAAACAAAIBEAAAIAAAgAAAAAAAAAAQAAA=</HashCode>
       <FileName>IVoxelObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -253,7 +220,7 @@
   <Class Name="SceneGraph" Collapsed="true">
     <Position X="6.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIQAAAAAgAIBAggAAAAAAAABAEAAAAIAQABAIAQAAA=</HashCode>
+      <HashCode>AIYQAAAAAgAIBAggAAAABAAABAEAEAAIAQABAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -320,7 +287,7 @@
   <Class Name="UpdateManager" Collapsed="true">
     <Position X="4.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAABAAAAAEAAIAAAAAAAAAAAAQQAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAABAABAAEAAIAEAAAQAAAAJAQQAEAAAAAAAAA=</HashCode>
       <FileName>UpdateManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -334,21 +301,21 @@
   <Class Name="Utility" Collapsed="true">
     <Position X="29.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABAACAAAgAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAIBABCAAAiAAAAgAEAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Voxel" Collapsed="true">
     <Position X="24.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAgCASAAQALAAIAYIAAAIiAIAgCAQAhgAAAAAAA=</HashCode>
+      <HashCode>IAiAAAkCACIAQAKAAoAYIAAIIiAIAgCAQAhgAAAAAAA=</HashCode>
       <FileName>Voxel.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VoxelMap" Collapsed="true">
     <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIQAAAAAAEAAgABAIABICMCEEAAAAAAEAgAEAEAAAQ=</HashCode>
+      <HashCode>AEAQIAAAAAEAAgABAIABICMCEUAAAAAAEAgAEAEAAAQ=</HashCode>
       <FileName>VoxelMap.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -360,14 +327,14 @@
         <Point X="7.25" Y="4.885" />
         <Point X="7.417" Y="4.885" Type="JumpStart" />
         <Point X="7.583" Y="4.885" Type="JumpEnd" />
-        <Point X="8.094" Y="4.885" Type="JumpStart" />
-        <Point X="8.26" Y="4.885" Type="JumpEnd" />
         <Point X="8.417" Y="4.885" Type="JumpStart" />
         <Point X="8.583" Y="4.885" Type="JumpEnd" />
         <Point X="8.798" Y="4.885" />
         <Point X="8.798" Y="11.125" />
         <Point X="8.583" Y="11.125" Type="JumpStart" />
         <Point X="8.417" Y="11.125" Type="JumpEnd" />
+        <Point X="6.583" Y="11.125" Type="JumpStart" />
+        <Point X="6.417" Y="11.125" Type="JumpEnd" />
         <Point X="5.25" Y="11.125" />
         <Point X="5.25" Y="12" />
       </Path>
@@ -388,7 +355,7 @@
   <Class Name="VoxGrid" Collapsed="true">
     <Position X="0.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQACAAAABAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>VoxGrid.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -396,7 +363,7 @@
     <Position X="26.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAkEAQAAAQSAAAAAAAAAACABAAAAAAAAAAA=</HashCode>
-      <FileName>IMusicListener.h</FileName>
+      <FileName>IMusicInteractor.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="MouseButton" Collapsed="true">
@@ -409,46 +376,46 @@
   <Struct Name="Vector3" Collapsed="true">
     <Position X="26.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEgAAAAAAIAAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AEgAAAAAAIAAIAAABAAIAQgAAUAAAAQAAAFgAQAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="Transform" Collapsed="true">
     <Position X="29.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAEAAAAAACAIAACAAAAAAAAAAAAAgAAgAA=</HashCode>
+      <HashCode>AAAAAgAAAAAEAAAAAACAIAACAAAAAQAAAAAAAgAAgAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="VectorI" Collapsed="true">
     <Position X="29.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="Vecti" Collapsed="true">
     <Position X="24.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgACAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAgACAAACA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="VectorF" Collapsed="true">
     <Position X="28" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAQAAAQAAAAAAAAFgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="VectorPF" Collapsed="true">
     <Position X="24.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="__unnamed_struct_0028_1" Collapsed="true">
+  <Struct Name="__unnamed_struct_0038_1" Collapsed="true">
     <Position X="24.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAQAQAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
@@ -528,7 +495,7 @@
   <Enum Name="CAM_MODE" Collapsed="true">
     <Position X="24.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAEAACAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAAAgAQAAAAAAAAAQAAAAAAAAAAEAAA=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Enum>

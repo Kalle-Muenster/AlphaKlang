@@ -1,4 +1,4 @@
-/* RuntimeInstances.h
+/* RuntimeInstances.cpp
  *
  * Instances of all RuntimeManagers are stored and managed here.
  * and most other global variables and objects should move also
@@ -19,7 +19,9 @@ BassAudio*		 _bassaudioInstance;
 SceneGraph*		 _scenegraphInstance;
 UpdateManager*	 _updateManagerInstance;
 
-static void GlobalDestructor(void)
+
+void 
+ProjectMappe::GlobalDestructor(void)
 {
 	delete _inputManagerInstance;
 	delete _bassaudioInstance;
@@ -42,7 +44,8 @@ InputManager::getInstance(void)
 
 InputManager::~InputManager(void)
 {
-	GlobalDestructor();
+	
+	//delete _inputManagerInstance;
 }
 
 //-------------------------------------------
@@ -56,10 +59,7 @@ BassAudio::GetInstance(void)
 		_bassaudioInstance;
 }
 
-BassAudio::~BassAudio(void)
-{
-	delete _bassaudioInstance;
-}
+
 
 //-------------------------------------------
 

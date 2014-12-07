@@ -22,7 +22,7 @@ IVoxelObject::InitializeObject(string ppmFileName,bool addToScene)
 
 IVoxelObject::~IVoxelObject(void)
 {
-	delete voxels;
+	//voxels = NULL;
 }
 
 void

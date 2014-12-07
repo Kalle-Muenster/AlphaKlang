@@ -17,16 +17,14 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 	VoxtructsInitiator::initiateVoxtructs();
 
 	drawables = new List<IGObject*,MAXIMUM_SXCENE_OBJECT>();
-
-	//for(int i=0;i<MAXIMUM_SXCENE_OBJECT;i++)
-	//	_drawables[i]=NULL;
-
-	//_NumberOfSceneObjects=0;
 }
 
 SceneGraph::~SceneGraph(void)
 {
-	delete drawables;
+	for(int ID = drawables->Last(); ID >= drawables->First(); ID = drawables->Prev(ID))
+		drawables->Distruct(ID);
+		
+	delete[] drawables;
 }
 
 GobID // Add's a gameobject to the Scene and returns it's given ID

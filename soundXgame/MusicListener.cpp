@@ -1,17 +1,19 @@
 //#include "Connectable.h"
-#include "IMusicInteractor.h"
+#include "MusicListener.h"
 
 
-AMusicInteractor::AMusicInteractor(void)
+MusicListener::MusicListener(void)
 {
+	FFTdataValide = false;
 	allMotivatorsEnabled  = false;
 	motivatorsUpdated = false;
+	sensitivity = 50;
 
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 	{
 		Line[i].enabled = false;
 		Line[i].threshold = 0.02f;
-		Line[i].Effect = 1.0f;
+		Line[i].Effect = 0.5f;
 		Line[i].lowerBound = 0;
 		Line[i].upperBound = 64;
 		Line[i].bandWidth = 32;
@@ -25,10 +27,10 @@ AMusicInteractor::AMusicInteractor(void)
 
 	Line[0].enabled = true;
 	Line[0].clampf = true;
-	Line[0].MINClampf = 5.f;
-	Line[0].MAXClampf = 55.f;
-	Line[0].threshold = 1;
-	Line[0].fallOff = 1.5f;
+	Line[0].MINClampf = -1;
+	Line[0].MAXClampf = 1;
+	Line[0].threshold = 0.33;
+	Line[0].fallOff = 0.025f;
 		Line[0].lowerBound = 0;
 		Line[0].upperBound = 4;
 		Line[0].bandWidth = 3;
@@ -54,14 +56,14 @@ AMusicInteractor::AMusicInteractor(void)
 }
 
 
-AMusicInteractor::~AMusicInteractor(void)
+MusicListener::~MusicListener(void)
 {
 	UPDATE->SignOutFromEarlyUpdate(this);
 	UPDATE->SignOutFromUpdate(this);
 }
 
 bool
-AMusicInteractor::Enabled(int lineNumber,BOOL enable)
+MusicListener::Enabled(int lineNumber,BOOL enable)
 {
 	if(enable<3)
 		Line[lineNumber].enabled = enable;
@@ -70,8 +72,10 @@ AMusicInteractor::Enabled(int lineNumber,BOOL enable)
 }
 
 float
-AMusicInteractor::listenTo(int line, float* fft)
+MusicListener::listenTo(int line, float* fft)
 {
+	if(!FFTdataValide)
+		return 0;
 
 	float lowVal=0;
 	float highVal=0;
@@ -88,8 +92,20 @@ AMusicInteractor::listenTo(int line, float* fft)
 	calculateEffect(line,lowVal,highVal);
 
 	if(Line[line].clampf)
-		Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
+	{
+		//Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
+		if(Line[line].Effect<Line[line].MINClampf)
+		{
+			Line[line].fallOff -= (((1-((Line[line].MINClampf-Line[line].Effect)/Line[line].fallOff ))/2) * Line[line].fallOff);
+			Line[line].Effect = Line[line].MINClampf;
 
+		}
+		else if(Line[line].Effect>Line[line].MAXClampf)
+		{
+			Line[line].fallOff += (((  ((Line[line].Effect-Line[line].MAXClampf)/Line[line].fallOff ))/2) * Line[line].fallOff);
+			Line[line].Effect = Line[line].MAXClampf;
+		}
+	}
 	Line[line].value[0]=lowVal;
 	Line[line].value[1]=highVal;
 
@@ -97,16 +113,16 @@ AMusicInteractor::listenTo(int line, float* fft)
 }
 
 void
-AMusicInteractor::calculateEffect(int line,float lowValue,float highValue)
+MusicListener::calculateEffect(int line,float lowValue,float highValue)
 {
 	if(lowValue > Line[line].threshold - highValue)
-		Line[line].Effect+=highValue*50*lowValue;
+		Line[line].Effect+=highValue*sensitivity*lowValue;
 	else
 		Line[line].Effect-=Line[line].fallOff;
 }
 
 float*
-AMusicInteractor::listen(float *fft)
+MusicListener::listen(float *fft)
 {
 	allMotivatorsEnabled = true;
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
@@ -122,25 +138,27 @@ AMusicInteractor::listen(float *fft)
 }
 
 void 
-AMusicInteractor::DoEarly(void)
+MusicListener::DoEarly(void)
 {
-	listen(GetFFTData());
+	void * validation = GetFFTData();
+	FFTdataValide = (bool*)validation;
+	listen((float*)validation);
 }
 
 void 
-AMusicInteractor::DoUpdate(void)
+MusicListener::DoUpdate(void)
 {
 	if(motivatorsUpdated)
 	{
 		for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 			if(Line[i].enabled)
 				MotivatorFunction(motivator[i],i);
-		motivatorsUpdated=false;
+		FFTdataValide=motivatorsUpdated=false;
 	}
 }
 
 ListenerData*
-AMusicInteractor::GetLineData(int number)
+MusicListener::GetLineData(int number)
 {
 	return &Line[number];
 }
@@ -148,19 +166,19 @@ AMusicInteractor::GetLineData(int number)
 
 /* trigger, der beim Überschreiten ausgelöst wird */
 void
-AMusicInteractor::SetThreshold(int line,float value)
+MusicListener::SetThreshold(int line,float value)
 {
 	Line[line].threshold = value;
 }
 
 void
-AMusicInteractor::SetClambt(int line,bool clamb)
+MusicListener::SetClambt(int line,bool clamb)
 {
 	Line[line].clampf=clamb;
 }
 
 void
-AMusicInteractor::SetClambt(int line,float min,float max)
+MusicListener::SetClambt(int line,float min,float max)
 {
 	Line[line].clampf=true;
 	Line[line].MINClampf = min;
@@ -168,10 +186,21 @@ AMusicInteractor::SetClambt(int line,float min,float max)
 }
 
 void
-AMusicInteractor::SetLineBounds(int line,int lower,int upper,int width)
+MusicListener::SetLineBounds(int line,int lower,int upper,int width)
 {
 	Line[line].bandWidth = width;
 	Line[line].lowerBound = lower;
 	Line[line].upperBound = upper;
 }
 
+void
+MusicListener::MotivatorFunction(float motivator,int number)
+{
+
+}
+
+void
+MusicListener::MotivatorFunction(float[])
+{
+
+}

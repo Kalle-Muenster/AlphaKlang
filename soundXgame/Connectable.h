@@ -18,6 +18,7 @@ private:
 	bool needOneMoreStartupCycle;
 
 public:
+	static int MaximumNumberOfConnectioms;
 	unsigned ConnectionID;
 	IGObject* connection;
 	bool _initialized;

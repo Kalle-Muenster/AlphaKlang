@@ -22,11 +22,13 @@ public:
 	virtual ~List(void)
 	{
 		if(typeid(ListMember).name()=="pointer-to")
+		{
 			for(int i=0;i<MAXIMUM_SIZE;i++)
 			{
 				if(list[i] != NULL)
 					delete (ListMember*)&list[i];
 			}
+		}
 	}
 
 	// Add a member to the list and return the memberID 
@@ -96,16 +98,20 @@ public:
 
 	// returns the Next member's ID - the next used slot-number in the list
 	ListMemberID Next(int current)
-	{
-		while(list[++current]==NULL);
-			return (ListMemberID)current;
+	{	
+		if(numberOfMember>0)
+			while(list[++current]==NULL);
+		else
+			return -1;
+
+		return (ListMemberID)current;
 	}
 
 	// returns the previous member's ID - the first used slot-number found before [current]
 	ListMemberID Prev(int current)
 	{
 		if(current == 0)
-			return -1;
+			return 0;
 		while(list[--current]==NULL);
 			return (ListMemberID)current;
 	}
@@ -131,6 +137,20 @@ public:
 				highestSlotNumberInUse = Prev(id);
 
 
+			list[id] = NULL;
+			--numberOfMember;
+		}
+	}
+
+	// remove's the element at slot-number [ListMemberID] and calls it's destructor...
+	void Distruct(ListMemberID id)
+	{
+		if(list[id]!=NULL)
+		{
+			if((id==highestSlotNumberInUse)&&(id!=First()))
+				highestSlotNumberInUse = Prev(id);
+
+			delete list[id];
 			list[id] = NULL;
 			--numberOfMember;
 		}

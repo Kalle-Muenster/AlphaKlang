@@ -20,15 +20,15 @@ VoxelMap::VoxelMap(void)
 
 VoxelMap::~VoxelMap()
 {
-	delete voxels;
+//	 voxels = NULL;
 
 
 }
 
 void VoxelMap::ReLoade(char* filename)
 {	
-	MainSizzes.x=1.0f;
-	MainSizzes.y=1.0f;
+//	MainSizzes.x=1.0f;
+//	MainSizzes.y=1.0f;
 
 
 
@@ -76,8 +76,8 @@ void VoxelMap::ReLoade(char* filename)
 
 		for(int count=0;count<numberOfVoxelers;count++)
 		{
-			int x = count%mapWidth;
-			int y = count/mapWidth;
+			int x = count % mapWidth;
+			int y = count / mapWidth;
 
 			voxels[count].farb.Bytss[0]=loader.Pixel(x,y)->byte[0];
 			voxels[count].farb.Bytss[1]=loader.Pixel(x,y)->byte[1];
@@ -87,17 +87,15 @@ void VoxelMap::ReLoade(char* filename)
 			voxels[count].color = voxels[count].farb.s32;  ///????
 			voxels[count].factor=127;
 			voxels[count].size.ix=voxels[count].size.yps=MainSizzes.y;
-			voxels[count].position.iX=(x*scale)+ *position.x;
-			voxels[count].position.Yps=(y*scale)+ *position.y;
+			voxels[count].position.iX = (x*scale) + *position.x;
+			voxels[count].position.Yps = (y*scale) + *position.y;
 			voxels[count].MainDimensions = &MainSizzes;
 
-			if(x>0 && x<mapWidth-1 && y>0 && y<mapHeight-1)
-			{
+			if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
 				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
-			}
 
 		}
-		delete loader.data;
+		//delete loader.data;
 	}
 }
 

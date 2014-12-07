@@ -96,6 +96,11 @@ bool _BackroundFFTcalculated = false;
 int _BackgroundFFTcurrentSize = FFT_WINDOW_SIZE;
 bool _BackgroundAudioIsPlaying = false;
 
+BassAudio::~BassAudio(void)
+{
+//	delete[] _BackgroundFFTbuffer;
+}
+
 int _GetNumberOfInputDevices(void)
 {
 	BASS_RECORDINFO *info = new BASS_RECORDINFO();
@@ -225,7 +230,7 @@ _getChannelData(DWORD channel,int mode,int size,void* buffer)
 }
 
 HCHANNEL
-BassAudio::Loade3DSample(const char* filename)
+BassAudio::Loade3DSample(const char* filename,bool loop)
 {
 	FILE* file;
 	file = fopen(filename,"rb");
@@ -234,7 +239,11 @@ BassAudio::Loade3DSample(const char* filename)
 	fileLength=ftell(file);
 	fseek(file,0,SEEK_SET);
 	offset=0;
-	HSAMPLE sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
+	HSAMPLE sample;
+	if(loop)
+		sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
+	else
+		sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_3D);
 	
 	if(sample!=NULL)
 	{
@@ -383,6 +392,23 @@ BassAudio::Set3D_DopplerFXFactor(float dopplerFxFactor)
 	return this->doppler;
 }
 
+
+float 
+BassAudio::BackgroundMusicVolume(float setter)
+{	if(_backgroundAudioLoadet)
+	{
+	 	if(setter<=1)
+		{
+			BASS_ChannelSetAttribute(derAudio,BASS_ATTRIB_VOL,setter);
+			return setter;
+		}
+
+	BASS_ChannelGetAttribute(derAudio,BASS_ATTRIB_VOL,&setter);
+	return  setter;
+	}
+	else 
+		return 0;
+}
 
 bool
 BassAudio::MasterResampling(BOOL Switch)

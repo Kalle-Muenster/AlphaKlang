@@ -23,9 +23,7 @@ Voxel::SetParentVoxmap(VoxelMap* map)
 
 Voxel::~Voxel(void)
 {
-	delete x,y,w,h;
-    delete MainDimensions;
-
+//	delete vMapObject;
 }
 
 VectorF

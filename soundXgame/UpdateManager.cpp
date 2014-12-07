@@ -34,9 +34,9 @@ UpdateManager::UpdateManager(void)
 //Destuctor...
 UpdateManager::~UpdateManager(void)
 {
-	delete[] _earlyUpdates;
-	delete[] _updates;
-	delete[] _lateUpdates;
+	//delete _earlyUpdates;
+	//delete _updates;
+	//delete _lateUpdates;
 }
 
 

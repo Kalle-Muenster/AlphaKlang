@@ -138,6 +138,8 @@ IAudioReciever::GetMasterOutFFT(void)
 {
 	if(AUDIO->MasterResampling() && _FFTwindowGettable)
 		return AUDIO->GetMasterOutFFT();
+	else 
+		return &_FFTwindowGettable;
 }
 
 
@@ -176,11 +178,11 @@ IAudioEmitter::AudioPause(void)
 }
 
 void
-IAudioEmitter::PlayAudio(void)
+IAudioEmitter::PlayAudio(bool restart)
 {
 	if(!IsPlaying)
 	{
-		BASS_ChannelPlay(audioSource,true);
+		BASS_ChannelPlay(audioSource,restart);
 		IsPlaying=true;
 	}
 }
@@ -232,8 +234,9 @@ float*
 IAudioEmitter::GetFFTWindow(int size)
 {
 	void* buffer = &fftwindow[0];
-	AUDIO->GetChannelFFT(this->audioSource,buffer,(FFT_SIZE)size);
-	return &fftwindow[0];
+	if(AUDIO->GetChannelFFT(this->audioSource,buffer,(FFT_SIZE)size))
+		return &fftwindow[0];
+	else return false;
 }
 
 
@@ -244,20 +247,20 @@ AudioEmitter::AudioEmitter(void)
 
 
 void
-IAudioEmitter::LoadeSample(const char* audioFileName)
+IAudioEmitter::LoadeSample(const char* audioFileName,bool loop)
 {
 	
-	audioSource = AUDIO->Loade3DSample(audioFileName);
+	audioSource = AUDIO->Loade3DSample(audioFileName,loop);
 //	SetMyPosition(&this->Connection()->transform);
 	this->AudioVolume(0.8);
 
 }
 
 void
-AudioEmitter::LoadeSample(const char* audioFileName)
+AudioEmitter::LoadeSample(const char* audioFileName,bool loop)
 {
 	
-	audioSource = AUDIO->Loade3DSample(audioFileName);
+	audioSource = AUDIO->Loade3DSample(audioFileName,loop);
 
 	this->AudioVolume(0.8);
 

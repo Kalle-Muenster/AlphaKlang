@@ -73,6 +73,8 @@ namespace ProjectMappe
 		VectorF center(void);
 		static const Rectangle *const Zero;
 	};
+
+	void GlobalDestructor(void);
 }
 
 //#define Rectangle ProjectMappe::Rectangle

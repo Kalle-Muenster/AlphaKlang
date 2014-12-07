@@ -2,14 +2,14 @@
 #define _MUSIKUBUS_
 
 #include "cubus.h"
-#include "MusicListener.h"
+#include "MusicInteractor.h"
 
 class Musicubus :
 	public Cubus
 {
 private:
 
-	MusicListener* musikInput;
+	MusicInteractor* musikInput;
 
 public:
 	Musicubus(void);

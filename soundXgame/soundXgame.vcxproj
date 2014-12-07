@@ -92,13 +92,14 @@
     <ClCompile Include="GuiObject.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
-    <ClCompile Include="IMusicInteractor.cpp" />
+    <ClCompile Include="MusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
     <ClCompile Include="IVoxelObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MrZylinder.cpp" />
+    <ClCompile Include="MusicScaler.cpp" />
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="ObjectUpdater.cpp" />
@@ -144,7 +145,8 @@
     <ClInclude Include="GuiObject.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
-    <ClInclude Include="IMusicInteractor.h" />
+    <ClInclude Include="MusicInteractor.h" />
+    <ClInclude Include="MusicListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />
     <ClInclude Include="InstancibleObjects.h" />
@@ -153,6 +155,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MrZylinder.h" />
     <ClInclude Include="MusicListener.h" />
+    <ClInclude Include="MusicScaler.h" />
     <ClInclude Include="Musikubus.h" />
     <ClInclude Include="ObjectManagement.h" />
     <ClInclude Include="ObjectUptater.h" />

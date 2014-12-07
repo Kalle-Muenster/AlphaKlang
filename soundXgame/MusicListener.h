@@ -1,71 +1,86 @@
-#ifndef _MUSIKLISTENER_H_
-#define _MUSIKLISTENER_H_
+#ifndef _MUSICLISTENER_H_
+#define _MUSICLISTENER_H_
 
-#include "imusicinteractor.h"
+#include <math.h>
+#include "projectMacros.h"
+#include "Connectable.h"
 
-class MusicListener :
-	public AMusicInteractor,
-	public IConnectable
+#define NUMBER_OF_LINEVALUES (2)
+
+struct ListenerData
 {
-
-public:
-	MusicListener(void)
-	{
-		DataField=Vector3(0,0,0);
-
-		Line[0].enabled = true;
-		Line[0].clampf = true;
-		Line[0].MINClampf = 5.f;
-		Line[0].MAXClampf = 55.f;
-		Line[0].threshold = 1;
-		Line[0].fallOff = 1.5f;
-		Line[0].lowerBound = 0;
-		Line[0].upperBound = 4;
-		Line[0].bandWidth = 3;
-	}
-	virtual ~MusicListener(void){}
-
-protected:
-	float value;
-	Vector3 DataField;
-	virtual float* GettFFTData(void)
-		{return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
-	virtual void MotivatorFunction(float Motivator,int number) 
-		{Vector3 temp;
-		//	printf("MusikListener: motivatornumber-%i: %f\n",number,Motivator);
-			switch(number)
-			{
-			case 0:
-				//printf("MusikListener: motivator0: %f\n",motivator[0]);
-		//		this->Connection()->scale(motivator[0],(motivator[1]+1.5)*2.5f,(motivator[2]+1.5)*2.5f);
-				DataField = Connection()->getTransform()->scale;
-				DataField.x=Motivator/3.3;
-				value = Motivator<40?Motivator<10?1.f:2.5f:Motivator<50?4.f:Motivator>54?2.f:6.f;
-				break;
-			case 1:
-				temp = this->Connection()->getTransform()->rotation;
-				DataField.y=(Motivator+1.5f)/3;
-				temp.x += Motivator*value/2;
-				temp.y -= Motivator*value/2.2;
-				temp.z += Motivator*value/1.8;
-				this->Connection()->rotate(temp);
-				
-				break;
-			case 2:
-				temp = this->Connection()->getTransform()->movement;
-				temp.x *= Motivator/3;
-				temp.y *= -Motivator/3;
-				temp.z *= Motivator/3;
-				this->Connection()->move(temp);
-
-				DataField.z=(Motivator+1.5f)/3;
-				this->Connection()->scale(DataField);
-
-				this->GetLineData(0)->fallOff=Motivator>0.75f?5.f:1.f;
-				this->GetLineData(0)->threshold=Motivator>0.25f?value/24.f:value/2.5f;
-			}
-		}
-	virtual void MotivatorFunction(float Motivator[]){}
+	bool enabled;
+	float threshold;
+	float Effect;
+	int lowerBound;
+	int upperBound;
+	float value[NUMBER_OF_LINEVALUES];
+	int bandWidth;
+	float fallOff; /* Zeit in sekunden, auf dem der threshold bleiben soll */
+	bool clampf; /* clampen min / max begrenzen für end-ausgabe wert */
+	float MINClampf;
+	float MAXClampf;
 };
+
+//typedef void(*ListenerFunc)(int,ListenerData*,IGObject*);
+//
+//class IMusicListener
+//{
+//public:
+//	
+//			IMusicListener(void);
+//	virtual ~IMusicListener(void);
+//
+//			float listenTo(int,float *fft);
+//			float* listen(float *fft);
+//			ListenerData* GetLineData(int);
+//			void SetThreshold(int,float);
+//			void SetClambt(int,bool);
+//			void SetClambt(int,float,float);
+//			bool Enabled(int,BOOL=3);
+//			void SetLineBounds(int line,int lower,int upper,int width);
+//	
+//			
+//			
+//protected:
+//
+//};
+
+
+class MusicListener :  
+	public IUpdateble
+{
+public:
+	static const int NUMBER_OF_LISTENINGLINES = 5;
+
+	MusicListener(void);
+	virtual ~MusicListener(void);
+	ListenerData* GetLineData(int);
+	float motivator[NUMBER_OF_LISTENINGLINES];
+	void SetThreshold(int,float);
+	void SetClambt(int,bool);
+	void SetClambt(int,float,float);
+	bool Enabled(int,BOOL=3);
+	void SetLineBounds(int line,int lower,int upper,int width);
+	float sensitivity;
+	virtual void DoEarly(void);
+	virtual void DoUpdate(void);
+	
+protected:
+	bool motivatorsUpdated;
+	virtual float* GetFFTData(void)
+		{return(float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
+	virtual void MotivatorFunction(float motivator,int number);
+	virtual void MotivatorFunction(float[]);
+	float listenTo(int,float *fft);
+	float* listen(float *fft);
+	virtual void calculateEffect(int line,float lowValue,float highValue);
+	ListenerData Line[NUMBER_OF_LISTENINGLINES];
+	bool allMotivatorsEnabled;
+	bool FFTdataValide;
+};
+
+
+
 
 #endif

@@ -16,6 +16,7 @@ private:
 	int imageIndex;
 	int bumpmapIndex;
 	bool transparenseEnabled;
+	float timer;
 
 public:
 	VoxControl(void);

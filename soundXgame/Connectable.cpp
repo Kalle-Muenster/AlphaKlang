@@ -4,6 +4,8 @@
 #include "DataStructs.h"
 #include "Connectable.h"
 
+int
+IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
 
 bool
 IConnectable::Not_hasInitialized(void)

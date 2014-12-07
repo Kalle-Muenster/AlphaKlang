@@ -7,8 +7,8 @@
 Fountain::Fountain(void) :
 	timer(0),
 	timer2(0),
-	spawnDelay(1.0f),
-	deleteDelay(2.0f)
+	spawnDelay(0.08f),
+	deleteDelay(1.5f)
 {
 	size = 20;
 	this->createRange();
@@ -73,12 +73,17 @@ void
 Fountain::DoUpdate(void)
 {
 	timer += INPUT->FrameTime;
-	if(timer >= this->spawnDelay)
+	if(motivator[0]>0.75)
 	{
-		this->Spawn();
-		timer = 0;
+		if(timer >= this->spawnDelay)
+		{
+			this->Spawn();
+			std::cout<<"Fountain spawned a cube by motivator0-trigger!\n";
+			timer = 0;
+		}
+
+
 	}
-	
 	// Check delete
 	timer2 += INPUT->FrameTime;
 	if(timer2 >= this->deleteDelay)
