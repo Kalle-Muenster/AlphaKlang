@@ -95,9 +95,12 @@ void
 IMeshObject::InitializeObject(const char* objFile, bool addToSceneGraph, Vector3 positionOffset)
 {
 	if(addToSceneGraph)
+	{
 		SetID(SCENE->Add(this));
+		LockID();
+	}
 	LoadMesh(objFile,positionOffset);
-	LockID();
+	
 }
 
 Texture*

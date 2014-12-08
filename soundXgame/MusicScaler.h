@@ -1,8 +1,10 @@
-#ifndef _MUSICSCALER_H_
-#define _MUSICSCALER_H_
+#ifndef _CMUSICSCALER_
+#define _CMUSICSCALER_
 
 #include "musiclistener.h"
 #include "AudioObject.h"
+
+
 
 class MusicScaler :
 	public MusicListener,

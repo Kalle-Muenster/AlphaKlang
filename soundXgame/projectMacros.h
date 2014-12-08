@@ -13,7 +13,7 @@
 #define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->size().y
 #define DINGERBUFFERLENGTH (16384)
 #define CONTROLERPOLLINTERVAL (50)
-
+#define clrscr system("cls")
 
 #include <windows.h>
 #include <windef.h>

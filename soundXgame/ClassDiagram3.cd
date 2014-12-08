@@ -50,8 +50,6 @@
         <Point X="7.5" Y="5.587" />
         <Point X="8.417" Y="5.587" Type="JumpStart" />
         <Point X="8.583" Y="5.587" Type="JumpEnd" />
-        <Point X="8.715" Y="5.587" Type="JumpStart" />
-        <Point X="8.881" Y="5.587" Type="JumpEnd" />
         <Point X="12.5" Y="5.587" />
         <Point X="12.5" Y="6.25" />
       </Path>
@@ -76,8 +74,6 @@
         <Point X="7.25" Y="5.816" />
         <Point X="8.417" Y="5.816" Type="JumpStart" />
         <Point X="8.583" Y="5.816" Type="JumpEnd" />
-        <Point X="8.715" Y="5.816" Type="JumpStart" />
-        <Point X="8.881" Y="5.816" Type="JumpEnd" />
         <Point X="10.5" Y="5.816" />
         <Point X="10.5" Y="6.25" />
       </Path>
@@ -139,7 +135,7 @@
   <Class Name="MusicInteractor" Collapsed="true">
     <Position X="5.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAgAAAAAAAAAQAAAAAAACCAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AARAAAAAAAgAAAAAAAAAQAAAAAAACCAAAAAgAAAAAAA=</HashCode>
       <FileName>MusicInteractor.h</FileName>
       <NewMemberFileName>IMusicInteractor.h</NewMemberFileName>
     </TypeIdentifier>
@@ -222,13 +218,6 @@
     <TypeIdentifier>
       <HashCode>AIYQAAAAAgAIBAggAAAABAAABAEAEAAIAQABAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="YetiInteractive" Collapsed="true">
-    <Position X="26.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAABAAAAAAAAEAAAAAAA=</HashCode>
-      <FileName>TestConectables.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CameraTargetRotator" Collapsed="true">
@@ -319,43 +308,10 @@
       <FileName>VoxelMap.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="VoxelInteractive" Collapsed="true">
-    <Position X="4.5" Y="12" Width="1.5" />
-    <InheritanceLine Type="IConnectable" ManuallyRouted="true">
-      <Path>
-        <Point X="7.25" Y="1.812" />
-        <Point X="7.25" Y="4.885" />
-        <Point X="7.417" Y="4.885" Type="JumpStart" />
-        <Point X="7.583" Y="4.885" Type="JumpEnd" />
-        <Point X="8.417" Y="4.885" Type="JumpStart" />
-        <Point X="8.583" Y="4.885" Type="JumpEnd" />
-        <Point X="8.798" Y="4.885" />
-        <Point X="8.798" Y="11.125" />
-        <Point X="8.583" Y="11.125" Type="JumpStart" />
-        <Point X="8.417" Y="11.125" Type="JumpEnd" />
-        <Point X="6.583" Y="11.125" Type="JumpStart" />
-        <Point X="6.417" Y="11.125" Type="JumpEnd" />
-        <Point X="5.25" Y="11.125" />
-        <Point X="5.25" Y="12" />
-      </Path>
-    </InheritanceLine>
-    <InheritanceLine Type="IInteractive" FixedToPoint="true">
-      <Path>
-        <Point X="3" Y="10.941" />
-        <Point X="3" Y="11.625" />
-        <Point X="4.938" Y="11.625" />
-        <Point X="4.938" Y="12" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAACQAAAAAAAAAAA=</HashCode>
-      <FileName>VoxGrid.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="VoxGrid" Collapsed="true">
     <Position X="0.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQACAAAABAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAUBCAQAABAAAAgAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>VoxGrid.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -363,7 +319,7 @@
     <Position X="26.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAkEAQAAAQSAAAAAAAAAACABAAAAAAAAAAA=</HashCode>
-      <FileName>IMusicInteractor.h</FileName>
+      <FileName>musiclistener.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="MouseButton" Collapsed="true">

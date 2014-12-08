@@ -1,5 +1,5 @@
 #include "VoxControl.h"
-#include "IVoxelObject.h"
+#include "VoxGrid.h"
 #include "projectMacros.h"
 #include "CameraModesIncluder.h"
 
@@ -41,7 +41,8 @@ int _currentSellection=0;
 void 
 VoxControl::keyPress(char key)
 {
-
+	if(SCENE->camera->GetTarget()==this->Connection())
+	{
 	if(key=='x')
 	{
 		if(_lastKey!='x')
@@ -120,15 +121,15 @@ VoxControl::keyPress(char key)
 		__ZedMode=true;
 	else
 		__ZedMode=false;
-
+	}
 }
 
 
 
-IVoxelObject* 
+VoxGrid* 
 VoxControl::vConnection(void)
 {
-	return (IVoxelObject*)this->connection;
+	return (VoxGrid*)this->connection;
 }
 float bumper = 0.0000f;
 void

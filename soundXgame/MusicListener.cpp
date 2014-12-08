@@ -4,6 +4,7 @@
 
 MusicListener::MusicListener(void)
 {
+	automaticFallOffAdjust=true;
 	FFTdataValide = false;
 	allMotivatorsEnabled  = false;
 	motivatorsUpdated = false;
@@ -93,18 +94,23 @@ MusicListener::listenTo(int line, float* fft)
 
 	if(Line[line].clampf)
 	{
-		//Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
-		if(Line[line].Effect<Line[line].MINClampf)
+		
+		if(automaticFallOffAdjust)
 		{
-			Line[line].fallOff -= (((1-((Line[line].MINClampf-Line[line].Effect)/Line[line].fallOff ))/2) * Line[line].fallOff);
-			Line[line].Effect = Line[line].MINClampf;
+			if(Line[line].Effect<Line[line].MINClampf)
+			{
+				Line[line].fallOff -= (((1-((Line[line].MINClampf-Line[line].Effect)/Line[line].fallOff ))/2) * Line[line].fallOff);
+				Line[line].Effect = Line[line].MINClampf;
 
+			}
+			else if(Line[line].Effect>Line[line].MAXClampf)
+			{
+				Line[line].fallOff += (((  ((Line[line].Effect-Line[line].MAXClampf)/Line[line].fallOff ))/2) * Line[line].fallOff);
+				Line[line].Effect = Line[line].MAXClampf;
+			}
 		}
-		else if(Line[line].Effect>Line[line].MAXClampf)
-		{
-			Line[line].fallOff += (((  ((Line[line].Effect-Line[line].MAXClampf)/Line[line].fallOff ))/2) * Line[line].fallOff);
-			Line[line].Effect = Line[line].MAXClampf;
-		}
+		else
+			Line[line].Effect=Line[line].Effect<Line[line].MINClampf?Line[line].MINClampf:Line[line].Effect>Line[line].MAXClampf?Line[line].MAXClampf:Line[line].Effect;
 	}
 	Line[line].value[0]=lowVal;
 	Line[line].value[1]=highVal;

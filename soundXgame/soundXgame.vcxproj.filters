@@ -122,12 +122,6 @@
     <ClCompile Include="TargetGrabber.cpp">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClCompile>
-    <ClCompile Include="TestConectables.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="TestYeti.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
@@ -137,7 +131,15 @@
     <ClCompile Include="MusicListener.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="MusicScaler.cpp" />
+    <ClCompile Include="MusicScaler.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicVox.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="TestConectables.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -197,9 +199,6 @@
     <ClInclude Include="SceneGraph.h">
       <Filter>Core\RuntimeManagers</Filter>
     </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>Core\RuntimeManagers</Filter>
-    </ClInclude>
     <ClInclude Include="UpdateManager.h">
       <Filter>Core\RuntimeManagers</Filter>
     </ClInclude>
@@ -211,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="MrZylinder.h">
       <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicListener.h">
-      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Randomover.h">
       <Filter>Objects\ConnectableComponents</Filter>
@@ -266,12 +262,6 @@
     <ClInclude Include="TargetGrabber.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
-    <ClInclude Include="TestConectables.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
-    <ClInclude Include="TestYeti.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
@@ -281,14 +271,18 @@
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="MusicListener.h">
+    <ClInclude Include="MusicInteractor.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicScaler.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicVox.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="MusicInteractor.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicListener.h" />
-    <ClInclude Include="MusicScaler.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

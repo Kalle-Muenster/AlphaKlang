@@ -1,5 +1,5 @@
-#ifndef _MUSICLISTENER_H_
-#define _MUSICLISTENER_H_
+#ifndef _IMUSICLISTENER_
+#define _IMUSICLISTENER_
 
 #include <math.h>
 #include "projectMacros.h"
@@ -65,7 +65,7 @@ public:
 	float sensitivity;
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
-	
+	bool automaticFallOffAdjust;
 protected:
 	bool motivatorsUpdated;
 	virtual float* GetFFTData(void)

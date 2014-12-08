@@ -1,10 +1,11 @@
 #ifndef _CONNECTABLE_OBSERVER_
 #define _CONNECTABLE_OBSERVER_
 
+
 #include "projectMacros.h"
 #include "InputManager.h"
 #include "Connectable.h"
-#include "VoxGrid.h"
+//#include "VoxGrid.h"
 
 
 class CInteractive : 

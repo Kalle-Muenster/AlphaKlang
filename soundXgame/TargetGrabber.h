@@ -2,7 +2,7 @@
 #define _TARGETGRABBER_H_
 
 #include "UpdateManager.h"
-#include "UpdateManager.h"
+//#include "UpdateManager.h"
 #include "Connectable.h"
 
 

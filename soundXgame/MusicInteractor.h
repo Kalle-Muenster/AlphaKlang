@@ -1,5 +1,5 @@
-#ifndef _MUSIKINTERACTOR_H_
-#define _MUSIKINTERACTOR_H_
+#ifndef _CMUSICINTERACTOR_
+#define	_CMUSICINTERACTOR_
 
 #include "MusicListener.h"
 #include "AudioObject.h"

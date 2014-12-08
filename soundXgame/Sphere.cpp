@@ -1,10 +1,13 @@
 #include "Sphere.h"
 
 
-//Sphere::Sphere(void)
-//{
-//	
-//}
+Sphere::Sphere(string meshFileName,string textureFileName,bool drawBackFaces)
+{
+	NoBackfaceCulling = drawBackFaces;
+	InitializeObject(meshFileName,true);
+	LoadTexture(textureFileName);
+
+}
 
 Sphere::Sphere(bool drawBackFaces)
 {

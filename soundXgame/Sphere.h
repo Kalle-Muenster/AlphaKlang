@@ -8,7 +8,7 @@ class Sphere :
 	public IMeshObject
 {
 public:
-//	Sphere(void);
+	Sphere(string mesh,string tex,bool backFaces = false);
 	Sphere(bool drawBackfaces=false);
 	virtual ~Sphere(void);
 

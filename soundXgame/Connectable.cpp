@@ -34,13 +34,14 @@ IConnectable::~IConnectable(void)
 	{
 		if(Connectables[i]!=NULL)
 		{
-			int index = 0;
+			RemoveConnected<IConnectable>(i+1);
+			/*int index = 0;
 			while(Connectables[i]->GetNumberOfConnected()>0)
 			{
 				if(Connectables[i]->getConnectables(index)!=NULL)
 					Connectables[i]->RemoveConnected<IConnectable>(Connectables[i]->ConIDs[i]-1);
 			}
-			delete this->Connectables[i];
+			delete this->Connectables[i];*/
 			NumberOfConnectedObjects--;
 		}
 	}

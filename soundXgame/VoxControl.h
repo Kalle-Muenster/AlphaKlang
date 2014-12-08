@@ -1,9 +1,11 @@
 #ifndef __VOXCONTROLL_H__
 #define __VOXCONTROLL_H__
 
-#include "TestConectables.h"
+#include "InputManager.h"
 #include "Connectable.h"
+//#include "VoxGrid.h"
 
+class VoxGrid;
 
 class VoxControl :
 	public IConnectable, public IInteractive, public IUpdateble
@@ -23,8 +25,29 @@ public:
 	virtual ~VoxControl(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
-	virtual IVoxelObject* vConnection(void);
+	virtual VoxGrid* vConnection(void);
 	virtual void DoUpdate(void);
+	template<typename V> V* Get(ConID id = NULL)
+	{
+		if(id>0)
+			(V*)getConnectables(id-1);
+		else
+		{
+			size_t t = typeid(V).hash_code();
+			if(typeid(this) != t)
+			{
+				for(int i=0;i<IConnectable::MaximumNumberOfConnections;i++)
+				{
+					if(ConIDs[i]==t)
+						return (V*)getConnectables(i);
+				}
+			}
+			else return this;
+		}
+		return false;
+	}
 };
+
+
 
 #endif

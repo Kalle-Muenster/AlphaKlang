@@ -7,6 +7,8 @@
 #include "ScreenOverlay.h"
 #include "GuiObject.h"
 #include "FogMachine.h"
+
+
 #include "MusicInteractor.h"
 #include "MusicScaler.h"
 
@@ -19,7 +21,7 @@ bool EXIT = false;
 Sprite* Framen;
 GuiObject* guiding;
 ScreenOverlay* overlay;
-Fountain* fountain;
+//Fountain* fountain;
 //Functions:
 void InitGlut(void);
 void LoadContent(void);
@@ -140,18 +142,18 @@ void LoadContent(void)
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
 	AUDIO->Volume(0.01);
 	AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	//Framen = new Sprite("framen_1920x1080.png");
-	fountain = new Fountain();
-	fountain->SetLineBounds(0,0,4,3);
-	fountain->SetClambt(0,-1,1);
-	fountain->SetThreshold(0,0.33);
-	fountain->sensitivity = 5;
+	//fountain = new Fountain();
+	//fountain->SetLineBounds(0,0,4,3);
+	//fountain->SetClambt(0,-1,1);
+	//fountain->SetThreshold(0,0.33);
+	//fountain->sensitivity = 5;
 	//ShaderObj* shaderObj = new ShaderObj();
 
 
@@ -167,9 +169,17 @@ void LoadContent(void)
 	VoxGrid* vObject = new VoxGrid("drei_.ppm");
 	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
 	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+	vObject->AddConnectable<MusicVox>();
 	vObject->move(-80,0,150);
 	vObject->MainSizzes.x=0.2;
 	vObject->MainSizzes.y=0.045f;
+
+	GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
+	SCENE->Object(vox2)->SetName("VoxelPlane2");
+	SCENE->Object(vox2)->AddConnectable<VoxControl>();
+	SCENE->Object(vox2)->AddConnectable<MusicVox>();
+	((VoxGrid*)SCENE->Object(vox2))->flip(Vector3(1,0,0));
+
 
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
@@ -254,6 +264,7 @@ void LoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
 
 	// Just some Music Cubes
 	unsigned obj;
@@ -264,15 +275,16 @@ void LoadContent(void)
 	{
 		x-=((float)i);
 		z+=(2.f*(float)i/15.0f);
-		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
+		obj = (new Sphere("cylinder_quads.obi","Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
+		SCENE->Object(obj)->AddConnectable<AudioEmitter>();
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("mp3/03-Kit-808.mp3",false);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicInteractor>();
-		SCENE->Object(obj)->AddConnectable<MusicInteractor>()->GetLineData(0)->fallOff;// += (float)i/100; 
+		SCENE->Object(obj)->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
@@ -300,7 +312,7 @@ void LoadContent(void)
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
 	AUDIO->Volume(0.8);
-	AUDIO->BackgroundMusicVolume(0.2);
+	AUDIO->BackgroundMusicVolume(0.95);
 }
 
 
@@ -455,16 +467,16 @@ void keyboardUpInput(unsigned char key,int x,int y)
 
 void processSpecialKeys(int key, int xx, int yy)
 {
-	if(key==GLUT_KEY_UP)
-	{
-		fountain->sensitivity += 1;
-		printf("fountain-sensitivity: %f\n",fountain->sensitivity);
-	}
-	if(key==GLUT_KEY_DOWN)
-	{
-		fountain->sensitivity -= 1;
-		printf("fountain-sensitivity: %f\n",fountain->sensitivity);
-	}
+	//if(key==GLUT_KEY_UP)
+	//{
+	//	fountain->sensitivity += 1;
+	//	printf("fountain-sensitivity: %f\n",fountain->sensitivity);
+	//}
+	//if(key==GLUT_KEY_DOWN)
+	//{
+	//	fountain->sensitivity -= 1;
+	//	printf("fountain-sensitivity: %f\n",fountain->sensitivity);
+	//}
 
 	INPUT->notifySpecialKey(key);
 }

@@ -100,6 +100,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MrZylinder.cpp" />
     <ClCompile Include="MusicScaler.cpp" />
+    <ClCompile Include="MusicVox.cpp" />
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="ObjectUpdater.cpp" />
@@ -116,7 +117,6 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TargetGrabber.cpp" />
     <ClCompile Include="TestConectables.cpp" />
-    <ClCompile Include="TestYeti.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -146,7 +146,6 @@
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="MusicInteractor.h" />
-    <ClInclude Include="MusicListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />
     <ClInclude Include="InstancibleObjects.h" />
@@ -154,8 +153,8 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MrZylinder.h" />
-    <ClInclude Include="MusicListener.h" />
     <ClInclude Include="MusicScaler.h" />
+    <ClInclude Include="MusicVox.h" />
     <ClInclude Include="Musikubus.h" />
     <ClInclude Include="ObjectManagement.h" />
     <ClInclude Include="ObjectUptater.h" />
@@ -173,8 +172,6 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TargetGrabber.h" />
-    <ClInclude Include="TestConectables.h" />
-    <ClInclude Include="TestYeti.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UpdateManager.h" />
     <ClInclude Include="Utility.h" />

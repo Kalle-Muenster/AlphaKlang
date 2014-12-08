@@ -1,4 +1,6 @@
+
 #include "MusicScaler.h"
+
 
 
 MusicScaler::MusicScaler(void)

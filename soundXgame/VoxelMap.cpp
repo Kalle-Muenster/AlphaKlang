@@ -182,7 +182,7 @@ void VoxelMap::LoadMap(char* filename,int channel)
 
 void VoxelMap::Draw(VectorPF position )
 {
-	
+//	printf("VOXELPLANE: Bumpfactor: %f\n",this->BumpFactor);
 	glBegin(GL_QUADS);
 
 	for(int f=0;f<256;f++)
