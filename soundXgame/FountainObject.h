@@ -17,7 +17,8 @@ public:
 	float power;
 	float gravity;
 	float speed;
-	float expanding; // Power for Directionvector (wie stark ausweiten)
+	float expanding; // Power for Directionvector (wie stark ausweiten), 1=low,10=high
+	float reduction; // Wie schnell der speed entgegen der Schwerkraft aufgeholben werden soll, -2.5=slow, +2.5=fast
 	Vector3 direction; // Directionvector to Expand
 
 	FountainObject(void);

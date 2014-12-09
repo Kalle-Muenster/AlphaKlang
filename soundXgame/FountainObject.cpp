@@ -28,10 +28,11 @@ FountainObject::Initialize(void)
 	//this->power = 3.0f;
 	//this->gravity = -0.035f;
 	//this->speed = 0.04f;
-	this->power = 4.0f;
-	this->gravity = -0.1f;
-	this->speed = 0.1f;
-	this->expanding = 6.0f; // expanding: 1=low,5=high
+	this->power = 2.5f;
+	this->gravity = -0.4f;
+	this->speed = 0.5f;
+	this->expanding = 40.0f;
+	this->reduction = 1.0f;
 	this->direction = Vector3(randX,0,randZ);
 
 	SetID(SCENE->Add(this));
@@ -61,7 +62,7 @@ FountainObject::DoUpdate(void)
 {
 	if(power > 0)
 	{
-		power -= (float)INPUT->FrameTime / 2.5f;
+		power -= (float)INPUT->FrameTime * this->reduction;
 		if(power < 0)
 			power = 0;
 	}

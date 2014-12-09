@@ -8,8 +8,8 @@
 #include "Ground.h"
 #include "MusicListener.h"
 
-class Fountain
-	: public IUpdateble,
+class Fountain :
+	public IUpdateble,
 	 public MusicListener
 {
 private:
@@ -20,15 +20,16 @@ private:
 	Transform transform;
 
 	/* Object Pool */
-	int size;
 	std::vector<FountainObject*> objects;
 	std::vector<FountainObject*> spawnedObjects;
 
 public:
+	int size;
 	//enum { SIZE = 100 };
 
 	Fountain(void);
 	~Fountain(void);
+	void SetPosition(Vector3 pos);
 	
 	/* Object Pool */
 	void setMaxSize(int i);

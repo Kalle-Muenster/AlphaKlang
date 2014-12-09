@@ -7,17 +7,13 @@
 Fountain::Fountain(void) :
 	timer(0),
 	timer2(0),
-	spawnDelay(0.08f),
-	deleteDelay(1.5f)
+	spawnDelay(0.05f),
+	deleteDelay(1.5f),
+	size(10)
 {
-	size = 20;
-	this->createRange();
 	this->transform.position = Vector3(0, 0, 0);
-
 	UpdateManager::getInstance()->SignInForUpdate(this);
-
 }
-
 
 Fountain::~Fountain(void)
 {
@@ -32,6 +28,12 @@ Fountain::~Fountain(void)
 }
 
 void
+Fountain::SetPosition(Vector3 pos)
+{
+	this->transform.position = pos;
+}
+
+void
 Fountain::createRange(void)
 {
 	for(int j = 0; j < size; j++)
@@ -39,8 +41,6 @@ Fountain::createRange(void)
 		FountainObject* tmp = new FountainObject();
 		objects.push_back(tmp);
 	}
-
-
 }
 
 FountainObject*
@@ -51,12 +51,13 @@ Fountain::getObject(void)
 	{
 		tmp = objects[0];
 		objects.erase(objects.begin());
+		//std::cout<<"Fountain... old!\n";
 	} else {
 		tmp = new FountainObject();
+		//std::cout<<"Fountain spawned... CREATE!\n";
 	}
 	spawnedObjects.push_back(tmp);
 	return tmp;
-
 }
 
 void
@@ -73,18 +74,19 @@ void
 Fountain::DoUpdate(void)
 {
 	timer += INPUT->FrameTime;
-	if(motivator[0]>0.75)
+
+	//std::cout << motivator[0] << std::endl;
+
+	if(motivator[0] > 0.75f)
 	{
 		if(timer >= this->spawnDelay)
 		{
 			this->Spawn();
-			std::cout<<"Fountain spawned a cube by motivator0-trigger!\n";
 			timer = 0;
 		}
-
-
 	}
-	// Check delete
+
+	// Check removing old objects
 	timer2 += INPUT->FrameTime;
 	if(timer2 >= this->deleteDelay)
 	{

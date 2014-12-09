@@ -143,17 +143,23 @@ void LoadContent(void)
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-	AUDIO->Volume(0.01);
-	AUDIO->Play();
+	//AUDIO->Volume(0.01);
+	//AUDIO->Play();
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	//Framen = new Sprite("framen_1920x1080.png");
-	//fountain = new Fountain();
+	
+	Fountain* fountain = new Fountain();
+	fountain->SetPosition(Vector3(-40, 0, 0));
+	fountain->size = 50;
+	fountain->createRange();
+
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);
 	//fountain->sensitivity = 5;
+
 	//ShaderObj* shaderObj = new ShaderObj();
 
 
@@ -180,11 +186,15 @@ void LoadContent(void)
 	SCENE->Object(vox2)->AddConnectable<MusicVox>();
 	((VoxGrid*)SCENE->Object(vox2))->flip(Vector3(1,0,0));
 
-
+	
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
-	SCENE->Object("AUDIO01")->move(2,0,-2);
+	SCENE->Object("AUDIO01")->move(-20,0,-4);
 	SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
+	SCENE->Object("AUDIO01")->IsGrounded(true);
+	IMeshObject* meshObj;
+	meshObj = static_cast<IMeshObject*>(SCENE->Object("AUDIO01"));	
+	meshObj->GroundedWithPivot = true;
 
 	(new Cubus("X-7.png"))->SetName("AUDIO02");
 	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("mp3/10-Nanopad.mp3");
@@ -311,7 +321,7 @@ void LoadContent(void)
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
-	AUDIO->Volume(0.8);
+	//AUDIO->Volume(0.8);
 	AUDIO->BackgroundMusicVolume(0.95);
 }
 
