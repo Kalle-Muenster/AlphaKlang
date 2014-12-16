@@ -145,6 +145,7 @@
     <ClInclude Include="GuiObject.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
+    <ClInclude Include="MusicController.h" />
     <ClInclude Include="MusicInteractor.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />

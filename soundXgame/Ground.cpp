@@ -1,5 +1,6 @@
 #include "Ground.h"
 #include "projectMacros.h"
+#include "MusicController.h"
 
 
 Ground* instance;
@@ -151,6 +152,11 @@ Ground::Ground(void) :
 	// initize map once
 	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
 	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
+
+	this->AddConnectable<MusicController>();
+	//->SetLineBounds(0, 100, 128, 14);
+	//this->GetConnected<MusicController>()->SetClambt(0, 0, 100);
+
 
 }
 
@@ -396,7 +402,13 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float speed = 35.0f * (float)INPUT->FrameTime;
+	
+	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
+	std::cout << line0 << std::endl;
+
+	float speed = line0;
+
+	//float speed = 35.0f * (float)INPUT->FrameTime;
 	//float speed = 0;
 	if(dynamicToTop)
 		dynamicVal += speed;

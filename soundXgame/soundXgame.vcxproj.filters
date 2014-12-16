@@ -283,6 +283,9 @@
     <ClInclude Include="Utility.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="MusicController.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
