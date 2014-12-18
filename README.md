@@ -16,13 +16,13 @@ Alphaklang - The Experience of Sound
   * Skill Demo ;)
 
 About
-======
+============
 
-* Final Project
-* University:	SAE Hamburg, Germany
-* Date: 09/2014 - 01/2015
-* Copyright (c) 2015
+* Final Project at SAE Institute University, Hamburg, Germany
+* Copyright (c) 09/2014 - 01/2015
+* by Kalle Münster and Dario D. Müller
 
 Links
+============
   * Documentation: https://docs.google.com/document/d/1_fZ0rWXhQemJyiExTHA93nG4yES0Mfp_2MNUDu5DR-E/edit?usp=sharing
   * Blog: www.dariodomi.de
