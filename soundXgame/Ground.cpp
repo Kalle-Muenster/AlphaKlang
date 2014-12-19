@@ -406,11 +406,11 @@ void Ground::Update(void)
 	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
 	std::cout << line0 << std::endl;
 
-	float speed = line0;
+	dynamicVal = line0 * 10;
 
 	//float speed = 35.0f * (float)INPUT->FrameTime;
 	//float speed = 0;
-	if(dynamicToTop)
+	/*if(dynamicToTop)
 		dynamicVal += speed;
 	else
 		dynamicVal -= speed;
@@ -423,7 +423,7 @@ void Ground::Update(void)
 	{
 		dynamicVal = 0;
 		dynamicToTop = true;
-	}
+	}*/
 
 	// Update First Person Camera
 	Cam* cam = SceneGraph::GetInstance()->camera;

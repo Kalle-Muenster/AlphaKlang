@@ -31,7 +31,7 @@ protected:
 	float timer;
 	float value;
 	Vector3 DataField;
-	virtual float* GettFFTData(void)
+	virtual float* GetFFTData(void)
 		{return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
 	virtual void MotivatorFunction(float Motivator,int number) 
 		{Vector3 temp;
