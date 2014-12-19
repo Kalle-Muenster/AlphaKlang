@@ -1,7 +1,7 @@
 ![](https://github.com/KallePower/ProjectMappe/blob/development/soundXgame/codefreaks_black.jpg)
 std::cout << Team Code Freaks << Programming by Kalle Münster and Dario D. Müller << std::endl
 
-Framework: Step One
+Framework: Stepflow
 ==============
 
 * Custom-build Graphics Framework build with C++ and OpenGL
