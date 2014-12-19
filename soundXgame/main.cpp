@@ -145,10 +145,10 @@ void LoadContent(void)
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
-	AUDIO->Volume(0.01);
-	AUDIO->Play();
-
+//	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+//	AUDIO->Volume(0.01);
+//	AUDIO->Play();
+//	AUDIO->BackgroundMusicVolume(0.1);
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
 	//Framen = new Sprite("framen_1920x1080.png");
@@ -314,8 +314,8 @@ void LoadContent(void)
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
-	AUDIO->Volume(0.8);
-	AUDIO->BackgroundMusicVolume(0.95);
+	AUDIO->Volume(1);
+	//AUDIO->BackgroundMusicVolume(0.95);
 
 }
 
