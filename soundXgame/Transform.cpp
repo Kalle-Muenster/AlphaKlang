@@ -1,5 +1,12 @@
 #include "Transform.h"
 
+const ITransform _ZeroTransformInstance = ITransform(); 
+
+//Zero-Initialized-instance:
+
+const ITransform*
+	const ITransform::Zero = &_ZeroTransformInstance;
+
 ITransform::ITransform(void)
 {
 	position = rotation = movement = Vector3(0,0,0);

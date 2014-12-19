@@ -1,6 +1,6 @@
 #include "VoxGrid.h"
 #include "projectMacros.h"
-#include "VoxControl.h"
+
 
 VoxGrid::VoxGrid(void)
 {
@@ -23,14 +23,16 @@ VoxGrid::VoxGrid(string ppmfile)
 void
 VoxGrid::Initialize(string PPMfileName)
 {
+	
 	flipped=false;
 	InitializeObject(PPMfileName,true);
 	SetTheZed();
 	Mode(NORMAL);
 	conXtor = new VoxControl();
 	conXtor->SetConnection(this);
+	conXtor->AddConnectable<TransformPointer>();
+	conXtor->GetConnected<TransformPointer>()->Initiator(new Transform());
 	
-	pUserData = (new Transform());
 //	this->AddConnectable<CTransform>(&conXtor->ConIDs[0]);
 //	this->GetConnected<CTransform>()->Initiator(new Transform());
 }
@@ -38,7 +40,7 @@ VoxGrid::Initialize(string PPMfileName)
 Transform*
 VoxGrid::extraTransform(void)
 {
-	return  (Transform*)pUserData;
+	return conXtor->GetConnected<TransformPointer>()->getTransform();
 }
 
 void

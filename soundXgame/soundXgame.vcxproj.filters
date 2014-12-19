@@ -497,6 +497,24 @@
     <Image Include="Modus Grau_64x64.png">
       <Filter>Resources\Textures</Filter>
     </Image>
+    <Image Include="kubismus.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech128-3channel.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech128-2.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech128-1.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech-2s.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech-2.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram31.cd" />

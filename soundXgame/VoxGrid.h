@@ -5,7 +5,7 @@
 #include "DataStructs.h"
 #include "IVoxelObject.h"
 #include "VoxControl.h"
-
+#include "Transform.h"
 //class VoxelInteractive : public IConnectable,public IInteractive
 //{
 //public:
@@ -42,9 +42,6 @@ public:
 		else
 			return (T*)this->vConXtor()->GetConnected<T>();
 	}
-
-
-
 };
 
 #endif
