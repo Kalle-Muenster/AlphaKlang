@@ -5,11 +5,11 @@
 
 MusicVox::MusicVox(void)
 {
-	Line[0].MINClampf= -25;
-	Line[0].MAXClampf= 100;
-	Line[0].threshold= 2;
-	Line[0].fallOff= 0.2;
-	sensitivity = 100;
+	Line[0].MINClampf= 0;
+	Line[0].MAXClampf= 50;
+	Line[0].threshold= 1;
+	Line[0].fallOff= 0.05;
+	sensitivity = 200;
 }
 
 bool
@@ -33,7 +33,7 @@ MusicVox::MotivatorFunction(float Motivator,int number)
 	switch(number)
 	{
 	case 0:
-		((VoxGrid*)this->Connection())->BumpFactor = (Motivator-4)/100;
+		((VoxGrid*)this->Connection())->BumpFactor = (Motivator/50);
 		break;
 	case 1:
 		

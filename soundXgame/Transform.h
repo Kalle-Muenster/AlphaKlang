@@ -1,7 +1,7 @@
 #ifndef _TRANSFORM_H_
 #define _TRANSFORM_H_
 
-#include "Connectable.h"
+//#include "Connectable.h"
 #include "DataStructs.h"
 
 
@@ -111,7 +111,7 @@ protected:
 	float MAX_SPEED,MIN_SPEED;
 public:
 	Vector3 movement;			// movement is a relative position and shows the difference to the last frame -> it's the Object's moving direction * speed
-	ControlledFloat speed;				// moving-speed
+	ControlledFloat speed;		// moving-speed
 	float depth;				// amount of matter per qm... 1 means 1Kg per 1m^3
 	float thickness;			// the thicker the harder... 1 means indistructable, 0 means cookie
 
@@ -126,13 +126,12 @@ class ITransform :
 	IDirection,
 	IPhysic
 {
-private:
+public:
 	ITransform(void);
 	virtual ~ITransform(void);
-public:
 	bool IsDirty(void);
 	void SetClean(void);
-
+const static ITransform* const Zero; 
 };
 
 #endif

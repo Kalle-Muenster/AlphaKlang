@@ -103,27 +103,22 @@ IConnectable::getTransform(void)
 }
 
 
-CTransform::CTransform(void)
+TransformPointer::TransformPointer(void)
 {
 }
 
 
-CTransform::~CTransform(void)
+TransformPointer::~TransformPointer(void)
 {
 }
 
 
-//
-//void
-//CTransform::Initiator(void)
-//{
-//	
-//}
+
 
 
 
 Transform*
-CTransform::getTransform(void)
+TransformPointer::getTransform(void)
 {
 	Transform* returner = new Transform();
 	returner->position = this->Connection()->getTransform()->position + this->Connection()->getTransform()->position;
@@ -133,8 +128,26 @@ CTransform::getTransform(void)
 	return returner;
 }
 
-CTransform::operator Transform*(void)
+TransformPointer::operator Transform*(void)
 {
 	return this->getTransform();
 }
 
+
+cTransform::cTransform(void)
+{
+
+}
+
+cTransform::~cTransform(void)
+{
+
+}
+
+bool
+cTransform::Initialize(void)
+{
+//	this->testTransform = *ITransform::Zero;
+//	this->useTestTransform = false;
+	return	true;
+}

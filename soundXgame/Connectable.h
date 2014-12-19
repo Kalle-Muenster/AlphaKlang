@@ -2,8 +2,8 @@
 #define _CONNECTABLE_H_
 
 #include "IGObject.h"
+#include "Transform.h"
 
-//class IGObject;
 struct Transform;
 
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
@@ -242,21 +242,31 @@ public:
 	
 };
 
+class cTransform :
+	public IConnectable,
+	public Transform
+{
+public:
+//	bool useTestTransform;
+//	ITransform testTransform;
+	cTransform(void);
+	virtual ~cTransform(void);
+	virtual bool Initialize(void);
+};
 
-
-class CTransform : 
+class TransformPointer : 
 	public IConnectable
 {
 private:
 	Transform* transform;
 
 public:
-	CTransform(void);
+	TransformPointer(void);
 	virtual void Initiator(Transform* origin)
 	{
 		transform = origin;
 	}
-	virtual ~CTransform(void);
+	virtual ~TransformPointer(void);
 	virtual Transform* getTransform(void);
 	virtual operator Transform*();
 };

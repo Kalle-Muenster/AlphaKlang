@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\Build\Win32\VC10\Release;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -55,7 +55,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32.lib;BASS_DSHOW.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32.lib;BASS_DSHOW.lib;tags.lib;xerces-c_3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -272,8 +272,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="CubusX_256.bmp" />
+    <Image Include="Deckelblech-2.png" />
+    <Image Include="Deckelblech-2s.png" />
+    <Image Include="Deckelblech128-1.png" />
+    <Image Include="Deckelblech128-2.png" />
+    <Image Include="Deckelblech128-3channel.png" />
     <Image Include="Der Blaue Dunst.png" />
     <Image Include="framen_1920x1080.png" />
+    <Image Include="kubismus.png" />
     <Image Include="Modus Grau_512x512.png" />
     <Image Include="Modus Grau_64x64.png" />
     <Image Include="Q2-shiny.png" />

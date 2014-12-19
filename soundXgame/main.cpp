@@ -8,9 +8,12 @@
 #include "GuiObject.h"
 #include "FogMachine.h"
 
+#include <xercesc\dom\DOM.hpp>
+#include <xercesc\framework\LocalFileInputSource.hpp>
 
 #include "MusicInteractor.h"
 #include "MusicScaler.h"
+#include "Transform.h"
 
 //Global Declerations:
 int wnd;
@@ -142,9 +145,10 @@ void LoadContent(void)
 	//i3 = 1;
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
-	//AUDIO->Volume(0.01);
-	//AUDIO->Play();
+
+//	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+//	AUDIO->Play();
+//	AUDIO->BackgroundMusicVolume(0.1);
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
@@ -166,7 +170,7 @@ void LoadContent(void)
 
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
-
+		
 
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
@@ -266,7 +270,7 @@ void LoadContent(void)
 	AUDIO->Play();
 	// Music Cube
 
-	(new Cubus("Deckelblech-2s.png"))->SetName("muckubus");
+	(new Cubus("kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(0)->threshold = 1.5;
@@ -285,7 +289,7 @@ void LoadContent(void)
 	{
 		x-=((float)i);
 		z+=(2.f*(float)i/15.0f);
-		obj = (new Sphere("cylinder_quads.obi","Deckelblech-2s.png"))->GetID();
+		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
@@ -321,8 +325,12 @@ void LoadContent(void)
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
-	//AUDIO->Volume(0.8);
+
 	AUDIO->BackgroundMusicVolume(0.95);
+
+	//AUDIO->Volume(1);
+	
+
 }
 
 
