@@ -1,4 +1,4 @@
-![](https://lh4.googleusercontent.com/pNb9n4t7FffyjXCUJzxlcCUpRtK2iI8wzOrqnwxhM5uRtyrwLKeGkLMcveZeC6sGdMAVQBsowjI=w1349-h973)
+![](https://github.com/KallePower/ProjectMappe/blob/development/soundXgame/codefreaks_black.jpg)
 std::cout << Team Code Freaks << Programming by Kalle Münster and Dario D. Müller << std::endl
 
 Framework: Step One
