@@ -133,12 +133,24 @@ Vector3::direction(Vector3 to)
 }
 
 Vector3
-Vector3::normal(void)
+Vector3::normalized(void)
 {
 	return glm::normalize(glm::vec3(x,y,z));
 }
 
-
+GLfloat &
+Vector3::operator[](int index)
+{
+	switch(index)
+	{
+	case 0:
+		return x;
+	case 1:
+		return y;
+	case 2:
+		return z;
+	}
+}
 
 
 

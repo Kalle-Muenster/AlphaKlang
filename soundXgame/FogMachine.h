@@ -15,11 +15,13 @@ class FogMachine :
 		List<Sprite*,MAXIMUM_NUMBER_OF_PARTICLES> fogs;
 		Texture texture;
 		bool particlesAlwaysFaceCamera;
+		GLuint textureIDs[3];
 	public:
-		FogMachine(void);
+		FogMachine(string);
 	//	virtual void InitializeObject(void);
 		virtual ~FogMachine(void);
 
+		GLuint SellectParticleImage(void);
 		float varianz;
 		float accselleration;
 		float emittingAngle;

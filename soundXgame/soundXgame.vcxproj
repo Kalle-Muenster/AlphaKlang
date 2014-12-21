@@ -192,7 +192,7 @@
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
     <None Include="ich.ppm" />
-    <None Include="Modus Grau.ppm" />
+    <None Include="Modus Grau_128x128.ppm" />
     <None Include="sphere_quads_high.obi" />
     <None Include="sphere_quads_low.obi" />
     <None Include="sphere_tris_high.obi" />
@@ -279,6 +279,7 @@
     <Image Include="Deckelblech128-3channel.png" />
     <Image Include="Der Blaue Dunst.png" />
     <Image Include="framen_1920x1080.png" />
+    <Image Include="grau_128x128.png" />
     <Image Include="kubismus.png" />
     <Image Include="Modus Grau_512x512.png" />
     <Image Include="Modus Grau_64x64.png" />

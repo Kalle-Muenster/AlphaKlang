@@ -154,10 +154,10 @@ void LoadContent(void)
 	Ground* ground = Ground::getInstance();
 	//Framen = new Sprite("framen_1920x1080.png");
 	
-	Fountain* fountain = new Fountain();
-	fountain->SetPosition(Vector3(-40, 0, 0));
-	fountain->size = 50;
-	fountain->createRange();
+	//Fountain* fountain = new Fountain();
+	//fountain->SetPosition(Vector3(-40, 0, 0));
+	//fountain->size = 50;
+	//fountain->createRange();
 
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
@@ -315,9 +315,9 @@ void LoadContent(void)
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
 
-	//(new FogMachine())->SetName("DasNebel");
-	//SCENE->Object("DasNebel")->move(10,0,5);
-	//((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
+	(new FogMachine("grau_128x128.png"))->SetName("DasNebel");
+	SCENE->Object("DasNebel")->move(10,0,5);
+	((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);

@@ -10,6 +10,7 @@
 
 IMeshObject::IMeshObject(void)
 {
+	angle = 0.0f;
 	this->transform.scale = Vector3(1,1,1);
 	transform.right	  = glm::vec3(1,0,0);
 	transform.up	  = glm::vec3(0,1,0);
@@ -180,6 +181,14 @@ IMeshObject::rotate(float toiX,float toYps,float toZed)
 	return  getTransform()->rotation;
 }
 
+Vector3
+IMeshObject::rotate(float rotationAngle,Vector3 axis)
+{
+	angle = rotationAngle;
+	rotate(axis.x,axis.y,axis.z);
+	return getTransform()->rotation;
+}
+
 void
 IMeshObject::draw(void)
 {
@@ -219,10 +228,14 @@ IMeshObject::draw(void)
 		glTranslatef(x, y, z);
 
 		// Rotate
-		glRotatef(getTransform()->rotation.x, 1, 0, 0);
-		glRotatef(getTransform()->rotation.y, 0, 1, 0);
-		glRotatef(getTransform()->rotation.z, 0, 0, 1);
-
+		if(angle==0)
+		{
+			glRotatef(getTransform()->rotation.x, 1, 0, 0);
+			glRotatef(getTransform()->rotation.y, 0, 1, 0);
+			glRotatef(getTransform()->rotation.z, 0, 0, 1);
+		}
+		else
+			glRotatef(angle,getTransform()->rotation.x,getTransform()->rotation.y,getTransform()->rotation.z);
 		// Scale
 		glScalef(getTransform()->scale.x,getTransform()->scale.y,getTransform()->scale.z);
 		

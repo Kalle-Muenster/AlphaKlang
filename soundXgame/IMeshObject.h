@@ -76,6 +76,8 @@ protected:
 	std::vector<glm::vec3>	norms;
 	Vector3					Pivot;
 
+	float					angle;
+
 public:
 	data32				color;
 	virtual Texture*  	GetTexture(void);
@@ -95,6 +97,7 @@ public:
 	virtual Vector3		move(float,float,float);
 	virtual Vector3		rotate(Vector3);
 	virtual Vector3		rotate(float,float,float);
+	virtual Vector3		rotate(float rotationAngle,Vector3 axis);
 	virtual Vector3		scale(Vector3);
 	virtual Vector3		scale(float,float,float);
 	virtual void		draw(void);

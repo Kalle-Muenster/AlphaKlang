@@ -25,7 +25,7 @@ public:
 	float distance(Vector3);
 	float GetLength(void);
 	Vector3 direction(Vector3 to);
-	Vector3 normal(void);
+	Vector3 normalized(void);
 	BASS_3DVECTOR asBassVector(void);
 	operator BASS_3DVECTOR();
 	operator glm::vec3();
@@ -37,7 +37,7 @@ public:
 	Vector3 operator/(float);
 	void operator +=(Vector3);
 	void operator -=(Vector3);
-	
+	GLfloat& operator[](int); 
 };
 
 struct Vector4 : public Vector3

@@ -100,7 +100,7 @@
   <Class Name="IMeshObject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEAWIiA=</HashCode>
+      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEBWIiA=</HashCode>
       <FileName>IMeshObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -266,17 +266,10 @@
       <FileName>TestYeti.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Loader" Collapsed="true">
-    <Position X="29.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAQARAABAAAAAAAAAAAABCAUCAACAAA=</HashCode>
-      <FileName>Utility.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Utility" Collapsed="true">
     <Position X="29.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAIBABCAAAiAAAAgAEAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAIBABCAAAiAAAAgAEAAAAABAAABwAAAAAAAAA=</HashCode>
       <FileName>Utility.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -318,7 +311,7 @@
   <Struct Name="Vector3" Collapsed="true">
     <Position X="26.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEgAAAAAAIAAIAAABAAIAQgAAUAAAAQAAAFgAQAAAAA=</HashCode>
+      <HashCode>AUgAAAAAAIAAIAAABAAIAQAAAUEAAAQAAAFgAQAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>

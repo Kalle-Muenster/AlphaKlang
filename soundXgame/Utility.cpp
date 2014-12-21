@@ -2,6 +2,15 @@
 #include "projectGrafics.h"
 #include "Utility.h"
 
+Vector3
+Utility::GlobalX = Vector3(1,0,0);
+
+Vector3
+Utility::GlobalY = Vector3(0,1,0);
+
+Vector3
+Utility::GlobalZ = Vector3(0,0,-1);
+
 
 void _rotate90(float partOf90,float & a,float &b)
 {
@@ -21,12 +30,12 @@ u32_2s16_4b8::u32_2s16_4b8(int set)
 	this->u32 = set;
 }
 
-
 Loader::Loader(void)
 {
 	_w=_h=_length=0;
 	_Data = std::vector<u32_2s16_4b8>();
 }
+
 
 Loader::Loader(const char* filename)
 {
@@ -440,7 +449,7 @@ Utility::RandomVector3(void)
 Vector3
 Utility::RandomDirection(void)
 {
-	return Utility::RandomVector3().normal();
+	return Utility::RandomVector3().normalized();
 }
 
 Vector3

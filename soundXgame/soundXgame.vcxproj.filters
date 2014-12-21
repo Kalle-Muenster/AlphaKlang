@@ -518,6 +518,9 @@
     <Image Include="Q2_1872x516.png">
       <Filter>Resources\Textures</Filter>
     </Image>
+    <Image Include="grau_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram31.cd" />
@@ -567,11 +570,11 @@
     <None Include="tri_sphere.fbx">
       <Filter>Resources\Meshes</Filter>
     </None>
-    <None Include="Modus Grau.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
     <None Include="cylinder_quads.obi">
       <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="Modus Grau_128x128.ppm">
+      <Filter>Resources\Textures</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

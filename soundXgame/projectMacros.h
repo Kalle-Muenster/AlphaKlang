@@ -14,9 +14,11 @@
 #define DINGERBUFFERLENGTH (16384)
 #define CONTROLERPOLLINTERVAL (50)
 #define clrscr system("cls")
+#define M_PI 3.14159265358979323846
 
 #include <windows.h>
 #include <windef.h>
+
 
 
 /////////////////////////////////////////////////////////

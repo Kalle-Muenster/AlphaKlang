@@ -35,6 +35,7 @@ union u32_2s16_4b8
 
 typedef u32_2s16_4b8* LoaderColor;
 
+
 class Loader
 {
 private:
@@ -69,6 +70,9 @@ public:
 
 	static Vector3 GetScalevectorByAspect(int width,int height,float zDepth = 1.f);
 
+	static Vector3 GlobalX;
+	static Vector3 GlobalY;
+	static Vector3 GlobalZ;
 	 
 	static float GetRandom(void); // Returns values between 0 and 1
 	static float Random(void); //..and seeds rand before
