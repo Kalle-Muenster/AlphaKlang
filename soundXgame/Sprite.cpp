@@ -31,9 +31,7 @@ Sprite::Sprite(char* filename,bool addToScene)
 	transform.right = temp2;
 	transform.up = temp3;
 
-	//verts.push_back(glm::vec3(temp1.x,temp1.y,temp1.z));
-	//verts.push_back(glm::vec3(temp2.x,temp2.y,temp2.z));
-	//verts.push_back(glm::vec3(temp3.x,temp3.y,temp3.z));
+
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -73,15 +71,10 @@ Sprite::SetTexture(Texture* tex)
 void 
 Sprite::SetUp(string textureFile,bool backFace)
 {	
-	int i = -1;
-	while((++i<64)&&(textureFile[i]!='_'));
-	if(i<64)
-		sscanf(&textureFile[i],"_%ix%i.",&texture.w,&texture.h);
-		
 	LoadTexture(textureFile);
 	this->NoBackfaceCulling = backFace;
 
-	transform.scale =Utility::GetScalevectorByAspect(texture.w,texture.h);
+	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
 }
 
 void 
@@ -92,3 +85,4 @@ Sprite::SetUp(Texture texture,bool backFace)
 
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
 }
+

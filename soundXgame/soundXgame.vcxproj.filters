@@ -470,9 +470,6 @@
     <Image Include="q2_23.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="Q2-shiny.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <Image Include="CubusX_256.bmp">
       <Filter>Resources\Textures</Filter>
     </Image>
@@ -516,6 +513,9 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="Deckelblech-2.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Q2_1872x516.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>

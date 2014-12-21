@@ -18,7 +18,7 @@ public:
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
 	virtual void DoLate(void);
-	void SetUpdateCallback(UPDATE_TIME,UpdateCallback);
+	void SetUpdateCallback(UPdTIME,UpdateCallback);
 private:
 	UpdateCallback callbacks[3]; 
 };

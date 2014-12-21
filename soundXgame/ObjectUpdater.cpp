@@ -37,7 +37,7 @@ ObjectUpdater::DoLate(void)
 }
 
 void
-ObjectUpdater::SetUpdateCallback(UPDATE_TIME update,UpdateCallback callback)
+ObjectUpdater::SetUpdateCallback(UPdTIME update,UpdateCallback callback)
 {
 	if(update==EARLY)
 		UPDATE->SignInForEarlyUpdate(this);

@@ -6,17 +6,22 @@
 #define MAXIMUM_NUMBER_OF_UPDATECLIENTS (1000)
 //#define LATE_AFTER_DRAW
 
-typedef unsigned UpID;
+//typedef unsigned UpdateID;
+
+
+enum UPdTIME
+{EARLY=0,MAIN=1,LATE=2};
+
 struct UpdateID
 {
 	unsigned Main,Early,Late;
+	unsigned& operator[](UPdTIME); 
 };
 
 class IUpdateble
 {
 public:
-	enum UPDATE_TIME
-	{EARLY=0,MAIN=1,LATE=2};
+
 	UpdateID UpdID;
 	IUpdateble(void);
 	virtual void InitiateUpdatable(void);

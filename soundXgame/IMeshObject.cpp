@@ -14,7 +14,7 @@ IMeshObject::IMeshObject(void)
 	transform.right	  = glm::vec3(1,0,0);
 	transform.up	  = glm::vec3(0,1,0);
 	transform.forward = glm::vec3(0,0,1);
-	transform.speed=1.f;
+	transform.speed = 1.f;
 	this->color.u32 = 0xffffffff;
 	this->FaceShape = GL_TRIANGLES;
 	this->NoBackfaceCulling = false;
@@ -86,6 +86,11 @@ IMeshObject::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigne
 IGObject*
 IMeshObject::LoadTexture(const char* textureFile)
 {
+	int i = -1;
+	while((++i<64)&&(textureFile[i]!='_'));
+	if(i<64)
+		sscanf(&textureFile[i],"_%ix%i.",&texture.w,&texture.h);
+
 	this->texture.ID = Utility::loadTexture(textureFile);
 	UseTexture = true;
 	return this;
@@ -178,9 +183,6 @@ IMeshObject::rotate(float toiX,float toYps,float toZed)
 void
 IMeshObject::draw(void)
 {
-	//if(!IsVisible) // <- check already within SceneGraph
-		//return;
-	
 	if(!vertexBufferID)
 		return;
 
@@ -204,16 +206,13 @@ IMeshObject::draw(void)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	
-	//if(UseTexture)
-	//{
-		glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-	//}
+	glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
+	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
 	{
 		// Translate
-		GLfloat x  = getTransform()->position.x;
+		GLfloat x = getTransform()->position.x;
 		GLfloat z = getTransform()->position.z;
 		GLfloat y = getTransform()->position.y;
 		

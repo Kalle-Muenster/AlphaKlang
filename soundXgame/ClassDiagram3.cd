@@ -31,7 +31,7 @@
   <Class Name="BassAudio" Collapsed="true">
     <Position X="24.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GgAggAAAAAJEAAgAEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
+      <HashCode>GgAggAAAAALEAAgAEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -135,7 +135,7 @@
   <Class Name="MusicInteractor" Collapsed="true">
     <Position X="5.25" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AARAAAAAAAgAAAAAAAAAQAAAAAAACCAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AARAAAAAAAAAAAAAAAAAQAAAAAAACCAAAAAgEAAAAAA=</HashCode>
       <FileName>MusicInteractor.h</FileName>
       <NewMemberFileName>IMusicInteractor.h</NewMemberFileName>
     </TypeIdentifier>
@@ -264,20 +264,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAEAAAAAAAAAAkAAAAAAAACQAAAAAAAAhABA=</HashCode>
       <FileName>TestYeti.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IUpdateble" Collapsed="true">
-    <Position X="8.75" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAAAAAAAEICAAACAAAAAAAAACAAEAAA=</HashCode>
-      <FileName>UpdateManager.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UpdateManager" Collapsed="true">
-    <Position X="4.25" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAABAABAAEAAIAEAAAQAAAAJAQQAEAAAAAAAAA=</HashCode>
-      <FileName>UpdateManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Loader" Collapsed="true">

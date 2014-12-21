@@ -3,6 +3,8 @@
 
 #include "igobject.h"
 
+typedef char* string;
+
 struct Texture 
 {
 	enum class Format
@@ -12,6 +14,48 @@ struct Texture
 	GLint format;
 	void* pData;
 	void Loade(string fileName,short Width,short Height,Format textureFormat = Texture::Format::BGRA);
+};
+
+template<const int NUMBER_OF_FRAMES>  
+class MultilayerTexture
+	: public Texture
+{
+private:
+	GLuint frameIDs[NUMBER_OF_FRAMES];
+	unsigned short frameDurations[NUMBER_OF_FRAMES];
+	double timer;
+	int current;
+
+public:
+	MultilayerTexture(int fps = -1)
+	{
+		current = 0;
+		timer = 1000/fps;
+		 if(fps>0)
+		 {
+			 for(int i=0;i<NUMBER_OF_FRAMES;i++)
+				frameDurations[i]=timer;
+		 }
+	}
+	virtual ~MultilayerTexture(void){}
+	void LoadeFrames(string filenames[])
+	{
+		for(int i =0; i<NUMBER_OF_FRAMES ; i++)
+		{
+			frameIDs[i] = Utility::loadTexture(filenames[i]);
+		}
+	}
+	void UpdateFrame(void)
+	{
+		if((timer+=INPUT->FrameTime) > frameDurations[current])
+		{
+			timer=0;
+			if(++current==NUMBER_OF_FRAMES)
+				current=0;
+
+			ID=frameIDs[current];
+		}
+	}
 };
 
 class IMeshObject : 

@@ -46,7 +46,8 @@ _SignIn( // before it will check if the client already is in there...
 		 IUpdateble** InvokationList, 
 		 IUpdateble* client, 
 		 unsigned &CurrentAmountOnClients, 
-		 unsigned MaximumNumberOfClients 
+		 unsigned MaximumNumberOfClients,
+		 UPdTIME updateTime
 		 ){
 	int FirstEmptySlotFound = -1;
 	unsigned counter = 0;
@@ -66,7 +67,7 @@ _SignIn( // before it will check if the client already is in there...
 	if(FirstEmptySlotFound>=0)
 	{
 		InvokationList[FirstEmptySlotFound]=client;
-		InvokationList[FirstEmptySlotFound]->UpdID.Main = FirstEmptySlotFound;
+		InvokationList[FirstEmptySlotFound]->UpdID[updateTime] = FirstEmptySlotFound;
 		CurrentAmountOnClients++; 
 	}
 	else for(index = CurrentAmountOnClients; index < MaximumNumberOfClients ;index++)
@@ -74,7 +75,7 @@ _SignIn( // before it will check if the client already is in there...
 		if(InvokationList[index]==NULL)
 		{	
 			InvokationList[index]=client;
-			InvokationList[index]->UpdID.Main=index;
+			InvokationList[index]->UpdID[updateTime]=index;
 			CurrentAmountOnClients++; 
 			return;
 		}
@@ -86,19 +87,19 @@ _SignIn( // before it will check if the client already is in there...
 void
 UpdateManager::SignInForUpdate(IUpdateble* updatebleInstance)
 {
-	_SignIn(&_updates[0], updatebleInstance, _NumberOfUpdateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/2);
+	_SignIn(&_updates[0], updatebleInstance, _NumberOfUpdateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/2,MAIN);
 }
 
 void
 UpdateManager::SignInForEarlyUpdate(IUpdateble* updatebleInstance)
 {
-	_SignIn(&_earlyUpdates[0], updatebleInstance, _NumberOfEarlyClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4);
+	_SignIn(&_earlyUpdates[0], updatebleInstance, _NumberOfEarlyClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4,EARLY);
 }
 
 void
 UpdateManager::SignInForLateUpdate(IUpdateble* updatebleInstance)
 {
-	_SignIn(&_lateUpdates[0], updatebleInstance, _NumberOfLateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4);
+	_SignIn(&_lateUpdates[0], updatebleInstance, _NumberOfLateClients, MAXIMUM_NUMBER_OF_UPDATECLIENTS/4,LATE);
 }
 
 /* SignOut's:.... */
@@ -193,6 +194,23 @@ UpdateManager::DoTheLateUpdates(void)
   //////////////////////////
 /*  IUpdateble-functions:  */
  //////////////////////////
+
+unsigned&
+UpdateID::operator[](UPdTIME index)
+{
+	switch (index)
+	{
+	case UPdTIME::EARLY:
+		return Early;
+		break;
+	case UPdTIME::MAIN:
+		return Main;
+		break;
+	case UPdTIME::LATE:
+		return Late;
+		break;
+	}
+}
 
 IUpdateble::IUpdateble(void)
 {

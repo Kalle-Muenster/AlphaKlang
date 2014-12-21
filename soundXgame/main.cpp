@@ -170,8 +170,8 @@ void LoadContent(void)
 
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
-		
-
+	(new SpriteAnimation<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
+	SCENE->Object("Q2animated")->move(SCENE->camera->transform.position+SCENE->camera->transform.forward);
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
 	//press "R" to loade the sellected image as Image.
@@ -335,7 +335,7 @@ void LoadContent(void)
 
 
 
-GobID switcher=0;
+int switcher=0;
 
 //Main-Cycle:
 ////////////////////////////////////////////////////////
@@ -362,7 +362,6 @@ void UpdateCycle(void)
 	//data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
 	//printf("color: %i,%i,%i,%i\n",col.byte[1] ,col.byte[2] ,col.byte[3] ,col.byte[0] );
 	//___________________________________________________________
-
 
 
 	//Update:
