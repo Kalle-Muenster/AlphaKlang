@@ -126,7 +126,6 @@
       <Filter>UnderConstruction</Filter>
     </ClCompile>
     <ClCompile Include="ScreenOverlay.cpp" />
-    <ClCompile Include="FogMachine.cpp" />
     <ClCompile Include="GuiObject.cpp" />
     <ClCompile Include="MusicListener.cpp">
       <Filter>Core</Filter>
@@ -140,7 +139,9 @@
     <ClCompile Include="TestConectables.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -267,7 +268,6 @@
       <Filter>UnderConstruction</Filter>
     </ClInclude>
     <ClInclude Include="ScreenOverlay.h" />
-    <ClInclude Include="FogMachine.h" />
     <ClInclude Include="GuiObject.h" />
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
@@ -287,7 +287,10 @@
     <ClInclude Include="MusicController.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMover.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

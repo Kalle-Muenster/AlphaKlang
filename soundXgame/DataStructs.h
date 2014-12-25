@@ -80,6 +80,7 @@ public:
 	Vector3 cros(Vector3);
 	float distance(Vector3);
 	float GetLength(void);
+	float GetPowerOfLength(void);
 	Vector3 direction(Vector3 to);
 	Vector3 normalized(void);
 	BASS_3DVECTOR asBassVector(void);

@@ -182,8 +182,8 @@ public:
 
 									float timePoint = (P.time/lifetime) ;
 
-									particleSize = InitialSize + (timePoint * 10);
-									particleAlphaValue = ((1-timePoint)*color.byte[0])/255;
+									particleSize = InitialSize + ((1.f-timePoint) * 10);
+									particleAlphaValue = ((timePoint)*color.byte[0])/255;
 									particlePosition = P.position;
 									particleFaceDirection = particlePosition.direction(SCENE->camera->transform.position);
 									particleRotationAxis = Utility::GlobalZ.cros(particleFaceDirection);

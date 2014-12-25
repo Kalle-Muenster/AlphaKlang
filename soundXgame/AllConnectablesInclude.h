@@ -14,3 +14,4 @@
 #include "Combiner.h"
 #include "IObserver.h"
 #include "TestConectables.h"
+#include "ObjectMover.h"

@@ -149,6 +149,12 @@ Vector3::GetLength(void)
 	return sqrtf(pow(x,2)+pow(y,2)+pow(z,2));
 }
 
+float
+Vector3::GetPowerOfLength(void)
+{
+   return (pow(x,2)+pow(y,2)+pow(z,2));
+}
+
 
 float
 Vector3::distance(Vector3 to)

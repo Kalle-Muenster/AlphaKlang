@@ -6,7 +6,6 @@
 #include "Musikubus.h"
 #include "ScreenOverlay.h"
 #include "GuiObject.h"
-#include "FogMachine.h"
 #include "ParticleSystem.h"
 
 
@@ -330,13 +329,20 @@ void LoadContent(void)
 	//(new FogMachine(particleImages))->SetName("DasNebel");
 	//SCENE->Object("DasNebel")->move(0,3,0);
 	//SCENE->Object("DasNebel")->IsGrounded(false);
-	(new ParticleSystem<500>("particle1_128x128.png"));
+	(new ParticleSystem<500>("particle4_128x128.png"));
+	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
+	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
+	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
+	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
+	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->IsActive = true;
 	SCENE->Object("ParticleSystem")->IsGrounded(false);
-	SCENE->Object("ParticleSystem")->move(-60,0,20);
+	SCENE->Object("ParticleSystem")->move(0,0,0);
 	SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
-	SCENE->Object("ParticleSystem")->scale(2,2,0);
-	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(255,255,255,50);
+	SCENE->Object("ParticleSystem")->scale(4,4,0);
+	SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
+	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(255,255,255,25);
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsActive(true);
+
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));

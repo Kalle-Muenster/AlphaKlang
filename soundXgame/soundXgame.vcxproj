@@ -84,7 +84,6 @@
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="FirstPerson.cpp" />
-    <ClCompile Include="FogMachine.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
     <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FountainObject.cpp" />
@@ -138,7 +137,6 @@
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="Cubus.h" />
     <ClInclude Include="FirstPerson.h" />
-    <ClInclude Include="FogMachine.h" />
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FountainObject.h" />
@@ -159,6 +157,7 @@
     <ClInclude Include="MusicVox.h" />
     <ClInclude Include="Musikubus.h" />
     <ClInclude Include="ObjectManagement.h" />
+    <ClInclude Include="ObjectMover.h" />
     <ClInclude Include="ObjectUptater.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Perceptor.h" />
