@@ -9,7 +9,63 @@
 
 typedef char* string;
 
+struct Texture 
+{
+	enum class Format
+	{DUAL=1,GRAY=16,RGB=24,RGBA=GL_RGBA,BGRA=GL_BGRA_EXT,ABGR=GL_ABGR_EXT};
+	GLuint ID;
+	short w,h;
+	GLint format;
+	void* pData;
+	void Loade(string fileName,short Width,short Height,Format textureFormat = Texture::Format::BGRA);
+};
 
+template<const int NUMBER_OF_FRAMES>  
+class MultilayerTexture
+	: public Texture
+{
+private:
+	GLuint frameIDs[NUMBER_OF_FRAMES];
+	unsigned short frameDurations[NUMBER_OF_FRAMES];
+	double timer;
+	int current;
+
+public:
+	MultilayerTexture(int fps = -1)
+	{
+		current = 0;
+		timer = 1000/fps;
+		 if(fps>0)
+		 {
+			 for(int i=0;i<NUMBER_OF_FRAMES;i++)
+				frameDurations[i]=timer;
+		 }
+	}
+	virtual ~MultilayerTexture(void){}
+	void LoadeFrames(string filenames[])
+	{
+		for(int i =0; i<NUMBER_OF_FRAMES ; i++)
+		{
+			frameIDs[i] = Utility::loadTexture(filenames[i]);
+		}
+	}
+	void SetFrame(int frameNumber)
+	{
+		 current=frameNumber;
+		 ID = frameIDs[current];
+	}
+	void Animate(void)
+	{
+		if((timer+=INPUT->FrameTime) > frameDurations[current])
+		{
+			timer=0;
+			if(++current==NUMBER_OF_FRAMES)
+				current=0;
+
+			ID=frameIDs[current];
+		}
+	}
+};
 
 struct Vector3 
 {
@@ -30,13 +86,17 @@ public:
 	operator BASS_3DVECTOR();
 	operator glm::vec3();
 	bool operator==(Vector3);
+	bool operator==(float);
 	bool operator!=(Vector3);
+	bool operator!=(float);
 	Vector3 operator+(Vector3);
 	Vector3 operator-(Vector3);
 	Vector3 operator*(float);
 	Vector3 operator/(float);
 	void operator +=(Vector3);
 	void operator -=(Vector3);
+	void operator *=(float);
+	void operator /=(float);
 	GLfloat& operator[](int); 
 };
 

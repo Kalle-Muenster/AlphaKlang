@@ -48,6 +48,8 @@ Sprite::Sprite(Texture particle,bool addToScene)
 	SetName("particle");
 	if(!addToScene)
 		LockID();
+
+	SomeValue = 0;
 }
 
 
@@ -69,7 +71,7 @@ Sprite::Sprite(char* filename,bool addToScene)
 	glm::vec3 temp2 = glm::vec3(1,0,0);
 	glm::vec3 temp3 = glm::vec3(0,1,0);
 
-	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
+	transform.forward = temp1;
 	transform.right = temp2;
 	transform.up = temp3;
 
@@ -90,6 +92,8 @@ Sprite::Sprite(char* filename,bool addToScene)
 	SetName(filename);
 	if(!addToScene)
 		LockID();
+
+	SomeValue = 0;
 }
 
 
@@ -128,4 +132,20 @@ Sprite::SetUp(Texture texture,bool backFace)
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
 }
 
+void
+Sprite::SetSomeValue(float value)
+{
+	this->SomeValue = value;
+}
 
+void 
+Sprite::draw(void)
+{
+	Transform temp = *getTransform();
+	for(int i = 0;i<3;i++)
+	{
+		IMeshObject::draw();
+		getTransform()->position.x-=2;
+	}
+	getTransform()->position = temp.position;
+}

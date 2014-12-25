@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-//A List of variables from type [ListMember] , with a maximum amount of [MAXIMUM_SIZE] 
+//A List of variables of type <ListMember> , with a maximum amount of <MAXIMUM_SIZE> 
 template<class ListMember,const unsigned MAXIMUM_SIZE> class List
 {
 public:
@@ -78,16 +78,16 @@ public:
 		}
 	}
 
-	// make the members accsessable by list[memberID]... 
+	//retrurn's a copy of the member at List[index] .. 
 	ListMember operator[](ListMemberID index)
 	{
 		return list[index];
 	}
 
-	// return the member at position [index] - (the memberID)...
-	ListMember at(ListMemberID index)
+	//retrieve's a pointer to the ListMember.at("index")...
+	ListMember* at(ListMemberID index)
 	{
-		return list[index];
+		return &list[index];
 	}
 
 	// Howmany members are contained in the list ?...

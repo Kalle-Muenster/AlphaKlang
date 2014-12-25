@@ -12,9 +12,9 @@ IMeshObject::IMeshObject(void)
 {
 	angle = 0.0f;
 	this->transform.scale = Vector3(1,1,1);
-	transform.right	  = glm::vec3(1,0,0);
-	transform.up	  = glm::vec3(0,1,0);
-	transform.forward = glm::vec3(0,0,1);
+	transform.right	  = Vector3(1,0,0);
+	transform.up	  = Vector3(0,1,0);
+	transform.forward = Vector3(0,0,-1);
 	transform.speed = 1.f;
 	this->color.u32 = 0xffffffff;
 	this->FaceShape = GL_TRIANGLES;
@@ -44,9 +44,10 @@ IMeshObject::LoadMesh(const char* objFileName,Vector3 positionOffset)
 	int count = verts.size();
 	for(int i = 0;i < count;i++)
 	{
-		verts.at(i).x += positionOffset.x;
-		verts.at(i).y += positionOffset.y;
-		verts.at(i).z += positionOffset.z;
+		verts.at(i) += (glm::vec3)positionOffset;
+		//verts.at(i).x += positionOffset.x;
+		//verts.at(i).y += positionOffset.y;
+		//verts.at(i).z += positionOffset.z;
 	}
 	this->DoObjBuffer();
 }
@@ -124,70 +125,45 @@ IMeshObject::SetTexture(Texture* tex)
 Vector3
 IMeshObject::move(Vector3 to)
 {
-	return move(to.x,to.y,to.z);
+	getTransform()->movement += (to - getTransform()->position);
+	getTransform()->position = to;
+	return getTransform()->position;
 }
 
 Vector3
 IMeshObject::move(float tox, float toy, float toz)
 {
-	getTransform()->movement.x += (tox - getTransform()->position.x);
-	getTransform()->movement.y += (toy - getTransform()->position.y);
-	getTransform()->movement.z += (toz - getTransform()->position.z);
-
-	if(getTransform()->movement.x!=0||getTransform()->movement.y!=0||getTransform()->movement.z!=0)
-	{
-		getTransform()->position.x = tox;
-		getTransform()->position.y = toy;
-		getTransform()->position.z = toz;
-
-		#ifdef DEBUG_OUTPUT_MESHOBJECTS
-			printf("\n%s - ID: %i Has Moved to %f,%f,%f !",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
-		#endif
-	}
-
-	return getTransform()->position;
+	return move(Vector3(tox,toy,toz));
 }
 
 Vector3
 IMeshObject::scale(Vector3 to)
 {
-	return scale(to.x,to.y,to.z);
+	getTransform()->scale = to;
+	return getTransform()->scale;
 }
 
 Vector3
 IMeshObject::scale(float X,float Y,float Z)
 {
-	getTransform()->scale.x=X;
-	getTransform()->scale.y=Y;
-	getTransform()->scale.z=Z;	
-	return getTransform()->scale;
+	return scale(Vector3(X,Y,Z));
 }
 
 Vector3
 IMeshObject::rotate(Vector3 to)
 {
-	rotate(to.x,to.y,to.z);
+	getTransform()->rotation = to;
+	getTransform()->forward = (to - getTransform()->position).normalized();
 	return getTransform()->rotation;
 }
 
 Vector3
 IMeshObject::rotate(float toiX,float toYps,float toZed)
 { 
-	getTransform()->rotation.x = toiX;
-	getTransform()->rotation.y = toYps;
-	getTransform()->rotation.z = toZed;
-
-	getTransform()->forward = (getTransform()->rotation - getTransform()->position);
-	return  getTransform()->rotation;
+	return rotate(Vector3(toiX,toYps,toZed));
 }
 
-Vector3
-IMeshObject::rotate(float rotationAngle,Vector3 axis)
-{
-	angle = rotationAngle;
-	rotate(axis.x,axis.y,axis.z);
-	return getTransform()->rotation;
-}
+
 
 void
 IMeshObject::draw(void)
@@ -220,24 +196,40 @@ IMeshObject::draw(void)
 
 	glPushMatrix();
 	{
-		// Translate
-		GLfloat x = getTransform()->position.x;
-		GLfloat z = getTransform()->position.z;
-		GLfloat y = getTransform()->position.y;
 		
-		glTranslatef(x, y, z);
+		Vector3 values = getTransform()->position;
 
-		// Rotate
-		if(angle==0)
+		//Grounding:
+		if(IsGrounded())
 		{
-			glRotatef(getTransform()->rotation.x, 1, 0, 0);
-			glRotatef(getTransform()->rotation.y, 0, 1, 0);
-			glRotatef(getTransform()->rotation.z, 0, 0, 1);
+			GLfloat *y = &getTransform()->position.y;
+			*y -= this->GroundValue;
+			this->GroundValue = GroundedWithPivot ? 
+								Ground::getInstance()->GetGroundY(values.x + Pivot.x * getTransform()->scale.x, values.z + Pivot.z * getTransform()->scale.z) 
+								:
+								Ground::getInstance()->GetGroundY(values.x, values.z);
+
+			*y += this->GroundValue;
 		}
-		else
-			glRotatef(angle,getTransform()->rotation.x,getTransform()->rotation.y,getTransform()->rotation.z);
-		// Scale
-		glScalef(getTransform()->scale.x,getTransform()->scale.y,getTransform()->scale.z);
+
+
+		// Translation:
+		glTranslatef(values.x, values.y, values.z);
+
+		// Rotation:
+		values = getTransform()->rotation;
+		if(angle==0) //by the transform's rotation-values as angles at their coresponding global-axis...
+		{
+			glRotatef(values.x, 1, 0, 0);
+			glRotatef(values.y, 0, 1, 0);
+			glRotatef(values.z, 0, 0, -1);
+		}
+		else // if angle is not zero, rotation will be aplied as rotation around an axis wich's defined by the transform's rotation-values.
+			glRotatef(angle,values.x,values.y,values.z);
+		
+		// Scaling:
+		values = getTransform()->scale;
+		glScalef(values.x,values.y,values.z);
 		
 		// Draw
 		glDrawArrays(FaceShape, 0, verts.size());
@@ -248,33 +240,5 @@ IMeshObject::draw(void)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void
-IMeshObject::DoLate(void)
-{
-	GLfloat x  = this->getTransform()->position.x;
-	GLfloat* y = &this->getTransform()->position.y;
-	GLfloat z = this->getTransform()->position.z;
 
-	*y -= this->GroundValue;
-	
-	if(GroundedWithPivot)
-	{
-		this->GroundValue = Ground::getInstance()->GetGroundY(x + Pivot.x * getTransform()->scale.x, z + Pivot.z * getTransform()->scale.z);
-	}
-	else
-	{
-		this->GroundValue = Ground::getInstance()->GetGroundY(x, z);
-	}
 
-	*y += this->GroundValue;
-}
-
-//Texture Struct:
-//############################################
-void Texture::Loade(string fileName,short Width,short Height,Format textureFormat)
-{
-	ID = Utility::loadTexture(fileName);
-	w = Width;
-	h = Height;
-	format=(int)textureFormat;
-}

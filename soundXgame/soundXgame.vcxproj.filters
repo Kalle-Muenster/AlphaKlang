@@ -140,6 +140,7 @@
     <ClCompile Include="TestConectables.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -286,6 +287,7 @@
     <ClInclude Include="MusicController.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -519,6 +521,15 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="grau_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="particle3_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="particle2_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="particle1_128x128.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>

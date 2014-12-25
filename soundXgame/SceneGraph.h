@@ -13,7 +13,7 @@ class SceneGraph
 {
 private:
 	SceneGraph(void);
-	List<IGObject*,MAXIMUM_SXCENE_OBJECT> *drawables;
+	List<IGObject*,MAXIMUM_SXCENE_OBJECT> drawables;
 	float r,g,b;
 	void UpdateSky(void);
 
@@ -46,7 +46,7 @@ public:
 	Cam* camera;
 
 	// Find an object by it's name...
-	IGObject* Object(const char* name);  
+	IGObject* Object(char* name);  
 
 	// Find an object by it's ID...
 	IGObject* Object(unsigned int ID);

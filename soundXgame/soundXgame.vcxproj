@@ -104,6 +104,7 @@
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="ObjectUpdater.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Musikubus.h" />
     <ClInclude Include="ObjectManagement.h" />
     <ClInclude Include="ObjectUptater.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Perceptor.h" />
     <ClInclude Include="projectClasses.h" />
     <ClInclude Include="projectGrafics.h" />
@@ -283,6 +285,9 @@
     <Image Include="kubismus.png" />
     <Image Include="Modus Grau_512x512.png" />
     <Image Include="Modus Grau_64x64.png" />
+    <Image Include="particle1_128x128.png" />
+    <Image Include="particle2_128x128.png" />
+    <Image Include="particle3_128x128.png" />
     <Image Include="Q2_1872x516.png" />
     <Image Include="q2_23.png" />
     <Image Include="testbild_1600x900.png" />

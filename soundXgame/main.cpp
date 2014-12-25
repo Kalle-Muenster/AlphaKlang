@@ -7,6 +7,8 @@
 #include "ScreenOverlay.h"
 #include "GuiObject.h"
 #include "FogMachine.h"
+#include "ParticleSystem.h"
+
 
 #include <xercesc\dom\DOM.hpp>
 #include <xercesc\framework\LocalFileInputSource.hpp>
@@ -60,6 +62,7 @@ int main(int argc,char** argv)
 
 int prepareForExit(void)
 {
+	glutExit();
 	//deletions:
 	ProjectMappe::GlobalDestructor();
 	//delete analyzer;
@@ -68,7 +71,7 @@ int prepareForExit(void)
 	delete guiding;
 	font = NULL;
 	delete font;
-	glutExit();
+	
 	return EXIT_SUCCESS;
 }
 
@@ -137,9 +140,10 @@ void LoadContent(void)
 	
 	//guiding = new GuiObject();
 	//guiding->LoadTexture("testbild_1600x900.png");
-
+	
 	AUDIO->Set3D_DopplerFXFactor(0.25f);
 	AUDIO->Set3D_DistanceFactor(0.75f);
+	AUDIO->Volume(0);
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
@@ -171,7 +175,7 @@ void LoadContent(void)
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
 	(new SpriteAnimation<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
-	SCENE->Object("Q2animated")->move(SCENE->camera->transform.position+SCENE->camera->transform.forward);
+	SCENE->Object("Q2animated")->move(0,0,0);
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
 	//press "R" to loade the sellected image as Image.
@@ -204,15 +208,18 @@ void LoadContent(void)
 	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->LoadeSample("mp3/10-Nanopad.mp3");
 	SCENE->Object("AUDIO02")->move(8,0,-2);
 	SCENE->Object("AUDIO02")->AddConnectable<MusicScaler>();
+	SCENE->Object("AUDIO02")->IsGrounded(true);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("mp3/11-Audio.mp3");
 	SCENE->Object("AUDIO03")->move(12,0,-2);
 	SCENE->Object("AUDIO03")->AddConnectable<MusicScaler>();
+	SCENE->Object("AUDIO03")->IsGrounded(true);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO04");
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->LoadeSample("mp3/18-Audio.mp3");
 	SCENE->Object("AUDIO04")->move(20,0,-2);
+	SCENE->Object("AUDIO04")->IsGrounded(true);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO05");
 	SCENE->Object("AUDIO05")->GetConnected<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
@@ -315,22 +322,35 @@ void LoadContent(void)
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
 
-	(new FogMachine("grau_128x128.png"))->SetName("DasNebel");
-	SCENE->Object("DasNebel")->move(10,0,5);
-	((FogMachine*)SCENE->Object("DasNebel"))->MachDampf();
+	string particleImages[3];
+	particleImages[0] = "particle1_128x128.png";
+	particleImages[1] = "particle2_128x128.png";
+	particleImages[2] = "particle3_128x128.png";
 
+	//(new FogMachine(particleImages))->SetName("DasNebel");
+	//SCENE->Object("DasNebel")->move(0,3,0);
+	//SCENE->Object("DasNebel")->IsGrounded(false);
+	(new ParticleSystem<500>("particle1_128x128.png"));
+	SCENE->Object("ParticleSystem")->IsGrounded(false);
+	SCENE->Object("ParticleSystem")->move(-60,0,20);
+	SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
+	SCENE->Object("ParticleSystem")->scale(2,2,0);
+	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(255,255,255,50);
+	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsActive(true);
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);
-	SCENE->camera->SetTarget(SCENE->Object("AUDIO01"));
+	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
+	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
+	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
 
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
 
 	AUDIO->BackgroundMusicVolume(0.95);
 
-	//AUDIO->Volume(1);
+	AUDIO->Volume(1);
 	
-
+	
 }
 
 
@@ -471,9 +491,12 @@ void keyboardInput(unsigned char key,int x,int y)
 
 	if(key == 27) // ESC
 	{
-		//glutExit();
 		EXIT=true;
 	}
+
+	
+		
+
 	INPUT->registerKey(key);
 }
 

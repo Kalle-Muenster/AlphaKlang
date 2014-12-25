@@ -29,7 +29,7 @@ IGObject::IGObject(void)
 	
 	GroundValue = 0;
 	IsGrounded(false);
-	UpdateManager::getInstance()->SignInForLateUpdate(this);
+//	UpdateManager::getInstance()->SignInForLateUpdate(this);
 
 }
 
@@ -96,20 +96,62 @@ IGObject::IsGrounded(bool status)
 	_isGrounded = status;
 }
 
-void
-IGObject::DoLate(void)
+Vector3 
+IGObject::move(Vector3 m) 
 {
-	GLfloat x  = this->getTransform()->position.x;
-	GLfloat* y = &this->getTransform()->position.y;
-	GLfloat z = this->getTransform()->position.z;
-
-	if(IsGrounded())
+	getTransform()->movement = m - getTransform()->position;
+	getTransform()->position = m;
+	if(AlwaysFaceMovingdirection)
 	{
-		*y -= this->GroundValue;
-		this->GroundValue = Ground::getInstance()->GetGroundY(x, z);
-		*y += this->GroundValue;
+		Vector3 vec = getTransform()->movement.normalized();
+	    Vector3 axis = getTransform()->forward.cros(vec);
+		 
+		rotate(glm::acos(getTransform()->forward.dot(vec))/(M_PI/180.0),axis);
+		getTransform()->forward = vec;
 	}
+	return getTransform()->position;
 }
+
+Vector3 
+IGObject::rotate(Vector3 r) 
+{
+	getTransform()->rotation = r;
+	return getTransform()->rotation;
+}
+
+Vector3
+IGObject::rotate(float rotationAngle,Vector3 axis)
+{
+	angle = rotationAngle;
+	return rotate(axis);
+}
+
+Vector3 
+IGObject::scale(Vector3 s) 
+{
+	getTransform()->scale = s;
+	return getTransform()->scale;
+}
+
+Vector3 
+IGObject::move(float X,float Y,float Z)
+{
+	return move(Vector3(X,Y,Z));
+}
+
+Vector3 
+IGObject::rotate(float X,float Y,float Z)
+{
+	return rotate(Vector3(X,Y,Z));
+}
+
+Vector3 
+IGObject::scale(float X,float Y,float Z)
+{
+	return scale(Vector3(X,Y,Z));
+}
+
+
 
 
 

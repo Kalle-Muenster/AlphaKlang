@@ -3,60 +3,9 @@
 
 #include "igobject.h"
 
-typedef char* string;
 
-struct Texture 
-{
-	enum class Format
-	{DUAL=1,GRAY=16,RGB=24,RGBA=GL_RGBA,BGRA=GL_BGRA_EXT,ABGR=GL_ABGR_EXT};
-	GLuint ID;
-	short w,h;
-	GLint format;
-	void* pData;
-	void Loade(string fileName,short Width,short Height,Format textureFormat = Texture::Format::BGRA);
-};
 
-template<const int NUMBER_OF_FRAMES>  
-class MultilayerTexture
-	: public Texture
-{
-private:
-	GLuint frameIDs[NUMBER_OF_FRAMES];
-	unsigned short frameDurations[NUMBER_OF_FRAMES];
-	double timer;
-	int current;
 
-public:
-	MultilayerTexture(int fps = -1)
-	{
-		current = 0;
-		timer = 1000/fps;
-		 if(fps>0)
-		 {
-			 for(int i=0;i<NUMBER_OF_FRAMES;i++)
-				frameDurations[i]=timer;
-		 }
-	}
-	virtual ~MultilayerTexture(void){}
-	void LoadeFrames(string filenames[])
-	{
-		for(int i =0; i<NUMBER_OF_FRAMES ; i++)
-		{
-			frameIDs[i] = Utility::loadTexture(filenames[i]);
-		}
-	}
-	void UpdateFrame(void)
-	{
-		if((timer+=INPUT->FrameTime) > frameDurations[current])
-		{
-			timer=0;
-			if(++current==NUMBER_OF_FRAMES)
-				current=0;
-
-			ID=frameIDs[current];
-		}
-	}
-};
 
 class IMeshObject : 
 	public IGObject
@@ -97,11 +46,10 @@ public:
 	virtual Vector3		move(float,float,float);
 	virtual Vector3		rotate(Vector3);
 	virtual Vector3		rotate(float,float,float);
-	virtual Vector3		rotate(float rotationAngle,Vector3 axis);
 	virtual Vector3		scale(Vector3);
 	virtual Vector3		scale(float,float,float);
 	virtual void		draw(void);
-	virtual void		DoLate(void);
+
 
 };
 //class Kollective : 

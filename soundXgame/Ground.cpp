@@ -162,6 +162,7 @@ Ground::Ground(void) :
 
 Ground::~Ground(void)
 {
+	
 //	delete[] configMap;
 	delete[] heightMap;
 //	delete[] dynamicConfigMap;
@@ -402,8 +403,9 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	
-	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
+	float line0 = 1;
+	if(this->HasConnected<MusicController>())
+		line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
 	//std::cout << line0 << std::endl;
 
 	dynamicVal = line0 * 10;

@@ -1,6 +1,6 @@
 #include "DataStructs.h"
 #include "VoxelVector.h"
-//#include "Utility.h"
+#include "Utility.h"
 
 // Vector3 
 //##################################################
@@ -51,11 +51,25 @@ Vector3::operator==(Vector3 other)
 {
 	return (x==other.x && y==other.y && z==other.z);
 }
+
+bool 
+Vector3::operator==(float scalar)
+{
+	return (x==scalar && y==scalar && z==scalar);
+}
+
 bool
 Vector3::operator!=(Vector3 other)
 {
 	return !(*this==other);
 }
+
+bool
+Vector3::operator!=(float scalar)
+{
+	return (x!=scalar || y!=scalar || z!=scalar);
+}
+
 Vector3
 Vector3::operator+(Vector3 adder)
 {
@@ -89,6 +103,22 @@ Vector3::operator-=(Vector3 other)
 	x-=other.x;
 	y-=other.y;
 	z-=other.z;
+}
+
+void
+Vector3::operator*=(float scalar)
+{
+	x=x*scalar;
+	y=y*scalar;
+	z=z*scalar;
+}
+
+void
+Vector3::operator/=(float scalar)
+{
+	x=x/scalar;
+	y=y/scalar;
+	z=z/scalar;
 }
 
 float
@@ -280,3 +310,12 @@ Data64::Data64(void)
 	unionData32[1] = data32();
 }
 
+//Texture Struct:
+//############################################
+void Texture::Loade(string fileName,short Width,short Height,Format textureFormat)
+{
+	ID = Utility::loadTexture(fileName);
+	w = Width;
+	h = Height;
+	format=(int)textureFormat;
+}

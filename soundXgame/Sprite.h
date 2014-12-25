@@ -19,6 +19,8 @@ public:
 	Sprite(Texture,bool addToScene = true);
 	Sprite(void);
 	virtual ~Sprite(void);
+	void SetSomeValue(float);
+	virtual void draw(void);
 
 };
 

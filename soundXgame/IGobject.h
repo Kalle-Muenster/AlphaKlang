@@ -16,7 +16,7 @@ struct Vector3;
 typedef unsigned int GobID;
 typedef unsigned int ConID;
 
-class IGObject : public IUpdateble
+class IGObject //: public IUpdateble
 {
 private:
 	GobID ID;
@@ -44,12 +44,13 @@ public:
 	bool			IsVisible;
 	virtual void	draw(void)=0;
 	Transform*		getTransform(void);
-	virtual Vector3 move(float,float,float){return Vector3();}// =0;
-	virtual Vector3 rotate(float,float,float){return Vector3();}// =0;
-	virtual Vector3 scale(float,float,float){return Vector3();}// =0;
-	virtual Vector3 move(Vector3 m) {return move(m.x,m.y,m.z);};//=0;
-	virtual Vector3 rotate(Vector3 r) {return rotate(r.x,r.y,r.z);};//=0;
-	virtual Vector3 scale(Vector3 s) {return scale(s.x,s.y,s.z);};//=0;
+	virtual Vector3 move(Vector3 m);
+	virtual Vector3 rotate(Vector3 r);
+	virtual Vector3	rotate(float rotationAngle,Vector3 axis);
+	virtual Vector3 scale(Vector3 s);
+	virtual Vector3 move(float X,float Y,float Z);
+	virtual Vector3 rotate(float X,float Y,float Z);
+	virtual Vector3 scale(float X,float Y,float Z);
 	GobID			GetID(void);
 	char*			GetName(void);
 	void			SetName(char*);
@@ -57,13 +58,12 @@ public:
 	operator IConnectable();
 
 	float			SomeValue;
-
+	float			angle;
+	bool			AlwaysFaceMovingdirection;
 
 	// Ground
 	bool IsGrounded();
 	void IsGrounded(bool status);
-	virtual void DoLate(void);
-
 
 	template<typename T> T* AddConnectable(void)
 	{
@@ -104,16 +104,7 @@ public:
 		
 		
 	}
-	//void through(void)
-	//{
-	//	if(((Kollective*)conXtor)->checkFail())
-	//		return;
 
-	//	if(((Kollective*)theNext->conXtor)->through(GetID()))
-	//		((Kollective*)conXtor)->apear(this);
-	//	else 
-	//		theNext->through();
-	//}
 };
 
 

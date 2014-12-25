@@ -145,7 +145,6 @@ UpdateManager::DoTheUpdates(void)
 	{
 		if(_earlyUpdates[i]!=NULL)
 			{ _earlyUpdates[i]->DoEarly(); counter++; }
-
 		i++;
 	}
 
@@ -156,24 +155,10 @@ UpdateManager::DoTheUpdates(void)
 	{
 		if(_updates[i]!=NULL)
 			{ _updates[i]->DoUpdate(); counter++; }
-
 		i++;
 	}
-
-//#ifdef LATE_BEFOR_DRAW
-//#undef LATE_AFTER_DRAW
-//	i = counter = 0;
-//	while(counter<_NumberOfLateClients)
-//	{
-//		if(_lateUpdates[i]!=NULL)
-//			{ _lateUpdates[i]->DoLate(); counter++;	}
-//
-//		i++;
-//	}
-//#endif
 }
 
-//#ifdef LATE_AFTER_DRAW
 void 
 UpdateManager::DoTheLateUpdates(void)
 {
@@ -183,11 +168,10 @@ UpdateManager::DoTheLateUpdates(void)
 	{
 		if(_lateUpdates[i]!=NULL)
 			{ _lateUpdates[i]->DoLate(); counter++;	}
-
 		i++;
 	}
 }
-//#endif
+
 
 
 
