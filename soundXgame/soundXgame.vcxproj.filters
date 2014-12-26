@@ -139,9 +139,6 @@
     <ClCompile Include="TestConectables.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -281,16 +278,18 @@
     <ClInclude Include="MusicVox.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="MusicController.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectMover.h" />
+    <ClInclude Include="Utility.h">
+      <Filter>Core\RuntimeManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMover.h">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

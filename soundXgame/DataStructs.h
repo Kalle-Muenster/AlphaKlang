@@ -76,6 +76,7 @@ public:
 	Vector3(glm::vec3);
 	Vector3(BASS_3DVECTOR);
 	static const Vector3* const Zero;
+	static Vector3 zero;
 	float dot(Vector3);
 	Vector3 cros(Vector3);
 	float distance(Vector3);

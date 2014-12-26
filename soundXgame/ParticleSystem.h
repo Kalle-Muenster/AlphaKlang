@@ -3,17 +3,7 @@
 
 #include "sprite.h"
 
-class Particle
-{
-public:
-	Vector3 position;
-	Vector3 movement;
-	float time;
-	bool active;
-	void move(Vector3 to);
-	Particle(void);
-	~Particle(void);
-};
+
 
 template<const int NUMBER_OF_PARTICLES>
 class ParticleSystem :
@@ -22,16 +12,30 @@ class ParticleSystem :
 {
 private:
 
+	class Particle
+	{
+	public:
+		Vector3 position;
+		Vector3 movement;
+		float time;
+		Particle(void)
+		{
+			position = *Vector3::Zero;
+			movement = *Vector3::Zero;
+			time=0;
+		}
+		~Particle(void){};
+	};
 	List<Particle*,NUMBER_OF_PARTICLES>		particles;
 	Vector3									particlePosition;
-	Vector3									particleFaceDirection;
-	Vector3									particleRotationAxis;
 	Vector3									particleDirection;
+	Vector3									particleRotationAxis;
 	GLfloat									particleRotationAngel;
 	GLfloat									particleSize;
 	GLfloat									particleAlphaValue;
 	GLfloat									InitialSize;
 	GLfloat									InitialSpeed;
+
 
 	int										particlesEmitted;
 	void									particleDraw(void)
@@ -39,8 +43,8 @@ private:
 												 if(!vertexBufferID)
 													return;
 
-												glEnable(GL_CULL_FACE);
-												glCullFace(GL_BACK);
+											//	glEnable(GL_CULL_FACE);
+											//	glCullFace(GL_BACK);
 
 												if(UseTexture)
 												{
@@ -75,7 +79,7 @@ private:
 												}
 												glPopMatrix();
 
-												glDisable(GL_CULL_FACE);
+											//	glDisable(GL_CULL_FACE);
 												glDisable(GL_TEXTURE_2D);
 											}
 	void                                    Emmission(void)
@@ -87,7 +91,6 @@ private:
 													lastActivatedParticle=lastActivatedParticle==particles.Last()?particles.First():lastActivatedParticle+1;
 													particles[lastActivatedParticle]->movement = (particleDirection * (InitialSpeed * INPUT->FrameTime));
 													particles[lastActivatedParticle]->position = this->getTransform()->position + particles[lastActivatedParticle]->movement;
-													particles[lastActivatedParticle]->active = true;
 													timer = particles[lastActivatedParticle]->time = lifetime;
 													particlesEmitted++;
 												}
@@ -134,11 +137,12 @@ public:
 						for(int i = 0;i < NUMBER_OF_PARTICLES;i++)
 							 particles.Add(new Particle());
 
+						ValueChangeReleasepoint = 0.5f;
+						ParticlesChangeSize = ParticlesChangeAlpha = true;
 						particlePosition = *Vector3::Zero;
-						
+						particleSize = 1;
 						getTransform()->rotation = Vector3(1,0,0);
 						particleDirection = getTransform()->forward;
-						particleFaceDirection = *Vector3::Zero;
 						particleRotationAxis = *Vector3::Zero;
 						particleRotationAngel = 0.f;
 						InitialSize = 0.5f;
@@ -148,10 +152,10 @@ public:
 						lifetime=5;
 						emittingFrequency=0.01;
 						accselleration = 1.01f; 
-						
+						MaximumSize = 3;
 						varianz = 1.5f;
 						getTransform()->movement = *Vector3::Zero;
-						InitialSpeed = 5;
+						InitialSpeed = 7;
 					//	LoadTexture(particleTexture);
 						SetID(SCENE->Add(this));
 						SetName("ParticleSystem");
@@ -162,10 +166,11 @@ public:
 	virtual		   ~ParticleSystem(void)
 					{
 						for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
-						particles.Distruct(ID);
+							particles.Distruct(ID);
 					}
 	virtual void	draw(void)
 					{
+						Vector3 cameraDirection;
 						Particle P;
 						if(this->IsVisible)	
 							Emmission(); 
@@ -182,12 +187,36 @@ public:
 
 									float timePoint = (P.time/lifetime) ;
 
-									particleSize = InitialSize + ((1.f-timePoint) * 10);
-									particleAlphaValue = ((timePoint)*color.byte[0])/255;
+									if(ParticlesChangeSize)
+										particleSize = InitialSize + ((timePoint < ValueChangeReleasepoint) ? ((1-timePoint) * MaximumSize) : (timePoint * MaximumSize));
+
+									if(ParticlesChangeAlpha)
+										particleAlphaValue = ((timePoint)*color.byte[0])/255;
+
 									particlePosition = P.position;
-									particleFaceDirection = particlePosition.direction(SCENE->camera->transform.position);
-									particleRotationAxis = Utility::GlobalZ.cros(particleFaceDirection);
-									particleRotationAngel = glm::acos(Utility::GlobalZ.dot(particleFaceDirection))/(M_PI/180.0);
+									
+									cameraDirection = SCENE->camera->transform.position;
+									//cameraDirection.y = particlePosition.y;
+									if(particlePosition.x > cameraDirection.x)
+									{
+										cameraDirection = particlePosition.direction(cameraDirection);
+										particleRotationAngel = glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
+									}
+									else
+									{
+									  	cameraDirection = particlePosition.direction(cameraDirection);
+										particleRotationAngel = - glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
+									}
+
+					
+									particleRotationAxis = Utility::GlobalZ.cros(cameraDirection);
+
+								//	particleRotationAxis = Utility::GlobalY;
+							
+
+									//particleFaceDirection = particlePosition.direction(SCENE->camera->transform.position);
+								//	particleRotationAxis = Utility::GlobalZ.cros(particleFaceDirection);
+								//	particleRotationAngel = glm::acos(Utility::GlobalZ.dot(particleFaceDirection))/(M_PI/180.0);
 
 									particleDraw();
 							}
@@ -201,22 +230,20 @@ public:
 						}
    						//printf("particles: %i\n",particlesEmitted);
 					}
-			bool	IsActive(BOOL setter = 2)
-					{
-						if(setter<2)
-							IsVisible=setter;
-
-						return IsVisible;
-					}
-			float	varianz;
-			float	accselleration;
-			float	lifetime;
-			float	emittingFrequency;
 	virtual Vector3	rotate(Vector3 r)
 					{
 						return particleDirection = r.normalized();
 						return Sprite::rotate(r);
 					}
+			float	varianz;
+			float	accselleration;
+			float	lifetime;
+			float	emittingFrequency;
+			bool	ParticlesChangeSize;
+			bool	ParticlesChangeAlpha;
+			float	ValueChangeReleasepoint;
+			float	MaximumSize;
+
 	virtual void	DoUpdate(void)
 					{
 

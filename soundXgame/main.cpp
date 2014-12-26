@@ -332,8 +332,9 @@ void LoadContent(void)
 	(new ParticleSystem<500>("particle4_128x128.png"));
 	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
-	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
+	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
+	
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->IsActive = true;
 	SCENE->Object("ParticleSystem")->IsGrounded(false);
 	SCENE->Object("ParticleSystem")->move(0,0,0);
@@ -341,7 +342,7 @@ void LoadContent(void)
 	SCENE->Object("ParticleSystem")->scale(4,4,0);
 	SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(255,255,255,25);
-	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsActive(true);
+	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);

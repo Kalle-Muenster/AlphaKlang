@@ -103,7 +103,6 @@
     <ClCompile Include="Musikubus.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="ObjectUpdater.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Perceptor.cpp" />
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />

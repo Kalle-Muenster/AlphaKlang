@@ -2,13 +2,13 @@
 #include "projectGrafics.h"
 #include "Utility.h"
 
-Vector3
+Vector3	
 Utility::GlobalX = Vector3(1,0,0);
 
-Vector3
+Vector3	
 Utility::GlobalY = Vector3(0,1,0);
 
-Vector3
+Vector3	
 Utility::GlobalZ = Vector3(0,0,-1);
 
 
