@@ -109,7 +109,13 @@ IGObject::move(Vector3 m)
 		rotate(glm::acos(getTransform()->forward.dot(vec))/(M_PI/180.0),axis);
 		getTransform()->forward = vec;
 	}
+
+	#ifdef OBJECT_DEBUG_MESSAGES_ON
+		printf("OBJECT: %s-%i: moved to X: %f, Y: %f, Z: %f\n",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+	#endif
 	return getTransform()->position;
+
+
 }
 
 Vector3 

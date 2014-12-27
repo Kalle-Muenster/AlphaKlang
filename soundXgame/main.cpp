@@ -139,7 +139,7 @@ void LoadContent(void)
 	
 	//guiding = new GuiObject();
 	//guiding->LoadTexture("testbild_1600x900.png");
-	
+	INPUT->SetDoubleclickTime(400);
 	AUDIO->Set3D_DopplerFXFactor(0.25f);
 	AUDIO->Set3D_DistanceFactor(0.75f);
 	AUDIO->Volume(0);
@@ -149,8 +149,8 @@ void LoadContent(void)
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 
-//	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
-//	AUDIO->Play();
+	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+	AUDIO->Play();
 //	AUDIO->BackgroundMusicVolume(0.1);
 
 	// Gameplay Objects
@@ -179,19 +179,65 @@ void LoadContent(void)
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
 	//press "R" to loade the sellected image as Image.
 	//press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
-	VoxGrid* vObject = new VoxGrid("drei_.ppm");
-	vObject->AddConnectable<VoxControl>(); // <-- look keyInput-function for more detail...
-	vObject->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	vObject->AddConnectable<MusicVox>();
-	vObject->move(-80,0,150);
-	vObject->MainSizzes.x=0.2;
-	vObject->MainSizzes.y=0.045f;
+	//(new VoxGrid("drei_.ppm"))->SetName("plane_front");
+	//SCENE->Object("plane_front")->AddConnectable<VoxControl>();
+	//SCENE->Object("plane_front")->move(-80,0,150);
+	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.x=0.2;
+	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y=0.045f;
+//	SCENE->Object("plane_front")->GetConnected<VoxControl>()->Connection()->SetName("voxels");
+//	SCENE->Object("plane_front")->AddConnectable<MusicVox>()->sensitivity = 200;
 
-	GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
-	SCENE->Object(vox2)->SetName("VoxelPlane2");
-	SCENE->Object(vox2)->AddConnectable<VoxControl>();
-	SCENE->Object(vox2)->AddConnectable<MusicVox>();
-	((VoxGrid*)SCENE->Object(vox2))->flip(Vector3(1,0,0));
+
+	(new VoxGrid("FromDaCode"))->SetName("plane_front");
+	SCENE->Object("plane_front")->AddConnectable<VoxControl>();
+	SCENE->Object("plane_front")->move(-500,-250,-500);
+	((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.x = 1.f;
+	((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y = 2.f;
+	((VoxGrid*)SCENE->Object("plane_front"))->LoadeMap("drei_64x64.ppm",0);
+	SCENE->Object("plane_front")->AddConnectable<MusicVox>();
+
+	(new VoxGrid("FromDaCode"))->SetName("plane_rear");
+	SCENE->Object("plane_rear")->AddConnectable<VoxControl>();
+	SCENE->Object("plane_rear")->move(-500,-250,500);
+	((VoxGrid*)SCENE->Object("plane_rear"))->MainSizzes.x = 1.f;
+	((VoxGrid*)SCENE->Object("plane_rear"))->MainSizzes.y = 2.f;
+	((VoxGrid*)SCENE->Object("plane_rear"))->LoadeMap("drei_64x64.ppm",0);
+	SCENE->Object("plane_rear")->AddConnectable<MusicVox>();
+
+	(new VoxGrid("FromDaCode"))->SetName("plane_left");
+	SCENE->Object("plane_left")->AddConnectable<VoxControl>();
+	SCENE->Object("plane_left")->move(-500,-250,-500);
+	((VoxGrid*)SCENE->Object("plane_left"))->MainSizzes.x = 1.f;
+	((VoxGrid*)SCENE->Object("plane_left"))->MainSizzes.y = 2.f;
+	((VoxGrid*)SCENE->Object("plane_left"))->flip('z');
+	((VoxGrid*)SCENE->Object("plane_left"))->LoadeMap("drei_64x64.ppm",0);
+	SCENE->Object("plane_left")->AddConnectable<MusicVox>();
+
+	(new VoxGrid("FromDaCode"))->SetName("plane_right");
+	SCENE->Object("plane_right")->AddConnectable<VoxControl>();
+	SCENE->Object("plane_right")->move(-500,-250,500);
+	((VoxGrid*)SCENE->Object("plane_right"))->MainSizzes.x = 1.f;
+	((VoxGrid*)SCENE->Object("plane_right"))->MainSizzes.y = 2.f;
+	((VoxGrid*)SCENE->Object("plane_right"))->flip('z');
+	((VoxGrid*)SCENE->Object("plane_right"))->LoadeMap("drei_64x64.ppm",0);
+	SCENE->Object("plane_right")->AddConnectable<MusicVox>();
+
+	(new VoxGrid("FromDaCode"))->SetName("plane_top");
+	SCENE->Object("plane_top")->AddConnectable<VoxControl>();
+	SCENE->Object("plane_top")->move(-500,-500,500);
+	((VoxGrid*)SCENE->Object("plane_top"))->MainSizzes.x = 1.f;
+	((VoxGrid*)SCENE->Object("plane_top"))->MainSizzes.y = 2.f;
+	((VoxGrid*)SCENE->Object("plane_top"))->flip('y');
+	((VoxGrid*)SCENE->Object("plane_top"))->flipZ();
+	((VoxGrid*)SCENE->Object("plane_top"))->LoadeMap("drei_64x64.ppm",0);
+	SCENE->Object("plane_top")->AddConnectable<MusicVox>();
+
+
+	//GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
+	//SCENE->Object(vox2)->SetName("VoxelPlane2");
+	//SCENE->Object(vox2)->AddConnectable<VoxControl>();
+	//SCENE->Object(vox2)->AddConnectable<MusicVox>();
+	//((VoxGrid*)SCENE->Object(vox2))->flip();
 
 	
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
@@ -339,10 +385,11 @@ void LoadContent(void)
 	SCENE->Object("ParticleSystem")->IsGrounded(false);
 	SCENE->Object("ParticleSystem")->move(0,0,0);
 	SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
-	SCENE->Object("ParticleSystem")->scale(4,4,0);
+	SCENE->Object("ParticleSystem")->scale(7.5,7.5,0);
 	SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
-	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(255,255,255,25);
+	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
+	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
 
 	// Camera
 	SCENE->camera->Mode(FIRSTPERSON);

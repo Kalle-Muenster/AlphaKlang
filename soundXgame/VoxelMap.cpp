@@ -11,8 +11,7 @@ VoxelMap::VoxelMap(void)
 	
 	voxelSize = 10.0f;
 	scale=8.0f;
-	//position.x=100;
-	//position.y=100;
+	flipt=false;
 	size.x = 200;
 	size.y = 200;
 	BumpFactor=0.5;
@@ -107,7 +106,7 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 	voxels = (Voxel*)buffer;
 
 	if(filename == "FromDaCode")
-	{
+	{			
 	mapWidth = BLUOB_BLUE.width;
 	mapHeight = BLUOB_BLUE.height;
 	numberOfVoxelers=BLUOB_BLUE.width*BLUOB_BLUE.height;
@@ -123,14 +122,16 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 		for(int c=0;c<4;c++)
 			voxels[i].farb.Bytss[c] =  BLUOB_BLUE.pixel_data[I+c];
 
-		voxels[i].color = voxels[i].farb.s32;	
-		voxels[i].size.ix=voxels[i].size.yps=MainSizzes.y;
-		voxels[i].position.iX=(x*scale)+ *position.x;
-		voxels[i].position.Yps=(y*scale)+ *position.y;
-		voxels[i].MainDimensions = &MainSizzes;
-		voxels[i].factor=127;
-		if(x>0 && x<mapWidth && y>0 && y<mapHeight)
+			voxels[i].color = voxels[i].farb.s32;  ///????
+			voxels[i].factor=127;
+			voxels[i].size.ix=voxels[i].size.yps=MainSizzes.y;
+			voxels[i].position.iX=(x*scale)+ *position.x;
+			voxels[i].position.Yps=(y*scale)+ *position.y;
+			voxels[i].MainDimensions = &MainSizzes;
+			voxels[i].SetParentVoxmap(this);
+		if(x>0 && x<(mapWidth-1) && y>0 && y<(mapHeight-1))
 			voxels[i].SetNeighbours(voxels[(i-1)-mapWidth].color ,voxels[i-(mapWidth-1)].color,voxels[i+1+mapWidth].color,voxels[i+(mapWidth-1)].color);
+		voxels[i].factorPointer = &BumpFactor;
 		}
 		loaded=true;
 	}
@@ -167,11 +168,11 @@ void VoxelMap::Loade(const char* filename,void* buffer)
 				voxels[count].SetNeighbours(voxels[(count-1)-mapWidth].color ,voxels[count-(mapWidth-1)].color,voxels[count+1+mapWidth].color,voxels[count+(mapWidth-1)].color);
 			voxels[count].factorPointer = &BumpFactor;
 		}
-	
+		loaded=true;
 	}
 }
 
-void VoxelMap::LoadMap(char* filename,int channel)
+void VoxelMap::LoadeMap(char* filename,int channel)
 {
 	Loader* loader = new Loader(filename);
 	for(int i=0;i<loader->count();i++)
@@ -189,7 +190,7 @@ void VoxelMap::Draw(VectorPF position )
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
-				voxels[i].vDraw(position);
+				voxels[i].vDraw(position,flipt);
 	}
 
 	glEnd();
@@ -203,7 +204,7 @@ void VoxelMap::DrawBunt(VectorPF position)
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
-				voxels[i].vDrawBunt(position);
+				voxels[i].vDrawBunt(position,flipt);
 	}	
 	glEnd();
 }
@@ -215,7 +216,7 @@ void VoxelMap::DrawByte(VectorPF position)
 	{
 		for(int i = 0;i<numberOfVoxelers;i++)
 			if(voxels[i].factor==f)
-				voxels[i].vDrawByte(position);
+				voxels[i].vDrawByte(position,flipt);
 	}	
 	glEnd();
 }

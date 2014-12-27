@@ -84,6 +84,11 @@ Vector3::operator-(Vector3 subtractor)
 	return Vector3(x - subtractor.x,y - subtractor.y,z - subtractor.z);
 }
 Vector3
+Vector3::operator-(void)
+{
+	return Vector3(-x,-y,-z);
+}
+Vector3
 Vector3::operator*(float scalar)
 {
 	return Vector3(x*scalar,y*scalar,z*scalar);

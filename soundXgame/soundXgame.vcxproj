@@ -185,12 +185,19 @@
   <ItemGroup>
     <None Include="bluobbber.pix" />
     <None Include="bluobbber.ppm" />
+    <None Include="Bump_3.ppm" />
+    <None Include="Bump_5.ppm" />
+    <None Include="Bump_6.ppm" />
     <None Include="buntbild_128.ppm" />
     <None Include="ClassDiagram31.cd" />
+    <None Include="Color_1.ppm" />
+    <None Include="Color_3.ppm" />
+    <None Include="Color_4.ppm" />
     <None Include="cube_quads.obi" />
     <None Include="cube_tris.obi" />
     <None Include="drei.ppm" />
     <None Include="drei_.ppm" />
+    <None Include="drei_64x64.ppm" />
     <None Include="ich.ppm" />
     <None Include="Modus Grau_128x128.ppm" />
     <None Include="sphere_quads_high.obi" />

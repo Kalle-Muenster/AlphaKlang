@@ -659,9 +659,10 @@ public:
 	float voxelSize;
 	VectorF MainSizzes;
 	GLfloat BumpFactor;
+	char flipt;
 	void Loade(const char* filename,void*);
 	void ReLoade(char* filename);
-	void LoadMap(char* filename,int channel);
+	void LoadeMap(char* filename,int channel);
 	
 	void Draw(VectorPF position);
 	void DrawBunt(VectorPF position);

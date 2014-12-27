@@ -23,33 +23,25 @@ VoxGrid::VoxGrid(string ppmfile)
 void
 VoxGrid::Initialize(string PPMfileName)
 {
-	
-	flipped=false;
 	InitializeObject(PPMfileName,true);
-	SetTheZed();
+	SetTheZed(&this->getTransform()->position.z);
 	Mode(NORMAL);
 	conXtor = new VoxControl();
 	conXtor->SetConnection(this);
-	conXtor->AddConnectable<TransformPointer>();
-	conXtor->GetConnected<TransformPointer>()->Initiator(new Transform());
-	
-//	this->AddConnectable<CTransform>(&conXtor->ConIDs[0]);
-//	this->GetConnected<CTransform>()->Initiator(new Transform());
+	flipt = 'x';
 }
 
-Transform*
-VoxGrid::extraTransform(void)
-{
-	return conXtor->GetConnected<TransformPointer>()->getTransform();
-}
+
 
 void
-VoxGrid::SetTheZed(void)
+VoxGrid::SetTheZed(float *theOtherZed)
 {
 	int count = mapWidth*mapHeight;
 	for(int i=0;i<count;i++)
-		voxels[i].TheOtherZED = &this->getTransform()->position.z;
+		voxels[i].TheOtherZED = theOtherZed;
 }
+
+
 
 VoxGrid::~VoxGrid(void)
 {
@@ -59,24 +51,23 @@ VoxGrid::~VoxGrid(void)
 Transform*
 VoxGrid::getTransform(void)
 {
-	return flipped? extraTransform():&transform;
+	return IGObject::getTransform();
 }
 
 
-
+void 
+VoxGrid::flip(char direction)
+{
+	if(direction>'z')
+		flipt = 'x';
+	else
+		flipt = direction;
+}
 
 void 
-VoxGrid::flip(Vector3 direction)
+VoxGrid::flipZ(void)
 {
-	
-	Vector3 vec(getTransform()->position-direction+getTransform()->forward);
-	flipped = !flipped;
-	getTransform()->forward -= direction;
-	getTransform()->right = getTransform()->forward.cros(direction);
-	getTransform()->up = getTransform()->right.cros(direction);
-	getTransform()->position = vec;
-
-	SetTheZed();
+	SetTheZed(flipt? &getTransform()->position.x : &getTransform()->position.z);
 }
 
 //

@@ -5,7 +5,7 @@
 
 bool __ZedMode = false;
 float _YPS=0.01;
-string _files[5];
+string _files[6];
 
 
 VoxControl::VoxControl(void)
@@ -13,11 +13,17 @@ VoxControl::VoxControl(void)
 	timer = 0;
 	tempvector = *Vector3::Zero;
 	bumpmapchannel=0;
-		_files[0]="buntbild_128.ppm";
-		_files[1]="drei_.ppm";
-		_files[2]="ich.ppm";
-		_files[3]="tr.ppm";
-		_files[4]="bluobbber.ppm";
+		//_files[0]="buntbild_128.ppm";
+		//_files[1]="drei_.ppm";
+		//_files[2]="ich.ppm";
+		//_files[3]="tr.ppm";
+		//_files[4]="bluobbber.ppm";
+		_files[0]="Bump_6.ppm";
+		_files[1]="Bump_5.ppm";
+		_files[2]="Bump_3.ppm";
+		_files[3]="Color_1.ppm";
+		_files[4]="Color_3.ppm";
+		_files[5]="Color_4.ppm";
 		bumpmapchannel=0;
 		bumpmapIndex=0;
 		imageIndex=0;
@@ -72,7 +78,7 @@ VoxControl::keyPress(char key)
 	{
 		if(_lastKey!='l')
 		{
-			this->vConnection()->LoadMap(_files[bumpmapIndex=_currentSellection],bumpmapchannel);
+			this->vConnection()->LoadeMap(_files[bumpmapIndex=_currentSellection],bumpmapchannel);
 		printf("BumpMap file-\"%s\"-Channel %i geloadedt !\n",_files[_currentSellection],bumpmapchannel);
 		if(++bumpmapchannel>3)
 			bumpmapchannel=0;
@@ -114,6 +120,15 @@ VoxControl::keyPress(char key)
 			}
 			transparenseEnabled = !transparenseEnabled;
 			_lastKey='t';
+		}
+	}
+
+	if(key=='u')
+	{
+		if(_lastKey!='u')
+		{
+			this->vConnection()->flip(++this->vConnection()->flipt);
+			_lastKey='u';
 		}
 	}
 

@@ -33,9 +33,9 @@ public:
 	void SetSize(VectorF setter);
 	GLfloat* TheOtherZED;
 	void SetParentVoxmap(VoxelMap* map);
-	void vDraw(VectorPF offset);
-	void vDrawBunt(VectorPF offset);
-	void vDrawByte(VectorPF offset);
+	void vDraw(VectorPF offset,char flipt);
+	void vDrawBunt(VectorPF offset,char flipt);
+	void vDrawByte(VectorPF offset,char flipt);
 
 private:
 	int OL;

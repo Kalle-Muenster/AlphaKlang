@@ -6,18 +6,15 @@
 #include "IVoxelObject.h"
 #include "VoxControl.h"
 #include "Transform.h"
-//class VoxelInteractive : public IConnectable,public IInteractive
-//{
-//public:
-//	VoxelInteractive(void){};
-//	virtual ~VoxelInteractive(void){};
-//
-//	virtual void mouseMotion(int iX,int Yps)
-//	{
-//		this->Connection()->getTransform()->position.x = (float)iX;
-//		this->Connection()->getTransform()->position.y = (float)Yps;
-//	}
-//};
+
+
+ //struct VectorA
+ //{
+ // float &x;
+ // float &y;
+ // float &z;
+ //};
+
 
 
 
@@ -25,12 +22,15 @@ class VoxGrid :
 	public IVoxelObject
 {
 private:
-	bool flipped;
-	Transform* extraTransform(void); 
-	void SetTheZed(void);
+
+	void SetTheZed(float*);
 	void Initialize(string PPMfileName="FromDaCode");
+	Transform transform2;
+	
+
 public:
-	void flip(Vector3);
+	void flipZ(void);
+	void flip(char);
 	VoxGrid(void);
 	VoxGrid(string ppmFileName);
 	virtual ~VoxGrid(void);

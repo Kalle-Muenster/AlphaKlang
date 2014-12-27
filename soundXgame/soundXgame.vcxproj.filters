@@ -589,6 +589,27 @@
     <None Include="Modus Grau_128x128.ppm">
       <Filter>Resources\Textures</Filter>
     </None>
+    <None Include="Color_4.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Color_3.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Color_1.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Bump_6.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Bump_5.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Bump_3.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="drei_64x64.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="brumm_f32.txt">
