@@ -1,6 +1,5 @@
 #ifndef __SCENEGRAPH__
 #define __SCENEGRAPH__
-
 #define MAXIMUM_SXCENE_OBJECT (3000)
 typedef unsigned int GobID;
 typedef char* string;
@@ -19,7 +18,7 @@ private:
 
 public:
 	~SceneGraph(void);
-	static SceneGraph* GetInstance();
+	static SceneGraph* getInstance();
 	void DrawAll(void);
 	void DrawSky(void);
 

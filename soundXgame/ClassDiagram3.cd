@@ -62,7 +62,7 @@
   <Class Name="IConnectable" Collapsed="true">
     <Position X="6.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAIIgAACIAIUEwHACBIAAAgDAAACAAAAIBQFAAAAA=</HashCode>
+      <HashCode>AACAIIgAACIAIUEwHACBIAAAoDAAACAAAAIBQFAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -93,14 +93,14 @@
   <Class Name="IGObject" Collapsed="true">
     <Position X="2.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAAAECAAAAgAGSFA0FQA=</HashCode>
+      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAQAECAAAAgAGSFBwFQA=</HashCode>
       <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMeshObject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEBWIiA=</HashCode>
+      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEBSIiA=</HashCode>
       <FileName>IMeshObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -216,7 +216,7 @@
   <Class Name="SceneGraph" Collapsed="true">
     <Position X="6.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYQAAAAAgAIBAggAAAABAAABAEAEAAIAQABAIAQAAA=</HashCode>
+      <HashCode>AIYQAAAAAgAIBAggAAAABAAAAAEAEAQIAQABAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -283,14 +283,14 @@
   <Class Name="VoxelMap" Collapsed="true">
     <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAQIAAAAAEAAgABAIABICMCEUAAAAAAEAgAEAEAAAQ=</HashCode>
+      <HashCode>AEAQIAAAAAGAAgABAIgBICIAEUAAAAAQEAgAEAEAAAQ=</HashCode>
       <FileName>VoxelMap.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VoxGrid" Collapsed="true">
     <Position X="0.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAUBCAQAABAAAAgAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AEAAAAAAAAAAAUBCAQABBAACAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>VoxGrid.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -311,7 +311,7 @@
   <Struct Name="Vector3" Collapsed="true">
     <Position X="26.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AUgAAAAAAIAAIAAABAAIAQAAAUEAAAQAAAFgAQAAAAA=</HashCode>
+      <HashCode>AUgAAAAAAIAAIAAABAAJAQAAAUEAAAQIAAFgAQAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -348,13 +348,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="__unnamed_struct_0038_1" Collapsed="true">
-    <Position X="24.5" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAQAQAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>VoxelMap.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Typedef Name="ConID" Collapsed="true">

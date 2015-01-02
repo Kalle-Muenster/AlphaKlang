@@ -145,11 +145,11 @@ Vector3::cros(Vector3 other)
 }
 
 
-BASS_3DVECTOR
-Vector3::asBassVector(void)
-{
-	return BASS_3DVECTOR(x,y,z);
-}
+//BASS_3DVECTOR
+//Vector3::asBassVector(void)
+//{
+//	return BASS_3DVECTOR(x,y,z);
+//}
 
 float 
 Vector3::GetLength(void)
@@ -182,18 +182,19 @@ Vector3::normalized(void)
 	return glm::normalize(glm::vec3(x,y,z));
 }
 
-GLfloat &
+GLfloat* 
 Vector3::operator[](int index)
 {
-	switch(index)
-	{
-	case 0:
-		return x;
-	case 1:
-		return y;
-	case 2:
-		return z;
-	}
+	return ((GLfloat*)&this[index]);
+	//switch(index)
+	//{
+	//case 0:
+	//	return x;
+	//case 1:
+	//	return y;
+	//case 2:
+	//	return z;
+	//}
 }
 
 

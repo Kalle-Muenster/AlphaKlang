@@ -7,13 +7,14 @@
 int
 IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
 
+
 bool
 IConnectable::Not_hasInitialized(void)
 {
 	if(!this->_initialized)
 	{
 		for(int i=0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ; i++)
-		{	this->ConIDs[i] = 0; this->Connectables[i]=NULL;}
+		{	this->ConIDs[i] = EMPTY_SLOT; this->Connectables[i]=NULL;}
 		this->NumberOfConnectedObjects = 0;
 		this->current = -1;
 
@@ -22,7 +23,7 @@ IConnectable::Not_hasInitialized(void)
 	}
 
 		if(needOneMoreStartupCycle)
-			needOneMoreStartupCycle = this->Initialize();
+			needOneMoreStartupCycle = !this->Initialize();
 
 	return false;
 }
@@ -34,7 +35,7 @@ IConnectable::~IConnectable(void)
 	{
 		if(Connectables[i]!=NULL)
 		{
-			RemoveConnected<IConnectable>(i+1);
+			RemoveConnected<IConnectable>(i);
 			/*int index = 0;
 			while(Connectables[i]->GetNumberOfConnected()>0)
 			{
@@ -70,7 +71,7 @@ void
 IConnectable::setConnectables(int index,IConnectable* connectable)
 {
 	this->Connectables[index]=connectable;
-	this->ConIDs[index]=connectable->ConnectionID;
+	this->ConIDs[index]=this->ConnectionID + connectable->thisTypeHashCode;
 	this->needOneMoreStartupCycle = !connectable->Initialize();
 }
 

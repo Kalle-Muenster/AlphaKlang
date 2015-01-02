@@ -28,25 +28,25 @@ TargetGrabber::Mode(TargetGrabber::MODE value)
 		_mode=value;
 
 		for(int i=0;i<3;i++)
-			if(targetConnectedMode[i]!=0)
+			if(targetConnectedMode[i]!=EMPTY_SLOT)
 				camera->GetTarget()->GetConnected<IConnectable>(targetConnectedMode[i])->IsActive=false;
 	
 		switch (value)
 		{
 		case MODE::MOVE:
-			if(targetConnectedMode[0]!=NULL)
+			if(targetConnectedMode[0]!=EMPTY_SLOT)
 				camera->GetTarget()->GetConnected<CamTargetMover>(targetConnectedMode[0])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetMover>(&targetConnectedMode[0]);
 			break;
 		case MODE::ROTATE:
-			if(targetConnectedMode[1]!=NULL)
+			if(targetConnectedMode[1]!=EMPTY_SLOT)
 				camera->GetTarget()->GetConnected<CamTargetRotator>(targetConnectedMode[1])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetRotator>(&targetConnectedMode[1]);
 			break;
 		case MODE::SCALE:
-			if(targetConnectedMode[2]!=NULL)
+			if(targetConnectedMode[2]!=EMPTY_SLOT)
 				camera->GetTarget()->GetConnected<CamTargetScaler>(targetConnectedMode[2])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetScaler>(&targetConnectedMode[2]);
@@ -131,7 +131,7 @@ TargetGrabber::ReleaseTarget(void)
 		for(int i=0;i<3;i++)
 		{
 			camera->GetTarget()->Remove<IConnectable>(targetConnectedMode[i]);
-			targetConnectedMode[i]=0;
+			targetConnectedMode[i]=EMPTY_SLOT;
 		}
 	}
 	_firststart=false;

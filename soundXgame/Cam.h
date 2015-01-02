@@ -11,10 +11,10 @@
 enum CAM_MODE : int
 {
 	set = -1,
-	FOLLOWTARGET = 1,
-	FIRSTPERSON = 2,
-	SPECTATOR = 3,
-	TARGETGRABBER = 4
+	FOLLOWTARGET = 0,
+	FIRSTPERSON = 1,
+	SPECTATOR = 2,
+	TARGETGRABBER = 3
 };
 
 
@@ -42,7 +42,7 @@ public:
 		CameraMode* m;
 		for(int i = 0;i<NumberOfConnectedObjects;i++)
 		{
-			m = (CameraMode*)getConnectables(ConIDs[i]-1);
+			m = (CameraMode*)getConnectables(ConIDs[i]);
 			if(m->IsActive || m->IsDirty)
 			{	
 				m->UpdateMode();
@@ -63,12 +63,12 @@ public:
 	Not_hasInitialized();
 		
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(ConIDs[i] == 0)
+		if(ConIDs[i] == EMPTY_SLOT)
 		{
 			T::StaticCamModeID = i;
 			CameraMode* newcon = new T();
 			newcon->SetConnection(this);
-			newcon->ConnectionID = ConIDs[i] = i+1;
+			newcon->ConnectionID = ConIDs[i] = i;
 			newcon->ModeName = (char*)typeid(T).name();
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
@@ -80,12 +80,12 @@ public:
 
 	template<typename T> T* Get(ConID id)
 	{
-		return (T*)getConnectables(id-1);
+		return (T*)getConnectables(id);
 	}
 
 	template<typename T> T* GetCameraMode(void)
 	{
-		return (T*)getConnectables(T::StaticCamModeID-1);
+		return (T*)getConnectables(T::StaticCamModeID);
 	}
 
 };
@@ -123,7 +123,7 @@ public:
 	void					stopFollowing(void);
 	virtual void			WheelVRoll(WHEEL state);
 	Vector3					move(float x,float y,float z);
-	Vector3		   		    move(glm::vec3);
+	Vector3		   		    move(Vector3);
 	Vector3					rotate(float x,float y,float z);
 	Vector3			        rotate(Vector3);
 	bool				    ShareAudio(BOOL=3);

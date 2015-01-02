@@ -139,6 +139,7 @@
     <ClCompile Include="TestConectables.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
+    <ClCompile Include="SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -290,6 +291,7 @@
     <ClInclude Include="ObjectMover.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">

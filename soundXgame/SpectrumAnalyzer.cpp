@@ -143,7 +143,7 @@ SpectrumAnalyzer::draw(void)
 Vector3
 SpectrumAnalyzer::move(float X,float Y,float Z)
 {
-	IMeshObject::move(X,Y,Z);
+	IMeshObject::move(Vector3(X,Y,Z));
 	_CHANGEDposition=true;
 	return getTransform()->position;
 }
@@ -152,7 +152,7 @@ Vector3
 SpectrumAnalyzer::rotate(float X,float Y,float Z)
 {
 	_CHANGEDrotation=true;
-	return IMeshObject::rotate(X,Y,Z);
+	return IMeshObject::rotate(Vector3(X,Y,Z));
 }
 
 // scale this object to the size each subobject will have.. 
@@ -160,7 +160,7 @@ Vector3
 SpectrumAnalyzer::scale(float X,float Y,float Z)
 {
 	_CHANGEDscale=true;
-	return IMeshObject::scale(X,Y,Z);
+	return IMeshObject::scale(Vector3(X,Y,Z));
 }
 
 SpectrumAnalyzer::~SpectrumAnalyzer(void)

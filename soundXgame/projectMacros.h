@@ -29,7 +29,7 @@
 /* 
 	handles the Scene... (how this could be ?) 
 */
-#define SCENE	SceneGraph::GetInstance()
+#define SCENE	SceneGraph::getInstance()
 
 
 // INPUT->

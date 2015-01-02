@@ -23,7 +23,8 @@ _IDIsFree(GobID id)
 IGObject::IGObject(void)
 {
 	IsVisible=true;
-	this->_idIsSet=false;
+	this->_idIsLocked=false;
+	this->ID=EMPTY_SLOT;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
 	
@@ -41,12 +42,12 @@ IGObject::~IGObject(void)
 bool
 IGObject::SetID(GobID id)
 {
-	if(this->_idIsSet==false)
+	if(this->_idIsLocked==false)
 	{
 		this->ID = id;
 		itoa(this->ID,&this->Name[0],10);
 		usedIDs.push_back(id);
-		return this->_idIsSet=true;
+	//	return this->_idIsSet=true;
 	}
 	else
 		return false;
@@ -55,15 +56,18 @@ IGObject::SetID(GobID id)
 unsigned
 IGObject::LockID(void)
 {
-	if(!_idIsSet)
+	if(!this->_idIsLocked)
 	{
-		while(!_IDIsFree(++objIDs));
-		this->ID = objIDs;
-		usedIDs.push_back(this->ID);
-		itoa(this->ID,&this->Name[0],10);
-		this->_idIsSet=true;
-		return this->ID;
+		if(this->ID==EMPTY_SLOT)
+		{
+			while(!_IDIsFree(++objIDs));
+			this->ID = objIDs;
+			usedIDs.push_back(this->ID);
+			itoa(this->ID,&this->Name[0],10);
+		}
+	this->_idIsLocked=true;
 	}
+	return this->ID;
 }
 
 void
@@ -99,15 +103,25 @@ IGObject::IsGrounded(bool status)
 Vector3 
 IGObject::move(Vector3 m) 
 {
-	getTransform()->movement = m - getTransform()->position;
-	getTransform()->position = m;
+	getTransform()->movement+=( m - getTransform()->position);
+	//getTransform()->position = m;
 	if(AlwaysFaceMovingdirection)
 	{
-		Vector3 vec = getTransform()->movement.normalized();
-	    Vector3 axis = getTransform()->forward.cros(vec);
-		 
-		rotate(glm::acos(getTransform()->forward.dot(vec))/(M_PI/180.0),axis);
-		getTransform()->forward = vec;
+		Vector3 fow = getTransform()->movement.normalized();
+		Vector3 vec = ((getTransform()->position + fow)-(getTransform()->position + getTransform()->forward));
+		getTransform()->forward = fow; 
+		 printf("testoutput 1v = %f,%f,%f\n",fow.x,fow.y,fow.z);
+		fow = getTransform()->right=(((getTransform()->position+getTransform()->right)+vec)-m);
+		printf("testoutput 1r = %f,%f,%f\n",fow.x,fow.y,fow.z);
+		fow = getTransform()->up = (((getTransform()->position+getTransform()->up)+vec)-m);
+		 printf("testoutput 1u = %f,%f,%f\n\n",fow.x,fow.y,fow.z);
+		
+		vec = getTransform()->forward;
+		fow = getTransform()->right = -Vector3(-vec.y,vec.x,vec.z);
+		printf("testoutput 2r = %f,%f,%f\n",fow.x,fow.y,fow.z);
+		fow = getTransform()->up = -Vector3(vec.z,vec.x,-vec.y);
+	    printf("testoutput 2u = %f,%f,%f\n",fow.x,fow.y,fow.z);
+
 	}
 
 	#ifdef OBJECT_DEBUG_MESSAGES_ON
@@ -122,14 +136,15 @@ Vector3
 IGObject::rotate(Vector3 r) 
 {
 	getTransform()->rotation = r;
+	angle=0;
 	return getTransform()->rotation;
 }
 
 Vector3
 IGObject::rotate(float rotationAngle,Vector3 axis)
 {
-	angle = rotationAngle;
 	return rotate(axis);
+	angle = rotationAngle;
 }
 
 Vector3 

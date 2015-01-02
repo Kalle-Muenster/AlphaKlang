@@ -428,7 +428,7 @@ void Ground::Update(void)
 	}*/
 
 	// Update First Person Camera
-	Cam* cam = SceneGraph::GetInstance()->camera;
+	Cam* cam = SceneGraph::getInstance()->camera;
 	CAM_MODE modeType = cam->Mode();
 	if(modeType == FIRSTPERSON)
 	{

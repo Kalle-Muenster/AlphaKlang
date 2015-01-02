@@ -10,27 +10,32 @@ class VoxGrid;
 class VoxControl :
 	public IConnectable, public IInteractive, public IUpdateble
 {
-private:
-//	int mode;
-//	bool _firstStart;
+protected:
 	Vector3 tempvector;
 	int bumpmapchannel;
 	int imageIndex;
 	int bumpmapIndex;
 	bool transparenseEnabled;
 	float timer;
+	bool ZedMode;
+	float YPS;
+	static string files[6];
+	char lastKey;
+	int currentSellection;
+	float bumper;
 
 public:
 	VoxControl(void);
 	virtual ~VoxControl(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
+	virtual IGObject* Connection(void);
 	virtual VoxGrid* vConnection(void);
 	virtual void DoUpdate(void);
 	template<typename V> V* Get(ConID id = NULL)
 	{
-		if(id>0)
-			(V*)getConnectables(id-1);
+		if(id>=0)
+			(V*)getConnectables(id);
 		else
 		{
 			size_t t = typeid(V).hash_code();
