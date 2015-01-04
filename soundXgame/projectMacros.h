@@ -11,7 +11,7 @@
 
 #define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()->size().x
 #define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->size().y
-#define DINGERBUFFERLENGTH (16384)
+#define MAIMUM_NUMBER_OF_VOXELS (16384)
 #define CONTROLERPOLLINTERVAL (50)
 #define clrscr system("cls")
 #define M_PI 3.14159265358979323846

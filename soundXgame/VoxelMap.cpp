@@ -862,7 +862,7 @@ void VoxelMap::DrawByte(VectorPF position)
 
 void* VoxelMap::SetVoxelerBuffer(Voxel* voxelss)
 {
-	numberOfVoxelers = DINGERBUFFERLENGTH;
+	numberOfVoxelers = MAIMUM_NUMBER_OF_VOXELS;
 	voxels = &voxelss[0];
 	return &voxelss[0];
 }

@@ -149,7 +149,7 @@ void LoadContent(void)
 	unsigned int brummsound;
 //	AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 
-	AUDIO->LoadeBackgroundAudio("testtrack.mp3");
+	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
 	AUDIO->Play();
 //	AUDIO->BackgroundMusicVolume(0.1);
 

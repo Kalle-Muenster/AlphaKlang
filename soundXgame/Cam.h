@@ -11,10 +11,10 @@
 enum CAM_MODE : int
 {
 	set = -1,
-	FOLLOWTARGET = 0,
-	FIRSTPERSON = 1,
-	SPECTATOR = 2,
-	TARGETGRABBER = 3
+	FOLLOWTARGET = 1,
+	FIRSTPERSON = 2,
+	SPECTATOR = 3,
+	TARGETGRABBER = 4
 };
 
 
@@ -42,7 +42,7 @@ public:
 		CameraMode* m;
 		for(int i = 0;i<NumberOfConnectedObjects;i++)
 		{
-			m = (CameraMode*)getConnectables(ConIDs[i]);
+			m = (CameraMode*)getConnectables(ConIDs[i]-1);
 			if(m->IsActive || m->IsDirty)
 			{	
 				m->UpdateMode();
@@ -68,7 +68,7 @@ public:
 			T::StaticCamModeID = i+1;
 			CameraMode* newcon = new T();
 			newcon->SetConnection(this);
-			newcon->ConnectionID = ConIDs[i] = i;
+			newcon->ConnectionID = ConIDs[i] = i+1;
 			newcon->ModeName = (char*)typeid(T).name();
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
@@ -80,12 +80,12 @@ public:
 
 	template<typename T> T* Get(ConID id)
 	{
-		return (T*)getConnectables(id);
+		return (T*)getConnectables(id-1);
 	}
 
 	template<typename T> T* GetCameraMode(void)
 	{
-		return (T*)getConnectables(T::StaticCamModeID);
+		return (T*)getConnectables(T::StaticCamModeID-1);
 	}
 
 };

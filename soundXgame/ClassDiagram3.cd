@@ -62,7 +62,7 @@
   <Class Name="IConnectable" Collapsed="true">
     <Position X="6.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAIIgAACIAIUEwHACBIAAAoDAAACAAAAIBQFAAAAA=</HashCode>
+      <HashCode>AACAIIgAACIAIUEwHACBIAAAgDAAACAAAAIBQFAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -93,7 +93,7 @@
   <Class Name="IGObject" Collapsed="true">
     <Position X="2.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAQAECAAAAgAGSFBwFQA=</HashCode>
+      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAQAECAAAAgAGSFBQFQA=</HashCode>
       <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -311,7 +311,7 @@
   <Struct Name="Vector3" Collapsed="true">
     <Position X="26.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AUgAAAAAAIAAIAAABAAJAQAAAUEAAAQIAAFgAQAAAAA=</HashCode>
+      <HashCode>AQgAAAAAAIAAIAAABAAJAQAAAUEAAAQIAAFgAQAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -350,13 +350,6 @@
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Typedef Name="ConID" Collapsed="true">
-    <Position X="26.25" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Connectable.h</FileName>
-    </TypeIdentifier>
-  </Typedef>
   <Typedef Name="GobID" Collapsed="true">
     <Position X="28" Y="8.75" Width="1.5" />
     <TypeIdentifier>

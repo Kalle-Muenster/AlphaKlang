@@ -144,11 +144,7 @@ VoxControl::keyPress(char key)
 	}
 }
 
-IGObject*
-VoxControl::Connection(void)
-{
-	return GetConnected<IConnectable>(ConIDs[0])->Connection();
-}
+
 
 
 

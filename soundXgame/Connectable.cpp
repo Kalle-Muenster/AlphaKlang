@@ -70,8 +70,8 @@ IConnectable::getConnectables(int index)
 void
 IConnectable::setConnectables(int index,IConnectable* connectable)
 {
-	this->Connectables[index]=connectable;
-	this->ConIDs[index]=this->ConnectionID + connectable->thisTypeHashCode;
+	this->Connectables[index] = connectable;
+	this->ConIDs[index]= connectable->ConnectionID;
 	this->needOneMoreStartupCycle = !connectable->Initialize();
 }
 

@@ -29,7 +29,7 @@ public:
 	virtual ~VoxControl(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
-	virtual IGObject* Connection(void);
+	//virtual IGObject* Connection(void);
 	virtual VoxGrid* vConnection(void);
 	virtual void DoUpdate(void);
 
