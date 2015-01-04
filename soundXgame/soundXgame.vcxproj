@@ -110,6 +110,7 @@
     <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObj.cpp" />
+    <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Spectator.cpp" />
     <ClCompile Include="SpectrumAnalyzer.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="ScreenOverlay.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderObj.h" />
+    <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Spectator.h" />
     <ClInclude Include="SpectrumAnalyzer.h" />
     <ClInclude Include="Sphere.h" />

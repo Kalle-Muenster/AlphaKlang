@@ -64,7 +64,7 @@ BassAudio::GetInstance(void)
 //-------------------------------------------
 
 SceneGraph*
-SceneGraph::GetInstance()
+SceneGraph::getInstance()
 {
 	if(!_scenegraphInstance)
 		_scenegraphInstance = new SceneGraph();

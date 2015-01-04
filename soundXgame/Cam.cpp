@@ -14,16 +14,10 @@ Cam::Cam(void) :
 	NumberOfModes(0),
 	_mode(1)
 {
-	this->transform.position.x=0;
-	this->transform.position.y=1;
-	this->transform.position.z=5;
-	this->transform.rotation.x=0;
-	this->transform.rotation.y=0;
-	this->transform.rotation.z=0;
-	this->transform.movement.x=0;
-	this->transform.movement.y=0;
-	this->transform.movement.z=0;
-
+	this->transform.position = Vector3(0,1,5);
+	this->transform.rotation = Vector3::zero;
+	this->transform.movement = Vector3::zero;
+	this->transform.scale = Vector3(1,1,1);
 	InitiateListener(&this->transform);
 
 	_fieldOfView = 55;
@@ -148,7 +142,7 @@ Cam::move(float x,float y,float z)
 }
 
 Vector3		
-Cam::move(glm::vec3  newPosition)
+Cam::move(Vector3  newPosition)
 {
 	if(transform.position != newPosition)
 	{

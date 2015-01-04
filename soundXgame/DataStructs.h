@@ -84,7 +84,6 @@ public:
 	float GetPowerOfLength(void);
 	Vector3 direction(Vector3 to);
 	Vector3 normalized(void);
-	BASS_3DVECTOR asBassVector(void);
 	operator BASS_3DVECTOR();
 	operator glm::vec3();
 	bool operator==(Vector3);
@@ -100,7 +99,7 @@ public:
 	void operator -=(Vector3);
 	void operator *=(float);
 	void operator /=(float);
-	GLfloat& operator[](int); 
+	GLfloat* operator[](int); 
 };
 
 struct Vector4 : public Vector3

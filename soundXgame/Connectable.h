@@ -11,6 +11,11 @@ struct Transform;
 
 typedef unsigned int ConID;
 
+#define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
+#define EMPTY_SLOT (4294967295)
+
+typedef unsigned int ConID;
+
 class IConnectable
 {
 private:
@@ -30,7 +35,7 @@ public:
 	int NumberOfConnectedObjects;
 	virtual Transform* getTransform(void);
 	bool IsActive;
-
+	unsigned TypeHashCode;
 public:
 	IConnectable(void)
 	{
@@ -38,6 +43,7 @@ public:
 		Not_hasInitialized();
 		NumberOfConnectedObjects=0;
 		current= -1;
+		TypeHashCode = (unsigned)typeid(IConnectable).hash_code();
 	}
 
 	virtual ~IConnectable(void);
@@ -65,7 +71,7 @@ public:
 	Not_hasInitialized();
 		
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(ConIDs[i]==0)
+		if(ConIDs[i]==NULL)
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(this->connection);	
@@ -86,7 +92,7 @@ public:
 	Not_hasInitialized();
 		
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(ConIDs[i] == 0)
+		if(ConIDs[i] == NULL)
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(this->connection);
@@ -105,6 +111,8 @@ public:
 	template<typename T> T* GetConnected(void)
 	{
 		ConID TypeHash = (ConID)typeid(T).hash_code();
+		if(TypeHash==TypeHashCode)
+			return (T*)this;
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
 			if(ConIDs[i] == TypeHash)
 				return (T*)getConnectables(i);
@@ -176,7 +184,7 @@ public:
 	Not_hasInitialized();
 		
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(gobject->conXtor->ConIDs[i]==0)
+		if(gobject->conXtor->ConIDs[i]==NULL)
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(gobject);
@@ -190,11 +198,11 @@ public:
 	ConID* ConnectConnectableInstance(IConnectable* inst)
 	{
 		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-			if(inst->Connection()->conXtor->ConIDs[i]==0)
+			if(inst->ConIDs[i]==NULL)
 		{
 			this->Connectables[i]=inst;
-			inst->Connection()->conXtor->ConIDs[i]=i+1;
-			this->ConIDs[i]=inst->Connection()->conXtor->ConIDs[i];
+			inst->ConIDs[i]=i+1;
+			this->ConIDs[i]=inst->ConIDs[i];
 			setConnectables(i,inst);
 			return &this->ConIDs[i];
 		}

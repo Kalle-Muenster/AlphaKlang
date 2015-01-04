@@ -8,3 +8,4 @@
 #include "Sprite.h"
 #include "spectrumAnalyzer.h"
 #include "ScreenOverlay.h"
+#include "SkyBox.h"

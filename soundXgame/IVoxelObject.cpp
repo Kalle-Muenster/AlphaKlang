@@ -15,7 +15,8 @@ void
 IVoxelObject::InitializeObject(string ppmFileName,bool addToScene)
 {
 	this->Loade(ppmFileName,SetVoxelerBuffer(&Voxlers[0]));
-	SetID(SCENE->Add(this));
+	if(addToScene)
+		SetID(SCENE->Add(this));
 	LockID();
 	IsVisible=true;
 }

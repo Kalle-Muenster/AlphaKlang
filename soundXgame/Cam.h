@@ -11,10 +11,10 @@
 enum CAM_MODE : int
 {
 	set = -1,
-	FOLLOWTARGET = 1,
-	FIRSTPERSON = 2,
-	SPECTATOR = 3,
-	TARGETGRABBER = 4
+	FOLLOWTARGET = 0,
+	FIRSTPERSON = 1,
+	SPECTATOR = 2,
+	TARGETGRABBER = 3
 };
 
 
@@ -63,9 +63,9 @@ public:
 	Not_hasInitialized();
 		
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(ConIDs[i] == 0)
+		if(ConIDs[i] == NULL)
 		{
-			T::StaticCamModeID = i;
+			T::StaticCamModeID = i+1;
 			CameraMode* newcon = new T();
 			newcon->SetConnection(this);
 			newcon->ConnectionID = ConIDs[i] = i+1;
@@ -73,7 +73,7 @@ public:
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
 			this->camera->NumberOfModes++;
-			return (T*)getConnectables(i);
+			return (T*)getConnectables(ConIDs[i]-1);
 		}
 		return NULL;
 	}
@@ -123,7 +123,7 @@ public:
 	void					stopFollowing(void);
 	virtual void			WheelVRoll(WHEEL state);
 	Vector3					move(float x,float y,float z);
-	Vector3		   		    move(glm::vec3);
+	Vector3		   		    move(Vector3);
 	Vector3					rotate(float x,float y,float z);
 	Vector3			        rotate(Vector3);
 	bool				    ShareAudio(BOOL=3);

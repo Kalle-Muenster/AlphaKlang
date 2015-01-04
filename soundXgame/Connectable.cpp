@@ -13,7 +13,7 @@ IConnectable::Not_hasInitialized(void)
 	if(!this->_initialized)
 	{
 		for(int i=0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ; i++)
-		{	this->ConIDs[i] = 0; this->Connectables[i]=NULL;}
+		{	this->ConIDs[i] = NULL; this->Connectables[i]=NULL;}
 		this->NumberOfConnectedObjects = 0;
 		this->current = -1;
 
@@ -22,7 +22,7 @@ IConnectable::Not_hasInitialized(void)
 	}
 
 		if(needOneMoreStartupCycle)
-			needOneMoreStartupCycle = this->Initialize();
+			needOneMoreStartupCycle = !this->Initialize();
 
 	return false;
 }

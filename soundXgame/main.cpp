@@ -188,49 +188,7 @@ void LoadContent(void)
 //	SCENE->Object("plane_front")->AddConnectable<MusicVox>()->sensitivity = 200;
 
 
-	(new VoxGrid("FromDaCode"))->SetName("plane_front");
-	SCENE->Object("plane_front")->AddConnectable<VoxControl>();
-	SCENE->Object("plane_front")->move(-500,-250,-500);
-	((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.x = 1.f;
-	((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y = 2.f;
-	((VoxGrid*)SCENE->Object("plane_front"))->LoadeMap("drei_64x64.ppm",0);
-	SCENE->Object("plane_front")->AddConnectable<MusicVox>();
-
-	(new VoxGrid("FromDaCode"))->SetName("plane_rear");
-	SCENE->Object("plane_rear")->AddConnectable<VoxControl>();
-	SCENE->Object("plane_rear")->move(-500,-250,500);
-	((VoxGrid*)SCENE->Object("plane_rear"))->MainSizzes.x = 1.f;
-	((VoxGrid*)SCENE->Object("plane_rear"))->MainSizzes.y = 2.f;
-	((VoxGrid*)SCENE->Object("plane_rear"))->LoadeMap("drei_64x64.ppm",0);
-	SCENE->Object("plane_rear")->AddConnectable<MusicVox>();
-
-	(new VoxGrid("FromDaCode"))->SetName("plane_left");
-	SCENE->Object("plane_left")->AddConnectable<VoxControl>();
-	SCENE->Object("plane_left")->move(-500,-250,-500);
-	((VoxGrid*)SCENE->Object("plane_left"))->MainSizzes.x = 1.f;
-	((VoxGrid*)SCENE->Object("plane_left"))->MainSizzes.y = 2.f;
-	((VoxGrid*)SCENE->Object("plane_left"))->flip('z');
-	((VoxGrid*)SCENE->Object("plane_left"))->LoadeMap("drei_64x64.ppm",0);
-	SCENE->Object("plane_left")->AddConnectable<MusicVox>();
-
-	(new VoxGrid("FromDaCode"))->SetName("plane_right");
-	SCENE->Object("plane_right")->AddConnectable<VoxControl>();
-	SCENE->Object("plane_right")->move(-500,-250,500);
-	((VoxGrid*)SCENE->Object("plane_right"))->MainSizzes.x = 1.f;
-	((VoxGrid*)SCENE->Object("plane_right"))->MainSizzes.y = 2.f;
-	((VoxGrid*)SCENE->Object("plane_right"))->flip('z');
-	((VoxGrid*)SCENE->Object("plane_right"))->LoadeMap("drei_64x64.ppm",0);
-	SCENE->Object("plane_right")->AddConnectable<MusicVox>();
-
-	(new VoxGrid("FromDaCode"))->SetName("plane_top");
-	SCENE->Object("plane_top")->AddConnectable<VoxControl>();
-	SCENE->Object("plane_top")->move(-500,-500,500);
-	((VoxGrid*)SCENE->Object("plane_top"))->MainSizzes.x = 1.f;
-	((VoxGrid*)SCENE->Object("plane_top"))->MainSizzes.y = 2.f;
-	((VoxGrid*)SCENE->Object("plane_top"))->flip('y');
-	((VoxGrid*)SCENE->Object("plane_top"))->flipZ();
-	((VoxGrid*)SCENE->Object("plane_top"))->LoadeMap("drei_64x64.ppm",0);
-	SCENE->Object("plane_top")->AddConnectable<MusicVox>();
+	(new SkyBox())->SetName("Skybox");
 
 
 	//GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
@@ -254,6 +212,17 @@ void LoadContent(void)
 	SCENE->Object("AUDIO02")->move(8,0,-2);
 	SCENE->Object("AUDIO02")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO02")->IsGrounded(true);
+	SCENE->Object("AUDIO02")->AddConnectable<ObjectMover<8>>();
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position);
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalZ);
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalZ+Utility::GlobalX);
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalX);
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalZ-Utility::GlobalX).normalized());
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalZ+Utility::GlobalX).normalized());
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalX-Utility::GlobalZ).normalized());
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(-(Utility::GlobalX + Utility::GlobalZ)).normalized());
+	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->IsActive = true;
+	SCENE->Object("AUDIO02")->getTransform()->speed = 10;
 
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("mp3/11-Audio.mp3");

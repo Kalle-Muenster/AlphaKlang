@@ -4,26 +4,28 @@
 
 VoxGrid::VoxGrid(void)
 {
-	Initialize();
+	Initialize("FromDaCode",true);
 	//Loade("FromDaCode",&Voxlers[0]);
 	//SetID(SCENE->Add(this));
 	//LockID();
 	//IsVisible=true;
 }
 
-VoxGrid::VoxGrid(string ppmfile)
+VoxGrid::VoxGrid(string ppmfile,bool addToScene)
 {
-	Initialize((string)ppmfile);
+	Initialize(ppmfile,addToScene);
 	//SetID(SCENE->Add(this));
 	//LockID();
 	//IsVisible=true;
 	//SetTheZed();
 }
 
+
+
 void
-VoxGrid::Initialize(string PPMfileName)
+VoxGrid::Initialize(string PPMfileName,bool addToScene)
 {
-	InitializeObject(PPMfileName,true);
+	InitializeObject(PPMfileName,addToScene);
 	SetTheZed(&this->getTransform()->position.z);
 	Mode(NORMAL);
 	conXtor = new VoxControl();
@@ -51,9 +53,17 @@ VoxGrid::~VoxGrid(void)
 Transform*
 VoxGrid::getTransform(void)
 {
-	return IGObject::getTransform();
+	return &transform;
 }
 
+Vector3
+VoxGrid::scale(Vector3 s)
+{
+	//getTransform()->scale = s;
+   	this->MainSizzes.x = s.x;
+	this->MainSizzes.y = s.y;
+	return Vector3(MainSizzes.x,MainSizzes.y,s.z);
+}
 
 void 
 VoxGrid::flip(char direction)

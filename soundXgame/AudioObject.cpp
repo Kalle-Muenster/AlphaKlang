@@ -220,7 +220,7 @@ IAudioEmitter::IsAudioPlaying(void)
 void
 IAudioEmitter::SetMyPosition(Transform *myTransform)
 {
-	BASS_ChannelSet3DPosition((DWORD)audioSource,&myTransform->position.asBassVector(),&myTransform->rotation.asBassVector(),&myTransform->movement.asBassVector());
+	BASS_ChannelSet3DPosition((DWORD)audioSource,&(BASS_3DVECTOR)myTransform->position,&(BASS_3DVECTOR)myTransform->rotation,&(BASS_3DVECTOR)myTransform->movement);
 	BASS_Apply3D();
 }
 
@@ -252,7 +252,7 @@ IAudioEmitter::LoadeSample(const char* audioFileName,bool loop)
 	
 	audioSource = AUDIO->Loade3DSample(audioFileName,loop);
 //	SetMyPosition(&this->Connection()->transform);
-	this->AudioVolume(0.8);
+	this->AudioVolume(1);
 
 }
 
@@ -262,7 +262,7 @@ AudioEmitter::LoadeSample(const char* audioFileName,bool loop)
 	
 	audioSource = AUDIO->Loade3DSample(audioFileName,loop);
 
-	this->AudioVolume(0.8);
+	this->AudioVolume(1);
 
 }
 
@@ -276,21 +276,17 @@ AudioEmitter::PlaySample(HCHANNEL sample,bool loop)
 void
 IAudioEmitter::LoadeStream(const char* audioFileName)
 {
-	
 	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
 //	SetMyPosition(&this->Connection()->transform);
-	this->AudioVolume(0.8);
-
+	this->AudioVolume(1);
 }
 
 void
 AudioEmitter::LoadeStream(const char* audioFileName)
 {
-	
 	audioSource = AUDIO->LoadeMusic(audioFileName,LOAD_3D);
 	SetMyPosition(this->Connection()->getTransform());
-	this->AudioVolume(0.8);
-
+	this->AudioVolume(1);
 }
 
 

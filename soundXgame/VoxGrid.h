@@ -1,5 +1,6 @@
 #ifndef __VOXGRID_H__
 #define __VOXGRID_H__
+
 #include "Connectable.h"
 #include "InputManager.h"
 #include "DataStructs.h"
@@ -24,7 +25,7 @@ class VoxGrid :
 private:
 
 	void SetTheZed(float*);
-	void Initialize(string PPMfileName="FromDaCode");
+	void Initialize(string PPMfileName="FromDaCode",bool addToScene=true);
 	Transform transform2;
 	
 
@@ -32,15 +33,16 @@ public:
 	void flipZ(void);
 	void flip(char);
 	VoxGrid(void);
-	VoxGrid(string ppmFileName);
+	VoxGrid(string ppmFileName,bool addToScene=true);
 	virtual ~VoxGrid(void);
 	virtual Transform* getTransform(void);
+	virtual Vector3 scale(Vector3);
 	template<typename T> T* Get(ConID id = NULL)
 	{
 		if(id)
-			return (T*)this->vConXtor()->GetConnected<T>(id);
+			return (T*)this->conXtor->GetConnected<T>(id);
 		else
-			return (T*)this->vConXtor()->GetConnected<T>();
+			return (T*)this->conXtor->GetConnected<T>();
 	}
 };
 

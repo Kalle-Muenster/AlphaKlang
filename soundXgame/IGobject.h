@@ -23,7 +23,7 @@ class IGObject //: public IUpdateble
 {
 private:
 	GobID ID;
-	bool _idIsSet;
+	bool _idIsLocked;
 	bool _isGrounded;
 	
 protected:
