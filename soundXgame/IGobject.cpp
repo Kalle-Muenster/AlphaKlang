@@ -27,7 +27,6 @@ IGObject::IGObject(void)
 	this->ID=NULL;
 	conXtor = new IConnectable();
 	conXtor->SetConnection(this);
-	
 	GroundValue = 0;
 	IsGrounded(false);
 	AlwaysFaceMovingdirection=false;

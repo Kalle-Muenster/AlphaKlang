@@ -42,7 +42,7 @@ public:
 		CameraMode* m;
 		for(int i = 0;i<NumberOfConnectedObjects;i++)
 		{
-			m = (CameraMode*)getConnectables(ConIDs[i]-1);
+			m = (CameraMode*)getConnectables(ConIDs[i]);
 			if(m->IsActive || m->IsDirty)
 			{	
 				m->UpdateMode();
@@ -68,7 +68,7 @@ public:
 			T::StaticCamModeID = i+1;
 			CameraMode* newcon = new T();
 			newcon->SetConnection(this);
-			newcon->ConnectionID = ConIDs[i] = i+1;
+			newcon->ConnectionID = ConIDs[i] = i;
 			newcon->ModeName = (char*)typeid(T).name();
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
@@ -80,12 +80,12 @@ public:
 
 	template<typename T> T* Get(ConID id)
 	{
-		return (T*)getConnectables(id-1);
+		return (T*)getConnectables(id);
 	}
 
 	template<typename T> T* GetCameraMode(void)
 	{
-		return (T*)getConnectables(T::StaticCamModeID-1);
+		return (T*)getConnectables(T::StaticCamModeID);
 	}
 
 };

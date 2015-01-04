@@ -131,7 +131,9 @@ TargetGrabber::ReleaseTarget(void)
 		for(int i=0;i<3;i++)
 		{
 			camera->GetTarget()->Remove<IConnectable>(targetConnectedMode[i]);
+
 			targetConnectedMode[i]=NULL;
+
 		}
 	}
 	_firststart=false;

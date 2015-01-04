@@ -7,6 +7,7 @@
 int
 IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
 
+
 bool
 IConnectable::Not_hasInitialized(void)
 {
@@ -34,7 +35,7 @@ IConnectable::~IConnectable(void)
 	{
 		if(Connectables[i]!=NULL)
 		{
-			RemoveConnected<IConnectable>(i+1);
+			RemoveConnected<IConnectable>(i);
 			/*int index = 0;
 			while(Connectables[i]->GetNumberOfConnected()>0)
 			{
@@ -70,7 +71,7 @@ void
 IConnectable::setConnectables(int index,IConnectable* connectable)
 {
 	this->Connectables[index]=connectable;
-	this->ConIDs[index]=connectable->ConnectionID;
+	this->ConIDs[index]=this->ConnectionID + connectable->thisTypeHashCode;
 	this->needOneMoreStartupCycle = !connectable->Initialize();
 }
 

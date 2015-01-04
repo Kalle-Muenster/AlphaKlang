@@ -29,7 +29,9 @@ VoxControl::VoxControl(void)
 		imageIndex=0;
 		ZedMode = false;
 		YPS=0.01;
+
 	  TypeHashCode=(unsigned)typeid(VoxControl).hash_code();
+
 }
 
 
@@ -142,6 +144,11 @@ VoxControl::keyPress(char key)
 	}
 }
 
+IGObject*
+VoxControl::Connection(void)
+{
+	return GetConnected<IConnectable>(ConIDs[0])->Connection();
+}
 
 
 

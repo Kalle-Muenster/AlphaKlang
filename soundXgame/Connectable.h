@@ -18,9 +18,10 @@ typedef unsigned int ConID;
 
 class IConnectable
 {
-private:
+protected:
 	void AddCombiner(IGObject*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
+	ConID thisTypeHashCode;
 
 public:
 	static int MaximumNumberOfConnectioms;
@@ -75,8 +76,10 @@ public:
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(this->connection);	
-			newcon->ConnectionID=typeid(T).hash_code(); 
+			newcon->thisTypeHashCode = (ConID)typeid(T).hash_code();
+			newcon->ConnectionID = this->ConnectionID*10 + i;  
 			setConnectables(i,(T*)newcon);
+			//ConIDs[i] = this->ConnectionID + newcon->thisTypeHashCode;
 			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
@@ -94,11 +97,13 @@ public:
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 		if(ConIDs[i] == NULL)
 		{
+			
 			IConnectable* newcon = new T();
 			newcon->SetConnection(this->connection);
-			newcon->ConnectionID = i+1;
+			newcon->ConnectionID = (this->ConnectionID*10)+(i);
+			newcon->thisTypeHashCode = (ConID)typeid(T).hash_code();
 			setConnectables(i,(T*)newcon);
-			*id=i+1;
+			*id=ConIDs[i];
 			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
@@ -116,6 +121,7 @@ public:
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
 			if(ConIDs[i] == TypeHash)
 				return (T*)getConnectables(i);
+
 		return NULL;
 	}
 
@@ -123,7 +129,7 @@ public:
 	//Workes mutch faster....
 	template<typename T> T* GetConnected(ConID conid)
 	{
-		return (T*)getConnectables(conid-1);
+		return (T*)getConnectables(conid-thisTypeHashCode);
 	}
 
 
@@ -132,23 +138,21 @@ public:
 	//previously Addet by Type,.. and not by ID...
 	template<typename T> ConID GetConnectionID(void)
 	{
-		ConID TypeHash = (ConID)typeid(T).hash_code();
-		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == TypeHash)
-			//	return ConIDs[i]-1;
-				return i+1;
+
+				return (ConIDs[typeID(T).hash_code()-ConnectionID]-thisTypeHashCode)/10;
+		return TypeHash;
 	}
 
 	/*Removes a connected Component by it's type...*/
 	template<typename T> void RemoveConnected(void)
 	{
-		ConID TypeHash = (ConID)typeid(T).hash_code();
+		ConID TypeCode = (ConID)typeid(T).hash_code() + this->ConnectionID;
 		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 			if(ConIDs[i]==TypeHash)
 			{
 			//	getConnectables(i)->~IConnectable();
 				delete getConnectables(i);
-				ConIDs[i] = NULL;
+				ConIDs[i] = EMPTY_SLOT;
 				NumberOfConnectedObjects--;
 				printf("%s-ID:%i: connectable %s removed !\n",Connection()->GetName(),Connection()->GetID(),typeid(T).name());
 			}		
@@ -159,11 +163,11 @@ public:
 	{
 	//	if(typeid((*getConnectables(id))).name()==typeid(T).name())
 	//	{
-		if(getConnectables(id-1)!=NULL)
+		if(id!=EMPTY_SLOT)
 		{
-			printf("%s-ID:%i: removing connectable %s at slot %i !\n",Connection()->GetName(),Connection()->GetID(),typeid(*getConnectables(id-1)).name(),id-1);
-			delete getConnectables(id-1);
-			ConIDs[id-1]=NULL;
+			printf("%s-ID:%i: removing connectable %s at slot %i !\n",Connection()->GetName(),Connection()->GetID(),typeid(*getConnectables(id)).name(),id);
+			delete getConnectables(id);
+			ConIDs[id]=EMPTY_SLOT;
 			NumberOfConnectedObjects--;
 		}
 	//	}
@@ -195,7 +199,7 @@ public:
 		return NULL;
 	}
 
-	ConID* ConnectConnectableInstance(IConnectable* inst)
+	ConID ConnectConnectableInstance(IConnectable* inst)
 	{
 		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 			if(inst->ConIDs[i]==NULL)
@@ -204,7 +208,7 @@ public:
 			inst->ConIDs[i]=i+1;
 			this->ConIDs[i]=inst->ConIDs[i];
 			setConnectables(i,inst);
-			return &this->ConIDs[i];
+			return this->ConIDs[i];
 		}
 			return NULL;
 	}
@@ -225,19 +229,19 @@ public:
 	{
 		int x=0;
 		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-			if(ConIDs[i]==0)
+			if(ConIDs[i]==EMPTY_SLOT)
 			{
 				for(int n = 0;n<MAXIMUM_NUMBER_OF_CONNECTIONS;n++)
-					if(instance->conXtor->ConIDs[n]==0)
+					if(instance->conXtor->ConIDs[n]==EMPTY_SLOT)
 					{
-						this->ConIDs[i]=n+1;
-						instance->conXtor->ConIDs[n]=i+1;
+						this->ConIDs[i]=n;
+						instance->conXtor->ConIDs[n]=i;
 						instance->conXtor->SetConnection(this);
 
 						setConnectables(i,instance->conXtor);
 						
-						while(ConIDs[i+(++x)]!=0);
-						ConIDs[x+=i]=x+1;
+						while(ConIDs[i+(++x)]!=EMPTY_SLOT);
+						ConIDs[x+=i]=x;
 											
 						AddCombiner(this->Connection(),&this->ConIDs[i],&instance->conXtor->ConIDs[n],x);
 						instance->conXtor->setConnectables(n,this);

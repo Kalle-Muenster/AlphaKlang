@@ -29,8 +29,10 @@ public:
 	virtual ~VoxControl(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
+	virtual IGObject* Connection(void);
 	virtual VoxGrid* vConnection(void);
 	virtual void DoUpdate(void);
+
 	//template<typename V> V* Get(ConID id = NULL)
 	//{
 	//	if(id>=0)
@@ -50,6 +52,7 @@ public:
 	//	}
 	//	return false;
 	//}
+
 };
 
 

@@ -31,7 +31,6 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[front]->move(-500,-250,-500);
 	walls[front]->MainSizzes.x = transform.scale.x;
 	walls[front]->MainSizzes.y = transform.scale.y*2;
-	
 //	walls[front]->AddConnectable<MusicVox>();
 
 	walls[rear] = new VoxGrid(imagefilename,false);
@@ -41,7 +40,6 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[rear]->move(-500,-250,500);
 	walls[rear]->MainSizzes.x = transform.scale.x;
 	walls[rear]->MainSizzes.y = transform.scale.y*2;
-	
 //	walls[rear]->AddConnectable<MusicVox>();
 
 	walls[left] = new VoxGrid(imagefilename,false);
@@ -63,7 +61,6 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[right]->MainSizzes.x = transform.scale.x;
 	walls[right]->MainSizzes.y = transform.scale.y*2;
 	walls[right]->flip('z');
-	
 //	walls[right]->AddConnectable<MusicVox>();
 
 	walls[top] = new VoxGrid(imagefilename,false);
@@ -75,8 +72,6 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[top]->MainSizzes.y = transform.scale.y*2;
 	walls[top]->flip('y');
 	walls[top]->flipZ();
-	
-	
 //	walls[top]->AddConnectable<MusicVox>();
 
 	walls[bottom] = new VoxGrid(imagefilename,false);
@@ -194,6 +189,7 @@ bool
 SkyBoxConnector::Initialize(void)
 {
 	current = SkyBox::WALLS::left;
+	TypeHashCode = (unsigned)typeid(SkyBoxConnector).hash_code();
 	InputManager::getInstance()->attachKey(this);
 	UpdateManager::getInstance()->SignInForUpdate(this);
 	return true;
