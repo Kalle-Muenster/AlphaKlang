@@ -62,9 +62,6 @@
     <ClCompile Include="Utility.cpp">
       <Filter>Core\RuntimeManagers</Filter>
     </ClCompile>
-    <ClCompile Include="IVoxelObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -201,9 +198,6 @@
     </ClInclude>
     <ClInclude Include="UpdateManager.h">
       <Filter>Core\RuntimeManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="IVoxelObject.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Objects</Filter>

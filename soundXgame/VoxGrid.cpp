@@ -1,23 +1,23 @@
 #include "VoxGrid.h"
+#include "Utility.h"
 #include "projectMacros.h"
+#include "DataStructs.h"
+#include "Connectable.h"
+
 
 
 VoxGrid::VoxGrid(void)
 {
+	this->position.x = &this->transform.position.x;
+	this->position.y = &this->transform.position.y;
 	Initialize("FromDaCode",true);
-	//Loade("FromDaCode",&Voxlers[0]);
-	//SetID(SCENE->Add(this));
-	//LockID();
-	//IsVisible=true;
 }
 
 VoxGrid::VoxGrid(string ppmfile,bool addToScene)
 {
+	this->position.x = &this->transform.position.x;
+	this->position.y = &this->transform.position.y;
 	Initialize(ppmfile,addToScene);
-	//SetID(SCENE->Add(this));
-	//LockID();
-	//IsVisible=true;
-	//SetTheZed();
 }
 
 
@@ -25,12 +25,17 @@ VoxGrid::VoxGrid(string ppmfile,bool addToScene)
 void
 VoxGrid::Initialize(string PPMfileName,bool addToScene)
 {
-	InitializeObject(PPMfileName,addToScene);
+	this->Loade(PPMfileName,SetVoxelerBuffer(&Voxlers[0]));
+	if(addToScene)
+		SetID(SCENE->Add(this));
+	LockID();
+	IsVisible=true;
 	SetTheZed(&this->getTransform()->position.z);
 	Mode(NORMAL);
 	conXtor = new VoxControl();
 	conXtor->SetConnection(this);
 	flipt = 'x';
+	Zflipt = false;
 }
 
 
@@ -50,38 +55,71 @@ VoxGrid::~VoxGrid(void)
 	
 }
 
-Transform*
-VoxGrid::getTransform(void)
-{
-	return &transform;
-}
 
 Vector3
 VoxGrid::scale(Vector3 s)
 {
-	//getTransform()->scale = s;
+	this->getTransform()->scale = s;
    	this->MainSizzes.x = s.x;
 	this->MainSizzes.y = s.y;
-	return Vector3(MainSizzes.x,MainSizzes.y,s.z);
+	return s;
 }
 
 void 
 VoxGrid::flip(char direction)
 {
+	if(direction<0)
+	{
+		direction = flipt+1;
+		flipZ();
+	}
+
 	if(direction>'z')
-		flipt = 'x';
-	else
-		flipt = direction;
+	   direction='x';
+
+	flipt = direction;
 }
 
 void 
 VoxGrid::flipZ(void)
 {
-	SetTheZed(flipt? &getTransform()->position.x : &getTransform()->position.z);
+	Zflipt = !Zflipt;
+	SetTheZed(Zflipt? &getTransform()->position.x : &getTransform()->position.z);
 }
 
-//
-//VoxGrid::operator VoxControll(void)
-//{
-//	return GetConnected<VoxControl>(conXtor->ConIDs[0]);
-//}
+
+
+
+
+void
+VoxGrid::draw(void)
+{
+	if(!IsVisible)
+		return;
+
+	glColor4b(255,255,255,255);
+	IsGrounded(false);
+
+	glPushMatrix();
+		switch(mode)
+		{
+		case NORMAL:
+			this->Draw(this->position);
+			break;
+		case BUNT:
+			this->DrawBunt(this->position);
+			break;
+		case BYTE:
+			this->DrawByte(this->position);
+			break;
+		}
+	glPopMatrix();
+
+}
+
+void
+VoxGrid::Mode(ColorMode colorMode)
+{
+	mode=colorMode;
+}
+

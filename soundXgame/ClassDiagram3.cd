@@ -62,7 +62,7 @@
   <Class Name="IConnectable" Collapsed="true">
     <Position X="6.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAIIgAACIAIUEwHACBIAAAgDAAACAAAAIBQFAAAAA=</HashCode>
+      <HashCode>AACAIIgAACIAIUEwHACBIAEAgDAAACAAAAIBQFAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -199,13 +199,6 @@
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="IVoxelObject" Collapsed="true">
-    <Position X="0.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAgIAAAACAAAIBEAAAIAAAgAAAAAAAAAAQAAA=</HashCode>
-      <FileName>IVoxelObject.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Map" Collapsed="true">
     <Position X="2.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
@@ -290,7 +283,7 @@
   <Class Name="VoxGrid" Collapsed="true">
     <Position X="0.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAUBCAQABBAACAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AEAAAAAAgIAAAQDCAQIBBAAKIAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>VoxGrid.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -369,13 +362,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
-    </TypeIdentifier>
-  </Typedef>
-  <Typedef Name="Connectable" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IVoxelObject.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="UpdateID" Collapsed="true">

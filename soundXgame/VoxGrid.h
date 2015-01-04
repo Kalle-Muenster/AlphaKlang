@@ -1,42 +1,46 @@
 #ifndef __VOXGRID_H__
 #define __VOXGRID_H__
 
+#include "VoxelMap.h"
 #include "Connectable.h"
 #include "InputManager.h"
 #include "DataStructs.h"
-#include "IVoxelObject.h"
 #include "VoxControl.h"
 #include "Transform.h"
 
 
- //struct VectorA
- //{
- // float &x;
- // float &y;
- // float &z;
- //};
+struct Vector3;
 
 
+typedef unsigned int ConID;
 
 
 class VoxGrid :
-	public IVoxelObject
+	public VoxelMap ,public IGObject
 {
+public:
+	enum ColorMode
+	{NORMAL=0,BUNT=1,BYTE=2};
 private:
 
-	void SetTheZed(float*);
-	void Initialize(string PPMfileName="FromDaCode",bool addToScene=true);
-	Transform transform2;
-	
+	void			SetTheZed(float*);
+	void			Initialize(string PPMfileName="FromDaCode",bool addToScene=true);
+	bool			Zflipt;
+	GLfloat			bumpFactor;
+	ColorMode		mode;
+	ConID			conID;
+	Voxel			Voxlers[16384+64];
 
 public:
-	void flipZ(void);
-	void flip(char);
-	VoxGrid(void);
-	VoxGrid(string ppmFileName,bool addToScene=true);
-	virtual ~VoxGrid(void);
-	virtual Transform* getTransform(void);
+					VoxGrid(void);
+					VoxGrid(string ppmFileName,bool addToScene=true);
+	virtual		   ~VoxGrid(void);
+	virtual void	draw(void);
+	void			Mode(ColorMode);
+	void			flipZ(void);
+	void			flip(char= -1);
 	virtual Vector3 scale(Vector3);
+
 	template<typename T> T* Get(ConID id = NULL)
 	{
 		if(id)

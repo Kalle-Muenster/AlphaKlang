@@ -16,9 +16,6 @@ bool
 MusicVox::Initialize(void)
 {
 	vec2 = *VectorF::Zero;
-
-	if(this->Connection()->HasConnected<VoxControl>())
-		this->VoxcontrollID = this->Connection()->conXtor->GetConnectionID<VoxControl>();
 	return true;
 }
 
@@ -33,18 +30,18 @@ MusicVox::MotivatorFunction(float Motivator,int number)
 	switch(number)
 	{
 	case 0:
-		for(((VoxControl*)this->Connection()->conXtor)->current=0;((VoxControl*)this->Connection()->conXtor)->current<6;((VoxControl*)this->Connection()->conXtor)->current++)
+		for(this->Connection()->conXtor->current=0;this->Connection()->conXtor->current<6;this->Connection()->conXtor->current++)
 			((VoxControl*)this->Connection()->conXtor)->vConnection()->BumpFactor = 0.5+(Motivator/500);
 		break;
 	case 1:
-		vec2.y = 1+ vec2.x-Motivator;
-		vec2.x = 2+ Motivator;
-		if(vec2.x>Motivator && vec2.y<0)
-			for(((VoxControl*)this->Connection()->conXtor)->current=0;((VoxControl*)this->Connection()->conXtor)->current<6;((VoxControl*)this->Connection()->conXtor)->current++)
+
+		if(vec2.x>Motivator-2 && vec2.y<vec2.x+1+Motivator)
+			for(this->Connection()->conXtor->current=0;this->Connection()->conXtor->current<6;this->Connection()->conXtor->current++)
 				((VoxControl*)this->Connection()->conXtor)->vConnection()->flip(++((VoxControl*)this->Connection()->conXtor)->vConnection()->flipt);//this->Connection()->getTransform()->up);
 		
-
-		for(((VoxControl*)this->Connection()->conXtor)->current=0;((VoxControl*)this->Connection()->conXtor)->current<6;((VoxControl*)this->Connection()->conXtor)->current++)
+		vec2.y =  vec2.x-Motivator;
+		vec2.x = 2+ Motivator;
+		for(this->Connection()->conXtor->current=0;this->Connection()->conXtor->current<6;this->Connection()->conXtor->current++)
 			((VoxControl*)this->Connection()->conXtor)->vConnection()->MainSizzes = vec2;
 		break;
 	}

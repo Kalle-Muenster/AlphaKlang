@@ -94,7 +94,6 @@
     <ClCompile Include="MusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
-    <ClCompile Include="IVoxelObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MrZylinder.cpp" />
@@ -149,7 +148,6 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="DataStructs.h" />
     <ClInclude Include="InstancibleObjects.h" />
-    <ClInclude Include="IVoxelObject.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MrZylinder.h" />

@@ -1,14 +1,10 @@
 #include "VoxControl.h"
 #include "VoxGrid.h"
-
 #include "CameraModesIncluder.h"
 
 
 string
 VoxControl::files[6];
-
-
-
 
 
 VoxControl::VoxControl(void)
@@ -93,13 +89,13 @@ VoxControl::keyPress(char key)
 
 
 	if(key=='b')
-		this->vConnection()->Mode(IVoxelObject::ColorMode::BUNT);
+		this->vConnection()->Mode(VoxGrid::ColorMode::BUNT);
 
 	if(key=='n')
-		this->vConnection()->Mode(IVoxelObject::ColorMode::NORMAL);
+		this->vConnection()->Mode(VoxGrid::ColorMode::NORMAL);
 
 	if(key=='h')
-		this->vConnection()->Mode(IVoxelObject::ColorMode::BYTE);
+		this->vConnection()->Mode(VoxGrid::ColorMode::BYTE);
 
 	if(key=='v')
 	{
@@ -132,7 +128,7 @@ VoxControl::keyPress(char key)
 	{
 		if(lastKey!='u')
 		{
-			this->vConnection()->flip(++this->vConnection()->flipt);
+			this->vConnection()->flip();
 			lastKey='u';
 		}
 	}

@@ -2,6 +2,7 @@
 #define _CMUSICVOX_
 
 #include "musiclistener.h"
+#include "SkyBox.h"
 
 class MusicVox :
 	public MusicListener,

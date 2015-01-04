@@ -28,25 +28,25 @@ TargetGrabber::Mode(TargetGrabber::MODE value)
 		_mode=value;
 
 		for(int i=0;i<3;i++)
-			if(targetConnectedMode[i]!=EMPTY_SLOT)
+			if(targetConnectedMode[i]!=NULL)
 				camera->GetTarget()->GetConnected<IConnectable>(targetConnectedMode[i])->IsActive=false;
 	
 		switch (value)
 		{
 		case MODE::MOVE:
-			if(targetConnectedMode[0]!=EMPTY_SLOT)
+			if(targetConnectedMode[0]!=NULL)
 				camera->GetTarget()->GetConnected<CamTargetMover>(targetConnectedMode[0])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetMover>(&targetConnectedMode[0]);
 			break;
 		case MODE::ROTATE:
-			if(targetConnectedMode[1]!=EMPTY_SLOT)
+			if(targetConnectedMode[1]!=NULL)
 				camera->GetTarget()->GetConnected<CamTargetRotator>(targetConnectedMode[1])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetRotator>(&targetConnectedMode[1]);
 			break;
 		case MODE::SCALE:
-			if(targetConnectedMode[2]!=EMPTY_SLOT)
+			if(targetConnectedMode[2]!=NULL)
 				camera->GetTarget()->GetConnected<CamTargetScaler>(targetConnectedMode[2])->IsActive=true;
 			else
 				camera->GetTarget()->AddConnectable<CamTargetScaler>(&targetConnectedMode[2]);

@@ -13,7 +13,7 @@ class SkyBox :
 
 public:
 	enum WALLS : int
-	{left,right,front,rear,top,bottom};
+	{NoWall = -1,left=0,right=1,front=2,rear=3,top=4,bottom=5};
 	//SkyBox(void);
 	SkyBox(string = "FromDaCode");
 	virtual void InitializeObject(string ppmFileName, bool addToScene=true);
@@ -22,24 +22,23 @@ public:
 	virtual void draw(void);
 	virtual Vector3 scale(Vector3);
 	virtual Vector3 move(Vector3);
-	void LoadeHightMap(string filename,int chanel,int wall=-1);
-	void LoadeColorMap(string filename,int wall=-1);
-	
+	void LoadeHightMap(string filename,int chanel,int wall = -1);
+	void LoadeColorMap(string filename,int wall = -1);
+	virtual Transform* getTransform(void);
 
 private:
 	VoxGrid* walls[6];
-	void SetWallvConnection(WALLS);
+	void SetToWall(WALLS);
 };
 
 
 class SkyBoxConnector : public VoxControl
 {
 public:
-	virtual IGObject* Connection(void);
 	virtual VoxGrid* vConnection(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
-
+	
 	virtual void DoUpdate(void);
 
 };

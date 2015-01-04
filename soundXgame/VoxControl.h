@@ -33,25 +33,25 @@ public:
 	virtual VoxGrid* vConnection(void);
 	virtual void DoUpdate(void);
 
-	//template<typename V> V* Get(ConID id = NULL)
-	//{
-	//	if(id>=0)
-	//		(V*)getConnectables(id);
-	//	else
-	//	{
-	//		size_t t = typeid(V).hash_code();
-	//		if(typeid(this) != t)
-	//		{
-	//			for(int i=0;i<IConnectable::MaximumNumberOfConnections;i++)
-	//			{
-	//				if(ConIDs[i]==t)
-	//					return (V*)getConnectables(i);
-	//			}
-	//		}
-	//		else return this;
-	//	}
-	//	return false;
-	//}
+	template<typename V> V* Get(ConID id = NULL)
+	{
+		if(id>0)
+			(V*)getConnectables(id);
+		else
+		{
+			ConID t = (ConID)typeid(V).hash_code();
+			if(TypeHashCode != t)
+			{
+				for(int i=0;i<IConnectable::MaximumNumberOfConnections;i++)
+				{
+					if(ConIDs[i]==t)
+						return (V*)getConnectables(i);
+				}
+			}
+			else return this;
+		}
+		return false;
+	}
 
 };
 
