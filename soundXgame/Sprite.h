@@ -36,45 +36,44 @@ protected:
 	float	nextFrameTimer;
 
 public:
-	SpriteAnimation(string filename, int slicesW, int slicesH, int fps, bool backface=true)
-		{
-	nextFrameTimer=0;
-
-	SetFPS(fps);
-
-	verts.push_back(Vector3(-1,-1,0));
-	verts.push_back(Vector3(1,-1,0));
-	verts.push_back(Vector3(1,1,0));
-	verts.push_back(Vector3(-1,1,0));
-
-	FaceShape=GL_QUADS;
-
-	glm::vec3 temp1 = glm::vec3(0,0,-1);
-	glm::vec3 temp2 = glm::vec3(1,0,0);
-	glm::vec3 temp3 = glm::vec3(0,1,0);
-
-	transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
-	transform.right = temp2;
-	transform.up = temp3;
-
-	glGenBuffers(1, &vertexBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
-
-	LoadeTexture(filename,slicesW,slicesH);
-	SetName(filename);
-	SetID(SCENE->Add(this));
-	LockID();
-
-	this->NoBackfaceCulling = backface;
-	for(currentLoop=0;currentLoop<NUMBER_OF_LOOPS;currentLoop++)
-	{
-		LoopStart[currentLoop] = (FRAME_COUNT/NUMBER_OF_LOOPS)*currentLoop;
-		LoopEnd[currentLoop] = LoopStart[currentLoop] + ((FRAME_COUNT/NUMBER_OF_LOOPS)-1);
-	}
-	currentLoop=0;
-}
-
+						SpriteAnimation(string filename, int slicesW, int slicesH, int fps, bool backface=true)
+						{
+							nextFrameTimer=0;
+						
+							SetFPS(fps);
+						
+							verts.push_back(Vector3(-1,-1,0));
+							verts.push_back(Vector3(1,-1,0));
+							verts.push_back(Vector3(1,1,0));
+							verts.push_back(Vector3(-1,1,0));
+						
+							FaceShape=GL_QUADS;
+						
+							glm::vec3 temp1 = glm::vec3(0,0,-1);
+							glm::vec3 temp2 = glm::vec3(1,0,0);
+							glm::vec3 temp3 = glm::vec3(0,1,0);
+						
+							transform.forward = Vector3(temp1.x,temp1.y,temp1.z);
+							transform.right = temp2;
+							transform.up = temp3;
+						
+							glGenBuffers(1, &vertexBufferID);
+							glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+							glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(glm::vec3), &verts[0], GL_STATIC_DRAW);
+						
+							LoadeTexture(filename,slicesW,slicesH);
+							SetName(filename);
+							SetID(SCENE->Add(this));
+							LockID();
+						
+							this->NoBackfaceCulling = backface;
+							for(currentLoop=0;currentLoop<NUMBER_OF_LOOPS;currentLoop++)
+							{
+								LoopStart[currentLoop] = (FRAME_COUNT/NUMBER_OF_LOOPS)*currentLoop;
+								LoopEnd[currentLoop] = LoopStart[currentLoop] + ((FRAME_COUNT/NUMBER_OF_LOOPS)-1);
+							}
+							currentLoop=0;
+						}
 	void				SetFPS(int fps)
 						{
 							for(int i=0;i<FRAME_COUNT;i++)

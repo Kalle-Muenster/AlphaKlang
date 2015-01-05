@@ -4,39 +4,41 @@
 #include "MusicVox.h"
 
 
+
 SkyBox::SkyBox(string imagefilename)
 {
+	AlwaysFaceMovingdirection = false;
 	this->conXtor = new SkyBoxConnector();
 	this->conXtor->SetConnection(this);
 	InitializeObject(imagefilename);
 	SetID(SCENE->Add(this));
 	LockID();
 	
-	SetToWall(WALLS::NoWall);
-	//this->AddConnectable<MusicVox>();
-	AlwaysFaceMovingdirection = false;
+	SetToWall(WALLS::None);
+	this->AddConnectable<MusicVox>();
+	
 }
 
 void
 SkyBox::InitializeObject(string imagefilename,bool addToScene)
 {
-	transform.scale=Vector3(1,1,1);
+	transform.scale = Vector3(1,1,1);
 	transform.position = Vector3::zero;
 
 	walls[front] = new VoxGrid(imagefilename,false);
-//	walls[front]->conXtor->ConIDs[0] = (ConID)walls[front]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[front]->AlwaysFaceMovingdirection = false;
 	walls[front]->SetName("plane_front");
 	walls[front]->LoadeMap("drei_64x64.ppm",0);
 	walls[front]->move(-500,-250,-500);
 
 	walls[rear] = new VoxGrid(imagefilename,false);
-//	walls[rear]->conXtor->ConIDs[0] = (ConID)walls[rear]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[rear]->AlwaysFaceMovingdirection = false;
 	walls[rear]->SetName("plane_rear");
 	walls[rear]->LoadeMap("drei_64x64.ppm",0);
 	walls[rear]->move(-500,-250,500);
 
 	walls[left] = new VoxGrid(imagefilename,false);
-//	walls[left]->conXtor->ConIDs[0] = (ConID)walls[left]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[left]->AlwaysFaceMovingdirection = false;
 	walls[left]->SetName("plane_left");
 	walls[left]->LoadeMap("drei_64x64.ppm",0);
 	walls[left]->move(-500,-250,-500);
@@ -44,14 +46,14 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[left]->LoadeMap("drei_64x64.ppm",0);
 
 	walls[right] = new VoxGrid(imagefilename,false);
-//	walls[right]->conXtor->ConIDs[0] = (ConID)walls[right]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[right]->AlwaysFaceMovingdirection = false;
 	walls[right]->SetName("plane_right");
 	walls[right]->LoadeMap("drei_64x64.ppm",0);
 	walls[right]->move(-500,-250,500);
 	walls[right]->flip('z');
 
 	walls[top] = new VoxGrid(imagefilename,false);
-//	walls[top]->conXtor->ConIDs[0] = (ConID)walls[top]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[top]->AlwaysFaceMovingdirection = false;
 	walls[top]->SetName("plane_top");
 	walls[top]->LoadeMap("drei_64x64.ppm",0);
 	walls[top]->move(-500,500,-500);
@@ -59,7 +61,7 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[top]->flipZ();
 
 	walls[bottom] = new VoxGrid(imagefilename,false);
-//	walls[bottom]->conXtor->ConIDs[0] = (ConID)walls[bottom]->conXtor->ConnectConnectableInstance(this->conXtor);
+	walls[bottom]->AlwaysFaceMovingdirection = false;
 	walls[bottom]->SetName("plane_bottom");
 	walls[bottom]->LoadeMap("drei_64x64.ppm",0);
 	walls[bottom]->move(-500,-500,-500);
@@ -106,13 +108,19 @@ SkyBox::getTransform(void)
 void
 SkyBox::SetToWall(WALLS wall)
 {
-	conXtor->current = wall;
+	conXtor->current = (wall>=0 && wall<=5)? wall : WALLS::None;
 }
 
 VoxGrid*
 SkyBox::Wall(int wall)
 {
 	return walls[wall];
+}
+
+string
+SkyBox::CurrentWallName(void)
+{
+	return SkyBoxConnector::wallNames[conXtor->current];
 }
 
 void
@@ -141,8 +149,8 @@ SkyBox::scale(Vector3 s)
 	transform.scale=s;
 	for(int i=0;i<6;i++)
 	{
-		//	walls[i]->scale(s);
-		//	walls[i]->move(-500, i%3>0? i%4==1? 500 : -500 : -250 ,i%2>0? 500 : i%4>0? 500 : -500);
+			walls[i]->scale(s);
+			walls[i]->move((-500*s.x)+transform.position.x,((i%3>0? i%4==1? 500 : -500 : -250 )*s.y)+transform.position.y,((i%2>0? 500 : i%4>0? 500 : -500)*s.z)+transform.position.z);
 	}
 	return s;
 }
@@ -154,12 +162,14 @@ SkyBox::move(Vector3 p)
 	transform.position=p;
 	for(int i=0;i<6;i++)
 	{
-		//walls[i]->getTransform()
-		//walls[i]->move(-500,i%3>0? i%4==1? 500 : -500 : -250 ,i%2>0? 500 : i%4>0? 500 : -500);
+		walls[i]->move((-500*transform.scale.x)+p.x,((i%3>0? i%4==1? 500 : -500 : -250)*transform.scale.y)+p.y ,((i%2>0? 500 : i%4>0? 500 : -500)*transform.scale.z)+p.z);
 	}
 	return p;
 }
 
+
+char*
+SkyBoxConnector::wallNames[] = {"left", "right", "front", "rear", "top", "bottom" ,"None"};
 
 VoxGrid*
 SkyBoxConnector::vConnection(void)
@@ -172,7 +182,7 @@ SkyBoxConnector::vConnection(void)
 bool 
 SkyBoxConnector::Initialize(void)
 {
-	current = SkyBox::WALLS::NoWall;
+	current = SkyBox::WALLS::None;
 	TypeHashCode = (unsigned)typeid(SkyBoxConnector).hash_code();
 	InputManager::getInstance()->attachKey(this);
 	UpdateManager::getInstance()->SignInForUpdate(this);
@@ -184,11 +194,20 @@ SkyBoxConnector::keyPress(char key)
 {
 	if(SCENE->camera->GetTarget() == this->Connection())
 	{
-		if(key=='l')
+		if(key>='0' && key<'9')
+		{
+			if(lastKey!=key)
+			{
+				current=(key-48>=0 && key-48<=5)? key-48 : 6;
+				printf("SKYBOX: sellected wall: %s\n", wallNames[current]);
+			}
+			lastKey=key;
+		}
+		else if(key=='l')
 		{
 			if(lastKey!='l')
 			{
-				((SkyBox*)Connection())->LoadeHightMap(files[currentSellection],bumpmapchannel);
+				((SkyBox*)Connection())->LoadeHightMap(files[currentSellection],bumpmapchannel,current>5? -1:current);
 				if(++bumpmapchannel>3)
 				bumpmapchannel=0; 
 			}
@@ -207,7 +226,7 @@ SkyBoxConnector::keyPress(char key)
 		{
 			if(lastKey!='r')
 			{
-				((SkyBox*)Connection())->LoadeColorMap(files[currentSellection]);
+				((SkyBox*)Connection())->LoadeColorMap(files[currentSellection],current>5? -1:current);
 			}
 			lastKey='r';
 		}
@@ -235,8 +254,10 @@ SkyBoxConnector::DoUpdate(void)
 		}
 		for(int i=0;i<6;i++)
 		{
+			int currentWall = current;
 			current = i;
 			vConnection()->Get<VoxControl>()->DoUpdate();
+			current = currentWall;
 		}
 	}
 }

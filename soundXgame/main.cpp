@@ -174,7 +174,20 @@ void LoadContent(void)
 	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
 	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
 	(new SpriteAnimation<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
-	SCENE->Object("Q2animated")->move(0,0,0);
+	SCENE->Object("Q2animated")->move(0,5,0);
+	SCENE->Object("Q2animated")->IsGrounded(false);
+	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+Utility::GlobalZ*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+Utility::GlobalZ*10+Utility::GlobalX*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+Utility::GlobalX*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+(Utility::GlobalZ-Utility::GlobalX).normalized()*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+(Utility::GlobalZ+Utility::GlobalX).normalized()*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+(Utility::GlobalX-Utility::GlobalZ).normalized()*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+(-(Utility::GlobalX + Utility::GlobalZ)).normalized()*10);
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->SetSpeed(3);
+	SCENE->Object("Q2animated")->AlwaysFaceMovingdirection = true;
+	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
 	//press "R" to loade the sellected image as Image.
@@ -212,17 +225,8 @@ void LoadContent(void)
 	SCENE->Object("AUDIO02")->move(8,0,-2);
 	SCENE->Object("AUDIO02")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO02")->IsGrounded(true);
-	SCENE->Object("AUDIO02")->AddConnectable<ObjectMover<8>>();
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position);
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalZ);
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalZ+Utility::GlobalX);
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+Utility::GlobalX);
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalZ-Utility::GlobalX).normalized());
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalZ+Utility::GlobalX).normalized());
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(Utility::GlobalX-Utility::GlobalZ).normalized());
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("AUDIO02")->getTransform()->position+(-(Utility::GlobalX + Utility::GlobalZ)).normalized());
-	SCENE->Object("AUDIO02")->GetConnected<ObjectMover<8>>()->IsActive = true;
-	SCENE->Object("AUDIO02")->getTransform()->speed = 10;
+
+	
 
 	(new Cubus("X-7.png"))->SetName("AUDIO03");
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->LoadeSample("mp3/11-Audio.mp3");

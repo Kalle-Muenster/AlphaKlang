@@ -125,9 +125,10 @@ IMeshObject::SetTexture(Texture* tex)
 Vector3
 IMeshObject::move(Vector3 to)
 {
-	getTransform()->movement += (to - getTransform()->position);
-	getTransform()->position = to;
-	return getTransform()->position;
+	//getTransform()->movement = (to - getTransform()->position);
+	//getTransform()->position = to;
+	//return getTransform()->position;
+	return IGObject::move(to);
 }
 
 Vector3

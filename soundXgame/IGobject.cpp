@@ -102,33 +102,22 @@ IGObject::IsGrounded(bool status)
 Vector3 
 IGObject::move(Vector3 m) 
 {
-	getTransform()->movement+=( m - getTransform()->position);
-	//getTransform()->position = m;
+	getTransform()->movement = ( m - getTransform()->position);
 	if(AlwaysFaceMovingdirection)
 	{
-		Vector3 fow = getTransform()->movement.normalized();
-		Vector3 vec = ((getTransform()->position + fow)-(getTransform()->position + getTransform()->forward));
-		getTransform()->forward = fow; 
-		 printf("testoutput 1v = %f,%f,%f\n",fow.x,fow.y,fow.z);
-		fow = getTransform()->right=(((getTransform()->position+getTransform()->right)+vec)-m);
-		printf("testoutput 1r = %f,%f,%f\n",fow.x,fow.y,fow.z);
-		fow = getTransform()->up = (((getTransform()->position+getTransform()->up)+vec)-m);
-		 printf("testoutput 1u = %f,%f,%f\n\n",fow.x,fow.y,fow.z);
-		
-		vec = getTransform()->forward;
-		fow = getTransform()->right = -Vector3(-vec.y,vec.x,vec.z);
-		printf("testoutput 2r = %f,%f,%f\n",fow.x,fow.y,fow.z);
-		fow = getTransform()->up = -Vector3(vec.z,vec.x,-vec.y);
-	    printf("testoutput 2u = %f,%f,%f\n",fow.x,fow.y,fow.z);
-
+		Vector3 vec = getTransform()->movement.normalized();
+		getTransform()->forward = vec;
+		getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
+		getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
+		getTransform()->rotation = Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0);
 	}
+	
+	getTransform()->position = m;
 
 	#ifdef OBJECT_DEBUG_MESSAGES_ON
 		printf("OBJECT: %s-%i: moved to X: %f, Y: %f, Z: %f\n",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
 	#endif
 	return getTransform()->position;
-
-
 }
 
 Vector3 

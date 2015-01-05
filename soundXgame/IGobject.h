@@ -2,7 +2,7 @@
 #define __ISCHMENA_H__
 
 
-#define  OBJECT_DEBUG_MESSAGES_ON
+//#define  OBJECT_DEBUG_MESSAGES_ON
 
 #include <vector>
 #include "projectGrafics.h"
@@ -48,11 +48,11 @@ public:
 	virtual void	draw(void)=0;
 	Transform*		getTransform(void);
 	virtual Vector3 move(Vector3 m);
-	virtual Vector3 rotate(Vector3 r);
-	virtual Vector3 scale(Vector3 s);
 	virtual Vector3 move(float X,float Y,float Z);
+	virtual Vector3 rotate(Vector3 r);
 	virtual Vector3 rotate(float X,float Y,float Z);
 	virtual Vector3	rotate(float rotationAngle,Vector3 axis);
+	virtual Vector3 scale(Vector3 s);
 	virtual Vector3 scale(float X,float Y,float Z);
 	GobID			GetID(void);
 	char*			GetName(void);

@@ -13,12 +13,16 @@ private:
 	Vector3 waypoints[NUMBER_OF_WAYPOINTS];
 	short currentWaypoint;
 	short numberOfWaypoints;
-	float speed;
+	
 public:
 	ObjectMover(void)
 	{
 		currentWaypoint = -1;
 		numberOfWaypoints = 0;
+	}
+	void SetSpeed(float speed)
+	{
+		Connection()->getTransform()->speed = speed;
 	}
 	virtual bool Initialize(void)
 	{
@@ -36,17 +40,22 @@ public:
 	virtual ~ObjectMover(void)
 	{
 		UpdateManager::getInstance()->SignOutFromUpdate(this);
-	};
+	}
+
 	virtual void DoUpdate(void)
 	{
 		if(IsActive)
 		{
-			if((waypoints[currentWaypoint] - this->Connection()->getTransform()->position).GetLength() < 0.1)
+			float factor = (this->Connection()->getTransform()->speed * INPUT->FrameTime);
+			Vector3 vec = waypoints[currentWaypoint] - this->Connection()->getTransform()->position;
+			if(vec.GetLength() < 0.1)
 			{
 				if(++currentWaypoint == numberOfWaypoints)
 					currentWaypoint = 0;
 			}
-			this->Connection()->getTransform()->position += (this->Connection()->getTransform()->position.direction(waypoints[currentWaypoint]) *(this->Connection()->getTransform()->speed * INPUT->FrameTime));
+			vec = vec.normalized()*factor;
+			vec = this->Connection()->getTransform()->position + vec;
+			this->Connection()->move(vec);
 		}
 	}
 };

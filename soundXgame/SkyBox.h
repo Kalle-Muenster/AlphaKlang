@@ -13,8 +13,10 @@ class SkyBox :
 
 public:
 	enum WALLS : int
-	{NoWall = -1,left=0,right=1,front=2,rear=3,top=4,bottom=5};
-	//SkyBox(void);
+	{left,right,front,rear,top,bottom,None};
+	
+
+	string CurrentWallName(void);
 	SkyBox(string = "FromDaCode");
 	virtual void InitializeObject(string ppmFileName, bool addToScene=true);
 	virtual ~SkyBox(void);
@@ -38,8 +40,7 @@ public:
 	virtual VoxGrid* vConnection(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
-	
 	virtual void DoUpdate(void);
-
+	static char *wallNames[];
 };
 #endif
