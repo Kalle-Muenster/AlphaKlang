@@ -112,7 +112,7 @@ void InitGlut(void)
 	glutKeyboardUpFunc(keyboardUpInput);
 
 	// hide mouse cursor
-	glutSetCursor(GLUT_CURSOR_NONE); 
+	glutSetCursor(GLUT_CURSOR_LEFT_RIGHT); 
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
@@ -150,7 +150,7 @@ void GlInit(void)
 
 void ActionTest(IConnectable* sender)
 {
-	((AnimatedSprite<36,3> *)SCENE->Object("Q2animated"))->Action(sender);
+	guiding->area.SetPosition(0,0);
 }
 
 ConID testID;
@@ -161,7 +161,7 @@ void LoadContent(void)
 	guiding->LoadTexture("testbild_1600x900.png");
 	guiding->scale(Vector3(256,256,1));
 	guiding->AddConnectable<ButtonControl>();
-	
+	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;

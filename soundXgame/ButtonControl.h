@@ -23,9 +23,9 @@ private:
 	GLuint vertexBufferID;
 	Texture texture;
 	char btnState;
-
-public:
 	
+public:
+	static const char* States[];
 	enum ButtonState : char
 	{DISABLED,NORMAL,HOVER,PRESSED};
 	ButtonControl(void);
@@ -40,6 +40,7 @@ public:
 	ProjectMappe::Rectangle	Panel;
 	VectorF PositionOnPanel;
 	VectorF SizeScaledPanel;
+	ProjectMappe::Rectangle GetArea(void);
 	GLfloat angle;
 };
 

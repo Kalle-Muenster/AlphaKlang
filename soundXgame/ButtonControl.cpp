@@ -627,7 +627,8 @@ static const struct {
   "\232\232\204\231\231\231\204\231\231\231\204\220\220\220x",
 };
 
-
+ const char*
+ButtonControl::States[] = {"DISABLED","NORMAL","HOVER","PRESSED"};
 
 ButtonControl::ButtonControl(void)
 {
@@ -690,7 +691,7 @@ ButtonControl::DoEarly(void)
 	if(INPUT->Mouse.LEFT.RELEASE)
 		SetState(NORMAL);
 
-	if(((GuiObject*)Connection())->area.Containes(INPUT->Mouse.Position))
+	if(GetArea().Containes(INPUT->Mouse.Position))
 	{
 		SetState(HOVER);
 		if(INPUT->Mouse.LEFT.CLICK||INPUT->Mouse.LEFT.HOLD)
@@ -716,6 +717,18 @@ ButtonControl::DoEarly(void)
 		return true;
 	}
 
+	ProjectMappe::Rectangle
+	ButtonControl::GetArea(void)
+	{
+		ProjectMappe::Rectangle area = *ProjectMappe::Rectangle::Zero;
+		area.SetPosition(Panel.GetPosition() + PositionOnPanel);
+		VectorF size = Panel.GetSize();
+		size.x *= SizeScaledPanel.x;
+		size.y = size.x/4;
+		area.SetSize(size);
+		return area;
+	}
+
 	ButtonControl::ButtonState 
 	ButtonControl::GetState(void)
 	{
@@ -730,6 +743,8 @@ ButtonControl::DoEarly(void)
 
 			if(btnState==PRESSED)
 				ClickAction(this);
+
+			printf("ButtonState: %s...\n",States[btnState]);
 		}
 	}
 
