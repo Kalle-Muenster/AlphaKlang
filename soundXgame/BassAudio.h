@@ -29,6 +29,7 @@ public:
 	HCHANNEL GetSampleFromBank(unsigned);
 	HCHANNEL LoadeSampleToBank(unsigned &,const char* fileNaname);
 	static BassAudio* GetInstance(void);
+	static const char* start(void);
 	HSTREAM LoadeMusic(const char*,LOAD_MODE);
 	HCHANNEL Loade3DSample(const char*,bool loop = true);
 	void LoadeBackgroundAudio(const char*);// or musik...

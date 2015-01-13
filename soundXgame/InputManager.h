@@ -87,6 +87,7 @@ private:
 	InputManager(void);
 
 public:
+	static const char* start(void);
 	static InputManager* getInstance();
 	virtual ~InputManager(void);
 
@@ -94,12 +95,12 @@ public:
 	//Private Stuff...........................
 private:
 	//Invokation-Lists:
+	List<unsigned char, 30> keyList;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseMotionObservers;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
-	List<unsigned char, 30> keyList;
-	std::vector<IObserver*> mouseClickListener;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> mouseClickListener;
 	
 
 	/*private vars and functions

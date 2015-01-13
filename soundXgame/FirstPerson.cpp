@@ -1,7 +1,7 @@
 #include "FirstPerson.h"
 #include "projectMacros.h"
 
-int FirstPerson::StaticCamModeID = -1;
+int FirstPerson::ID = -1;
 
 
 FirstPerson::FirstPerson(void)
@@ -35,7 +35,7 @@ FirstPerson::Initialize(void)
 	INPUT->attachMouseMove(this);
 	INPUT->attachMouseWheel(this);
 	INPUT->attachSpecial(this);
-	StaticCamModeID = this->CamModeID();
+	ID = this->CamModeID();
 	accelerate = false;
 	return true;
 }

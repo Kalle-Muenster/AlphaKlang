@@ -1,7 +1,7 @@
 #ifndef _MESHOBJECT_H_
 #define _MESHOBJECT_H_
 
-#include "igobject.h"
+#include "Igobject.h"
 
 
 

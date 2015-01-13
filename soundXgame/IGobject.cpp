@@ -11,6 +11,8 @@
 static unsigned objIDs = 99;
 std::vector<GobID> usedIDs = std::vector<GobID>();
 
+
+
 bool
 _IDIsFree(GobID id)
 {
@@ -22,15 +24,16 @@ _IDIsFree(GobID id)
 
 IGObject::IGObject(void)
 {
+	
+	
 	IsVisible=true;
 	this->_idIsLocked=false;
 	this->ID=NULL;
-	conXtor = new IConnectable();
+	conXtor = new IConXtor();
 	conXtor->SetConnection(this);
 	GroundValue = 0;
 	IsGrounded(false);
 	AlwaysFaceMovingdirection=false;
-
 }
 
 IGObject::~IGObject(void)
@@ -80,6 +83,12 @@ IGObject::InitializeObject(bool addToSceneGraph)
 }
 
 
+void
+IGObject::Action(IConnectable* sender)
+{
+
+}
+
 GobID
 IGObject::GetID(void)
 {
@@ -87,84 +96,84 @@ IGObject::GetID(void)
 }
 
 // Ground
-bool
-IGObject::IsGrounded()
-{
-	return _isGrounded;
-}
-
-void
-IGObject::IsGrounded(bool status)
-{
-	_isGrounded = status;
-}
-
-Vector3 
-IGObject::move(Vector3 m) 
-{
-	getTransform()->movement = ( m - getTransform()->position);
-	if(AlwaysFaceMovingdirection)
-	{
-		Vector3 vec = getTransform()->movement.normalized();
-		getTransform()->forward = vec;
-		getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
-		getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
-		getTransform()->rotation = Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0);
-	}
-	
-	getTransform()->position = m;
-
-	#ifdef OBJECT_DEBUG_MESSAGES_ON
-		printf("OBJECT: %s-%i: moved to X: %f, Y: %f, Z: %f\n",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
-	#endif
-	return getTransform()->position;
-}
-
-Vector3 
-IGObject::rotate(Vector3 r) 
-{
-	getTransform()->rotation = r;
-	angle=0;
-	return getTransform()->rotation;
-}
-
-Vector3
-IGObject::rotate(float rotationAngle,Vector3 axis)
-{
-	return rotate(axis);
-	angle = rotationAngle;
-}
-
-Vector3 
-IGObject::scale(Vector3 s) 
-{
-	getTransform()->scale = s;
-	return getTransform()->scale;
-}
-
-Vector3 
-IGObject::move(float X,float Y,float Z)
-{
-	return move(Vector3(X,Y,Z));
-}
-
-Vector3 
-IGObject::rotate(float X,float Y,float Z)
-{
-	return rotate(Vector3(X,Y,Z));
-}
-
-Vector3 
-IGObject::scale(float X,float Y,float Z)
-{
-	return scale(Vector3(X,Y,Z));
-}
-
-
+//bool
+//IGObject::IsGrounded()
+//{
+//	return _isGrounded;
+//}
+//
+//void
+//IGObject::IsGrounded(bool status)
+//{
+//	_isGrounded = status;
+//}
+//
+//Vector3 
+//IGObject::move(Vector3 m) 
+//{
+//	getTransform()->movement = ( m - getTransform()->position);
+//	if(AlwaysFaceMovingdirection)
+//	{
+//		Vector3 vec = getTransform()->movement.normalized();
+//		getTransform()->forward = vec;
+//		getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
+//		getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
+//		getTransform()->rotation = Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0);
+//	}
+//	
+//	getTransform()->position = m;
+//
+//	#ifdef OBJECT_DEBUG_MESSAGES_ON
+//		printf("OBJECT: %s-%i: moved to X: %f, Y: %f, Z: %f\n",GetName(),GetID(),getTransform()->position.x,getTransform()->position.y,getTransform()->position.z);
+//	#endif
+//	return getTransform()->position;
+//}
+//
+//Vector3 
+//IGObject::rotate(Vector3 r) 
+//{
+//	getTransform()->rotation = r;
+//	angle=0;
+//	return getTransform()->rotation;
+//}
+// Vector3 
+//IGObject::rotate(float X,float Y,float Z)
+//{
+//	return rotate(Vector3(X,Y,Z));
+//}
+//Vector3
+//IGObject::rotate(float rotationAngle,Vector3 axis)
+//{
+//	return rotate(axis);
+//	angle = rotationAngle;
+//}
+//
+//Vector3 
+//IGObject::scale(Vector3 s) 
+//{
+//	getTransform()->scale = s;
+//	return getTransform()->scale;
+//}
+//
+//Vector3 
+//IGObject::move(float X,float Y,float Z)
+//{
+//	return move(Vector3(X,Y,Z));
+//}
+//
+//
+//
+//Vector3 
+//IGObject::scale(float X,float Y,float Z)
+//{
+//	return scale(Vector3(X,Y,Z));
+//}
 
 
 
-char* 
+
+
+const char* 
 IGObject::GetName(void)
 {
 	return &this->Name[0];
@@ -187,7 +196,7 @@ IGObject::SetName(char* name)
 Transform*
 IGObject::getTransform()
 {
-	return &This->transform;
+	return &transform;
 }
 
 
@@ -196,12 +205,5 @@ IGObject::operator IConnectable(void)
 	return *conXtor;
 }
 
-
-
-
-
-
-
 #undef This;
-
 

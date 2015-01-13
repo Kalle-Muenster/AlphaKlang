@@ -88,7 +88,8 @@
     <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="GuiObject.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="IDrawable.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="MusicListener.cpp" />
@@ -114,8 +115,10 @@
     <ClCompile Include="SpectrumAnalyzer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StrangeChaoticView.cpp" />
     <ClCompile Include="TargetGrabber.cpp" />
     <ClCompile Include="TestConectables.cpp" />
+    <ClCompile Include="ButtonControl.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -127,8 +130,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
+    <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="AudioObject.h" />
     <ClInclude Include="BassAudio.h" />
+    <ClInclude Include="ButtonControl.h" />
     <ClInclude Include="Cam.h" />
     <ClInclude Include="CameraModesIncluder.h" />
     <ClInclude Include="Collider.h" />
@@ -140,7 +145,8 @@
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FountainObject.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="GuiObject.h" />
+    <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="MusicController.h" />
@@ -172,7 +178,9 @@
     <ClInclude Include="SpectrumAnalyzer.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StrangeChaoticView.h" />
     <ClInclude Include="TargetGrabber.h" />
+    <ClInclude Include="There Are Four Buttons !!!!_256x256.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UpdateManager.h" />
     <ClInclude Include="Utility.h" />
@@ -204,6 +212,7 @@
     <None Include="sphere_quads_low.obi" />
     <None Include="sphere_tris_high.obi" />
     <None Include="sphere_tris_low.obi" />
+    <None Include="There Are Four Buttons !!!!_256x256.pgm" />
     <None Include="tr.ppm" />
     <None Include="ClassDiagram3.cd" />
     <None Include="tri_sphere.fbx" />
@@ -282,7 +291,7 @@
     <Image Include="Deckelblech-2.png" />
     <Image Include="Deckelblech-2s.png" />
     <Image Include="Deckelblech128-1.png" />
-    <Image Include="Deckelblech128-2.png" />
+    <Image Include="Deckelblech_128x128.png" />
     <Image Include="Deckelblech128-3channel.png" />
     <Image Include="Der Blaue Dunst.png" />
     <Image Include="framen_1920x1080.png" />
@@ -296,6 +305,7 @@
     <Image Include="Q2_1872x516.png" />
     <Image Include="q2_23.png" />
     <Image Include="testbild_1600x900.png" />
+    <Image Include="There Are Four Buttons !!!!_256x256.png" />
     <Image Include="X-3.png" />
     <Image Include="X-512.jpg" />
     <Image Include="X-7.png" />

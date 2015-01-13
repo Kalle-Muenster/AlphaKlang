@@ -24,7 +24,7 @@ public:
 		{	
 			Motivator+=10;
 			Motivator/=3;
-			this->Connection()->scale(Motivator,Motivator,Motivator);
+			((ILocatable*)this->Connection())->scale(Motivator,Motivator,Motivator);
 		}
 	}
 protected:

@@ -37,6 +37,7 @@ public:
 
 	UpdateManager(void);
 	virtual ~UpdateManager(void);
+	static const char* start(void);
 	static UpdateManager* getInstance(void);
 	
 	void SignInForEarlyUpdate(IUpdateble*);

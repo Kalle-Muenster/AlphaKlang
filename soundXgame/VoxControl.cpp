@@ -48,7 +48,7 @@ VoxControl::Initialize(void)
 void 
 VoxControl::keyPress(char key)
 {
-	if(SceneGraph::getInstance()->camera->GetTarget()==this->Connection())
+	if(((IObjection<IConnectable>*)SceneGraph::getInstance()->camera->GetTarget())==this->Connection())
 	{
 	if(key=='x')
 	{
@@ -164,7 +164,7 @@ VoxControl::DoUpdate(void)
 			lastKey='\0';
 		}
 	}
-	if(SceneGraph::getInstance()->camera->GetTarget()==this->Connection())
+	if(((IObjection<IConnectable>*)SceneGraph::getInstance()->camera->GetTarget())==this->Connection())
 	{
 		//if(SCENE->camera->mode<TargetGrabber>()->IsATargetGrabbed())
 		//	SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::OFF);

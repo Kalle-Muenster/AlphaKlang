@@ -4,7 +4,7 @@
 void
 YetiInteractive::keyPress(char key)
 {
-	if(this->Connection()->GetID() == (SCENE->camera->GetTarget()->GetID()) )
+	if(((IGObject*)this->Connection())->GetID() == (SCENE->camera->GetTarget()->GetID()) )
 	{
 		bool ismoving = false;
 		float X,Z;
@@ -32,7 +32,7 @@ YetiInteractive::keyPress(char key)
 		if(ismoving)
 			this->Connection()->move(X,this->Connection()->getTransform()->position.y,Z);
 
-		printf("\nKeypress (\"%c\") recieved in Object: %s !\n",key,this->Connection()->GetName());
+		printf("\nKeypress (\"%c\") recieved in Object: %s !\n",key,((IGObject*)this->Connection())->GetName());
 	}
 }
 

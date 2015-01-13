@@ -23,7 +23,7 @@ void
 SkyBox::InitializeObject(string imagefilename,bool addToScene)
 {
 	transform.scale = Vector3(1,1,1);
-	transform.position = Vector3::zero;
+	transform.position = *Vector3::Zero;
 
 	walls[front] = new VoxGrid(imagefilename,false);
 	walls[front]->AlwaysFaceMovingdirection = false;
@@ -102,7 +102,7 @@ SkyBox::draw(void)
 Transform*
 SkyBox::getTransform(void)
 {
-	return conXtor->current<0 ? &this->transform : walls[conXtor->current]->getTransform();
+	return (conXtor->current<0||conXtor->current>5) ? &this->transform : walls[conXtor->current]->getTransform();
 }
 
 void
@@ -192,7 +192,7 @@ SkyBoxConnector::Initialize(void)
 void 
 SkyBoxConnector::keyPress(char key)
 {
-	if(SCENE->camera->GetTarget() == this->Connection())
+	if(SCENE->camera->GetTarget() == (IGObject*)this->Connection())
 	{
 		if(key>='0' && key<'9')
 		{
@@ -241,7 +241,7 @@ SkyBoxConnector::keyPress(char key)
 void 
 SkyBoxConnector::DoUpdate(void)
 {	
-	if(SCENE->camera->GetTarget() == this->Connection())
+	if(SCENE->camera->GetTarget()->GetID() == this->Connection()->GetID())
 	{
 		if(lastKey!='\0')
 		{

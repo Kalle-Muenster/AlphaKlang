@@ -6,6 +6,7 @@
 #include "VoxGrid.h"
 #include "Fountain.h"
 #include "Sprite.h"
+#include "AnimatedSprite.h"
 #include "spectrumAnalyzer.h"
 #include "ScreenOverlay.h"
 #include "SkyBox.h"

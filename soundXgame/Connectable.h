@@ -1,28 +1,171 @@
 #ifndef _CONNECTABLE_H_
 #define _CONNECTABLE_H_
 
-#include "IGObject.h"
+//#include "IGObject.h"
 #include "Transform.h"
 
 struct Transform;
 
 #define MAXIMUM_NUMBER_OF_CONNECTIONS (10)
-#define EMPTY_SLOT (4294967295)
+#define EMPTY (4294967295u)
 
 typedef unsigned int ConID;
+class IConXtor;
 
+
+ class IDrawable
+{
+public:
+	bool IsVisible;
+	virtual void draw(void){};
+	virtual bool isVisible(BOOL=3);
+	data32 color;
+};
+
+ class ILocatable 
+{
+protected:
+	bool		_isGrounded;
+	Transform	transform;
+	float		GroundValue;
+	
+
+public:
+	ILocatable(void);
+	virtual Transform*	getTransform(void);
+	virtual Vector3		move(float X,float Y,float Z);
+	virtual Vector3		move(Vector3 p);
+	virtual Vector3		rotate(float X,float Y,float Z);
+	virtual Vector3		rotate(Vector3 r);
+	virtual Vector3		rotate(float rotationAngle,Vector3 rotationAxis);
+	virtual Vector3		scale(float X,float Y,float Z);
+	virtual Vector3		scale(Vector3 s);
+	bool				IsGrounded();
+	void				IsGrounded(bool status);
+	bool				AlwaysFaceMovingdirection;
+	float				angle;
+};
+
+
+class IConnectable;
+//class Kollective;
+//#include "Connectable.h"
+struct Transform;
+struct Vector3;
+
+
+typedef unsigned int GobID;
+typedef unsigned int ConID;
+
+template<class Objected>
+class IObjection : public ILocatable, public IDrawable
+{
+//#define this ((IObjection<Objected>*)this)
+public:
+	Objected* conXtor;
+
+
+	template<typename cT> cT* AddConnectable(void)
+	{
+		return this->conXtor->AddConnectable<cT>(); 
+	}
+	template<typename cT> cT* AddConnectable(ConID* id)
+	{
+		return conXtor->AddConnectable<cT>(id);
+	}
+	template<typename uT> uT* AddUnconnectable(void)
+	{
+		return (uT*)conXtor->AddConnectable<Connectable<uT>>();
+	}
+	template<typename cT> void Remove(ConID id=NULL)
+	{
+		if(this==NULL)
+			return;
+		if(id)
+			conXtor->RemoveConnected<cT>(id);
+		else
+			conXtor->RemoveConnected<cT>();
+	}
+	template<typename cT> cT* GetConnected(ConID id=EMPTY)
+	{
+		if(id == EMPTY) return this->conXtor->GetConnected<cT>();
+		else if(id == NULL) return this->conXtor->GetConnected<cT>(0);
+		else return this->conXtor->GetConnected<cT>(id);
+	}
+	template<typename cT> cT* Set(cT* connectableInstance)
+	{
+		return this->conXtor->ConnectConnectable<cT>(connectableInstance);
+	}
+	template<typename cT> cT* Disconnect(ConID id=EMPTY)
+	{
+		cT* detached = (id==EMPTY)? this->conXtor->GetConnected<cT>() :this->conXtor->GetConnected<cT>(id);
+		if(id==EMPTY) this->conXtor->Remove<cT>();
+		else this->conXtor->Remove<cT>(id);
+		return detached;
+	}
+
+	template<class cT> cT* GetOrAdd(void)
+	{
+		T* get = conXtor->GetConnected<cT>();
+		if(!get)
+			get = conXtor->AddConnectable<cT>();
+
+		return get;
+	}
+
+	virtual GobID GetID(void)
+	{
+		return GetConnected<IConXtor>(0)->GetID();
+	}
+
+	virtual const char* GetName(void)
+	{
+		return GetConnected<IConXtor>(0)->GetName();
+	}
+
+	virtual void SetName(char* name)
+	{
+		GetConnected<IConXtor>(0)->SetName(name);
+	}
+
+	operator IDrawable(void)
+	{
+		return GetOrAdd<Connectable<IDrawable>>();
+	}
+
+	operator ILocatable(void)
+	{
+		return GetOrAdd<Connectable<ILocatable>>();
+	}
+
+	virtual Transform* getTransform()
+	{
+		return ((ILocatable*)this)->getTransform();
+	}
+
+	virtual void draw(void)
+	{
+		((IDrawable*)this)->draw();
+	}
+
+	virtual IObjection<Objected>* Connection(void)
+	{
+		return this;
+	}
+//#undef this
+};
 
 class IConnectable
 {
 protected:
-	void AddCombiner(IGObject*,ConID*,ConID*,int);
+	void AddCombiner(void*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
 	unsigned TypeHashCode;
 
 public:
 	static int MaximumNumberOfConnectioms;
 	unsigned ConnectionID;
-	IGObject* connection;
+	void* connection;
 	bool _initialized;
 	IConnectable* Connectables[MAXIMUM_NUMBER_OF_CONNECTIONS];
 	unsigned ConnectTo(IConnectable*);
@@ -50,7 +193,7 @@ public:
 	//Returns the Connaction's owner...
 	//The "Main"-Object where all other Connectables are connected to
 	//or the "Head" of the Connection...
-	virtual IGObject* Connection(void);
+	virtual IObjection<IConnectable>* Connection(void);
 	
 	//StartUp-Initializer...
 	//override and put code in it for handling dependencies on other Components
@@ -59,6 +202,10 @@ public:
 	//than is Setup right, return "true" to let the Component enter it's normal Runtime-Cycling...
 	virtual bool Initialize(void)
 	{return true;}
+
+
+	void SetConnection(void*);
+	void SetConnection(IConnectable*);
 
 	//Adds a Component to the Object were its called on...
 	//the component later can be getted with the Objects "GetConnected<IConnectable>()"-function...
@@ -72,7 +219,7 @@ public:
 		if(ConIDs[i]==0)
 		{
 			IConnectable* newcon = new T();
-			newcon->SetConnection(this->connection);	
+			newcon->SetConnection((IObjection<IConnectable>*)this->connection);	
 			newcon->ConnectionID=typeid(T).hash_code(); 
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
@@ -176,7 +323,7 @@ public:
 	int GetNumberOfConnected(void);
 
 
-	template<typename T> T* AddConnectable(IGObject* gobject)
+	template<typename T> T* AddConnectable(IObjection<IConnectable>* gobject)
 	{
 
 	Not_hasInitialized();
@@ -208,8 +355,7 @@ public:
 	}
 
 
-	void SetConnection(IGObject*);
-	void SetConnection(IConnectable*);
+
 
 	// Link's two Conections conXtor<->conXtor-whise and returns a pointer to the newly Added Conection's ConID,
 	// wich then will contain this Conection's ConID-Key as it's value. the ConID of this Object
@@ -219,14 +365,14 @@ public:
 	// object at runtime. the new "merged" object will contain all functionality and Components-sets of both Instances it is merged from...
 	// -> calling "Conection()" on this Object's Components, will return this Object. (as usual..)
 	// -> calling "Conection()" on the other Object's Components, will also return this Object, (not the other Object itself)
-	ConID* AddConnection(IGObject* instance)
+	ConID* AddConnection(IObjection<IConnectable>* instance)
 	{
 		int x=0;
 		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 			if(ConIDs[i]==0)
 			{
 				for(int n = 0;n<MAXIMUM_NUMBER_OF_CONNECTIONS;n++)
-					if(instance->conXtor->ConIDs[n]==0)
+					if((instance)->conXtor->ConIDs[n]==0)
 					{
 						this->ConIDs[i]=n+1;
 						instance->conXtor->ConIDs[n]=i+1;
@@ -246,6 +392,46 @@ public:
 	}
 
 	
+};
+
+template<typename NonConnectableType> 
+class Connectable : public NonConnectableType ,  public IConnectable 
+{
+public:
+	virtual bool Initialize(void)
+	{
+		TypeHashCode = typeid(this).hash_code();
+		return true;
+	}
+};
+
+typedef void(*action)(IConnectable*);
+
+  class IConXtor : 
+	public IConnectable
+{
+private:
+	GobID ID;
+	char Name[64];
+	bool _idLocked;
+protected:
+
+	
+	unsigned SetID(unsigned);
+	bool LockID(unsigned);
+	action ConnectionAction;
+public:
+		IConXtor(void)
+		{
+			SetID(EMPTY);
+			connection = (IObjection<IConXtor>*)this;
+		}
+		virtual ~IConXtor(void);
+	GobID GetID(void);
+	const char* GetName(void);
+	void SetName(const char*);
+	virtual bool Initialize(void);
+
 };
 
 class cTransform :
@@ -275,6 +461,20 @@ public:
 	virtual ~TransformPointer(void);
 	virtual Transform* getTransform(void);
 	virtual operator Transform*();
+};
+
+
+ 
+
+class Dimensionality  : 
+	public IConnectable, 
+	public ITransform 
+{
+public:
+	Dimensionality(void);
+	virtual ~Dimensionality(void);
+	virtual bool Initialize(void);
+	Transform* getTransform(void);
 };
 
 

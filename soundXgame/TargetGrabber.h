@@ -26,7 +26,7 @@ public:
 	TargetGrabber::MODE Mode(TargetGrabber::MODE = TargetGrabber::MODE::get);
 	TargetGrabber(void);
 	virtual ~TargetGrabber(void);
-	static int StaticCamModeID;
+	static int ID;
 	virtual bool Initialize(void);
 	IGObject* GrabTarget(void);
 	bool IsATargetGrabbed(void);

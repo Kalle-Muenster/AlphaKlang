@@ -26,7 +26,7 @@ public:
 
 	FirstPerson(void);
 	virtual ~FirstPerson(void);
-	static int StaticCamModeID;
+	static int ID;
 	void UpdateHeight(float y);
 
 	virtual bool Initialize(void);

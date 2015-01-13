@@ -7,7 +7,7 @@
 #include "DataStructs.h"
 #include "VoxControl.h"
 #include "Transform.h"
-
+#include "IGobject.h"
 
 struct Vector3;
 

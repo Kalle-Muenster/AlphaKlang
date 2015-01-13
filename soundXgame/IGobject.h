@@ -6,29 +6,24 @@
 
 #include <vector>
 #include "projectGrafics.h"
-#include "DataStructs.h"
-#include "UpdateManager.h"
-
-class IConnectable;
-//class Kollective;
-//#include "Connectable.h"
-struct Transform;
-struct Vector3;
+#include "Connectable.h"
 
 
-typedef unsigned int GobID;
-typedef unsigned int ConID;
+//const unsigned int EMPTY = 4294967295u;
 
-class IGObject //: public IUpdateble
+
+
+class IGObject 
+	: public IObjection<IConXtor>
 {
 private:
 	GobID ID;
 	bool _idIsLocked;
-	bool _isGrounded;
+//	bool _isGrounded;
 	
 protected:
 
-	Transform	transform;
+//	Transform	transform;
 	char		Name[64];
 	bool		SetID(GobID);
 	unsigned	LockID(void);
@@ -37,55 +32,56 @@ protected:
 	
 
 	// Ground
-	float GroundValue;
+//	float GroundValue;
 
+	
 
 public:
 	IGObject(void);
 	virtual ~IGObject(void);
 	void			InitializeObject(bool addToSceneGraph=true);
-	bool			IsVisible;
-	virtual void	draw(void)=0;
-	Transform*		getTransform(void);
-	virtual Vector3 move(Vector3 m);
-	virtual Vector3 move(float X,float Y,float Z);
-	virtual Vector3 rotate(Vector3 r);
-	virtual Vector3 rotate(float X,float Y,float Z);
-	virtual Vector3	rotate(float rotationAngle,Vector3 axis);
-	virtual Vector3 scale(Vector3 s);
-	virtual Vector3 scale(float X,float Y,float Z);
-	GobID			GetID(void);
-	char*			GetName(void);
-	void			SetName(char*);
-	IConnectable*	conXtor;
+//	bool			IsVisible;
+//	virtual void	draw(void)=0;
+	virtual Transform*		getTransform(void);
+	//virtual Vector3 move(Vector3 m);
+	//virtual Vector3 move(float X,float Y,float Z);
+	//virtual Vector3 rotate(Vector3 r);
+	//virtual Vector3 rotate(float X,float Y,float Z);
+//	virtual Vector3	rotate(float rotationAngle,Vector3 axis);
+	//virtual Vector3 scale(Vector3 s);
+	//virtual Vector3 scale(float X,float Y,float Z);
+	virtual GobID	GetID(void);
+	virtual const char*	GetName(void);
+	virtual void	SetName(char*);
+//	IConXtor*	conXtor;
 	operator IConnectable();
 
 	float			SomeValue;
-	float			angle;
-	bool			AlwaysFaceMovingdirection;
-
+//	float			angle;
+//	bool			AlwaysFaceMovingdirection;
+	virtual void	Action(IConnectable* sender);
 	// Ground
-	bool IsGrounded();
-	void IsGrounded(bool status);
+//	bool IsGrounded();
+//	void IsGrounded(bool status);
+	
+	//template<typename T> T* AddConnectable(void)
+	//{
+	//	if(conXtor->GetConnected<T>()!=NULL)
+	//		return conXtor->GetConnected<T>();
 
-	template<typename T> T* AddConnectable(void)
-	{
-		if(conXtor->GetConnected<T>()!=NULL)
-			return conXtor->GetConnected<T>();
-
-		return conXtor->AddConnectable<T>();
-	}
-	template<typename T> T* AddConnectable(ConID*id)
-	{
-			return conXtor->AddConnectable<T>(id);
-	}
-	template<typename T> T* GetConnected(ConID id=NULL)
-	{
-		if(id)
-			return conXtor->GetConnected<T>(id);
-		else
-			return conXtor->GetConnected<T>();
-	}
+	//	return conXtor->AddConnectable<T>();
+	//}
+	//template<typename T> T* AddConnectable(ConID*id)
+	//{
+	//		return conXtor->AddConnectable<T>(id);
+	//}
+	//template<typename T> T* GetConnected(ConID id=NULL)
+	//{
+	//	if(id)
+	//		return conXtor->GetConnected<T>(id);
+	//	else
+	//		return conXtor->GetConnected<T>();
+	//}
 	template<typename T> bool HasConnected(void)
 	{
 		int i = -1;
@@ -96,17 +92,17 @@ public:
 		else
 			return false;
 	}
-	template<typename T> void Remove(ConID id=NULL)
-	{
-		if(this==NULL)
-			return;
-		if(id)
-			conXtor->RemoveConnected<T>(id);
-		else
-			conXtor->RemoveConnected<T>();
-		
-		
-	}
+	//template<typename T> void Remove(ConID id=NULL)
+	//{
+	//	if(this==NULL)
+	//		return;
+	//	if(id)
+	//		conXtor->RemoveConnected<T>(id);
+	//	else
+	//		conXtor->RemoveConnected<T>();
+	//	
+	//	
+	//}
 
 };
 

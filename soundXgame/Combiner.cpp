@@ -1,5 +1,6 @@
 #include "Combiner.h"
 #include "DataStructs.h"
+ #include "IGObject.h"
 
 Combiner::Combiner(void)
 {
@@ -24,5 +25,5 @@ Combiner::SetConiIDKeyPair(ConID* setter1,ConID* setter2)
 Transform*
 Combiner::getSubform(unsigned childIndex)
 {
-	return GetConnected<IConnectable>(*ConIDKeyPair[childIndex])->connection->getTransform();
+	return ((IGObject*)GetConnected<IConnectable>(*ConIDKeyPair[childIndex])->connection)->getTransform();
 }

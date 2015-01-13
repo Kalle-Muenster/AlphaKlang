@@ -2,34 +2,37 @@
 #include "projectMacros.h"
 #include "projectClasses.h"
 
-#include "ShaderObj.h"
+//#include "ShaderObj.h"
 #include "Musikubus.h"
-#include "ScreenOverlay.h"
-#include "GuiObject.h"
+//#include "ScreenOverlay.h"
+
 #include "ParticleSystem.h"
 
 
 #include <xercesc\dom\DOM.hpp>
 #include <xercesc\framework\LocalFileInputSource.hpp>
 
-#include "MusicInteractor.h"
-#include "MusicScaler.h"
-#include "Transform.h"
+
+//#define LATE_AFTER_DRAW
+#define LATE_BEFOR_DRAW
+
 
 //Global Declerations:
 int wnd;
 void* font;
 bool EXIT = false; 
+
 //Objects:
-//SpectrumAnalyzer* analyzer;
 Sprite* Framen;
 GuiObject* guiding;
 ScreenOverlay* overlay;
-//Fountain* fountain;
+
 //Functions:
+int prepareForExit(void);
 void InitGlut(void);
 void LoadContent(void);
 void GlInit(void);
+void InitEngine(void);
 void UpdateCycle(void);
 void RenderCycle(void);
 void OnDisplay(void);
@@ -41,10 +44,9 @@ void MouseWheelFunc(int,int,int,int);
 void processSpecialKeys(int,int,int);
 void keyboardInput(unsigned char,int,int);
 void keyboardUpInput(unsigned char,int,int);
-//void MouseHoverWindow(int);
 void GamePadFunc(unsigned,int,int,int);
-int prepareForExit(void);
-//void Render2D(void);
+
+
 
 //Entrypoint:
 int main(int argc,char** argv)
@@ -53,10 +55,22 @@ int main(int argc,char** argv)
 
 	InitGlut();
 	GlInit();
+	InitEngine();
 	LoadContent();
 
 	glutMainLoop();
 	return prepareForExit();
+}
+
+void InitEngine(void)
+{
+	ProjectMappe::StartupRuntimeManagers();
+
+	INPUT->SetDoubleclickTime(400);
+	
+	AUDIO->Set3D_DopplerFXFactor(0.25f);
+	AUDIO->Set3D_DistanceFactor(0.75f);
+	AUDIO->Volume(0);
 }
 
 int prepareForExit(void)
@@ -64,7 +78,6 @@ int prepareForExit(void)
 	glutExit();
 	//deletions:
 	ProjectMappe::GlobalDestructor();
-	//delete analyzer;
 	delete Framen;
 	delete overlay; 
 	delete guiding;
@@ -115,12 +128,18 @@ void GlInit(void)
 	glClearDepth(1);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE); // unnötig hier, weil bereits in IMeshObject::draw() ???
+	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+	// glDisable( GL_LIGHTING );
+	 glEnable( GL_DITHER );
+
+
+        // Disable dithering
+
+        
 	
     glEnable(GL_MULTISAMPLE_ARB); // enable Multisample Antialiasing
 	glEnable(GL_BLEND); // enable transparency
@@ -129,20 +148,20 @@ void GlInit(void)
 }
 
 
+void ActionTest(IConnectable* sender)
+{
+	((AnimatedSprite<36,3> *)SCENE->Object("Q2animated"))->Action(sender);
+}
+
 ConID testID;
-//int i1,i2,i3;
-//int cycle1 = 127;
-//int cycle2 = 255;
-//int cycle3 = 127;
 void LoadContent(void)
 {
 	
-	//guiding = new GuiObject();
-	//guiding->LoadTexture("testbild_1600x900.png");
-	INPUT->SetDoubleclickTime(400);
-	AUDIO->Set3D_DopplerFXFactor(0.25f);
-	AUDIO->Set3D_DistanceFactor(0.75f);
-	AUDIO->Volume(0);
+	guiding = new GuiObject();
+	guiding->LoadTexture("testbild_1600x900.png");
+	guiding->scale(Vector3(256,256,1));
+	guiding->AddConnectable<ButtonControl>();
+	
 	//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
@@ -155,8 +174,8 @@ void LoadContent(void)
 
 	// Gameplay Objects
 	Ground* ground = Ground::getInstance();
-	//Framen = new Sprite("framen_1920x1080.png");
-	
+	(new SkyBox())->SetName("Skybox");
+
 	//Fountain* fountain = new Fountain();
 	//fountain->SetPosition(Vector3(-40, 0, 0));
 	//fountain->size = 50;
@@ -170,10 +189,7 @@ void LoadContent(void)
 	//ShaderObj* shaderObj = new ShaderObj();
 
 
-
-	//(new Cubus("X-3.png", true, true))->SetName("Brummer");
-	//SCENE->Object("Brummer")->GetConnected<AudioEmitter>()->PlaySample(AUDIO->GetSampleFromBank(brummsound),true);
-	(new SpriteAnimation<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
+	(new AnimatedSprite<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
 	SCENE->Object("Q2animated")->IsGrounded(false);
 	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
@@ -188,6 +204,7 @@ void LoadContent(void)
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->SetSpeed(3);
 	SCENE->Object("Q2animated")->AlwaysFaceMovingdirection = true;
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
+
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
 	//press "R" to loade the sellected image as Image.
@@ -201,15 +218,22 @@ void LoadContent(void)
 //	SCENE->Object("plane_front")->AddConnectable<MusicVox>()->sensitivity = 200;
 
 
-	(new SkyBox())->SetName("Skybox");
+	
 
+   /*
+
+	(new GuiObject("Deckelblech_128x128.png"))->SetName("TestButton");
+	GUI2D->Element("TestButton")->AddConnectable<ButtonControl>();
+	GUI2D->Element("TestButton")->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
+	GUI2D->Element("TestButton")->area.SetPosition(100,100);
+	*/
 
 	//GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
 	//SCENE->Object(vox2)->SetName("VoxelPlane2");
 	//SCENE->Object(vox2)->AddConnectable<VoxControl>();
 	//SCENE->Object(vox2)->AddConnectable<MusicVox>();
 	//((VoxGrid*)SCENE->Object(vox2))->flip();
-
+	
 	
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
@@ -217,7 +241,7 @@ void LoadContent(void)
 	SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO01")->IsGrounded(true);
 	IMeshObject* meshObj;
-	meshObj = static_cast<IMeshObject*>(SCENE->Object("AUDIO01"));	
+	meshObj = (IMeshObject*)SCENE->Object("AUDIO01");	
 	meshObj->GroundedWithPivot = true;
 
 	(new Cubus("X-7.png"))->SetName("AUDIO02");
@@ -331,11 +355,7 @@ void LoadContent(void)
 	   
 
 	// Spectrum Analyzer
-	//analyzer = new SpectrumAnalyzer();
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
-	//analyzer->SetName("SpectrumAnalyzer");
-	//analyzer->AddConnectable<CamTargetRotator>();
-	SCENE->Object("SpectrumAnalyzer")->AddConnectable<CamTargetRotator>();
 	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -30.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
@@ -345,10 +365,8 @@ void LoadContent(void)
 	particleImages[1] = "particle2_128x128.png";
 	particleImages[2] = "particle3_128x128.png";
 
-	//(new FogMachine(particleImages))->SetName("DasNebel");
-	//SCENE->Object("DasNebel")->move(0,3,0);
-	//SCENE->Object("DasNebel")->IsGrounded(false);
-	(new ParticleSystem<500>("particle4_128x128.png"));
+
+	(new ParticleSystem<500>("particle4_128x128.png"))->SetName("ParticleSystem");
 	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
@@ -365,6 +383,8 @@ void LoadContent(void)
 	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
 
 	// Camera
+	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>();
+	
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
@@ -386,52 +406,19 @@ int switcher=0;
 
 //Main-Cycle:
 ////////////////////////////////////////////////////////
+
+
 /* the Main-Updatecall */
 void UpdateCycle(void)
 {
-	//color test flashing krams....
-	//if(cycle1<0||cycle1>255)
-	//	i1= -i1;
-	//if(cycle2<0||cycle2>255)
-	//	i2= -i2;
-	//if(cycle3<0||cycle3>255)
-	//	i3= -i3;
-
-	//cycle1+=i1;
-	//cycle2+=i2;
-	//cycle3+=i3;
-
-	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[1] = cycle1;
-	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[2] = cycle2;
-	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[3] = cycle3;
-	//((Cubus*)SCENE->Object((unsigned)1))->color.byte[0] = (255-cycle1);
-
-	//data32 col = ((Cubus*)SCENE->Object((unsigned)0))->color;
-	//printf("color: %i,%i,%i,%i\n",col.byte[1] ,col.byte[2] ,col.byte[3] ,col.byte[0] );
-	//___________________________________________________________
-
-
-	//Update:
 	UPDATE->DoTheUpdates();
 
-
+#ifdef LATE_BEFOR_DRAW
+		UPDATE->DoTheLateUpdates();
+#endif
 }
-void DrawGui(void)
-{
-	 //	glMatrixMode(GL_PROJECTION); 
-		//glPushMatrix(); 
-		//glLoadIdentity(); 
-		//gluOrtho2D(0,SCREENWIDTH,0,SCREENHEIGHT);
 
-		//glBegin(GL_QUADS);
 
-		//guiding->draw();
-		//
-		//glEnd();
-
-		//glPopMatrix();
-		//glMatrixMode(GL_MODELVIEW);
-}
 //The Main-Draw-Call...
 void RenderCycle(void)
 {
@@ -439,22 +426,15 @@ void RenderCycle(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SCENE->DrawAll();
-	//Render2D();
-	DrawGui();
+
+	SCENE->DrawGUI();
+
 	glutSwapBuffers();
 }
 
-//void Render2D(void)
-//{
-//	//glPushMatrix();
-//
-//
-//
-//	//glPopMatrix();
-//}
 
-//#define LATE_AFTER_DRAW
-#define LATE_BEFOR_DRAW
+
+
 
 //GL-DisplayCallbacks
 ////////////////////////////////////////////////////////
@@ -463,13 +443,7 @@ void OnDisplay(void)
 {
 	UpdateCycle();
 
-	#ifdef LATE_BEFOR_DRAW
-		UPDATE->DoTheLateUpdates();
-	#endif
-
 	RenderCycle();
-
-	//Render2D();
 
 	#ifdef LATE_AFTER_DRAW
 		UPDATE->DoTheLateUpdates();
@@ -502,28 +476,37 @@ void OnReshape(GLsizei size_x,GLsizei size_y)
 
 
 //Keyboard:
+unsigned char lastKey='\0';
 void keyboardInput(unsigned char key,int x,int y)
 {
 	/* Switches Cam-Modes..*/
 	if(key=='p')
 	{	
-		SCENE->camera->Mode(FIRSTPERSON);
+		if(lastKey!=key)
+			SCENE->camera->Mode(FIRSTPERSON);
 	}
-	if(key=='f')
+	else if(key=='f')
 	{	
-		SCENE->camera->Mode(FOLLOWTARGET);
+		if(lastKey!=key)
+			SCENE->camera->Mode(FOLLOWTARGET);
 	}
-	if(key=='o')
-		SCENE->camera->Mode(SPECTATOR);
-
-	if(key == 27) // ESC
+	else if(key=='o')
 	{
-		EXIT=true;
+		if(lastKey!=key)
+			SCENE->camera->Mode(SPECTATOR);
+	}
+	else if(key=='s')
+	{
+		if(lastKey!=key)
+			SCENE->camera->Mode(StrangeChaoticView::ID);
+	}
+	else if(key == 27) // ESC
+	{
+		if(lastKey!=key)
+			EXIT=true;
 	}
 
-	
-		
-
+	lastKey = key;
 	INPUT->registerKey(key);
 }
 
@@ -534,17 +517,6 @@ void keyboardUpInput(unsigned char key,int x,int y)
 
 void processSpecialKeys(int key, int xx, int yy)
 {
-	//if(key==GLUT_KEY_UP)
-	//{
-	//	fountain->sensitivity += 1;
-	//	printf("fountain-sensitivity: %f\n",fountain->sensitivity);
-	//}
-	//if(key==GLUT_KEY_DOWN)
-	//{
-	//	fountain->sensitivity -= 1;
-	//	printf("fountain-sensitivity: %f\n",fountain->sensitivity);
-	//}
-
 	INPUT->notifySpecialKey(key);
 }
 

@@ -3,21 +3,26 @@
 
 #include <vector>
 #include <iostream>
+#include <windows.h>
+#include <windef.h>
+
 #include "InputManager.h"
 #include "SceneGraph.h"
 #include "UpdateManager.h"
+#include "GuiManager.h"
 #include "BassAudio.h"
 #include "ObjectManagement.h"
 
-#define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()->size().x
-#define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->size().y
+#define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()->GetSize().x
+#define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->GetSize().y
 #define MAIMUM_NUMBER_OF_VOXELS (16384)
 #define CONTROLERPOLLINTERVAL (50)
 #define clrscr system("cls")
-#define M_PI 3.14159265358979323846
+#define M_PI (3.14159265358979323846)
+#define	EMPTY (4294967295u)
 
-#include <windows.h>
-#include <windef.h>
+
+
 
 
 
@@ -65,9 +70,17 @@
 	Playing Background-Musik and controling the master-output.
 	also Provides Getting FFT-Data for any audio chanel in Scene..
 */
-#define AUDIO  BassAudio::GetInstance()
+#define AUDIO BassAudio::GetInstance()
 
-#define OBJECT	ObjectManagement::getInstance();
+
+// GUI2D->
+/*
+  for drawing 2D-Textures, writing text and setting up buttons and sliders., etc... 
+  also should contain options for saving, loading, xml-serialization and such stuff soon...
+*/
+#define GUI2D GuiManager::getInstance()
+
+#define OBJECT ObjectManagement::getInstance()
 
 
 

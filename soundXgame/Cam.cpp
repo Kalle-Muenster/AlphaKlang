@@ -9,14 +9,13 @@
 bool 
 Cam::_shareAudioReciever = true;
 
-
 Cam::Cam(void) :
 	NumberOfModes(0),
 	_mode(1)
 {
 	this->transform.position = Vector3(0,1,5);
-	this->transform.rotation = Vector3::zero;
-	this->transform.movement = Vector3::zero;
+	this->transform.rotation = *Vector3::Zero;
+	this->transform.movement = *Vector3::Zero;
 	this->transform.scale = Vector3(1,1,1);
 	InitiateListener(&this->transform);
 
@@ -36,7 +35,6 @@ Cam::Cam(void) :
 	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
 	
 }
-
 
 bool
 Cam::IsShared(bool setter)
@@ -74,7 +72,7 @@ Cam::SetTarget(Vector3 *position)
 }
 
 IGObject*
-Cam::SetTarget(IGObject *targetObject)
+Cam::SetTarget(IObjection<IConnectable> *targetObject)
 {
 	//Mode(FOLLOWTARGET);
 	_distanceToTarget = transform.position.distance(targetObject->getTransform()->position);
@@ -85,13 +83,13 @@ Cam::SetTarget(IGObject *targetObject)
 	_targetObject->IsVisible=true;
 	
 	printf("CAMERA: Set %s-ID:%i As Camera-Target!\n",_targetObject->GetName(),_targetObject->GetID());
-	return _targetObject;
+	return (IGObject*)_targetObject;
 }
 
 IGObject* 
 Cam::GetTarget(void)
 {
-	return _targetObject;
+	return (IGObject*)_targetObject;
 }
 
 void
@@ -129,11 +127,6 @@ Cam::GetTargetPosition(void)
 	else
 		return transform.position;
 }
-
-
-
-
-
 
 Vector3		
 Cam::move(float x,float y,float z)
@@ -209,12 +202,19 @@ Cam::Aspect(GLfloat aspect)
 CAM_MODE
 Cam::Mode(CAM_MODE value)
 {
+	return Mode((int)value);
+}
+
+CAM_MODE
+Cam::Mode(int value)
+{
 //get():
 	if(value==set)
 		return (CAM_MODE)_mode;
 //set(value):
-	if(value != (CAM_MODE)_mode)
+	if(value != _mode)
 	{
+		string text = "CAMERA: Mode: %s activated!\n";
 		if(ModeSocket->Get<CameraMode>(value)->IsPrimarMode())
 		{
 			ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
@@ -223,20 +223,22 @@ Cam::Mode(CAM_MODE value)
 		}
 		else
 		{
-			ModeSocket->Get<CameraMode>(value)->IsActive = true;
+			bool activated = ModeSocket->Get<CameraMode>(value)->Activate(!ModeSocket->Get<CameraMode>(value)->IsActive);
+			if(!activated);
+				text = "CAMERA: Mode: %s deactivated!\n";
 		}
 		
-		printf("CAMERA: Mode: %s activated! !\n", ModeSocket->Get<CameraMode>(value)->ModeName);
+		printf(text, ModeSocket->Get<CameraMode>(value)->ModeName);
 		
 		UpdateView();
 	}
 }
-
-
+	
 void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
 {
-	glViewport(0, 0, INPUT->GetViewportRectangle()->size().x,INPUT->GetViewportRectangle()->size().y);
+	VectorF vec = INPUT->GetViewportRectangle()->GetSize();
+	glViewport(0, 0, vec.x,vec.y);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

@@ -27,7 +27,12 @@ protected:
 public:
 	Cam* camera;
 	char* ModeName;
-	bool IsActive;
+	virtual bool Activate(BOOL setter = 3)
+		{
+			if(setter<3)
+				IsActive=setter;
+			return IsActive;
+		}
 	bool IsDirty;
 	bool IsPrimarMode(void)
 	{return isPrimarMode;}
@@ -57,7 +62,7 @@ public:
 	virtual void SetConnection(IConnectable* camconnector)
 		{camera=((CameraMode*)camconnector)->camera;}
 
-	template<typename T> T* AddCameraMode(void)
+	template<typename C> C* AddCameraMode(void)
 	{
 
 	Not_hasInitialized();
@@ -65,27 +70,27 @@ public:
 	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 		if(ConIDs[i] == NULL)
 		{
-			T::StaticCamModeID = i+1;
-			CameraMode* newcon = new T();
+			C::ID = i+1;
+			CameraMode* newcon = new C();
 			newcon->SetConnection(this);
 			newcon->ConnectionID = ConIDs[i] = i+1;
-			newcon->ModeName = (char*)typeid(T).name();
-			setConnectables(i,(T*)newcon);
+			newcon->ModeName = (char*)typeid(C).name();
+			setConnectables(i,(C*)newcon);
 			NumberOfConnectedObjects++;
 			this->camera->NumberOfModes++;
-			return (T*)getConnectables(ConIDs[i]-1);
+			return (C*)getConnectables(ConIDs[i]-1);
 		}
 		return NULL;
 	}
 
-	template<typename T> T* Get(ConID id)
+	template<typename C> C* Get(ConID id)
 	{
-		return (T*)getConnectables(id-1);
+		return (C*)getConnectables(id-1);
 	}
 
-	template<typename T> T* GetCameraMode(void)
+	template<typename C> C* GetCameraMode(void)
 	{
-		return (T*)getConnectables(T::StaticCamModeID-1);
+		return (C*)getConnectables(C::ID-1);
 	}
 
 };
@@ -95,7 +100,7 @@ class Cam : public IWheelee,  public IAudioReciever
 private:
 	static bool				_shareAudioReciever;
 	Vector3					*_targetPosition;		//position vector the camera looks at if in FOLLOWTARGET-Mode...
-	IGObject*				_targetObject;
+	IObjection<IConnectable>*				_targetObject;
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;
@@ -115,7 +120,7 @@ public:
 	virtual GLfloat			Aspect(GLfloat = NULL);
 	Transform               transform;	
 	void		            SetTarget(Vector3* target);
-	IGObject*               SetTarget(IGObject* target);
+	IGObject*               SetTarget(IObjection<IConnectable>* target);
 	IGObject*				GetTarget(void);
 	Vector3					GetTargetPosition(void);
 	float					GetTargetDistance(void);
@@ -130,13 +135,14 @@ public:
 	virtual void			Update(void);
 	int						NumberOfModes; 
 	CAM_MODE                Mode(CAM_MODE = set);
+	CAM_MODE                Mode(int);
 	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
 	template<class cM> cM*	mode(CAM_MODE value=set)
-	{
-		if(value==set)
-			return ModeSocket->Get<cM>(Mode(set));
-		return ModeSocket->Get<cM>(value);
-	}
+							{
+								if(value==set)
+									return ModeSocket->Get<cM>(Mode(set));
+								return ModeSocket->Get<cM>(value);
+							}
 };
 
 #endif

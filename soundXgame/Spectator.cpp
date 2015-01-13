@@ -1,7 +1,7 @@
 #include "Spectator.h"
 
 
-int Spectator::StaticCamModeID = -1;
+int Spectator::ID = -1;
 float iX,Yps;
 
 
@@ -25,7 +25,7 @@ Spectator::Initialize(void)
 	delta=0;
 	rotary3 = *Vector3::Zero;
 	vec = *Vector3::Zero;
-	StaticCamModeID = this->CamModeID();
+	ID = this->CamModeID();
 
 	return true;
 }

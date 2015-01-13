@@ -1,7 +1,7 @@
 #ifndef __VECTOR__F
 #define __VECTOR__F
 
-//#include "DataStructs.h"
+typedef int BOOL;
 
 class VoxtructsInitiator
 {
@@ -39,6 +39,8 @@ public:
 	VectorF cros(VectorF other);
 	bool operator ==(VectorF other);
 	bool operator !=(VectorF other);
+	bool operator <(VectorF other);
+	bool operator >(VectorF other);
 	static const VectorF* const Zero;
 };
 	
@@ -49,8 +51,12 @@ public:
 	float *y;
 
 	operator VectorI();
-	VectorPF operator *(float s);
-	VectorPF operator /(float s);
+	operator VectorF();
+	void operator =(VectorF);
+	VectorF operator +(VectorPF);
+	VectorF operator -(VectorPF);
+	VectorF operator *(float s);
+	VectorF operator /(float s);
 	static const VectorPF* const Zero;
 };
 
@@ -59,23 +65,29 @@ namespace ProjectMappe
 	class Rectangle
 	{
 	private:
-		VectorF Position;
-		VectorF HalbSize;
+		VectorPF Center;
+		VectorPF HalbSize;
 	public:
 		Rectangle(void);
 		Rectangle(float,float,float,float);
-		VectorF position(void);
-		VectorF position(float,float);
-		VectorF position(VectorF);
-		VectorF size(void);
-		VectorF size(float,float);
-		VectorF size(VectorF);
-		VectorF center(void);
+		Rectangle(float*cX,float*cY,float*hW,float*hH);
+		VectorF GetPosition(void);
+		void SetPosition(float,float);
+		void SetPosition(VectorF);
+		VectorF GetSize(void);
+		void SetSize(float,float);
+		void SetSize(VectorF);
+		VectorF GetHalbSize(void);
+		VectorF GetCenter(void);
+		BOOL Containes(VectorF);
+
 		static const Rectangle *const Zero;
 	};
 
 	void GlobalDestructor(void);
+	void StartupRuntimeManagers(void);
 }
+
 
 //#define Rectangle ProjectMappe::Rectangle
 

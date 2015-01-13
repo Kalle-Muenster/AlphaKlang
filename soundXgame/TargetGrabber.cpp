@@ -60,12 +60,12 @@ TargetGrabber::Mode(TargetGrabber::MODE value)
 }
 
 int 
-TargetGrabber::StaticCamModeID = -1;
+TargetGrabber::ID = -1;
 
 bool
 TargetGrabber::Initialize(void)
 {
-	StaticCamModeID = this->CamModeID();
+	ID = this->CamModeID();
 	return true;
 }
 
@@ -173,7 +173,7 @@ CamTargetMover::mouseMotion(int x,int y)
 		IsActive=false;
 	else if(IsActive)
 	{
-			if(SCENE->camera->GetTarget() == this->Connection())
+		if(SCENE->camera->GetTarget()->GetID() == ((IGObject*)this->Connection())->GetID())
 			{
 				float distance = SCENE->camera->GetTargetDistance();
 				Vector3 targetDestination =  SCENE->camera->transform.position.direction(SCENE->camera->transform.rotation);
@@ -258,7 +258,7 @@ CamTargetScaler::DoUpdate(void)
 		IsActive=false;
 	else if(IsActive)
 	{
-		if(SCENE->camera->GetTarget() == this->Connection())
+		if(SCENE->camera->GetTarget() == (IGObject*)this->Connection())
 		{
 			vec = this->Connection()->getTransform()->scale;
 			

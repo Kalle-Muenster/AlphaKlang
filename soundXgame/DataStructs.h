@@ -7,7 +7,11 @@
 #include "VoxelVector.h"
 #include "List.h"
 
-typedef char* string;
+typedef char*          string;
+typedef unsigned int   GobID;
+typedef unsigned int ConID;
+//typedef short          BOOL;
+//typedef void           (*action)(IConnectable*);
 
 struct Texture 
 {
@@ -76,7 +80,6 @@ public:
 	Vector3(glm::vec3);
 	Vector3(BASS_3DVECTOR);
 	static const Vector3* const Zero;
-	static Vector3 zero;
 	float dot(Vector3);
 	Vector3 cros(Vector3);
 	float distance(Vector3);
@@ -123,12 +126,11 @@ typedef data32* Union32;
 struct Data32
 {
 protected:
-	
+	data32 data;
 	virtual void BaseInitor(void);
 public:
-	data32 data;
 	Data32(void);
-	data32 GetUnion(void);
+	Union32 GetUnion(void);
 	virtual ~Data32(void);
 };
 
@@ -149,21 +151,7 @@ public:
 	~Sample(void);
 };
 
-typedef unsigned char* chan;
 
-class Color : Data32
-{
-protected:
-	virtual void initor(void);
-public:
-	Color(void);
-	Color(unsigned);
-	Color(int r,int g,int b,int a);
-	chan R,G,B,A;
-	unsigned* uInt;
-	chan operator[] (int index);
-	~Color(void);
-};
 
 
 union Data64

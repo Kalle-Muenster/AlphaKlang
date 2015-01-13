@@ -10,8 +10,7 @@ const Vector3 _zeroVec3 = Vector3(0,0,0);
 const Vector3*const
 Vector3::Zero = &_zeroVec3;
 
-Vector3
-Vector3::zero = _zeroVec3;
+
 
 Vector3::Vector3(void)
 {
@@ -204,7 +203,6 @@ Vector3::operator[](int index)
 void
 Data32::BaseInitor(void)
 {
-	data = data32();
 	data.u32 = 0;
 }
 
@@ -214,10 +212,10 @@ Data32::Data32(void)
 	BaseInitor();
 }
 
-data32
+data32*
 Data32::GetUnion(void)
 {
-	return data;
+	return &data;
 }
 
 Data32::~Data32(void)
@@ -225,50 +223,7 @@ Data32::~Data32(void)
 	
 }
 
-Color::Color(void)
-{
-	
-}
 
-void
-Color::initor(void)
-{
-	R = &data.byte[1];
-	G = &data.byte[2];
-	B = &data.byte[3];
-	A = &data.byte[0];
-	uInt = &data.u32;
-}
-
-Color::Color(unsigned uint)
-{
-	data.u32 = uint;
-	initor();
-}
-
-Color::Color(int r,int g, int b, int a)
-{
-	data.byte[0] = a;
-	data.byte[1] = r;
-	data.byte[2] = g;
-	data.byte[3] = b;
-	initor();
-}
-
-chan
-Color::operator[] (int index)
-{
-	return (&this->data.byte[index]);
-}
-
-Color::~Color(void)
-{
-	//delete R;
-	//delete G;
-	//delete B;
-	//delete A;
-	//delete uInt;
-}
 
 
 Sample::Sample(void)

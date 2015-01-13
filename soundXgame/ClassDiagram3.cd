@@ -31,39 +31,15 @@
   <Class Name="BassAudio" Collapsed="true">
     <Position X="24.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GgAggAAAAALEAAgAEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
+      <HashCode>GgAggAAAAALEAAggEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Cam" Collapsed="true">
-    <Position X="7.75" Y="12" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IIQAAUDgAIQUQECAAgAQAAEAEAAEAQBCABAgBAAQBCI=</HashCode>
-      <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Combiner" Collapsed="true">
     <Position X="11.75" Y="6.25" Width="1.5" />
-    <InheritanceLine Type="IConnectable" ManuallyRouted="true" FixedFromPoint="true">
-      <Path>
-        <Point X="7.5" Y="1.812" />
-        <Point X="7.5" Y="5.587" />
-        <Point X="8.417" Y="5.587" Type="JumpStart" />
-        <Point X="8.583" Y="5.587" Type="JumpEnd" />
-        <Point X="12.5" Y="5.587" />
-        <Point X="12.5" Y="6.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AgQAAAAAAAACAAAAAAAAIBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Combiner.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IConnectable" Collapsed="true">
-    <Position X="6.5" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAIIgAACIAIUEwHACBIAEAgDAAACAAAAIBQFAAAAA=</HashCode>
-      <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CTransform" Collapsed="true">
@@ -88,13 +64,6 @@
     <TypeIdentifier>
       <HashCode>AAQAAAACgAAAAAAAQAIIIAAAgAAAUCQNAoBgIQCAFCA=</HashCode>
       <FileName>Ground.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IGObject" Collapsed="true">
-    <Position X="2.5" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAIAAAAAAgAkELCAAIQhAQCAQAECAAAAgAGSFBQFQA=</HashCode>
-      <FileName>IGObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="IMeshObject" Collapsed="true">
@@ -195,7 +164,7 @@
   <Class Name="InputManager" Collapsed="true">
     <Position X="28" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAmYQAGAAFBgAsEUCADIBEAAAQEQAUgAgQAIAAECEc=</HashCode>
+      <HashCode>ABAmYQAGAAFBgAskUCADIBEAAAQEQAUgAgQAIAAECEc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -209,7 +178,7 @@
   <Class Name="SceneGraph" Collapsed="true">
     <Position X="6.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYQAAAAAgAIBAggAAAABAAAAAEAEAQIAQABAIAQAAA=</HashCode>
+      <HashCode>AIYQAAAAAgAIBAggAAAABAAAAAEAEAQIAQADAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -262,7 +231,7 @@
   <Class Name="Utility" Collapsed="true">
     <Position X="29.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAIBABCAAAiAAAAgAEAAAAABAAABwAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAIBABCABAiAAAAgAEAAAAABIAABwAAAAAAAAA=</HashCode>
       <FileName>Utility.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -287,6 +256,27 @@
       <FileName>VoxGrid.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Cam" Collapsed="true">
+    <Position X="7.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIQAAUDgAIQUQECAAgAQAAEAEAAEAQBCABAgBAAQBCI=</HashCode>
+      <FileName>Cam.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IGObject" Collapsed="true">
+    <Position X="2.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAgEICAAAAgAQAAAAACAAAAgAGQAAQFQQ=</HashCode>
+      <FileName>IGObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IConnectable" Collapsed="true">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAIIgAACIAIUEwHACBIAEAgDAAACAAAAIBQFAAAAA=</HashCode>
+      <FileName>Connectable.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="ListenerData" Collapsed="true">
     <Position X="26.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
@@ -304,7 +294,7 @@
   <Struct Name="Vector3" Collapsed="true">
     <Position X="26.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQgAAAAAAIAAIAAABAAJAQAAAUEAAAQIAAFgAQAAAAA=</HashCode>
+      <HashCode>AQgAAAAAAIAAIAAABAAIAQAAAUEAAAQIAAFgAQAAAAA=</HashCode>
       <FileName>DataStructs.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -339,17 +329,10 @@
   <Struct Name="VectorPF" Collapsed="true">
     <Position X="24.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAABgAAAAAAA=</HashCode>
+      <HashCode>AIAAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Typedef Name="GobID" Collapsed="true">
-    <Position X="28" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IGObject.h</FileName>
-    </TypeIdentifier>
-  </Typedef>
   <Typedef Name="ListenerFunc" Collapsed="true">
     <Position X="29.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
@@ -376,6 +359,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Utility.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="GobID" Collapsed="true">
+    <Position X="28" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Enum Name="FFT_SIZE" Collapsed="true">

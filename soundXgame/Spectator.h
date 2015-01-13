@@ -5,11 +5,13 @@
 #include "Cam.h"
 //#include "CameraMode.h"
 
-class Spectator : public CameraMode , public IInteractive
+class Spectator : 
+	public CameraMode, 
+	public IInteractive
 {
 
 protected:
-	virtual void			UpdateMode(void);		// Updates all datachanges in this Cam-Mode...
+	virtual void UpdateMode(void);		// Updates all datachanges in this Cam-Mode...
 	bool cameraWillMove;
 	Vector3 vec;
 	Vector3 rotary3;
@@ -19,7 +21,7 @@ public:
 
 	Spectator(void);
 	virtual ~Spectator(void);
-	static int StaticCamModeID;
+	static int ID;
 	virtual bool Initialize(void);
 //	Cubus* CamCubus;
 	virtual void keyPress(char key);

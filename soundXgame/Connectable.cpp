@@ -3,6 +3,7 @@
 #include "Combiner.h"
 #include "DataStructs.h"
 #include "Connectable.h"
+#include "projectMacros.h"
 
 int
 IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
@@ -50,15 +51,15 @@ IConnectable::~IConnectable(void)
 
 
 void
-IConnectable::AddCombiner(IGObject* obje,ConID* id1,ConID* id2,int componentSlot)
+	IConnectable::AddCombiner(void* igobject,ConID* id1,ConID* id2,int componentSlot)
 {
 		setConnectables(componentSlot,(new Combiner())->SetConiIDKeyPair(id1,id2));
 }
 
-IGObject* 
+IObjection<IConnectable>* 
 IConnectable::Connection(void)
 {
-	return this->connection;
+	return (IObjection<IConnectable>* )this->connection;
 }
 
 IConnectable*
@@ -82,7 +83,7 @@ IConnectable::GetNumberOfConnected(void)
 }
 
 void 
-IConnectable::SetConnection(IGObject* gobject)
+	IConnectable::SetConnection(void* gobject)
 {
 	connection=gobject;
 	ConnectionID=0;
@@ -151,4 +152,201 @@ cTransform::Initialize(void)
 //	this->testTransform = *ITransform::Zero;
 //	this->useTestTransform = false;
 	return	true;
+}
+
+
+
+  IConXtor::~IConXtor()
+  {
+
+  }
+
+bool
+IConXtor::Initialize(void)
+{
+	return LockID(SetID(SCENE->Add((IDrawable*)this->Connection())));
+}
+
+const char* 
+IConXtor::GetName(void)
+	{
+		 return &this->Name[0];
+	}
+
+void 
+IConXtor::SetName(const char* name)
+	{
+		this->Name[63]='\0';
+		char i = 0;
+		do this->Name[i] = name[i];
+		while( (++i<63) && (Name[i-1]!='\0') );
+	}
+
+
+unsigned 
+IConXtor::SetID(unsigned id)
+{
+	if(!_idLocked)
+		this->ID = id;
+
+	return this->ID;
+}
+
+GobID
+IConXtor::GetID(void)
+{
+	return this->ID;
+}
+
+bool
+IConXtor::LockID(unsigned lockTO)
+{
+	if(ID==EMPTY)
+		lockTO = ID = ObjectManagement::getInstance()->GenerateID();
+	else if(ID==lockTO)
+		this->_idLocked=true;
+
+	return _idLocked;
+}
+
+Dimensionality::Dimensionality(void)
+{
+	dimension.position = *Vector3::Zero;
+	dimension.rotation = *Vector3::Zero;
+	dimension.scale =	 *Vector3::Zero;
+	dimension.DimensionDirty=false;
+
+	direction.forward = Utility::GlobalZ;
+	direction.right =	Utility::GlobalX;
+	direction.up =		Utility::GlobalY;
+	direction.DirectionsDirty=false;
+
+	physics.movement	= *Vector3::Zero;
+	physics.thickness	= 0.5;
+	physics.depth		= 1;
+	physics.speed.SetUp(Controlled<float>::ControllMode::Clamp,-10,100,0.1,0);
+}
+
+Dimensionality::~Dimensionality(void)
+{
+	physics.speed.~ControlledFloat();
+}
+
+bool 
+Dimensionality::Initialize(void)
+{
+	return true;
+}
+
+Transform* 
+Dimensionality::getTransform(void)
+{
+	Transform t;
+	t.position = dimension.position;
+	t.rotation = dimension.rotation;
+	t.scale = dimension.scale;
+	t.movement = physics.movement;
+	t.speed = (float)physics.speed;
+	t.forward = direction.forward;
+	t.right = direction.right;
+	t.up = direction.up;
+
+	return &t;
+}
+
+ bool
+IDrawable::isVisible(BOOL setter)
+{
+	if(setter<3)
+		IsVisible = setter;
+	return IsVisible;
+}
+
+
+ILocatable::ILocatable(void)
+{
+	transform.position = *Vector3::Zero;
+	transform.rotation = *Vector3::Zero;
+	transform.scale	   =  Vector3(1,1,1);
+	transform.forward  =  Utility::GlobalZ;
+	transform.right    =  Utility::GlobalX;
+	transform.up       =  Utility::GlobalY;
+	transform.movement = *Vector3::Zero;
+	transform.speed	   =  0;
+	GroundValue		   =  0;
+	angle			   =  0;
+	_isGrounded		   =  false;
+	AlwaysFaceMovingdirection = false;
+}
+
+
+
+Transform*
+ILocatable::getTransform(void)
+{
+	return &transform;
+}
+
+
+Vector3 
+ILocatable::move(float X,float Y,float Z)
+			{return move(Vector3(X,Y,Z));}
+Vector3 
+ILocatable::move(Vector3 p)
+					{
+						getTransform()->movement = p - getTransform()->position;
+							if(AlwaysFaceMovingdirection)
+							{
+								Vector3 vec = getTransform()->movement.normalized();
+								getTransform()->forward = vec;
+								getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
+								getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
+								getTransform()->rotation = Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0);
+							}
+						getTransform()->position = p;
+						return p;
+					}
+
+
+
+
+
+Vector3		
+ILocatable::rotate(float rotationAngle,Vector3 rotationAxis)
+					{
+						angle=rotationAngle;
+						getTransform()->rotation = rotationAxis;
+						return rotationAxis;
+					}
+Vector3
+ILocatable::rotate(Vector3 r)
+					{
+						getTransform()->rotation = r;
+						angle=0;
+						return r;
+					}
+ Vector3 
+ILocatable::rotate(float X,float Y,float Z)
+			{return rotate(Vector3(X,Y,Z));}
+
+Vector3 
+ILocatable::scale(float X,float Y,float Z)
+			{return scale(Vector3(X,Y,Z));}
+Vector3 
+ILocatable::scale(Vector3 s)
+					{
+						getTransform()->scale = s;
+						return s;
+					}
+	
+bool
+ILocatable::IsGrounded()
+{
+	return _isGrounded;
+}
+
+void
+ILocatable::IsGrounded(bool status)
+{
+	_isGrounded = status;
 }

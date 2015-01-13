@@ -1,6 +1,6 @@
 #include "Sprite.h"
 #include "TargetGrabber.h"
-
+#include "projectMacros.h"
 
 
 
@@ -55,6 +55,30 @@ Sprite::Sprite(Texture particle,bool addToScene)
 
 Sprite::Sprite(char* filename,bool addToScene)
 {
+	SetUp(filename,true,addToScene);
+}
+
+
+Sprite::~Sprite(void)
+{
+
+}
+
+Texture*
+Sprite::GetTexture(void)
+{
+	return &texture;
+}
+
+void 
+Sprite::SetTexture(Texture tex)
+{
+	texture=tex;
+}
+
+void 
+Sprite::SetUp(string textureFile,bool backFace,bool addToScene)
+{	
 	verts.push_back(Vector3(-1,1,0));
 	verts.push_back(Vector3(1,1,0));
 	verts.push_back(Vector3(1,-1,0));
@@ -88,39 +112,17 @@ Sprite::Sprite(char* filename,bool addToScene)
 
 	IGObject::InitializeObject(addToScene);
 	
-	SetUp(filename,true);
-	SetName(filename);
-	if(!addToScene)
-		LockID();
-
-	SomeValue = 0;
-}
-
-
-Sprite::~Sprite(void)
-{
-
-}
-
-Texture*
-Sprite::GetTexture(void)
-{
-	return &texture;
-}
-
-void 
-Sprite::SetTexture(Texture tex)
-{
-	texture=tex;
-}
-
-void 
-Sprite::SetUp(string textureFile,bool backFace)
-{	
 	LoadTexture(textureFile);
 	this->NoBackfaceCulling = backFace;
 
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
+	SetName(textureFile);
+	
+	if(!addToScene)
+		LockID();
+
+	SomeValue = 0;
+
 }
 
 void 
@@ -138,14 +140,3 @@ Sprite::SetSomeValue(float value)
 	this->SomeValue = value;
 }
 
-void 
-Sprite::draw(void)
-{
-	Transform temp = *getTransform();
-	for(int i = 0;i<3;i++)
-	{
-		IMeshObject::draw();
-		getTransform()->position.x-=2;
-	}
-	getTransform()->position = temp.position;
-}

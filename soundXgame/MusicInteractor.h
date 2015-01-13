@@ -63,7 +63,7 @@ protected:
 				temp.x += Motivator*value/2;
 				temp.y -= Motivator*value/2.2;
 				temp.z += Motivator*value/1.8;
-				this->Connection()->rotate(temp);
+				((IGObject*)this->Connection())->rotate(temp);
 				
 				break;
 			case 2:

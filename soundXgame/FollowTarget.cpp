@@ -1,6 +1,6 @@
 #include "FollowTarget.h"
 
-int FollowTarget::StaticCamModeID = -1;
+int FollowTarget::ID = -1;
 
 FollowTarget::FollowTarget(void)
 {
@@ -17,7 +17,7 @@ bool
 FollowTarget::Initialize(void)
 {
 	
-	StaticCamModeID = this->CamModeID();
+	ID = this->CamModeID();
 	return true;
 }
 
@@ -43,7 +43,7 @@ FollowTarget::SetTarget(Vector3 *position)
 IGObject*
 FollowTarget::SetTarget(IGObject *targetObject)
 {
-	return camera->SetTarget(targetObject);
+	return camera->SetTarget((IObjection<IConnectable> *)targetObject);
 }
 
 IGObject* 

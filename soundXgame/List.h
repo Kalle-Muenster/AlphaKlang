@@ -6,26 +6,65 @@
 //A List of variables of type <ListMember> , with a maximum amount of <MAXIMUM_SIZE> 
 template<class ListMember,const unsigned MAXIMUM_SIZE> class List
 {
+typedef unsigned ListMemberID;
+
+protected:
+	ListMember list[MAXIMUM_SIZE];
+	int numberOfMember;
+	ListMemberID highestSlotNumberInUse;
+	ListMember Nulled;
+
 public:
-	typedef unsigned ListMemberID;
-	
+	bool MemberArePointers;
 	// Constructs a new list-instance..
 	List(void)
 	{
 		numberOfMember = 0;
 		highestSlotNumberInUse = 0;
+		
+
+		//check if ListMember are class-pointers or valuetypes
+		MemberArePointers = Utility::StringCompareRecursive( typeid(ListMember).name(),"class ") >= 6; 
+
+		//if it' a pointer-list set each slot to NULL
+		if(MemberArePointers)
+			Nulled = NULL;
+		else try
+		{	//try instanciating a variable of ListMembertype by using it's standardconstructor, for using it as NULL-sign..
+			Nulled = ListMember();
+		}
+		catch(...)
+		{	//if does'nt work: Allert!
+			std::cout<<"ERROR: when using valuetypes as listmember, use the \"List<type,count>(type NullInstance)\" - constructor !...";
+			throw"LueckList: error while initializing. use a different constructor...";
+		}
+
+		//Initialize the List's dataarray with the desired Nulled value
+		//for signing it as unused empty...
 		for(int i=0;i<MAXIMUM_SIZE;i++)
-			list[i] = NULL;
+			list[i] = Nulled;	
 	}
+
+	//Construct a new Listinstance and initialize it's data-array to the given value...
+	List(ListMember NullValue)
+	{
+		numberOfMember = 0;
+		highestSlotNumberInUse = 0;
+		MemberArePointers = MemberArePointers = Utility::StringCompareRecursive( typeid(ListMember).name(),"class ") >= 6;
+		for(int i=0;i<MAXIMUM_SIZE;i++)
+			list[i] = NullValue;	 
+
+	}
+
 
 	// Distroy's all the list's members when the list is beeing distroyed... 
 	virtual ~List(void)
 	{
-		if(typeid(ListMember).name()=="pointer-to")
+		if(MemberArePointers)
 		{
 			for(int i=0;i<MAXIMUM_SIZE;i++)
 			{
-				if(list[i] != NULL)
+				if(list[i] != Nulled)
 					delete (ListMember*)&list[i];
 			}
 		}
@@ -42,7 +81,7 @@ public:
 		{
 			while(counter<numberOfMember)
 			{//check's if the object has been addet to the list allready...
-				if(list[index] == NULL) // and look for free slot to add it there later..
+				if(list[index] == Nulled) // and look for free slot to add it there later..
 					FirstEmptySlotFound = FirstEmptySlotFound<0? index : FirstEmptySlotFound;
 				else if(list[index] == member)
 					return index; //return if list already contain the object...
@@ -59,21 +98,20 @@ public:
 			}
 			else for(index = numberOfMember; index < MAXIMUM_SIZE ;index++)
 			{// no slot found before: go ahead finding one.. 
-				if(list[index]==NULL)
+				if(list[index]==Nulled)
 				{	
 					list[index]=member;
 					numberOfMember++; 
-					highestSlotNumberInUse = index;
-					return highestSlotNumberInUse;
+					return (highestSlotNumberInUse = index);
 				}
 			}//if maximum count on members reached !!
-			throw "Liste voll!..";
+			throw "Liste voll!..\n";
 		}
 		catch(char* exeption)
 		{
 			std::cout<<"Exeption in LuecklList<";
 			std::cout<<typeid(ListMember).name();
-			std::cout<<"> ... \n";
+			std::cout<<"> ... ";
 			std::cout<<exeption;
 		}
 	}
@@ -99,84 +137,92 @@ public:
 	// returns the Next member's ID - the next used slot-number in the list
 	ListMemberID Next(int current)
 	{	
-		if(numberOfMember>0)
-			while(list[++current]==NULL);
-		else
+		//return if list is empty.
+		if(numberOfMember==0)
 			return -1;
-
+		
+		//fastforward until finding next used slot.
+		while(list[++current]==Nulled);
+		
+		//and return it's position.
 		return (ListMemberID)current;
 	}
 
 	// returns the previous member's ID - the first used slot-number found before [current]
 	ListMemberID Prev(int current)
-	{
-		if(current == 0)
-			return 0;
-		while(list[--current]==NULL);
-			return (ListMemberID)current;
+	{	
+		//return if already first element.
+		if(current == 0)  
+			return 0;	
+
+		//rewind the list until finding a used slot.
+		while(list[--current]==Nulled);
+
+		//return the found position.
+		return (ListMemberID)current;
 	}
 
 	// return the ID of the first member in the list..
 	ListMemberID First(void)
 	{
+		//list-slot indexes can't be negativ, so getting the next of [-1] will be the first...
 		return Next(-1);
 	}
 
 	// return the ID of the last member at the end of the list..
 	ListMemberID Last(void)
 	{
+		//return a "peak"-value, wich's updated everytime an objects is Addet or Removed
 		return highestSlotNumberInUse;
 	}
 
 	// remove's the member at slot-number [ListMemberID]...
 	void Remove(ListMemberID id)
 	{
-		if(list[id]!=NULL)
+		//check	if slot at "id" is in use..
+		if(list[id]!=Nulled)
 		{
-			if(id==highestSlotNumberInUse)
-				highestSlotNumberInUse = Prev(id);
+			list[id] = Nulled; //erease the pointer,
 
+			//if it's the last element:
+			if(id==highestSlotNumberInUse) //decrease the peak-value... 
+				highestSlotNumberInUse = Prev(id); // to it's preceding ellement.
 
-			list[id] = NULL;
-			--numberOfMember;
-		}
-	}
-
-	// remove's the element at slot-number [ListMemberID] and calls it's destructor...
-	void Distruct(ListMemberID id)
-	{
-		if(list[id]!=NULL)
-		{
-			if((id==highestSlotNumberInUse)&&(id!=First()))
-				highestSlotNumberInUse = Prev(id);
-
-			delete list[id];
-			list[id] = NULL;
-			--numberOfMember;
+			--numberOfMember;// and decrease the member-count by 1.
 		}
 	}
 
 	// remove's the given member from the list, if it's contained in it..
 	void Remove(ListMember member)
 	{
-		for(int i = 0 ; i<MAXIMUM_SIZE ; i++)
+		for(unsigned ID = First(); ID <= Last() ; ID = Next(ID))
 		{
-			if(list[i]==member)
+			if(list[ID]==member)
 			{
-				if(i==highestSlotNumberInUse)
-					highestSlotNumberInUse=Prev(i);
+				highestSlotNumberInUse = (ID==highestSlotNumberInUse)? Prev(ID) : highestSlotNumberInUse;
 
-				list[i] = NULL;
+				list[ID] = Nulled;
 				--numberOfMember;
 				return;
 			}
 		}
 	}
 
-protected:
-	ListMember list[MAXIMUM_SIZE];
-	int numberOfMember;
-	ListMemberID highestSlotNumberInUse;
+	// remove's the element at slot-number [ListMemberID] and calls it's destructor...
+	void Distruct(ListMemberID id)
+	{
+		if(list[id]!=Nulled)
+		{
+			if((id==highestSlotNumberInUse)&&(id!=First()))
+				highestSlotNumberInUse = Prev(id);
+
+			if(MemberArePointers)
+				delete list[id];  // same as "Remove", but also kill's the object itself befor ereasing the pointer to it...
+			
+			list[id] = Nulled;
+			--numberOfMember;
+		}
+	}
 };
 
 #endif

@@ -1,17 +1,17 @@
 #include "InputManager.h"
 #include "DataStructs.h"
 
-//LPSYSTEMTIME _sTime;
 DWORD _timerTicks;
 DWORD _lastTicks;
 DWORD _frameTicks;
 DWORD _clicktimer;
 DWORD _doubleClickLength;
 int _fps;
-
-//InputManager* instance;
-			
-ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(0,0,800, 600);
+float vpX=400;
+float vpY=300;
+float vpW=400;
+float vpH=300;
+ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(&vpX,&vpY,&vpW,&vpH);
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
@@ -42,12 +42,12 @@ InputManager::InputManager(void)
 	_frameTicks = 0;
 	_doubleClickLength = 200;
 
+	this->keyList = List<unsigned char, 30>();
 	this->MouseMotionObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->MouseWheelObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->KeyboardObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->SpecialKeyObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
-	this->keyList = List<unsigned char, 30>();
-	this->mouseClickListener = std::vector<IObserver*>();
+	this->mouseClickListener = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 
 	FrameTime = 0;
 	Mouse.X=Mouse.Y=0;
@@ -57,9 +57,6 @@ InputManager::InputManager(void)
 	Mouse.LEFT.HOLD=Mouse.RIGHT.HOLD=Mouse.MIDDLE.HOLD=false;
 	Mouse.LEFT.DOUBLE=Mouse.RIGHT.DOUBLE=Mouse.MIDDLE.DOUBLE=false;
 	Mouse.Movement = *VectorF::Zero;
-
-	//_Viewport=*ProjectMappe::Rectangle::Zero;
-	//_Viewport.size(1,1);
 
 	_ViewPortNormalizedMouseCoordinates=Vector3(0,0,0);
 
@@ -89,7 +86,10 @@ InputManager::InputManager(void)
 	*/
 }
 
+InputManager::~InputManager(void)
+{
 
+}
 
 void InputManager::attachMouseMove(IObserver* obs) 
 {
@@ -112,7 +112,7 @@ void InputManager::attachSpecial(IObserver* obs)
 void InputManager::attachMouseClick(IObserver* obs)
 {
 	if(obs->checkForObservability(OBSERVATE_MOUSE)||obs->checkForObservability(OBSERVATE_CLICKS))
-		this->mouseClickListener.push_back(obs);
+		this->mouseClickListener.Add(obs);
 }
 
 void InputManager::attachMouseWheel(IObserver* obs)
@@ -155,7 +155,7 @@ InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,in
 void
 InputManager::registerKey(unsigned char key)
 {
-	std::cout << "down " << key << std::endl;
+	std::cout<< "INPUT: key: \"" << key << "\" pressed !" << std::endl;
 
 	this->keyList.Add(key);
 }
@@ -163,7 +163,7 @@ InputManager::registerKey(unsigned char key)
 void
 InputManager::registerKeyUp(unsigned char key)
 {
-	std::cout << "up " << key << std::endl;
+	std::cout<< "INPUT: key: \"" << key << "\" released !" << std::endl;
 
 	this->keyList.Remove(key);
 
@@ -172,7 +172,7 @@ InputManager::registerKeyUp(unsigned char key)
 void
 InputManager::notifyKey() 
 {
-	if(this->keyList.Count() != 0)
+	if( (this->keyList.Count() != 0) && (KeyboardObservers.Count() != 0) )
 	{
 		for(unsigned ID = this->keyList.First(); ID <= this->keyList.Last(); ID = this->keyList.Next(ID))
 		{
@@ -194,9 +194,10 @@ InputManager::FireEvents(void)
 void
 InputManager::notifySpecialKey(int key) 
 {
-	for(unsigned ID = SpecialKeyObservers.First(); ID <= SpecialKeyObservers.Last(); ID = SpecialKeyObservers.Next(ID))
+	if(SpecialKeyObservers.Count()>0)
 	{
-		((IInteractive*)SpecialKeyObservers[ID])->specialKeyPressed(key);
+		for(unsigned ID = SpecialKeyObservers.First(); ID <= SpecialKeyObservers.Last(); ID = SpecialKeyObservers.Next(ID))
+			((IInteractive*)SpecialKeyObservers[ID])->specialKeyPressed(key);
 	}
 }
 
@@ -205,15 +206,19 @@ InputManager::notifyMouse(int x, int y)
 {
 	setMousePosition(x,y);
 
+	if(MouseMotionObservers.Count()==0)
+		return;
+
 	for(unsigned ID = MouseMotionObservers.First(); ID <= MouseMotionObservers.Last(); ID = MouseMotionObservers.Next(ID))
-	{
 		((IInteractive*)MouseMotionObservers[ID])->mouseMotion(x,y);
-	}
 }
 
 void
 InputManager::notifyWheel(int wheel)
 {
+	if(MouseWheelObservers.Count()==0)
+		return;
+
 	for(unsigned ID = MouseWheelObservers.First(); ID <= MouseWheelObservers.Last(); ID = MouseWheelObservers.Next(ID) )
 	{
 		if(MouseWheelObservers[ID]->checkForObservability(OBSERVATE_KEYBOARD))
@@ -231,67 +236,71 @@ InputManager::notifyWheel(int wheel)
 void
 InputManager::notifyQlicks(void)
 {
+	if(mouseClickListener.Count()==0)
+		return;
+
 	bool click = false;
+
 	if(Mouse.LEFT.CLICK)
 	{click=true;
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->LeftClick(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->LeftClick(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseClicks(0,click,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.LEFT.RELEASE)
 	{
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->LeftRelease(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseClicks(0,click,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 
 	if(click=Mouse.RIGHT.CLICK)
 	{click=true;
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->RightClick(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->RightClick(Mouse.Position);
 			else
-				((IInteractive*)(*it))->mouseClicks(1,click,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(1,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.RIGHT.RELEASE)
 	{
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it))
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->LeftRelease(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseClicks(1,false,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(1,false,Mouse.Position);
 		}
 	}
 
 	if(click=Mouse.MIDDLE.CLICK)
 	{click=true;
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->MiddleClick(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->MiddleClick(Mouse.Position);
 			else
-				((IInteractive*)(*it))->mouseClicks(2,click,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(2,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.MIDDLE.RELEASE)
 	{
-		for(auto it = this->mouseClickListener.begin(); it != this->mouseClickListener.end(); ++it) 
+		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
 		{
-			if((*it)->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)(*it))->MiddleRelease(Mouse.Position);
+			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickListener[it])->MiddleRelease(Mouse.Position);
 			else 
-				((IInteractive*)(*it))->mouseClicks(2,false,Mouse.Position);
+				((IInteractive*)mouseClickListener[it])->mouseClicks(2,false,Mouse.Position);
 		}
 	}
 }
@@ -311,12 +320,16 @@ InputManager::UpdateMouseButtons(int button,int state,int x,int y)
 			RIGHTnewState = !state;
 			break;
 		}
+
 		setMousePosition(x,y);
 
-		for(auto it=mouseClickListener.begin();it!=mouseClickListener.end();it++)
+		if(mouseClickListener.Count()>0)
 		{
-			if((*it)->checkForObservability(OBSERVATE_KEYBOARD))
-				((IInteractive*)(*it))->mouseClicks(button,state==GLUT_DOWN,Mouse.Position);
+			for(unsigned ID = mouseClickListener.First(); ID <= mouseClickListener.Last(); ID = mouseClickListener.Next(ID))
+			{
+				if(mouseClickListener[ID]->checkForObservability(OBSERVATE_KEYBOARD))
+					((IInteractive*)mouseClickListener[ID])->mouseClicks(button,state==GLUT_DOWN,Mouse.Position);
+			}
 		}
 }
 
@@ -385,8 +398,8 @@ InputManager::GetViewportRectangle(void)
 void 
 InputManager::SaveViewportRectangle(int x,int y,int w,int h)
 {
-	_Viewport.position(x,y);
-	_Viewport.size(w,h);
+	_Viewport.SetPosition(x,y);
+	_Viewport.SetSize(w,h);
 }
 
 void 
@@ -403,10 +416,10 @@ InputManager::setMousePosition(int x,int y)
 	Mouse.Position.x = Mouse.X = x;
 	Mouse.Position.y = Mouse.Y = y;
 
-	_ViewPortNormalizedMouseCoordinates.x = 2*(Mouse.Position.x/GetViewportRectangle()->size().x)-1;
-	_ViewPortNormalizedMouseCoordinates.y = 2*(1-Mouse.Position.y/GetViewportRectangle()->size().y)-1;
+	_ViewPortNormalizedMouseCoordinates.x = 2.f*(Mouse.Position.x/GetViewportRectangle()->GetSize().x)-1.f;
+	_ViewPortNormalizedMouseCoordinates.y = 2.f*(1.f-Mouse.Position.y/GetViewportRectangle()->GetSize().y)-1.f;
 
-	glm::vec4 ray_clip(_ViewPortNormalizedMouseCoordinates.x,_ViewPortNormalizedMouseCoordinates.y,-1,1);
+	glm::vec4 ray_clip(_ViewPortNormalizedMouseCoordinates.x,_ViewPortNormalizedMouseCoordinates.y,-1.f,1.f);
 
 /*
 	

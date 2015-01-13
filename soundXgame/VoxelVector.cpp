@@ -27,8 +27,8 @@ VoxtructsInitiator::initiateVoxtructs(void)
 	_VectiZero.yps = _VectiZero.ix = 0;
 	_VectorPFzero.x = 0;
 	_VectorPFzero.y = 0;
-	_RectangleZero.position(*VectorF::Zero);
-	_RectangleZero.size(*VectorF::Zero);
+	//_RectangleZero.SetPosition(*VectorF::Zero);
+	//_RectangleZero.SetSize(*VectorF::Zero);
 }
 
 
@@ -107,6 +107,18 @@ bool
 		return (x!=other.x || y!=other.y);
 	}
 
+bool
+	VectorF::operator<(VectorF other)
+	{
+		return x<other.x && y<other.y;
+	}
+
+bool
+	VectorF::operator>(VectorF other)
+	{
+		return x>other.x && y>other.y;
+	}
+
 VectorF
 	VectorF::cros(VectorF other)
 {
@@ -123,85 +135,140 @@ VectorPF::operator VectorI()
 		return newVector;
 	}
 
-VectorPF
+VectorPF::operator VectorF()
+	{
+		VectorF newVector;
+		newVector.x = *x;
+		newVector.y = *y;
+		return newVector;
+	}
+
+void
+VectorPF::operator =(VectorF setter)
+{
+	*x = setter.x;
+	*y = setter.y;
+}
+
+VectorF
 VectorPF::operator *(float s)
 	{
-		VectorPF newVector;
-		*newVector.x = *x *s;
-		*newVector.y = *y *s;
+		VectorF newVector;
+		newVector.x= *x *s;
+		newVector.y= *y *s;
 		return newVector;
 	}
 
-VectorPF
+VectorF
 VectorPF::operator /(float s)
 	{
-		VectorPF newVector = *VectorPF::Zero;
-		*newVector.x=*x/s;
-		*newVector.y=*y/s;
+		VectorF newVector;
+		newVector.x=*x/s;
+		newVector.y=*y/s;
 		return newVector;
 	}
 
+VectorF
+VectorPF::operator +(VectorPF vec)
+{
+	VectorF neuVector;
+	neuVector.x = *x + *vec.x;
+	neuVector.y = *y + *vec.y;
+	return neuVector;
+}
+
+VectorF
+VectorPF::operator -(VectorPF vec)
+{
+	VectorF neuVector;
+	neuVector.x = *x - *vec.x;
+	neuVector.y = *y - *vec.y;
+	return neuVector;
+}
 
 ProjectMappe::Rectangle::Rectangle(void)
 {
-	Position = *VectorF::Zero;
-	HalbSize = *VectorF::Zero;
+	float halbX,halbY,centerX,centerY;
+	Center.x = &centerX;
+	Center.y = &centerY;
+	HalbSize.x = &halbX;
+	HalbSize.y = &halbY;
+	halbX=halbY=centerX=centerY=0;
 }
 
 ProjectMappe::Rectangle::Rectangle(float pX,float pY,float width,float height)
 {
-	Position = *VectorF::Zero;
-	HalbSize = *VectorF::Zero;
-	Position.x=pX;
-	Position.y=pY;
-	HalbSize.x=width/2;
-	HalbSize.y=height/2;
+	float hW,hH,cX,cY;
+	hW = width/2;
+	hH = height/2;
+	cX = pX+hW;
+	cY = pY+hH;
+	HalbSize.x=&hW;
+	HalbSize.y=&hH;
+	Center.x=&cX;
+	Center.y=&cY;
+}
+
+ProjectMappe::Rectangle::Rectangle(float *centerX,float *centerY,float *halbWidth,float *halbHeight)
+{
+	HalbSize.x = halbWidth;
+	HalbSize.y = halbHeight;
+	Center.x = centerX;
+	Center.y = centerY;
 }
 
 VectorF
-ProjectMappe::Rectangle::position(void)
+ProjectMappe::Rectangle::GetPosition(void)
 {
-	return Position;
+	return Center-HalbSize;
+}
+
+void
+ProjectMappe::Rectangle::SetPosition(float x,float y)
+{
+	*Center.x = *HalbSize.x + x;
+	*Center.y = *HalbSize.y + y;
+}
+
+void
+ProjectMappe::Rectangle::SetPosition(VectorF xy)
+{
+	SetPosition(xy.x,xy.y);
 }
 
 VectorF
-ProjectMappe::Rectangle::position(float x,float y)
+ProjectMappe::Rectangle::GetSize(void)
 {
-	Position.x=x;
-	Position.y=y;
-	return Position;
+	return (VectorF)HalbSize * 2.f;
 }
 
 VectorF
-ProjectMappe::Rectangle::position(VectorF xy)
+ProjectMappe::Rectangle::GetHalbSize(void)
 {
-	return Position=xy;
+	return HalbSize;
+}
+
+void
+ProjectMappe::Rectangle::SetSize(float W,float H)
+{
+	*HalbSize.x = (W/2.f);
+	*HalbSize.y = (H/2.f);
+}
+
+void
+ProjectMappe::Rectangle::SetSize(VectorF wh)
+{
+	SetSize(wh.x,wh.y);
 }
 
 VectorF
-ProjectMappe::Rectangle::size(void)
+ProjectMappe::Rectangle::GetCenter(void)
 {
-	return HalbSize*2;;
+	return Center;
 }
 
-VectorF
-ProjectMappe::Rectangle::size(float x,float y)
+BOOL 
+ProjectMappe::Rectangle::Containes(VectorF point)
 {
-	HalbSize.x = x/2.0f;
-	HalbSize.y = y/2.0f;
-	return size();
+	return (point < Center+HalbSize) && (point > Center-HalbSize);
 }
-
-VectorF
-ProjectMappe::Rectangle::size(VectorF wh)
-{
-	HalbSize = wh/2.0f;
-	return size();
-}
-
-VectorF
-ProjectMappe::Rectangle::center(void)
-{
-	return Position + HalbSize;
-}
-

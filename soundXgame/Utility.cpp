@@ -467,3 +467,51 @@ Utility::GetScalevectorByAspect(int width,int height,float zDepth)
 
 	return result;
 }
+
+// recursive string comperation... returns -1 if strings are equal, 
+// else returns the number of character at wich they where different.
+int
+_cmprStrngsRec(const char* A,const char* B,int position)
+{
+	if((A[position]=='\0')&&(B[position]=='\0'))
+		return -1;
+	else if(A[position]==B[position])
+		return _cmprStrngsRec(A,B,++position);
+	else
+		return position;
+}
+
+//Compare 2 strings case sensetive by iteration..
+bool
+_compareStrings(const char* A,const char* B)
+{
+	bool result = false;
+	int i = -1;
+	while(A[++i]!='\0' && B[i]!='\0') 
+	{
+		if(A[i]==B[i])
+			result = true;
+		else
+			return false;
+	}
+	return result;
+}
+
+//Compare 2 strings case sensitive by recursion...
+unsigned
+_compareStringsRecursive(const char* A,const char* B)
+{
+	return _cmprStrngsRec(A,B,0);
+}
+
+bool
+Utility::StringCompareIterative(const char* A,const char* B)
+{
+	return _compareStrings(A,B);
+}
+
+unsigned
+Utility::StringCompareRecursive(const char* A,const char* B)
+{
+	 return _compareStringsRecursive(A,B);
+}

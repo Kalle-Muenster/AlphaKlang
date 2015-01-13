@@ -76,7 +76,7 @@ void
 ScreenOverlay::draw(void)
 {
 
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR);
 //	glMatrixMode(GL_TEXTURE);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
 	glDrawBuffer(GL_BACK);
@@ -111,6 +111,6 @@ ScreenOverlay::draw(void)
 	glEnd();
 //	 glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
-	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_COLOR);
 	//	glMatrixMode(GL_PROJECTION);
 }

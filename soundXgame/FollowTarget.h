@@ -16,7 +16,7 @@ protected:
 public:
 	FollowTarget(void);
 	virtual ~FollowTarget(void);
-	static int StaticCamModeID;
+	static int ID;
 	virtual bool Initialize(void);
 
 	void					SetTarget(Vector3*);

@@ -8,7 +8,7 @@
 class VoxGrid;
 
 class VoxControl :
-	public IConnectable, public IInteractive, public IUpdateble
+	public IConXtor, public IInteractive, public IUpdateble
 {
 protected:
 	Vector3 tempvector;

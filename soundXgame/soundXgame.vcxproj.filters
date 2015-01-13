@@ -77,9 +77,6 @@
     <ClCompile Include="VoxGrid.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectManagement.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectUpdater.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
@@ -123,7 +120,6 @@
       <Filter>UnderConstruction</Filter>
     </ClCompile>
     <ClCompile Include="ScreenOverlay.cpp" />
-    <ClCompile Include="GuiObject.cpp" />
     <ClCompile Include="MusicListener.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -136,7 +132,20 @@
     <ClCompile Include="TestConectables.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="StrangeChaoticView.cpp">
+      <Filter>Objects\ConnectableCameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonControl.cpp" />
+    <ClCompile Include="IDrawable.cpp" />
+    <ClCompile Include="ObjectManagement.cpp">
+      <Filter>Core\RuntimeManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>Core\RuntimeManagers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -217,9 +226,6 @@
     <ClInclude Include="ObjectUptater.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectManagement.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
     <ClInclude Include="Musikubus.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
@@ -260,7 +266,6 @@
       <Filter>UnderConstruction</Filter>
     </ClInclude>
     <ClInclude Include="ScreenOverlay.h" />
-    <ClInclude Include="GuiObject.h" />
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -285,7 +290,24 @@
     <ClInclude Include="ObjectMover.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SkyBox.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="StrangeChaoticView.h">
+      <Filter>Objects\ConnectableCameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonControl.h" />
+    <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
+      <Filter>Resources\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawable.h" />
+    <ClInclude Include="AnimatedSprite.h" />
+    <ClInclude Include="ObjectManagement.h">
+      <Filter>Core\RuntimeManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
+      <Filter>Core\RuntimeManagers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -503,9 +525,6 @@
     <Image Include="Deckelblech128-3channel.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="Deckelblech128-2.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <Image Include="Deckelblech128-1.png">
       <Filter>Resources\Textures</Filter>
     </Image>
@@ -528,6 +547,12 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="particle1_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Deckelblech_128x128.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="There Are Four Buttons !!!!_256x256.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>
@@ -604,6 +629,9 @@
       <Filter>Resources\Textures</Filter>
     </None>
     <None Include="drei_64x64.ppm">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="There Are Four Buttons !!!!_256x256.pgm">
       <Filter>Resources\Textures</Filter>
     </None>
   </ItemGroup>

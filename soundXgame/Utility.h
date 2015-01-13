@@ -79,6 +79,9 @@ public:
 	static float Random(float MAX_float); //... 0 to MAX 
 	static Vector3 RandomDirection(void); // get's a random direction...
 	static Vector3 RandomVector3(void); // get's a Random vector3 between v3(-1,-1,-1) and v3(1,1,1);
+
+	static bool StringCompareIterative(const char*,const char*);
+	static unsigned StringCompareRecursive(const char*,const char*);
 };
 
 #endif
