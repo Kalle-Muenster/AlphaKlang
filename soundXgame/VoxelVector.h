@@ -79,7 +79,7 @@ namespace ProjectMappe
 		void SetSize(VectorF);
 		VectorF GetHalbSize(void);
 		VectorF GetCenter(void);
-		BOOL Containes(VectorF);
+		bool Containes(VectorF);
 
 		static const Rectangle *const Zero;
 	};

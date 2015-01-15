@@ -267,8 +267,9 @@ ProjectMappe::Rectangle::GetCenter(void)
 	return Center;
 }
 
-BOOL 
+bool 
 ProjectMappe::Rectangle::Containes(VectorF point)
 {
-	return (point < Center+HalbSize) && (point > Center-HalbSize);
+	bool contains =	(point < Center+HalbSize) && (point > Center-HalbSize);
+	return contains;
 }

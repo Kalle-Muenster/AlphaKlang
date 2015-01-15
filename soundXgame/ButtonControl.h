@@ -23,13 +23,14 @@ private:
 	GLuint vertexBufferID;
 	Texture texture;
 	char btnState;
-	
+	float left,right,top,bottom;
+
 public:
 	static const char* States[];
 	enum ButtonState : char
-	{DISABLED,NORMAL,HOVER,PRESSED};
+	{DISABLED=0,NORMAL=1,HOVER=2,PRESSED=3};
 	ButtonControl(void);
-	virtual void DoEarly(void);
+	virtual void DoLate(void);
 	virtual ~ButtonControl(void);
 	virtual bool Initialize(void);
 	virtual ButtonState GetState(void);

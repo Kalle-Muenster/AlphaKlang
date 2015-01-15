@@ -7,7 +7,7 @@
 //#include "ScreenOverlay.h"
 
 #include "ParticleSystem.h"
-
+#include "EffectClass.h"
 
 #include <xercesc\dom\DOM.hpp>
 #include <xercesc\framework\LocalFileInputSource.hpp>
@@ -25,7 +25,7 @@ bool EXIT = false;
 //Objects:
 Sprite* Framen;
 GuiObject* guiding;
-ScreenOverlay* overlay;
+
 
 //Functions:
 int prepareForExit(void);
@@ -45,7 +45,7 @@ void processSpecialKeys(int,int,int);
 void keyboardInput(unsigned char,int,int);
 void keyboardUpInput(unsigned char,int,int);
 void GamePadFunc(unsigned,int,int,int);
-
+//void WriteText2D(char*,int,int);
 
 
 //Entrypoint:
@@ -79,7 +79,6 @@ int prepareForExit(void)
 	//deletions:
 	ProjectMappe::GlobalDestructor();
 	delete Framen;
-	delete overlay; 
 	delete guiding;
 	font = NULL;
 	delete font;
@@ -112,7 +111,7 @@ void InitGlut(void)
 	glutKeyboardUpFunc(keyboardUpInput);
 
 	// hide mouse cursor
-	glutSetCursor(GLUT_CURSOR_LEFT_RIGHT); 
+//	glutSetCursor(GLUT_CURSOR_NONE); 
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
@@ -156,7 +155,8 @@ void ActionTest(IConnectable* sender)
 ConID testID;
 void LoadContent(void)
 {
-	
+
+
 	guiding = new GuiObject();
 	guiding->LoadTexture("testbild_1600x900.png");
 	guiding->scale(Vector3(256,256,1));
@@ -428,7 +428,7 @@ void RenderCycle(void)
 	SCENE->DrawAll();
 
 	SCENE->DrawGUI();
-
+	
 	glutSwapBuffers();
 }
 
@@ -536,7 +536,11 @@ void MouseWheelFunc(int wheel,int state,int X,int Y)
 	INPUT->UpdateMouseWheel(wheel,state,X,Y);
 }
 
-/*void MouseHoverWindow(int)
-{
-
-}*/
+//void WriteText2D(char * text, int x, int y)		
+//{
+//  char *c;
+//  glColor4f(1.0f,1.0f,0.5f,0.2f);
+//  glRasterPos2i(x, y);
+//  for (c=text; *c != '\0'; c++) 
+//  { glutBitmapCharacter(font, *c);}
+//}

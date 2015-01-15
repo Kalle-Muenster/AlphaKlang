@@ -12,6 +12,7 @@ GuiManager::GuiManager(void)
 	NotIsInstanciated = false;
 	scene = SceneGraph::getInstance();
 	elements = List<IDrawable*,MAX_NUM_GUI_OBJECTS>();
+	writeOrders = List<WriteOrder*,100>();
 	r=g=b=a=1.f;
 }
 
@@ -102,7 +103,7 @@ GuiManager::Disable2DDrawing(void)
 
 
 GobID 
-	GuiManager::Add(IDrawable* element)
+GuiManager::Add(IDrawable* element)
 {
 	return elements.Add(element) + MAX_MUM_SCENE_OBJECTS;
 }
@@ -131,18 +132,54 @@ GuiManager::Element(GobID id)
 		return (IObjection<Connectable<IDrawable>>*)elements[ID];
 }
 
+void _WriteText2D(const char * text, Vecti position,data32 color)		
+{
+  unsigned short i=0;
+  glColor4f(color.byte[0]/255,color.byte[1]/255,color.byte[2]/255,color.byte[3]/255);
+  glRasterPos2i(position.ix, position.yps);
+  while(text[i] != '\0') 
+  { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
+}
+
+void
+GuiManager::Write(const char* Text,short X,short Y,unsigned Color)
+{
+	data32 col;
+	col.u32 = Color;
+	writeOrders.Add(new WriteOrder(Text,X,Y,col));
+}
+
 void
 GuiManager::DrawGUI(void)
 {
 	Enable2DDrawing();
 	{
-		for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
-			if(elements[ID]->IsVisible)
-				elements[ID]->draw();
+		if(elements.Count()>0)
+		{
+			for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
+				if(elements[ID]->IsVisible)
+					elements[ID]->draw();
+		}
+
+		if(writeOrders.Count()>0)
+		{
+			for(unsigned ID = writeOrders.First();ID<=writeOrders.Last();ID=writeOrders.Next(ID))
+			{
+				_WriteText2D(writeOrders[ID]->text,writeOrders[ID]->position,writeOrders[ID]->color);
+				writeOrders.Distruct(ID);
+			}
+		}
 	}	
 	Disable2DDrawing();
 }
 
+GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color)
+{
+	text = Text;
+	position.ix = x;
+	position.yps = y;
+	color = Color;
+}
 
 GuiObject::GuiObject(void)
 {

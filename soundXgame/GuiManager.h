@@ -26,6 +26,7 @@ public:
 	virtual Vector3 scale(Vector3);
 	bool UseTexture;
 	bool IsActive;
+	
 };
 
 
@@ -33,10 +34,19 @@ public:
 
 class GuiManager
 {
+	class WriteOrder
+	{
+	public:
+		const char* text;
+		Vecti position;
+		data32 color; 
+		WriteOrder(const char*,short,short,data32);
+	};
 private:
 	static bool NotIsInstanciated;
 	GuiManager(void);
 	List<IDrawable*,MAX_NUM_GUI_OBJECTS> elements;
+	List<WriteOrder*,100> writeOrders;
 	float r,g,b,a;
 	void Enable2DDrawing(void);
 	void Disable2DDrawing(void);
@@ -51,6 +61,8 @@ public:
 	IObjection<Connectable<IDrawable>>* Element(string name);
 	IObjection<Connectable<IDrawable>>* Element(GobID id);
 	void DrawGUI(void);
+	void Write(const char*,short,short,unsigned=0xffffffff);
+	
 };
 
 #endif

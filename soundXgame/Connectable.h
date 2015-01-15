@@ -161,8 +161,10 @@ protected:
 	void AddCombiner(void*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
 	unsigned TypeHashCode;
+	bool canHaveMultipleInstances;
 
 public:
+	
 	static int MaximumNumberOfConnectioms;
 	unsigned ConnectionID;
 	void* connection;
@@ -180,6 +182,7 @@ public:
 public:
 	IConnectable(void)
 	{
+		canHaveMultipleInstances=false;
 		_initialized=false;
 		Not_hasInitialized();
 		NumberOfConnectedObjects=0;

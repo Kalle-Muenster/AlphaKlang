@@ -119,7 +119,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
-    <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="MusicListener.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -138,13 +137,23 @@
     <ClCompile Include="StrangeChaoticView.cpp">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonControl.cpp" />
-    <ClCompile Include="IDrawable.cpp" />
     <ClCompile Include="ObjectManagement.cpp">
       <Filter>Core\RuntimeManagers</Filter>
     </ClCompile>
     <ClCompile Include="GuiManager.cpp">
       <Filter>Core\RuntimeManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectClass.cpp">
+      <Filter>UnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenOverlay.cpp">
+      <Filter>UnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="IDrawable.cpp">
+      <Filter>UnderConstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonControl.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +274,6 @@
     <ClInclude Include="Transform.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenOverlay.h" />
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -296,17 +304,27 @@
     <ClInclude Include="StrangeChaoticView.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonControl.h" />
     <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
       <Filter>Resources\Textures</Filter>
     </ClInclude>
-    <ClInclude Include="IDrawable.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="ObjectManagement.h">
       <Filter>Core\RuntimeManagers</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
       <Filter>Core\RuntimeManagers</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectClass.h">
+      <Filter>UnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenOverlay.h">
+      <Filter>UnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="IDrawable.h">
+      <Filter>UnderConstruction</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonControl.h">
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -553,6 +571,9 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="There Are Four Buttons !!!!_256x256.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="button64.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>

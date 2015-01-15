@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\src;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm-9.6.1\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\src;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\Build\Win32\VC10\Release;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -78,11 +78,13 @@
   <ItemGroup>
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="BassAudio.cpp" />
+    <ClCompile Include="ButtonControl.cpp" />
     <ClCompile Include="Cam.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="Cubus.cpp" />
+    <ClCompile Include="EffectClass.cpp" />
     <ClCompile Include="FirstPerson.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
     <ClCompile Include="Fountain.cpp" />
@@ -118,7 +120,6 @@
     <ClCompile Include="StrangeChaoticView.cpp" />
     <ClCompile Include="TargetGrabber.cpp" />
     <ClCompile Include="TestConectables.cpp" />
-    <ClCompile Include="ButtonControl.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UpdateManager.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="Cubus.h" />
+    <ClInclude Include="EffectClass.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
@@ -287,6 +289,7 @@
     <Text Include="brumm_s16.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="button64.png" />
     <Image Include="CubusX_256.bmp" />
     <Image Include="Deckelblech-2.png" />
     <Image Include="Deckelblech-2s.png" />
