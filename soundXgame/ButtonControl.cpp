@@ -61,7 +61,7 @@ char bufY[32];
 VectorF mPosition;
 
 void
-ButtonControl::DoLate(void)
+ButtonControl::DoEarly(void)
 {
 	GetArea();
 
@@ -86,7 +86,7 @@ ButtonControl::DoLate(void)
 	bool ButtonControl::Initialize(void)
 	{
 		UPDATE->SignOutFromUpdate(this);
-		UPDATE->SignInForLateUpdate(this);
+		UPDATE->SignInForEarlyUpdate(this);
 		GuiManager::getInstance()->Add(this);
 		Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
 										&this->Connection()->getTransform()->position.y,
@@ -97,6 +97,10 @@ ButtonControl::DoLate(void)
 		SizeScaledPanel.y = SizeScaledPanel.x/4;
 		this->angle = 0;
 		GetArea();
+
+		movetest = Controlled<float>();
+		movetest.SetUp(-1,1,0,0.05,movetest.Cycle);
+		movetest.IsControlled(true);
 
 		return true;
 	}
@@ -142,12 +146,15 @@ ButtonControl::DoLate(void)
 		ClickAction = clicFunc;
 	}
 
+	char tempstring[32];
+
 	void ButtonControl::draw(void)
 	{
-				if(!vertexBufferID)
-		return;
-
-
+		if(!vertexBufferID)
+			return;
+		float test = movetest;
+		sprintf(&tempstring[0],"%f",test);
+		GuiManager::getInstance()->Write(tempstring,50,50);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 
@@ -168,6 +175,7 @@ ButtonControl::DoLate(void)
 	{
 		// Translation:
 		VectorF values = Panel.GetPosition() + this->PositionOnPanel;
+		values.x += (test*100);
 		glTranslatef(values.x, values.y, 0);
 
 		// Rotation:

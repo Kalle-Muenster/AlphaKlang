@@ -24,13 +24,15 @@ private:
 	Texture texture;
 	char btnState;
 	float left,right,top,bottom;
+	Controlled<float> movetest;
+
 
 public:
 	static const char* States[];
 	enum ButtonState : char
 	{DISABLED=0,NORMAL=1,HOVER=2,PRESSED=3};
 	ButtonControl(void);
-	virtual void DoLate(void);
+	virtual void DoEarly(void);
 	virtual ~ButtonControl(void);
 	virtual bool Initialize(void);
 	virtual ButtonState GetState(void);

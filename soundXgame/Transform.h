@@ -183,7 +183,8 @@ protected:
 	ctrlType MIN,MAX,MOVE;
 	ctrlType* _Value;
 	bool ControllerActive;
-	 
+	bool CheckAtGet;
+
 	short _mode;
 	short userModesCount;
 	UserModeControl<ctrlType> * UserMode;
@@ -210,6 +211,7 @@ protected:
 				if(UserMode->ID==mode)
 					return UserMode->checkVALUE(_Value);
 		}	
+		return *_Value;
 	}
 public:
 	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
@@ -246,6 +248,8 @@ public:
 	{
 		this->_Value = new ctrlType();
 		userModesCount=4;
+		ControllerActive = false;
+		CheckAtGet = true;
 	}
 
 	virtual ~Controlled(void)
@@ -265,7 +269,7 @@ public:
 
 	virtual ControllMode Mode(ControllMode mode=ControllMode::NONE)
 	{
-		if(_mode!=ControllMode::NONE)
+		if(mode!=ControllMode::NONE)
 			_mode=mode;
 		return (ControllMode)_mode;
 	}
@@ -286,6 +290,9 @@ public:
 	virtual Controlled* SetUp(ctrlType min,ctrlType max,ctrlType initial,ctrlType move,ControllMode mode)
 	{
 		*_Value = initial;
+		MAX=max;
+		MIN=min;
+		MOVE=move;
 		Mode(mode);
 		return this;
 	}
@@ -309,7 +316,7 @@ public:
 	//getter...
 	virtual operator ctrlType(void)
 	{
-		return *_Value;
+		return CheckAtGet? Value() : *_Value;
 	}
 
 	//setter
