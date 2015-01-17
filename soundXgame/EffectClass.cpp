@@ -5,7 +5,7 @@
 EffectClass::EffectClass(void)
 {
 	bufferOK = false;
-	screenBufferData = SCENE->GetFXbufferData();
+//	screenBufferData = SCENE->GetFXbufferData();
 	glGenFramebuffers(1, &frameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 

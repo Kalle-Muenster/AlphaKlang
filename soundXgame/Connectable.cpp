@@ -164,7 +164,15 @@ cTransform::Initialize(void)
 bool
 IConXtor::Initialize(void)
 {
-	return LockID(SetID(SCENE->Add((IDrawable*)this->Connection())));
+	return true;
+}
+
+bool
+IConXtor::AddToSceneAndLockID(void)
+{
+	if(!_idLocked)
+		return LockID(SetID(SCENE->Add(this->Connection())));
+	return _idLocked;
 }
 
 const char* 

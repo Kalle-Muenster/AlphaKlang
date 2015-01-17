@@ -17,14 +17,14 @@ class IGObject
 	: public IObjection<IConXtor>
 {
 private:
-	GobID ID;
-	bool _idIsLocked;
+//	GobID ID;
+//	bool _idIsLocked;
 //	bool _isGrounded;
 	
 protected:
 
 //	Transform	transform;
-	char		Name[64];
+//	char		Name[64];
 	bool		SetID(GobID);
 	unsigned	LockID(void);
 

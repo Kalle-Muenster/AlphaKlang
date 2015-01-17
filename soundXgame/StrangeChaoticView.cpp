@@ -49,7 +49,7 @@ StrangeChaoticView::ViewConvergencer::ViewConvergencer(void)
 {
 	Initialize();
 	SetName("Convergencer");
-	LoadTexture();
+	//LoadTexture();
 }
 
 
@@ -87,7 +87,7 @@ StrangeChaoticView::ViewConvergencer::Initialize(void)
 	transform.scale    = Vector3(1,1,1);
 
 	IGObject::InitializeObject();
-	UseTexture = true;
+	UseTexture = false;
 	IsVisible = IsActive = true;
 }
 

@@ -116,9 +116,6 @@
     <ClCompile Include="TargetGrabber.cpp">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
     <ClCompile Include="MusicListener.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -155,6 +152,10 @@
     <ClCompile Include="ButtonControl.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SCENESETUP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -271,9 +272,6 @@
     <ClInclude Include="TargetGrabber.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
     <ClInclude Include="List.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -325,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="ButtonControl.h">
       <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

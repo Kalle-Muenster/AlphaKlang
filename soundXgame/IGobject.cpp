@@ -27,8 +27,8 @@ IGObject::IGObject(void)
 	
 	
 	IsVisible=true;
-	this->_idIsLocked=false;
-	this->ID=NULL;
+//	this->_idIsLocked=false;
+//	this->ID=NULL;
 	conXtor = new IConXtor();
 	conXtor->SetConnection(this);
 	GroundValue = 0;
@@ -44,32 +44,42 @@ IGObject::~IGObject(void)
 bool
 IGObject::SetID(GobID id)
 {
-	if(this->_idIsLocked==false)
-	{
-		this->ID = id;
-		itoa(this->ID,&this->Name[0],10);
-		usedIDs.push_back(id);
-	//	return this->_idIsSet=true;
-	}
+	if(conXtor->SetID(id)==id)
+		return true;
 	else
 		return false;
+
+	//if(this->_idIsLocked==false)
+	//{
+	//	this->ID = id;
+	//	itoa(this->ID,&this->Name[0],10);
+	//	usedIDs.push_back(id);
+	////	return this->_idIsSet=true;
+	//}
+	//else
+	//	return false;
 }
 
 unsigned
 IGObject::LockID(void)
 {
-	if(!this->_idIsLocked)
-	{
-		if(this->ID==NULL)
-		{
-			while(!_IDIsFree(++objIDs));
-			this->ID = objIDs;
-			usedIDs.push_back(this->ID);
-			itoa(this->ID,&this->Name[0],10);
-		}
-	this->_idIsLocked=true;
-	}
-	return this->ID;
+	if(conXtor->LockID(conXtor->GetID()))
+		return conXtor->GetID();
+	else 
+		return EMPTY;
+
+	//if(!this->_idIsLocked)
+	//{
+	//	if(this->ID==NULL)
+	//	{
+	//		while(!_IDIsFree(++objIDs));
+	//		this->ID = objIDs;
+	//		usedIDs.push_back(this->ID);
+	//		itoa(this->ID,&this->Name[0],10);
+	//	}
+	//this->_idIsLocked=true;
+	//}
+	//return this->ID;
 }
 
 void
@@ -92,7 +102,7 @@ IGObject::Action(IConnectable* sender)
 GobID
 IGObject::GetID(void)
 {
-	return this->ID;
+	return this->conXtor->GetID();
 }
 
 // Ground
@@ -176,21 +186,22 @@ IGObject::GetID(void)
 const char* 
 IGObject::GetName(void)
 {
-	return &this->Name[0];
+	return conXtor->GetName();
 }
 
 void
 IGObject::SetName(char* name)
 {
-	int i = 0;
-	while(i<63)
-	{
-		this->Name[i] = name[i];
-		if(this->Name[i]=='\0')
-			return;
-		i++;
-	}
-	Name[63]='\0';
+	conXtor->SetName(name);
+	//int i = 0;
+	//while(i<63)
+	//{
+	//	this->Name[i] = name[i];
+	//	if(this->Name[i]=='\0')
+	//		return;
+	//	i++;
+	//}
+	//Name[63]='\0';
 }
 
 Transform*

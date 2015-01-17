@@ -98,9 +98,13 @@ ButtonControl::DoEarly(void)
 		this->angle = 0;
 		GetArea();
 
-		movetest = Controlled<float>();
-		movetest.SetUp(-1,1,0,0.05,movetest.Cycle);
-		movetest.IsControlled(true);
+//		movetest = Controlled<float>();
+		movetest.SetUserMode<SineControlled<float>>(-35.756,57.9,0,0.05);
+		//movetest.SetMIN(-35.756);
+		//movetest.SetMAX(57.9);
+		movetest.SetMOVE((float)(3.14159265358979323846 / 18));
+		movetest = 0;
+		movetest.ControllerActive=true;
 
 		return true;
 	}
@@ -152,8 +156,8 @@ ButtonControl::DoEarly(void)
 	{
 		if(!vertexBufferID)
 			return;
-		float test = movetest;
-		sprintf(&tempstring[0],"%f",test);
+		
+		
 		GuiManager::getInstance()->Write(tempstring,50,50);
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -175,7 +179,9 @@ ButtonControl::DoEarly(void)
 	{
 		// Translation:
 		VectorF values = Panel.GetPosition() + this->PositionOnPanel;
-		values.x += (test*100);
+		float test = movetest;
+		sprintf(&tempstring[0],"%f",test);
+		values.x += test;
 		glTranslatef(values.x, values.y, 0);
 
 		// Rotation:

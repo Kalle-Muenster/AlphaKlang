@@ -6,6 +6,8 @@
 
 
 
+
+
 class Cubus :
 	public IMeshObject
 {

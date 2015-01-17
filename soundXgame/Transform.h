@@ -16,13 +16,13 @@ protected:
   public:
 	cType *MIN,*MAX,*MOVE;
 
-	virtual void InitLater(void){};
-	virtual void InitFirst(cType&min,cType&max,cType&move,void *cntrlr)
+	virtual void Init(void){};
+	virtual void InitFirst(cType*min,cType*max,cType*move,void *cntrlr)
 	{
 		controller = cntrlr;
-	//	MIN=min;
-	//	MAX=max;
-	//	MOVE=move;
+		MIN = min;
+		MAX = max;
+		MOVE = move;
 	};
 
 	UserModeControl(void){ID = -1;}
@@ -86,6 +86,36 @@ public:
 	{
 		*pVALUE = *pVALUE+ INVERT? -*MOVE : *MOVE;
 		return ClambController<cType>::checkVALUE(pVALUE);
+	}
+};
+
+const float Circle = 360 * 3.14159265358979323846 / 180;
+
+template<typename cType> class SineControlled
+	: public MovingValue<cType>
+{
+protected: 
+	
+public:
+	float PINGPONG_VALUE,HALBRANGE,SHIFT;
+	
+	virtual void Init(void)
+	{
+		InvertController<cType>::Init();
+		*MOVE = Circle/360;
+		PINGPONG_VALUE = 0;
+		HALBRANGE = (*MAX - *MIN)/2;
+		SHIFT = (-HALBRANGE - *MIN);
+		CLAMP=false;
+		INVERT=false;
+	}
+
+	virtual cType checkVALUE(cType* pVALUE)
+	{
+	   PINGPONG_VALUE += *MOVE;
+	   PINGPONG_VALUE =  PINGPONG_VALUE>Circle? PINGPONG_VALUE-Circle : PINGPONG_VALUE;
+	   *pVALUE = (glm::sin(PINGPONG_VALUE)*HALBRANGE)+SHIFT;
+	   return  InvertController<cType>::checkVALUE(pVALUE);
 	}
 };
 
@@ -182,7 +212,7 @@ template<typename ctrlType> class Controlled
 protected:
 	ctrlType MIN,MAX,MOVE;
 	ctrlType* _Value;
-	bool ControllerActive;
+	
 	bool CheckAtGet;
 
 	short _mode;
@@ -204,30 +234,43 @@ protected:
 			*_Value = *_Value<MIN?MAX-(MIN- *_Value):*_Value>MAX?MIN+(*_Value - MAX): (*_Value+MOVE); 
 			break;
 		case ( unsigned short)Controlled<ctrlType>::ControllMode::PingPong:
-			*_Value = *_Value<MIN?(MIN+(MIN- *_Value))+(MOVE *= -1):*_Value>MAX? (MAX-(*_Value-MAX))+(MOVE *= -1) :(*_Value+MOVE); 
+			*_Value = (*_Value<MIN)? ( ( MIN + ( MIN - *_Value ) ) + ( MOVE = (-MOVE) ) ) : (*_Value>MAX)? ( ( MAX -(*_Value - MAX) ) + ( MOVE = (-MOVE) ) ) : (*_Value+MOVE) ; 
 			break;
 		default:
-			if(userModesCount>4)
-				if(UserMode->ID==mode)
-					return UserMode->checkVALUE(_Value);
+			if((userModesCount>4)&&(UserMode->ID==mode)&&(UserMode!=NULL))
+				return UserMode->checkVALUE(_Value);
 		}	
 		return *_Value;
 	}
 public:
+	bool ControllerActive;
 	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
+	void SetMIN(ctrlType val)
+	{
+		MIN = val;
+	}
+	void SetMAX(ctrlType val)
+	{
+		MAX = val;
+	}
+	void SetMOVE(ctrlType val)
+	{
+		MOVE = val;
+	}
 	template<typename Umode> Umode* GetUserMode(void)
 	{
 		return (Umode*)UserMode;
 	}
 	template<typename Umode> void SetUserMode(ctrlType initial)
 	{
+
 		if(UserMode)
 		{	delete UserMode; 
 			userModesCount--; }
 
 		UserMode = new Umode();
-		UserMode->InitFirst(MIN,MAX,MOVE,this);
-		UserMode->InitLater();
+		UserMode->InitFirst(&MIN,&MAX,&MOVE,this);
+		UserMode->Init();
 
 		*_Value = initial;
 
@@ -235,21 +278,42 @@ public:
 		Mode(UserMode);
 
 	}
-	virtual ctrlType Value(ctrlType setter=_Nan._Float)
+	template<typename Umode> void SetUserMode(ctrlType min,ctrlType max,ctrlType initial,ctrlType move)
 	{
-		if(setter!=_Nan._Float)
-		{
-			*_Value = setter;
-		}
+		MIN=min;
+		MAX=max;
+		MOVE=move;
+
+		if(UserMode)
+		{	delete UserMode; 
+			userModesCount--; }
+
+		UserMode = new Umode();
+		UserMode->InitFirst(&MIN,&MAX,&MOVE,this);
+		UserMode->Init();
+
+		*_Value = initial;
+
+		UserMode->ID = ++userModesCount;
+		Mode(UserMode);
+
+	}
+	virtual ctrlType SetValue(ctrlType setter)
+	{
+		*_Value = setter;
 		return checkValue(Mode());
 	}
-
+	virtual ctrlType GetValue(void)
+	{
+		return checkValue(Mode());
+	}
 	Controlled(void)
 	{
 		this->_Value = new ctrlType();
 		userModesCount=4;
 		ControllerActive = false;
 		CheckAtGet = true;
+		UserMode = NULL;
 	}
 
 	virtual ~Controlled(void)
@@ -259,18 +323,25 @@ public:
 
 
 
-	virtual bool IsControlled(BOOL active=3)
-	{
-		if(active<2)
-			ControllerActive=active;
-		
-		return ControllerActive;
-	}
+	//virtual bool IsControlled(BOOL active=3)
+	//{
+	//	if(active<2)
+	//		ControllerActive=active;
+	//	
+	//	return ControllerActive;
+	//}
 
 	virtual ControllMode Mode(ControllMode mode=ControllMode::NONE)
 	{
 		if(mode!=ControllMode::NONE)
-			_mode=mode;
+		{	_mode=mode;
+			if(mode==ControllMode::Clamp) 
+				CheckAtGet = false; 
+			else if(mode==ControllMode::Invert) 
+				CheckAtGet = false;
+			else 
+				CheckAtGet = true;
+		}
 		return (ControllMode)_mode;
 	}
 
@@ -280,7 +351,8 @@ public:
 			if(_mode!=mode->ID)
 			{
 				UserMode = mode;
-				_mode = UserMode->ID;		
+				_mode = UserMode->ID;
+				CheckAtGet=true;
 			}			 		
 
 
@@ -297,8 +369,9 @@ public:
 		return this;
 	}
 
-	virtual Controlled* SetUp(UserModeControl<ctrlType> *mode,ctrlType initial)
+	virtual Controlled* SetUp(ctrlType min,ctrlType max,ctrlType initial,ctrlType move,UserModeControl<ctrlType> *mode)
 	{
+		SetUp(min,max,initial,move,ControllMode::Clamp);
 		*_Value = initial;
 		if(mode->ID < 0)
 			mode->ID = ++userModesCount;
@@ -316,13 +389,13 @@ public:
 	//getter...
 	virtual operator ctrlType(void)
 	{
-		return CheckAtGet? Value() : *_Value;
+		return CheckAtGet? GetValue() : *_Value;
 	}
 
 	//setter
 	ctrlType operator =(ctrlType set)
 	{
-		return this->Value(set);
+		return this->SetValue(set);
 	}
 
 

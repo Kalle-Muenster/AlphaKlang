@@ -37,7 +37,7 @@ Loader::Loader(void)
 }
 
 
-Loader::Loader(const char* filename)
+Loader::Loader(char* filename)
 {
 	_w=_h=_length=0;
 	LoadeFile(filename);
@@ -93,7 +93,7 @@ Loader::Pixel(int x,int y)
 
 
 void*
-Loader::LoadeFile(const char* filename)
+Loader::LoadeFile(char* filename)
 {
 	u32_2s16_4b8 pixel;
 	pixel.u32 = 0;

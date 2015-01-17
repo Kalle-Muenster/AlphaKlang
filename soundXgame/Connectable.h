@@ -77,6 +77,10 @@ public:
 	{
 		return (uT*)conXtor->AddConnectable<Connectable<uT>>();
 	}
+	template<typename uT> uT* GetUnconnectable(void)
+	{
+		return (uT*)conXtor->GetConnected<Connectable<uT>>();
+	}
 	template<typename cT> void Remove(ConID id=NULL)
 	{
 		if(this==NULL)
@@ -137,6 +141,11 @@ public:
 	{
 		return GetOrAdd<Connectable<ILocatable>>();
 	}
+
+	//operator IConXtor(void)
+	//{
+	//	return GetOrAdd<IConXtor>();
+	//}
 
 	virtual Transform* getTransform()
 	{
@@ -398,7 +407,10 @@ public:
 };
 
 template<typename NonConnectableType> 
-class Connectable : public NonConnectableType ,  public IConnectable 
+class Connectable 
+	: 
+	public NonConnectableType,
+	public IConnectable 
 {
 public:
 	virtual bool Initialize(void)
@@ -419,13 +431,13 @@ private:
 	bool _idLocked;
 protected:
 
-	
-	unsigned SetID(unsigned);
-	bool LockID(unsigned);
+		
+
 	action ConnectionAction;
 public:
 		IConXtor(void)
 		{
+			_idLocked=false;
 			SetID(EMPTY);
 			connection = (IObjection<IConXtor>*)this;
 		}
@@ -434,7 +446,9 @@ public:
 	const char* GetName(void);
 	void SetName(const char*);
 	virtual bool Initialize(void);
-
+	bool AddToSceneAndLockID(void);
+	unsigned SetID(unsigned);
+	bool LockID(unsigned);
 };
 
 class cTransform :

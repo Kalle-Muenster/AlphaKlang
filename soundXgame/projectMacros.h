@@ -78,7 +78,7 @@
   for drawing 2D-Textures, writing text and setting up buttons and sliders., etc... 
   also should contain options for saving, loading, xml-serialization and such stuff soon...
 */
-#define GUI2D GuiManager::getInstance()
+#define GUI GuiManager::getInstance()
 
 #define OBJECT ObjectManagement::getInstance()
 

@@ -22,7 +22,7 @@ GuiManager*			_guimanagerInstance;
 ObjectManagement*	_objectManagerInstance;
 
 //A data-array wich can be used as framebuffer-memory for aplying image-efects to the screen.. 
-data32 screenBuffer[1920*1080];
+//data32 screenBuffer[1920*1080];
 
 void 
 ProjectMappe::GlobalDestructor(void)
@@ -114,13 +114,13 @@ SceneGraph::getInstance(void)
 {
 	return _scenegraphInstance;
 }
-
+/*
 data32* 
 SceneGraph::GetFXbufferData(void)
 {
 	return &screenBuffer[0];
 }
-
+ */
 //-------------------------------------------
 
 const char*

@@ -21,7 +21,7 @@ ITransform::ITransform(void)
 	physics.speed.SetUp(Controlled<float>::Cycle,-1,1,0,0.005);
 	physics.speed.Mode(Controlled<float>::Cycle);
 	physics.mass = Controlled<float>();
-	physics.mass.SetUserMode<Calculator<float,3>>(0.5f);
+	physics.mass.SetUserMode<Calculator<float,3>>(-1000,1000,0.5f,0);
 	physics.mass.GetUserMode<Calculator<float,3>>()->pPIN[0] = &dimension.scale.x;
 	physics.mass.GetUserMode<Calculator<float,3>>()->pPIN[1] = &dimension.scale.y;
 	physics.mass.GetUserMode<Calculator<float,3>>()->pPIN[2] = &dimension.scale.z;
@@ -96,5 +96,5 @@ Controlled<float>*
 float
 ControlledFloat::operator=(float setter)
 {
-	return Value(setter);
+	return SetValue(setter);
 }

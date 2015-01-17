@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm-9.6.1\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\src;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\src;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;C:\Libraries\xerces-c-3.1.1\Build\Win32\VC10\Release;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -109,6 +109,7 @@
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="SCENESETUP.h" />
     <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObj.cpp" />

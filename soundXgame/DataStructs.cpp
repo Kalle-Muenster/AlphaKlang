@@ -144,11 +144,17 @@ Vector3::cros(Vector3 other)
 }
 
 
-//BASS_3DVECTOR
-//Vector3::asBassVector(void)
-//{
-//	return BASS_3DVECTOR(x,y,z);
-//}
+bool
+Vector3::operator<(Vector3 other)
+{
+	 return ((other.x - x) + (other.y - y) + (other.z - z)) > 0;
+}
+
+bool
+Vector3::operator>(Vector3 other)
+{
+	return ((other.x - x) + (other.y - y) + (other.z - z)) < 0;
+}
 
 float 
 Vector3::GetLength(void)

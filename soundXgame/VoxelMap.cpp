@@ -737,14 +737,14 @@ void VoxelMap::ReLoade(char* filename)
 	}
 }
 
-void VoxelMap::Loade(const char* filename,void* buffer)
+void VoxelMap::Loade(char* filename,void* buffer)
 {	
 	MainSizzes.x=1.0f;
 	MainSizzes.y=1.0f;
 
 	voxels = (Voxel*)buffer;
 
-	if(filename == "FromDaCode")
+	if(Utility::StringCompareIterative(filename,"FromDaCode"))
 	{			
 	mapWidth = BLUOB_BLUE.width;
 	mapHeight = BLUOB_BLUE.height;

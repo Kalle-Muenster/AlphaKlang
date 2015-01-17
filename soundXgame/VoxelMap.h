@@ -23,7 +23,7 @@ public:
 	VectorF MainSizzes;
 	GLfloat BumpFactor;
 	char flipt;
-	void Loade(const char* filename,void*);
+	void Loade(char* filename,void*);
 	void ReLoade(char* filename);
 	void LoadeMap(char* filename,int channel);
 	

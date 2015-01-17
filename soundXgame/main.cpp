@@ -7,7 +7,7 @@
 //#include "ScreenOverlay.h"
 
 #include "ParticleSystem.h"
-#include "EffectClass.h"
+//#include "EffectClass.h"
 
 #include <xercesc\dom\DOM.hpp>
 #include <xercesc\framework\LocalFileInputSource.hpp>
@@ -133,7 +133,7 @@ void GlInit(void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	// glDisable( GL_LIGHTING );
-	 glEnable( GL_DITHER );
+//	 glEnable( GL_DITHER );
 
 
         // Disable dithering
@@ -155,14 +155,9 @@ void ActionTest(IConnectable* sender)
 ConID testID;
 void LoadContent(void)
 {
-
-
-	guiding = new GuiObject();
-	guiding->LoadTexture("testbild_1600x900.png");
-	guiding->scale(Vector3(256,256,1));
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
-	//i1 = -1;
+	printf("ENGINE: Loading Scene...\n");
+	
+//i1 = -1;
 	//i2 = -2;
 	//i3 = 1;
 	unsigned int brummsound;
@@ -180,7 +175,10 @@ void LoadContent(void)
 	//fountain->SetPosition(Vector3(-40, 0, 0));
 	//fountain->size = 50;
 	//fountain->createRange();
-
+	guiding = new GuiObject("testbild_1600x900.png");
+	guiding->scale(Vector3(256,256,1));
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);
@@ -266,6 +264,7 @@ void LoadContent(void)
 	(new Cubus("X-7.png"))->SetName("AUDIO05");
 	SCENE->Object("AUDIO05")->GetConnected<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
 	SCENE->Object("AUDIO05")->move(2,0,-10);
+
 
 	(new Cubus("X-7.png"))->SetName("AUDIO06");
 	SCENE->Object("AUDIO06")->GetConnected<AudioEmitter>()->LoadeSample("mp3/06-CZ_ToogBass.mp3");
@@ -382,14 +381,14 @@ void LoadContent(void)
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
 	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
 
-	// Camera
+		// Camera
 	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>();
 	
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
-
+	
 	//overlay = new ScreenOverlay();
 	//overlay->Initialize("framen_1920x1080.png");
 
@@ -398,6 +397,7 @@ void LoadContent(void)
 	AUDIO->Volume(1);
 	
 	
+	printf("\nSCENE: Loaded... \n ...entering gameloop!\n\n");
 }
 
 
@@ -412,6 +412,7 @@ int switcher=0;
 void UpdateCycle(void)
 {
 	UPDATE->DoTheUpdates();
+
 
 #ifdef LATE_BEFOR_DRAW
 		UPDATE->DoTheLateUpdates();
@@ -458,7 +459,7 @@ void OnDisplay(void)
 
 void OnIdle(void)
 {
-	OnDisplay();
+	glutPostRedisplay();
 }
 
 void OnReshape(GLsizei size_x,GLsizei size_y)

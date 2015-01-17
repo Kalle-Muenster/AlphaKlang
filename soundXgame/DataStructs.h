@@ -93,6 +93,8 @@ public:
 	bool operator==(float);
 	bool operator!=(Vector3);
 	bool operator!=(float);
+	bool operator<(Vector3);
+	bool operator>(Vector3);
 	Vector3 operator+(Vector3);
 	Vector3 operator-(Vector3);
 	Vector3 operator-(void);

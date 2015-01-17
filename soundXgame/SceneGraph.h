@@ -51,7 +51,7 @@ public:
 	// accses to the scene's main-camera...
 	Cam* camera;
 
-	data32* GetFXbufferData(void);
+//	data32* GetFXbufferData(void);
 
 
 	// Find an object by it's name...

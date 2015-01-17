@@ -44,14 +44,14 @@ private:
 public:
 	LoaderColor data;
 	Loader(void);
-	Loader(const char* filename);
+	Loader(char* filename);
 	~Loader(void);
 	int width(int=NULL);
 	int height(int=NULL);
 	int count(void);
 	LoaderColor Pixel(int);
 	LoaderColor Pixel(int,int);
-	void* LoadeFile(const char* filename);
+	void* LoadeFile(char* filename);
 };
 
 class Utility 

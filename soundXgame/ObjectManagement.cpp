@@ -47,7 +47,7 @@ ObjectManagement::FreeID(unsigned id)
 	}
 	else if(id >= MAX_MUM_SCENE_OBJECTS)
 	{
-		GUI2D->Remove(GUI2D->Element(id));
+		GUI->Remove(GUI->Element(id));
 	}
 	else
 	{
