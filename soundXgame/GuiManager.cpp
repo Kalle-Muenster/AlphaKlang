@@ -122,6 +122,7 @@ GuiManager::Element(string name)
 	for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
 		if(Utility::StringCompareRecursive(((IObjection<IConnectable>*)elements[ID])->GetName(),name))
 			return (IObjection<Connectable<IDrawable>>*)elements[ID];
+	return NULL;
 }
 
 IObjection<Connectable<IDrawable>>*
@@ -130,7 +131,9 @@ GuiManager::Element(GobID id)
 	GobID ID = id - MAX_MUM_SCENE_OBJECTS;
 	if(((IObjection<IConnectable>*)elements[ID])->GetID()==id)
 		return (IObjection<Connectable<IDrawable>>*)elements[ID];
+	return NULL;
 }
+
 
 void _WriteText2D(const char * text, Vecti position,data32 color)		
 {

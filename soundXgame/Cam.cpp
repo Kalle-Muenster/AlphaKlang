@@ -13,6 +13,7 @@ Cam::Cam(void) :
 	NumberOfModes(0),
 	_mode(1)
 {
+	this->FarClipDistance = 2000;
 	this->transform.position = Vector3(0,1,5);
 	this->transform.rotation = *Vector3::Zero;
 	this->transform.movement = *Vector3::Zero;
@@ -207,42 +208,46 @@ Cam::Mode(CAM_MODE value)
 
 CAM_MODE
 Cam::Mode(int value)
-{
+{  
 //get():
 	if(value==set)
 		return (CAM_MODE)_mode;
 //set(value):
 	if(value != _mode)
-	{
-		string text = "CAMERA: Mode: %s activated!\n";
-		if(ModeSocket->Get<CameraMode>(value)->IsPrimarMode())
+	{	string text = "CAMERA: Mode: %s activated!\n";
+		CameraMode* M = ModeSocket->Get<CameraMode>(value);
+		
+		if(M->IsPrimarMode())
 		{
 			ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
-			ModeSocket->Get<CameraMode>(value)->IsActive = true;
+			M->Activate(true);
 			_mode = value;
 		}
 		else
 		{
-			bool activated = ModeSocket->Get<CameraMode>(value)->Activate(!ModeSocket->Get<CameraMode>(value)->IsActive);
-			if(!activated);
+			if(!(M->Activate(!M->IsActive)));
 				text = "CAMERA: Mode: %s deactivated!\n";
 		}
 		
-		printf(text, ModeSocket->Get<CameraMode>(value)->ModeName);
+		printf(text, M->ModeName);
 		
 		UpdateView();
 	}
+	return (CAM_MODE)_mode;
 }
 	
 void // UpdateView: its called on GL-Reshape (if window has been resized...)
 Cam::UpdateView(void)
 {
-	VectorF vec = INPUT->GetViewportRectangle()->GetSize();
+	VectorF vec;
+	vec.x = INPUT->GetViewportRectangle()[2];
+	vec.y = INPUT->GetViewportRectangle()[3];
+
 	glViewport(0, 0, vec.x,vec.y);
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(FieldOfView(), Aspect(), 0.1f, 1000.0f);
+	gluPerspective(FieldOfView(), Aspect(), 0.1f, FarClipDistance);
 	TransformDIRTY = true;
 }
 
@@ -274,22 +279,12 @@ Cam::Update()
 		this->move(transform.position);
 		this->rotate(*_targetPosition);
 	}
-
-	//Mode-Dependant updates...
-	//ModeSocket->UpdateAllActiveModes();
 	
 	//update camera position:
 	UpdateDirections();
 	
 	//Mode-Dependant updates...
 	ModeSocket->UpdateAllActiveModes();
-
-
-	//Set To GL
-	//gluLookAt(transform.position.x, transform.position.y, transform.position.z,
-	//transform.rotation.x,transform.rotation.y,transform.rotation.z,	0, 1, 0);
-
-
 
 	//update The Position of the attached AudioReciever
 	SetAudioResieverPosition(&transform);

@@ -111,7 +111,7 @@ void InitGlut(void)
 	glutKeyboardUpFunc(keyboardUpInput);
 
 	// hide mouse cursor
-//	glutSetCursor(GLUT_CURSOR_NONE); 
+//	 
 	
 	GLenum glewError = glewInit();
 	if( glewError != GLEW_OK )
@@ -133,7 +133,7 @@ void GlInit(void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	// glDisable( GL_LIGHTING );
-//	 glEnable( GL_DITHER );
+	 glEnable( GL_DITHER );
 
 
         // Disable dithering
@@ -179,6 +179,8 @@ void LoadContent(void)
 	guiding->scale(Vector3(256,256,1));
 	guiding->AddConnectable<ButtonControl>();
 	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel.y = 75;
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);
@@ -291,11 +293,13 @@ void LoadContent(void)
 	SCENE->Object("AUDIO10")->move(8,0,-18);
 	SCENE->Object("AUDIO10")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->sensitivity=2;
-	SCENE->Object("AUDIO06")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
+	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
 
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->LoadeSample("mp3/05-TeeBee Ultralight.mp3");
 	SCENE->Object("AUDIO11")->move(12,0,-18);
+	SCENE->Object("AUDIO11")->IsGrounded(false);
+	SCENE->Object("AUDIO11")->AddConnectable<testDing>();
 
 	(new Cubus("X-7.png"))->SetName("AUDIO12");
 	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->LoadeSample("mp3/09-Brite Strings.mp3");
@@ -382,8 +386,10 @@ void LoadContent(void)
 	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
 
 		// Camera
-	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>();
+	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
+	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>()->IsActive=false;
 	
+
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
@@ -411,8 +417,13 @@ int switcher=0;
 /* the Main-Updatecall */
 void UpdateCycle(void)
 {
-	UPDATE->DoTheUpdates();
+	if(SCENE->camera->NeedViewUpdate)
+	{
+		glutReshapeWindow(SCREENWIDTH+1,SCREENHEIGHT+1);
+		SCENE->camera->NeedViewUpdate=false;
+	}
 
+	UPDATE->DoTheUpdates();
 
 #ifdef LATE_BEFOR_DRAW
 		UPDATE->DoTheLateUpdates();
@@ -500,6 +511,11 @@ void keyboardInput(unsigned char key,int x,int y)
 	{
 		if(lastKey!=key)
 			SCENE->camera->Mode(StrangeChaoticView::ID);
+	}
+	else if(key=='e')
+	{
+		if(lastKey!=key)
+			SCENE->camera->Mode(Edit::ID);
 	}
 	else if(key == 27) // ESC
 	{

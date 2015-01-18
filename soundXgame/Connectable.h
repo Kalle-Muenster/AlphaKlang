@@ -132,12 +132,12 @@ public:
 		GetConnected<IConXtor>(0)->SetName(name);
 	}
 
-	operator IDrawable(void)
+	operator IDrawable*(void)
 	{
 		return GetOrAdd<Connectable<IDrawable>>();
 	}
 
-	operator ILocatable(void)
+	operator ILocatable*(void)
 	{
 		return GetOrAdd<Connectable<ILocatable>>();
 	}
@@ -292,8 +292,8 @@ public:
 		ConID TypeHash = (ConID)typeid(T).hash_code();
 		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
 			if(ConIDs[i] == TypeHash)
-			//	return ConIDs[i]-1;
 				return i+1;
+		return NULL;
 	}
 
 	/*Removes a connected Component by it's type...*/
@@ -303,7 +303,6 @@ public:
 		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
 			if(ConIDs[i]==TypeHash)
 			{
-			//	getConnectables(i)->~IConnectable();
 				delete getConnectables(i);
 				ConIDs[i] = NULL;
 				NumberOfConnectedObjects--;
@@ -314,8 +313,6 @@ public:
 	/*Remove a connected Component by it's ID...*/
 	template<typename T> void RemoveConnected(ConID id)
 	{
-	//	if(typeid((*getConnectables(id))).name()==typeid(T).name())
-	//	{
 		if(getConnectables(id-1)!=NULL)
 		{
 			printf("%s-ID:%i: removing connectable %s at slot %i !\n",Connection()->GetName(),Connection()->GetID(),typeid(*getConnectables(id-1)).name(),id-1);
@@ -323,7 +320,6 @@ public:
 			ConIDs[id-1]=NULL;
 			NumberOfConnectedObjects--;
 		}
-	//	}
 	}
 
 	//UNREADY-SECTION...
@@ -346,7 +342,8 @@ public:
 			IConnectable* newcon = new T();
 			newcon->SetConnection(gobject);
 			newcon->ConnectionID=ConIDs[i]=(ConID)typeid(T).hash_code();
-				setConnectables(i,(T*)newcon);
+			setConnectables(i,(T*)newcon);
+			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
 		return NULL;
@@ -361,6 +358,7 @@ public:
 			inst->Connection()->conXtor->ConIDs[i]=i+1;
 			this->ConIDs[i]=inst->Connection()->conXtor->ConIDs[i];
 			setConnectables(i,inst);
+			NumberOfConnectedObjects++;
 			return &this->ConIDs[i];
 		}
 			return NULL;
@@ -381,6 +379,7 @@ public:
 	{
 		int x=0;
 		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+		{
 			if(ConIDs[i]==0)
 			{
 				for(int n = 0;n<MAXIMUM_NUMBER_OF_CONNECTIONS;n++)
@@ -401,6 +400,8 @@ public:
 						return &this->ConIDs[i];
 					}
 			}
+		}
+		return NULL;
 	}
 
 	

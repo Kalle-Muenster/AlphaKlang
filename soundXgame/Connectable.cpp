@@ -237,7 +237,7 @@ Dimensionality::Dimensionality(void)
 
 Dimensionality::~Dimensionality(void)
 {
-	physics.speed.~ControlledFloat();
+	physics.speed.~Controlled<float>();
 }
 
 bool 

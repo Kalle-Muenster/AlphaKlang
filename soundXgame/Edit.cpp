@@ -1,26 +1,23 @@
-#include "FirstPerson.h"
-#include "projectMacros.h"
+#include "Edit.h"
 
-int FirstPerson::ID = -1;
+int
+Edit::ID = -1;
 
-
-FirstPerson::FirstPerson(void)
+Edit::Edit(void)
 {
-	ModeName = "FirstPerson";
+	ModeName = "Edit";
 	isPrimarMode=true;
 }
 
-FirstPerson::~FirstPerson(void)
-{
 
+Edit::~Edit(void)
+{
 }
 
-
-
-bool
-FirstPerson::Initialize(void)
+bool 
+Edit::Initialize(void)
 {
-	
+
 	angle		= 0;
 	lx			= 0;
 	lz			= -1;
@@ -41,18 +38,9 @@ FirstPerson::Initialize(void)
 	return true;
 }
 
-void
-FirstPerson::OnActivate(void)
-{
-	//hide cursor
-	glutSetCursor(GLUT_CURSOR_NONE);
-	//update view...
-	camera->NeedViewUpdate=true;
-	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
-}
 
 void 
-FirstPerson::UpdateMode(void)
+Edit::UpdateMode(void)
 { 
 	camera->move(x, eyeY, z);
 	camera->rotate(x+lx, y + 1.7f, z+lz); 
@@ -64,7 +52,7 @@ FirstPerson::UpdateMode(void)
 
 
 void 
-FirstPerson::keyPress(char key)
+Edit::keyPress(char key)
 {
 
 	if(IsActive)
@@ -99,7 +87,7 @@ FirstPerson::keyPress(char key)
 }
 
 void
-FirstPerson::specialKeyPressed(int key)
+Edit::specialKeyPressed(int key)
 {
 	if(IsActive)
 	{
@@ -130,48 +118,54 @@ FirstPerson::specialKeyPressed(int key)
 }
 
 void
-FirstPerson::mouseMotion(int newX, int newY)
+Edit::mouseMotion(int newX, int newY)
 {
 	if(!IsActive)
 		return;
 
-	// if mouse haven't change -> return
-	if(newX == mouseX && newY == mouseY)
-		return;
+	if(INPUT->Mouse.RIGHT.HOLD)
+	{
+		// if mouse haven't change -> return
+		if(newX == mouseX && newY == mouseY)
+			return;
 
-	// check difference between last-frame mouse pos
-	int diffX = newX - mouseX;
-	int diffY = newY - mouseY;
+		// check difference between last-frame mouse pos
+		int diffX = newX - mouseX;
+		int diffY = newY - mouseY;
 
-	// calculate
-	angle += 0.005f * diffX * mouseSpeed;
-	lx = sin(angle);
-	lz = -cos(angle);
-	eyeY += (float)diffY / 300;
+		// calculate
+		angle += 0.005f * diffX * mouseSpeed;
+		lx = sin(angle);
+		lz = -cos(angle);
+		eyeY += (float)diffY / 300;
 
-	// set fixed restriction to top and bottom
-	if(eyeY < -0.5f + y)
-		eyeY = -0.5f+ y;
-	else if(eyeY > 2.5f+ y)
-		eyeY = 2.5f+ y;
+		// set fixed restriction to top and bottom
+		//if(eyeY < -0.5f + y)
+		//	eyeY = -0.5f+ y;
+		//else if(eyeY > 2.5f+ y)
+		//	eyeY = 2.5f+ y;
 
-	// set mouse pos center to screen
-	mouseX = SCREENWIDTH / 2;
-	mouseY = SCREENHEIGHT / 2;
-	
-	// fix to static mouse pos
-	glutWarpPointer(mouseX, mouseY);
+		// set mouse pos center to screen
+		mouseX = SCREENWIDTH / 2;
+		mouseY = SCREENHEIGHT / 2;
 
-	// flag check data uptodate
-	IsDirty=true;
-	UpdateMode();
+		//center cursor...
+		glutWarpPointer(mouseX, mouseY);
+
+		// flag check data uptodate
+		IsDirty=true;
+		UpdateMode();
+	}
 
 }
 
 void
-FirstPerson::UpdateHeight(float y)
+Edit::OnActivate(void)
 {
-	float diffEyeY = y - this->y;
-	this->y = y;
-	eyeY += diffEyeY;
+	//show cursor
+	glutSetCursor(GLUT_CURSOR_INHERIT);
+	//update view
+	camera->NeedViewUpdate=true;
+	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
 }
+

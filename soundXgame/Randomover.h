@@ -7,14 +7,15 @@
 class testDing : public IConnectable, public IUpdateble
 {
 public:
-	Controlled<Vector3> vec;
+	ControlledVector3 vec;
 	virtual bool Initialize(void)
 	{
-		vec.SetUp(Vector3(20,20,10),Vector3(-20,-20,10),*Vector3::Zero,Vector3(0.1,0.1,0),vec.PingPong);
+		return true;
 	}
 	virtual void DoUpdate(void)
 	{
-		this->Connection()->move(vec);
+		Vector3 temp = vec;
+		this->Connection()->move(temp);
 	}
 };
 

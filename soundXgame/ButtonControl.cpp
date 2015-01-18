@@ -80,11 +80,12 @@ ButtonControl::DoEarly(void)
 	else
 		SetState(NORMAL);
 
-	GuiManager::getInstance()->Write(States[btnState],10,160);
+//	GuiManager::getInstance()->Write(States[btnState],10,160);
 }
 
 	bool ButtonControl::Initialize(void)
 	{
+		area = *ProjectMappe::Rectangle::Zero;
 		UPDATE->SignOutFromUpdate(this);
 		UPDATE->SignInForEarlyUpdate(this);
 		GuiManager::getInstance()->Add(this);
@@ -98,11 +99,8 @@ ButtonControl::DoEarly(void)
 		this->angle = 0;
 		GetArea();
 
-//		movetest = Controlled<float>();
 		movetest.SetUserMode<SineControlled<float>>(-35.756,57.9,0,0.05);
-		//movetest.SetMIN(-35.756);
-		//movetest.SetMAX(57.9);
-		movetest.SetMOVE((float)(3.14159265358979323846 / 18));
+		movetest.SetMOVE((float)(3.14159265358979323846 / 180));
 		movetest = 0;
 		movetest.ControllerActive=true;
 
@@ -112,12 +110,14 @@ ButtonControl::DoEarly(void)
 	ProjectMappe::Rectangle
 	ButtonControl::GetArea(void)
 	{
-		ProjectMappe::Rectangle area = *ProjectMappe::Rectangle::Zero;
-		area.SetPosition(Panel.GetPosition() + PositionOnPanel);
-		VectorF size = Panel.GetSize();
-		size.x *= SizeScaledPanel.x;
-		size.y = size.x/4;
-		area.SetSize(size);
+		float mover = movetest;
+		VectorF	vec = Panel.GetSize();
+		vec.x *= (SizeScaledPanel.x*(mover*3/100));
+		vec.y = vec.x/4;
+		area.SetSize(vec);
+		vec = (Panel.GetPosition() + PositionOnPanel )-area.GetHalbSize();
+		vec.x+=mover;
+		area.SetPosition(vec);
 		left=area.GetCenter().x-area.GetHalbSize().x;
 		right=area.GetCenter().x+area.GetHalbSize().x;
 		top=area.GetCenter().y-area.GetHalbSize().y;
@@ -158,7 +158,7 @@ ButtonControl::DoEarly(void)
 			return;
 		
 		
-		GuiManager::getInstance()->Write(tempstring,50,50);
+		
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 
@@ -177,10 +177,11 @@ ButtonControl::DoEarly(void)
 
 	glPushMatrix();
 	{
-		// Translation:
-		VectorF values = Panel.GetPosition() + this->PositionOnPanel;
 		float test = movetest;
-		sprintf(&tempstring[0],"%f",test);
+	//	sprintf(&tempstring[0],"%f",test);
+	//	GuiManager::getInstance()->Write(tempstring,50,50);
+		// Translation:
+		VectorF values = Panel.GetPosition() + PositionOnPanel;
 		values.x += test;
 		glTranslatef(values.x, values.y, 0);
 
@@ -188,9 +189,7 @@ ButtonControl::DoEarly(void)
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 
 		// Scaling:
-		values = Panel.GetSize();
-		values.x *= SizeScaledPanel.x;
-		values.y = values.x/4;
+		values = area.GetSize();
 		glScalef(values.x,values.y,0);
 		
 		// Draw

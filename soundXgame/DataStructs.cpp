@@ -147,13 +147,13 @@ Vector3::cros(Vector3 other)
 bool
 Vector3::operator<(Vector3 other)
 {
-	 return ((other.x - x) + (other.y - y) + (other.z - z)) > 0;
+	 return ((other.x - x) + (other.y - y) + (other.z - z)) < 0;
 }
 
 bool
 Vector3::operator>(Vector3 other)
 {
-	return ((other.x - x) + (other.y - y) + (other.z - z)) < 0;
+	return ((other.x - x) + (other.y - y) + (other.z - z)) > 0;
 }
 
 float 

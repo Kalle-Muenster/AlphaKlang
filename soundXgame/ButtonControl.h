@@ -25,7 +25,7 @@ private:
 	char btnState;
 	float left,right,top,bottom;
 	Controlled<float> movetest;
-
+	ProjectMappe::Rectangle area;
 
 public:
 	static const char* States[];

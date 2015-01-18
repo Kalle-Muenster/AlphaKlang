@@ -170,7 +170,7 @@
   <Class Name="SceneGraph" Collapsed="true">
     <Position X="6.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIYQAAAAAgAIJAggAAAABAAAAAEAEAQIAQADAIAQAAA=</HashCode>
+      <HashCode>AIYQAAAAAgAIBAggAAAABAAAAAEAEAQIAQADAIAQAAA=</HashCode>
       <FileName>SceneGraph.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -251,7 +251,7 @@
   <Class Name="Cam" Collapsed="true">
     <Position X="7.75" Y="12" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IIQAAUDgAIQUQECAAgAQAAEAEAAEAQBCABAgBAAQBCI=</HashCode>
+      <HashCode>IIQQAUDgAIQUQECAAgAUAAEAEAAEAQBCABAgBAAQBCI=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -286,7 +286,7 @@
   <Class Name="IObjection&lt;Objected&gt;" Collapsed="true">
     <Position X="3.5" Y="1.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>QAQAAAAAAAAABEFAAAIAhEAAAAAAAAAAAAAAQFIABAA=</HashCode>
+      <HashCode>BAQAAAAAAAAABEFAAAIAhAAQAAAAAAAAAAAAQVIABAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -398,7 +398,7 @@
   <Class Name="CameraMode" Collapsed="true">
     <Position X="35.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAQggAAABAAAAAAAAAAAAgAAABGAABAAgBAAA=</HashCode>
+      <HashCode>AAAAAAIAQggAAABAAAAAAAAAAAAgAAEBGAABAAgBAAA=</HashCode>
       <FileName>Cam.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -475,7 +475,7 @@
   <Class Name="ButtonControl" Collapsed="true">
     <Position X="12.75" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABEBEAAAAABARCAAAMAAAiAAQAIEgABAAAAlEBAggg=</HashCode>
+      <HashCode>AABEBEAAAAABARCAAAMAAAiAAQAIEgABAAAAlEBAggk=</HashCode>
       <FileName>ButtonControl.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -524,7 +524,7 @@
   <Class Name="FirstPerson" Collapsed="true">
     <Position X="22.5" Y="15" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAEAAAgQEEAAAIAEBAAAgAgACQEABkAQBQAAQ=</HashCode>
+      <HashCode>AAAAAAIAEAAAgQEEAAAMAEBAAAgAgAGQEABkAQBQAAQ=</HashCode>
       <FileName>FirstPerson.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -640,73 +640,10 @@
       <FileName>Spectator.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UserModeControl&lt;cType&gt;">
-    <Position X="0.5" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAABEAAAAAgAEAAAQAAAAgAAAAAAAAAABAAAAAAJA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="InvertController&lt;cType&gt;">
-    <Position X="2.5" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ClambController&lt;cType&gt;">
-    <Position X="2.5" Y="15.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAE=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MovingValue&lt;cType&gt;">
-    <Position X="2.5" Y="18.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SineController&lt;cType&gt;">
     <Position X="2.25" Y="20.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAEAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Trigger&lt;cType&gt;">
-    <Position X="4.25" Y="20.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAACAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Jongleur&lt;cType, NUMBER_OF_PINS&gt;">
-    <Position X="0.5" Y="20.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAgAAAAAAAAAAACABAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Calculator&lt;cType, NUMBER_OF_PINS&gt;">
-    <Position X="0.5" Y="23" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Controlled&lt;ctrlType&gt;" Collapsed="true">
-    <Position X="15" Y="7.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAABABAMAQABgAAgAAAAQCAAAAAACQAABgEAAiAJA=</HashCode>
-      <FileName>Transform.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ControlledFloat" Collapsed="true">
-    <Position X="15" Y="9" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAABAAAQAAABgAAAAAAAAAAAAAAAAAAAAgAAAgAJA=</HashCode>
       <FileName>Transform.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -729,6 +666,62 @@
     <TypeIdentifier>
       <HashCode>AAAAAAQAACAAAACAAAAIAAAAIQAgAgIAAAAAACAIAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controlled&lt;ctrlType&gt;" Collapsed="true">
+    <Position X="15" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAABABIMAQAhgAAgAAAAQCAAAAAACQAABgEAEiAJA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Calculator&lt;cType, NUMBER_OF_PINS&gt;">
+    <Position X="0.5" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Jongleur&lt;cType, NUMBER_OF_PINS&gt;">
+    <Position X="0.5" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAgAAAAAAAAAAACABAAAAA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trigger&lt;cType&gt;">
+    <Position X="4.25" Y="20.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAACAAAAAAA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovingValue&lt;cType&gt;">
+    <Position X="2.5" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClambController&lt;cType&gt;">
+    <Position X="2.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAE=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InvertController&lt;cType&gt;">
+    <Position X="2.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserModeControl&lt;cType&gt;">
+    <Position X="0.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABEAAAAAgAEAAAQAAAAgAAAAAAAAAAACAAAAAJA=</HashCode>
+      <FileName>ControlledValues.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="ListenerData" Collapsed="true">
@@ -924,7 +917,7 @@
     <Position X="57.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Transform.h</FileName>
+      <FileName>ControlledValues.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Enum Name="FFT_SIZE" Collapsed="true">

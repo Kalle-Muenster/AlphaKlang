@@ -114,6 +114,7 @@ public:
 			std::cout<<"> ... ";
 			std::cout<<exeption;
 		}
+		return NULL;
 	}
 
 	//retrurn's a copy of the member at List[index] .. 

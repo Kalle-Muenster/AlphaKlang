@@ -83,7 +83,9 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
+    <ClCompile Include="ControlledValues.cpp" />
     <ClCompile Include="Cubus.cpp" />
+    <ClCompile Include="Edit.cpp" />
     <ClCompile Include="EffectClass.cpp" />
     <ClCompile Include="FirstPerson.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
@@ -109,7 +111,6 @@
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
-    <ClCompile Include="SCENESETUP.h" />
     <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObj.cpp" />
@@ -141,7 +142,9 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
+    <ClInclude Include="ControlledValues.h" />
     <ClInclude Include="Cubus.h" />
+    <ClInclude Include="Edit.h" />
     <ClInclude Include="EffectClass.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="FollowTarget.h" />
@@ -187,6 +190,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UpdateManager.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="ValueControllerUserModes.h" />
     <ClInclude Include="VoxControl.h" />
     <ClInclude Include="VoxelVector.h" />
     <ClInclude Include="Voxel.h" />

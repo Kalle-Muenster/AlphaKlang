@@ -7,11 +7,7 @@ DWORD _frameTicks;
 DWORD _clicktimer;
 DWORD _doubleClickLength;
 int _fps;
-float vpX=400;
-float vpY=300;
-float vpW=400;
-float vpH=300;
-ProjectMappe::Rectangle _Viewport = ProjectMappe::Rectangle(&vpX,&vpY,&vpW,&vpH);
+float _Viewport[]={0,0,800,600};
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];
@@ -155,7 +151,7 @@ InputManager::notifyJoystick(int id,int button,bool state,int AxisX,int AxisY,in
 void
 InputManager::registerKey(unsigned char key)
 {
-	std::cout<< "INPUT: key: \"" << key << "\" pressed !" << std::endl;
+//	std::cout<< "INPUT: key: \"" << key << "\" pressed !" << std::endl;
 
 	this->keyList.Add(key);
 }
@@ -163,7 +159,7 @@ InputManager::registerKey(unsigned char key)
 void
 InputManager::registerKeyUp(unsigned char key)
 {
-	std::cout<< "INPUT: key: \"" << key << "\" released !" << std::endl;
+//	std::cout<< "INPUT: key: \"" << key << "\" released !" << std::endl;
 
 	this->keyList.Remove(key);
 
@@ -389,17 +385,19 @@ InputManager::UpdateJoysticks(int id,unsigned buttons,int AxisX,int AxisY,int Ax
 	}
 }
 
-ProjectMappe::Rectangle* 
+float* 
 InputManager::GetViewportRectangle(void)
 {
-	return &_Viewport;
+	return &_Viewport[0];
 }
 
 void 
 InputManager::SaveViewportRectangle(int x,int y,int w,int h)
 {
-	_Viewport.SetPosition(x,y);
-	_Viewport.SetSize(w,h);
+	_Viewport[0]=x;
+	_Viewport[1]=y;
+	_Viewport[2]=w;
+	_Viewport[3]=h;
 }
 
 void 
@@ -416,8 +414,8 @@ InputManager::setMousePosition(int x,int y)
 	Mouse.Position.x = Mouse.X = x;
 	Mouse.Position.y = Mouse.Y = y;
 
-	_ViewPortNormalizedMouseCoordinates.x = 2.f*(Mouse.Position.x/GetViewportRectangle()->GetSize().x)-1.f;
-	_ViewPortNormalizedMouseCoordinates.y = 2.f*(1.f-Mouse.Position.y/GetViewportRectangle()->GetSize().y)-1.f;
+	_ViewPortNormalizedMouseCoordinates.x = 2.f*(Mouse.Position.x/_Viewport[2])-1.f;
+	_ViewPortNormalizedMouseCoordinates.y = 2.f*(1.f-Mouse.Position.y/_Viewport[3])-1.f;
 
 	glm::vec4 ray_clip(_ViewPortNormalizedMouseCoordinates.x,_ViewPortNormalizedMouseCoordinates.y,-1.f,1.f);
 

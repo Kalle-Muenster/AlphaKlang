@@ -155,7 +155,12 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="SCENESETUP.h" />
+    <ClCompile Include="Edit.cpp">
+      <Filter>Objects\ConnectableCameraModes</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlledValues.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -325,6 +330,15 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit.h">
+      <Filter>Objects\ConnectableCameraModes</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueControllerUserModes.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlledValues.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

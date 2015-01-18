@@ -816,7 +816,7 @@ void VoxelMap::LoadeMap(char* filename,int channel)
 	Loader* loader = new Loader(filename);
 	for(int i=0;i<loader->count();i++)
 		voxels[i].factor=loader->Pixel(i)->byte[channel];
-	printf("Loaded bumpmap %s: %i voxels \n",filename,loader->count());
+//	printf("Loaded bumpmap %s: %i voxels \n",filename,loader->count());
 
 }
 

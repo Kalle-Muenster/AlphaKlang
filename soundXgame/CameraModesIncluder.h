@@ -4,3 +4,4 @@
 #include "FollowTarget.h"
 #include "Spectator.h"
 #include "StrangeChaoticView.h"
+#include "Edit.h"

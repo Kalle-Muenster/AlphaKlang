@@ -13,8 +13,8 @@
 #include "BassAudio.h"
 #include "ObjectManagement.h"
 
-#define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()->GetSize().x
-#define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()->GetSize().y
+#define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()[2]
+#define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()[3]
 #define MAIMUM_NUMBER_OF_VOXELS (16384)
 #define CONTROLERPOLLINTERVAL (50)
 #define clrscr system("cls")

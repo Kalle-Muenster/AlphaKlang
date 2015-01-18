@@ -27,17 +27,25 @@ protected:
 public:
 	Cam* camera;
 	char* ModeName;
-	virtual bool Activate(BOOL setter = 3)
+	bool Activate(BOOL setter = 3)
 		{
 			if(setter<3)
+			{
 				IsActive=setter;
+				if(IsActive)
+					OnActivate();
+			}
 			return IsActive;
 		}
+	virtual void OnActivate(void){}
 	bool IsDirty;
 	bool IsPrimarMode(void)
 	{return isPrimarMode;}
 	virtual ~CameraMode(void)
-		{}
+	{
+		for(int i = 0 ; i<NumberOfConnectedObjects;i++)
+			RemoveConnected<IConnectable>(i+1);
+	}
 	
 	void UpdateAllActiveModes(void)
 	{
@@ -100,13 +108,13 @@ class Cam : public IWheelee,  public IAudioReciever
 private:
 	static bool				_shareAudioReciever;
 	Vector3					*_targetPosition;		//position vector the camera looks at if in FOLLOWTARGET-Mode...
-	IObjection<IConnectable>*				_targetObject;
+	IObjection<IConnectable>*	_targetObject;
 	ConID					*targetConID;			
 	double					_fieldOfView;
 	GLfloat					_aspect;
 	int						_mode;
 	float					_distanceToTarget;
-	void					UpdateView();			// Update Window and or Viewport Changes...
+	
 	void					UpdateDirections(void); // Re-Calculates "forward","right" and "up"
 	
 protected:
@@ -115,7 +123,10 @@ protected:
 
 public:
 							Cam(void);
+	float					FarClipDistance;
+	bool					NeedViewUpdate;
 	virtual					~Cam(void);
+	void					UpdateView();			// Update Window and or Viewport Changes...
 	virtual double			FieldOfView(double = _FNan._Double);
 	virtual GLfloat			Aspect(GLfloat = NULL);
 	Transform               transform;	
