@@ -11,7 +11,13 @@
 #include "Connectable.h"
 
 
+template<const unsigned short fftBufferSize> struct FFT_DATA_BUFFER
+{
+ float buffer[fftBufferSize];
+};
+
 /* Interface, not instanziable */
+
 class IAudioEmitter
 {
 protected:
@@ -19,7 +25,8 @@ protected:
 	void InitiateAudioEmitter(Transform*,const char*);
 	bool IsPlaying;
 	void SetMyPosition(Transform*);
-	float fftwindow[1024];
+	FFT_DATA_BUFFER<128> fftData;
+
 public:
 	HCHANNEL audioSource;
 	IAudioEmitter(void);
@@ -30,17 +37,17 @@ public:
 	virtual void AudioPause(void);
 	virtual float AudioVolume(float=2);
 	virtual float PitchAudio(float=2);
+	virtual float* GetFFTData(void);
 	virtual float* GetFFTWindow(void);
-	virtual float* GetFFTWindow(int);
 	virtual bool IsAudioPlaying(void);
-
+	virtual void Set3Dparameter(float minDistance,float maxDistance);
 };
 
 /* Connetable of IAudioEmitter */
 class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateble
 {
 public:
-	virtual void PlaySample(HCHANNEL sample,bool loop=false);
+	virtual void PlaySample(HCHANNEL sample);
 	AudioEmitter(void);
 	virtual void LoadeSample(const char*,bool loop = true);
 	virtual void LoadeStream(const char*);

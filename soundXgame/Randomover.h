@@ -4,23 +4,22 @@
 #include "connectable.h"
 #include "UpdateManager.h"
 
-class testDing : public IConnectable, public IUpdateble
+class SmoothObjectMover 
+	: 
+	public IConnectable, 
+	public IUpdateble
 {
 public:
-	ControlledVector3 vec;
-	virtual bool Initialize(void)
-	{
-		return true;
-	}
-	virtual void DoUpdate(void)
-	{
-		Vector3 temp = vec;
-		this->Connection()->move(temp);
-	}
+	ControlledVector3 movingVector;
+	virtual bool Initialize(void);
+	virtual void DoUpdate(void);
 };
 
-class Randomover :
-	public IConnectable ,public IUpdateble
+
+class Randomover 
+	:
+	public IConnectable,
+	public IUpdateble
 {
 private:
 	bool rotation, moving;

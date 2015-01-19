@@ -26,43 +26,79 @@ private:
 		}
 		~Particle(void){};
 	};
+	bool movingaway;
 	List<Particle*,NUMBER_OF_PARTICLES>		particles;
+//	std::vector<Particle*>					particles_stdvec;
 	Vector3									particlePosition;
 	Vector3									particleDirection;
 	Vector3									particleRotationAxis;
 	GLfloat									particleRotationAngel;
 	GLfloat									particleSize;
 	GLfloat									particleAlphaValue;
-	GLfloat									InitialSize;
+	
 	GLfloat									InitialSpeed;
 
 
 	int										particlesEmitted;
+
+	void									ParticleCalculation(unsigned ID)
+											{						
+												Vector3 cameraDirection;
+												Particle P = *particles[ID];
+											//	Particle P = *particles_stdvec[ID];
+												P.time = P.time>0 ? P.time-INPUT->FrameTime : 0;
+
+													if(P.time > 0)
+													{
+															P.movement *= accselleration;
+															P.position += particles[ID]->movement;
+															//P.position += particles_stdvec[ID]->movement;
+
+															float timePoint = (P.time/lifetime) ;
+
+															if(ParticlesChangeSize)
+																particleSize = InitialSize + ((timePoint < ValueChangeReleasepoint) ? ((1-timePoint) * MaximumSize) : (timePoint * MaximumSize));
+
+															if(ParticlesChangeAlpha)
+																particleAlphaValue = ((timePoint)*color.byte[0])/255;
+
+															particlePosition = P.position;
+															
+															cameraDirection = SCENE->camera->transform.position;
+
+															if(particlePosition.x > cameraDirection.x)
+															{
+																cameraDirection = particlePosition.direction(cameraDirection);
+																particleRotationAngel = glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
+															}
+															else
+															{
+															  	cameraDirection = particlePosition.direction(cameraDirection);
+																particleRotationAngel = - glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
+															}
+											
+															particleRotationAxis = Utility::GlobalZ.cros(cameraDirection);
+															particleDraw();
+													}
+													else
+													{
+															P.position = P.movement = *Vector3::Zero;
+															P.time = 0;
+															particlesEmitted--;
+													}
+													*particles[ID] = P;
+													//*particles_stdvec[ID] = P;
+													glBindBuffer(GL_ARRAY_BUFFER,0);
+													glBindTexture(GL_TEXTURE_2D, 0);
+													glDisable(GL_TEXTURE_2D);
+											}
+
 	void									particleDraw(void)
 											{
-												 if(!vertexBufferID)
-													return;
-
-											//	glEnable(GL_CULL_FACE);
-											//	glCullFace(GL_BACK);
-
-												if(UseTexture)
-												{
-													glColor4f((GLfloat)color.byte[1]/255,(GLfloat)color.byte[2]/255,(GLfloat)color.byte[3]/255,particleAlphaValue);
-													glEnable(GL_TEXTURE_2D);
-													glBindTexture(GL_TEXTURE_2D, texture.ID);
-												}
-												else
-												{
-													glColor4b(color.byte[1],color.byte[2],color.byte[3],color.byte[0]);
-												}
-
-												glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-												glVertexPointer(3, GL_FLOAT, 0, 0);
-
-												glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
-												glTexCoordPointer(2, GL_FLOAT, 0, 0);
-
+												glColor4f((GLfloat)color.byte[1]/255,(GLfloat)color.byte[2]/255,(GLfloat)color.byte[3]/255,particleAlphaValue);
+												glEnable(GL_TEXTURE_2D);
+												glBindTexture(GL_TEXTURE_2D, texture.ID);
+										
 												glPushMatrix();
 												{
 													// Translation:
@@ -80,7 +116,7 @@ private:
 												glPopMatrix();
 
 											//	glDisable(GL_CULL_FACE);
-												glDisable(GL_TEXTURE_2D);
+
 											}
 	void                                    Emmission(void)
 											{
@@ -91,13 +127,21 @@ private:
 													lastActivatedParticle=lastActivatedParticle==particles.Last()?particles.First():lastActivatedParticle+1;
 													particles[lastActivatedParticle]->movement = (particleDirection * (InitialSpeed * INPUT->FrameTime));
 													particles[lastActivatedParticle]->position = this->getTransform()->position + particles[lastActivatedParticle]->movement;
-													timer = particles[lastActivatedParticle]->time = lifetime;
+													particles[lastActivatedParticle]->time = lifetime;
+													timer = 0;
+													//lastActivatedParticle=lastActivatedParticle==NUMBER_OF_PARTICLES-1?0:lastActivatedParticle+1;
+													//particles_stdvec[lastActivatedParticle]->movement = (particleDirection * (InitialSpeed * INPUT->FrameTime));
+													//particles_stdvec[lastActivatedParticle]->position = this->getTransform()->position + particles_stdvec[lastActivatedParticle]->movement;
+													//timer = particles_stdvec[lastActivatedParticle]->time = lifetime;
+
 													particlesEmitted++;
+												//	if(particlesEmitted>0)
+												//		turnMarker += (turnMarker<NUMBER_OF_PARTICLES-1)? 1 : 0;
 												}
 											}
 	float									timer;
 	int										lastActivatedParticle;
-
+	unsigned										turnMarker;
 
 public:
 					ParticleSystem(string particleTexture)
@@ -133,7 +177,7 @@ public:
 							
 							SetUp(particleTexture,true);
 
-					//	particles = List<Particle*,NUMBER_OF_PARTICLES>();
+				
 						for(int i = 0;i < NUMBER_OF_PARTICLES;i++)
 							 particles.Add(new Particle());
 
@@ -148,6 +192,7 @@ public:
 						InitialSize = 0.5f;
 						particlesEmitted = 0;
 						timer = 0;
+						turnMarker = NUMBER_OF_PARTICLES-1;
 						lastActivatedParticle = -1;
 						lifetime=5;
 						emittingFrequency=0.01;
@@ -156,79 +201,91 @@ public:
 						varianz = 1.5f;
 						getTransform()->movement = *Vector3::Zero;
 						InitialSpeed = 7;
-					//	LoadTexture(particleTexture);
 						SetID(SCENE->Add(this));
 						SetName("ParticleSystem");
 						LockID();
 						IsVisible = false;
 						UPDATE->SignInForUpdate(this);
+						transform.speed = 20.f;
+						movingaway=false;
 					}
 	virtual		   ~ParticleSystem(void)
 					{
 						for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
 							particles.Distruct(ID);
+
+						//for(int i = 0;i < NUMBER_OF_PARTICLES;i++)
+						//	delete particles_stdvec[i];
 					}
+	
+
 	virtual void	draw(void)
 					{
-						Vector3 cameraDirection;
-						Particle P;
+						if(!vertexBufferID)
+							return;
+
+
 						if(this->IsVisible)	
 							Emmission(); 
 
-						for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
+						if(NoBackfaceCulling)
+							glDisable(GL_CULL_FACE);
+						else
 						{
-							P = *particles[ID];
-							P.time = P.time>0 ? P.time-INPUT->FrameTime : 0;
-
-							if(P.time > 0)
-							{
-									P.movement *= accselleration;
-									P.position += particles[ID]->movement;
-
-									float timePoint = (P.time/lifetime) ;
-
-									if(ParticlesChangeSize)
-										particleSize = InitialSize + ((timePoint < ValueChangeReleasepoint) ? ((1-timePoint) * MaximumSize) : (timePoint * MaximumSize));
-
-									if(ParticlesChangeAlpha)
-										particleAlphaValue = ((timePoint)*color.byte[0])/255;
-
-									particlePosition = P.position;
-									
-									cameraDirection = SCENE->camera->transform.position;
-									//cameraDirection.y = particlePosition.y;
-									if(particlePosition.x > cameraDirection.x)
-									{
-										cameraDirection = particlePosition.direction(cameraDirection);
-										particleRotationAngel = glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
-									}
-									else
-									{
-									  	cameraDirection = particlePosition.direction(cameraDirection);
-										particleRotationAngel = - glm::acos(Utility::GlobalZ.dot(cameraDirection))/(M_PI/180.0);
-									}
-
-					
-									particleRotationAxis = Utility::GlobalZ.cros(cameraDirection);
-
-								//	particleRotationAxis = Utility::GlobalY;
-							
-
-									//particleFaceDirection = particlePosition.direction(SCENE->camera->transform.position);
-								//	particleRotationAxis = Utility::GlobalZ.cros(particleFaceDirection);
-								//	particleRotationAngel = glm::acos(Utility::GlobalZ.dot(particleFaceDirection))/(M_PI/180.0);
-
-									particleDraw();
-							}
-							else
-							{
-									P.position = P.movement = *Vector3::Zero;
-									P.time = 0;
-									particlesEmitted--;
-							}
-							*particles[ID] = P;
+							glEnable(GL_CULL_FACE);
+							glCullFace(GL_BACK);
 						}
-   						//printf("particles: %i\n",particlesEmitted);
+
+						glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+						glVertexPointer(3, GL_FLOAT, 0, 0);
+
+						glBindBuffer(GL_ARRAY_BUFFER, uvBufferID);
+						glTexCoordPointer(2, GL_FLOAT, 0, 0);
+						bool interleave=false;
+						float dist1 = this->getTransform()->position.distance(SCENE->camera->transform.position);  
+						float dist2 = (this->getTransform()->position + this->getTransform()->movement).distance(SCENE->camera->transform.position);
+						if(dist1>dist2)
+						{
+							//if(movingaway)
+							//{
+							//	movingaway = false;
+							//	turnMarker = lastActivatedParticle<0?NUMBER_OF_PARTICLES:lastActivatedParticle;
+							//}
+							for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
+								ParticleCalculation(ID);
+							 // for(unsigned ID = particles.First(); ID <= turnMarker; ID = particles.Next(ID))
+								//ParticleCalculation(ID);
+							 // for(unsigned ID = particles.Last(); ID > turnMarker; ID = particles.Prev(ID))
+								//ParticleCalculation(ID);
+							//for(unsigned i=0;i<turnMarker;i++)
+							//	ParticleCalculation(i);
+							//for(unsigned i = NUMBER_OF_PARTICLES-1;i>=turnMarker;i--)
+							//	ParticleCalculation(i);
+						}
+						else
+						{
+		/*					if(!movingaway)
+							{
+								movingaway = true;
+								turnMarker = lastActivatedParticle<0?NUMBER_OF_PARTICLES:lastActivatedParticle;
+							}*/
+							
+							for(unsigned ID = particles.Last(); ID > particles.First(); ID = particles.Prev(ID))
+								 ParticleCalculation(ID);
+							ParticleCalculation(particles.First());
+
+							//for(unsigned ID = turnMarker; ID > particles.First(); ID = particles.Prev(ID))
+							//	 ParticleCalculation(ID);
+							//ParticleCalculation(particles.First());
+
+							//for(unsigned ID = turnMarker+1; ID <= particles.Last(); ID = particles.Next(ID))
+							//	 ParticleCalculation(ID);
+							
+							//for(unsigned i=turnMarker-1;i>=0;i--)
+							//	ParticleCalculation(i);
+							//for(unsigned i = turnMarker;i<NUMBER_OF_PARTICLES;i++)
+							//	ParticleCalculation(i);
+						}
 					}
 	virtual Vector3	rotate(Vector3 r)
 					{
@@ -243,7 +300,7 @@ public:
 			bool	ParticlesChangeAlpha;
 			float	ValueChangeReleasepoint;
 			float	MaximumSize;
-
+			GLfloat	InitialSize;
 	virtual void	DoUpdate(void)
 					{
 

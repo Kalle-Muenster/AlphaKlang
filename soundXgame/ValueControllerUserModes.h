@@ -103,16 +103,16 @@ public:
 template<typename cType> class SineControlled
 	: public MovingValue<cType>
 {
+private:
+	cType HALBRANGE;
 public:
-	float PINGPONG_VALUE,HALBRANGE,SHIFT;
+	cType PINGPONG_VALUE;
 	
 	virtual void Init(void)
 	{
 		InvertController<cType>::Init();
 		*MOVE = Circle/360;
 		PINGPONG_VALUE = 0;
-		HALBRANGE = (*MAX - *MIN)/2;
-		SHIFT = (-HALBRANGE - *MIN);
 		CLAMP=false;
 		INVERT=true;
 	}
@@ -121,7 +121,8 @@ public:
 	{
 	   PINGPONG_VALUE += *MOVE;
 	   PINGPONG_VALUE =  PINGPONG_VALUE>Circle? PINGPONG_VALUE-Circle : PINGPONG_VALUE;
-	   *pVALUE = (glm::sin(PINGPONG_VALUE)*HALBRANGE)+SHIFT;
+	   HALBRANGE = (*MAX - *MIN)/2;
+	   *pVALUE = (glm::sin(PINGPONG_VALUE)*HALBRANGE)+(-HALBRANGE - *MIN);
 	   return  InvertController<cType>::checkVALUE(pVALUE);
 	}
 };

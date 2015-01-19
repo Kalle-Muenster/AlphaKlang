@@ -55,3 +55,33 @@ Randomover::SetSpeed(float speed)
 {
 	this->Connection()->getTransform()->speed = speed;
 }
+
+
+
+bool
+SmoothObjectMover::Initialize(void)
+{
+ 	movingVector.SetUserMode<SineControlled<float>>();
+	movingVector.x.SetMIN(-30);
+	movingVector.x.SetMAX(40);
+	movingVector.x.SetMOVE(Circle/180);
+	movingVector.y.SetMIN(0.5);
+	movingVector.y.SetMAX(25);
+	movingVector.y.SetMOVE(Circle/120);
+	movingVector.z.SetMIN(-50);
+	movingVector.z.SetMAX(50);
+	movingVector.z.SetMOVE(Circle/220);
+	movingVector.x = 10;
+	movingVector.y = 1;
+	movingVector.z = 0;
+	movingVector.ControllersActive(true);
+	return true;
+}
+
+
+
+void 
+SmoothObjectMover::DoUpdate(void)
+{
+	this->Connection()->move(movingVector);
+}

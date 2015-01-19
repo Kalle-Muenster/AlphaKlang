@@ -28,7 +28,7 @@ protected:
 	float					angle;
 
 public:
-	data32				color;
+//	data32				color;
 	virtual Texture*  	GetTexture(void);
 	virtual void		SetTexture(Texture*);
 	bool				GroundedWithPivot;

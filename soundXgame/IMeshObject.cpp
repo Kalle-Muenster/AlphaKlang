@@ -73,7 +73,7 @@ IMeshObject::DoObjBuffer(void)
 void
 IMeshObject::SetColor(data32 newColor)
 {
-	this->color = newColor;
+	color = newColor;
 }
 
 void

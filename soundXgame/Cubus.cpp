@@ -26,7 +26,7 @@ Cubus::Cubus(string textureFile,bool backfaces,bool addToScene,Vector3 positionO
 {
 	InitializeCubus(addToScene,positionOffset);
 	LoadTexture(textureFile);
-	AddConnectable<AudioEmitter>();
+	//AddConnectable<AudioEmitter>();
 	NoBackfaceCulling= backfaces;
 	this->SetName("Cubus");
 	this->IsVisible=true;
@@ -75,7 +75,7 @@ Cubus::SetCollisionSound(string file)
 {
 	if(!this->HasConnected<AudioEmitter>())
 		this->AddConnectable<AudioEmitter>();
-	//this->GetConnected<AudioEmitter>()->LoadeSample(file);
+	this->GetConnected<AudioEmitter>()->LoadeSample(file);
 }
 
 //Cubus*

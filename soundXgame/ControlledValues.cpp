@@ -1,35 +1,55 @@
 #include "ControlledValues.h"
 
 ControlledVector3::ControlledVector3(void)
-	{
-		x.SetUp(-20,20,0,0.1,x.PingPong);
-		x.ControllerActive = true;
-		y.SetUp(-30,30,0,0.1,y.PingPong);
-		y.ControllerActive = true;
-		z.SetUp(-40,40,0,0.1,z.PingPong);
-		z.ControllerActive = true;
-	}
+{
+	x.SetUp(-20,20,0,0.1,x.PingPong);
+	x.ControllerActive = true;
+	y.SetUp(-30,30,0,0.1,y.PingPong);
+	y.ControllerActive = true;
+	z.SetUp(-40,40,0,0.1,z.PingPong);
+	z.ControllerActive = true;
+}
 
 ControlledVector3::~ControlledVector3(void)
-	{
-		x.~Controlled<float>();
-		y.~Controlled<float>();
-		z.~Controlled<float>();
-	}
+{
+	x.~Controlled<float>();
+	y.~Controlled<float>();
+	z.~Controlled<float>();
+}
 
-	ControlledVector3::operator Vector3(void)
-	{
-		return Vector3(x,y,z);
-	}
+void 
+ControlledVector3::ControllersActive(bool set)
+{
+	x.ControllerActive = y.ControllerActive = z.ControllerActive = set;
+}
 
-	Vector3 
-	ControlledVector3::operator =(Vector3 setter)
-	{
-		x = setter.x;
-		y = setter.y;
-		z = setter.z;
-		return setter;
-	}
+Vector3
+ControlledVector3::Check(void)
+{
+	return Vector3(x.Check(),y.Check(),z.Check());
+}
+
+void
+ControlledVector3::SetMode(Controlled<float>::ControllMode mode)
+{
+	x.Mode(mode);
+	y.Mode(mode);
+	z.Mode(mode);
+}
+
+ControlledVector3::operator Vector3(void)
+{
+	return Vector3(x,y,z);
+}
+
+Vector3 
+ControlledVector3::operator =(Vector3 setter)
+{
+	x = setter.x;
+	y = setter.y;
+	z = setter.z;
+	return setter;
+}
 
 
 

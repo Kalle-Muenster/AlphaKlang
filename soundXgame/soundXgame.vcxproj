@@ -18,13 +18,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -96,6 +96,7 @@
     <ClCompile Include="IDrawable.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="MusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="MusicScaler.cpp" />
     <ClCompile Include="MusicVox.cpp" />
     <ClCompile Include="Musikubus.cpp" />
+    <ClCompile Include="ObjectFollower.cpp" />
     <ClCompile Include="ObjectManagement.cpp" />
     <ClCompile Include="ObjectUpdater.cpp" />
     <ClCompile Include="Perceptor.cpp" />
@@ -155,6 +157,7 @@
     <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="MusicController.h" />
     <ClInclude Include="MusicInteractor.h" />
     <ClInclude Include="InputManager.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="MusicScaler.h" />
     <ClInclude Include="MusicVox.h" />
     <ClInclude Include="Musikubus.h" />
+    <ClInclude Include="ObjectFollower.h" />
     <ClInclude Include="ObjectManagement.h" />
     <ClInclude Include="ObjectMover.h" />
     <ClInclude Include="ObjectUptater.h" />
@@ -301,7 +305,7 @@
     <Image Include="Deckelblech128-1.png" />
     <Image Include="Deckelblech_128x128.png" />
     <Image Include="Deckelblech128-3channel.png" />
-    <Image Include="Der Blaue Dunst.png" />
+    <Image Include="Der Blaue Dunst_512x512.png" />
     <Image Include="framen_1920x1080.png" />
     <Image Include="grau_128x128.png" />
     <Image Include="kubismus.png" />

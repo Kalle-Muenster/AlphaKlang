@@ -262,7 +262,8 @@ Dimensionality::getTransform(void)
 	return &t;
 }
 
- bool
+
+bool
 IDrawable::isVisible(BOOL setter)
 {
 	if(setter<3)
@@ -270,6 +271,20 @@ IDrawable::isVisible(BOOL setter)
 	return IsVisible;
 }
 
+ void
+IDrawable::SetColor(data32 newColor)
+{
+	color = newColor;
+}
+
+void
+IDrawable::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	color.byte[0] = a;
+	color.byte[1] = r;
+	color.byte[2] = g;
+	color.byte[3] = b;
+}
 
 ILocatable::ILocatable(void)
 {
@@ -309,7 +324,7 @@ ILocatable::move(Vector3 p)
 								getTransform()->forward = vec;
 								getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
 								getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
-								getTransform()->rotation = Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0);
+								this->rotate(Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0));
 							}
 						getTransform()->position = p;
 						return p;

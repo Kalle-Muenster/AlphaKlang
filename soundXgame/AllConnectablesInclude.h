@@ -16,3 +16,4 @@
 #include "TestConectables.h"
 #include "ObjectMover.h"
 #include "ButtonControl.h"
+#include "ObjectFollower.h"

@@ -61,16 +61,7 @@
 #define UPDATE	UpdateManager::getInstance()
 
 
-// AUDIO->
-/*
-	Everything Audio...
-	use to configures I/O drivers,configure FX-rooting's,
-	Sampling,Loading,Streaming Files or other sources... 
-	Configuring the 3D-Environment-settings,
-	Playing Background-Musik and controling the master-output.
-	also Provides Getting FFT-Data for any audio chanel in Scene..
-*/
-#define AUDIO BassAudio::GetInstance()
+
 
 
 // GUI2D->

@@ -13,13 +13,15 @@ typedef unsigned int ConID;
 class IConXtor;
 
 
- class IDrawable
+class IDrawable
 {
 public:
-	bool IsVisible;
-	virtual void draw(void){};
-	virtual bool isVisible(BOOL=3);
-	data32 color;
+	bool			IsVisible;
+	data32			color;
+	virtual void	draw(void){};
+	virtual bool	isVisible(BOOL=3);
+	virtual void	SetColor(data32 newColor);
+	virtual void	SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 };
 
  class ILocatable 
@@ -110,7 +112,7 @@ public:
 
 	template<class cT> cT* GetOrAdd(void)
 	{
-		T* get = conXtor->GetConnected<cT>();
+		cT* get = conXtor->GetConnected<cT>();
 		if(!get)
 			get = conXtor->AddConnectable<cT>();
 

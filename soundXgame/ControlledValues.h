@@ -66,7 +66,7 @@ protected:
 	virtual ctrlType SetValue(ctrlType setter)
 	{
 		*_Value = setter;
-		return GetValue();
+		return (ControllerActive && !CheckAtGet)? checkValue(Mode()) : setter;
 	}
 
 	virtual ctrlType GetValue(void)
@@ -76,10 +76,35 @@ protected:
 	}
 
 public:
+	//If set "true", the Value will be checked and updated
+	//everytime it's ret or written. ...usefull for Clamping or Inverting
+	//If set to "false", it's Value wo'nt be checked and wo'nt be updated
+	//unless you call "Check()" on it manualy. ...usefull for MovingValues
+	//like pingpong or cycle. it than can be updated once per frame in an
+	//update-loop for example, to let its Value stay the same during the
+	//whole frame-cycle.
 	bool ControllerActive;
 
 	//The sellectable modes...
 	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
+	
+	//constructor...
+	Controlled(void)
+	{
+		_Value = new ctrlType();
+		userModesCount=4;
+		ControllerActive = false;
+		CheckAtGet = true;
+		UserMode = NULL;
+	}
+
+	virtual ~Controlled(void)
+	{
+		if(UserMode!=NULL)
+			delete UserMode;
+		delete _Value;
+	}
+
 	
 	void SetMIN(ctrlType val)
 	{
@@ -143,21 +168,13 @@ public:
 
 	}
 
-	//constructor...
-	Controlled(void)
+	//Checks the Value and return it.  (even if Controller is deactivated)
+	//... use it to perform updating manualy and not to be called automaticly,
+	//everytime the value is "getted" when in a "MovingValue-Mode"...
+	ctrlType Check(void)
 	{
-		_Value = new ctrlType();
-		userModesCount=4;
-		ControllerActive = false;
-		CheckAtGet = true;
-		UserMode = NULL;
-	}
-
-	virtual ~Controlled(void)
-	{
-		if(UserMode!=NULL)
-			delete UserMode;
-		delete _Value;
+		ControllerActive=false;
+		return checkValue(Mode());
 	}
 
 	//set the controller-Mode
@@ -243,6 +260,15 @@ public:
 
 	ControlledVector3(void);
 	virtual ~ControlledVector3(void);
+	void SetMode(Controlled<float>::ControllMode);
+	void ControllersActive(bool);
+	Vector3 Check(void);
+	template<typename usermode> void SetUserMode(void)
+									 {
+									 	x.SetUserMode<usermode>(x);
+									 	y.SetUserMode<usermode>(y);
+									 	z.SetUserMode<usermode>(z);
+									 }
 	virtual operator Vector3(void);
 	virtual Vector3 operator =(Vector3 setter);
 };

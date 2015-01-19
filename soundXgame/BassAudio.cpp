@@ -91,14 +91,33 @@ default :
 }
 }
 
+struct Channel
+{
+	DWORD ID;
+	char Name[64];
+};
+
 float _BackgroundFFTbuffer[FFT_WINDOW_SIZE];
-bool _BackroundFFTcalculated = false;
 int _BackgroundFFTcurrentSize = FFT_WINDOW_SIZE;
+HSTREAM derAudio;
+HRECORD MasterOutResample;
+List<void*,MAXIMUM_NUMBER_OF_AUDIOOBJECTS> _GameObjects;
+Channel _Channels[MAXIMUM_NUMBER_OF_AUDIOOBJECTS];
+
+
+
 bool _BackgroundAudioIsPlaying = false;
+bool _AudioNeed3DUpdate = false;
+bool _BackroundFFTcalculated = false;
+bool _IsPlaying = false;
+bool _IsRecordingMaster = false;
+bool _backgroundAudioLoadet = false;
+bool _recordingInitiated = false;
+
 
 BassAudio::~BassAudio(void)
 {
-//	delete[] _BackgroundFFTbuffer;
+
 }
 
 int _GetNumberOfInputDevices(void)
@@ -123,12 +142,7 @@ void _printInputDevices(void)
 }
 
 
-HSTREAM derAudio;
-HRECORD MasterOutResample;
-bool _IsPlaying = false;
-bool _IsRecordingMaster = false;
-bool _backgroundAudioLoadet = false;
-bool _recordingInitiated = false;
+
 
 void
 _get3Dfactors(float& dist,float& rollOff,float& dopplerF)
@@ -153,12 +167,13 @@ _set3Dfactors(float distance,float rollOff,float doppler)
 	 if(!result)
 		printf("AUDIO: %s\n",_GetErrorString());
 	 else
-		BASS_Apply3D();
+		_AudioNeed3DUpdate=true;
 
 	 return result;
 }
 
-int _getMasterOutForRecord(void)
+int 
+_getMasterOutForRecord(void)
 {
 	_printInputDevices();
 	DWORD flags;
@@ -173,7 +188,8 @@ int _getMasterOutForRecord(void)
 	return 0;
 }
 
-bool _ToggleRecordFromMasterOut(void)
+bool 
+_ToggleRecordFromMasterOut(void)
 {
 	if(!_recordingInitiated)
 	{
@@ -202,55 +218,119 @@ bool _ToggleRecordFromMasterOut(void)
 
 
 HSTREAM
-	_getAudioStreamByFileName(const string filename,int mode)
+_getAudioStreamByFileName(const string filename,int mode)
 {
+	/*
 	FILE* file;
 	file = fopen(filename,"rb");
-	long fileLength,offset;
+	long fileLength;
 	fseek(file,0,SEEK_END);
 	fileLength=ftell(file);
 	fseek(file,0,SEEK_SET);
-	offset=0;
-	fclose(file);
-//	delete file;
+	fclose(file);  	 */
+
+	FILE* file = fopen(filename,"rb");
+	long fileLength=fseek(file,0,SEEK_END);
+	fclose(file);	 
+
+	bool _FX=mode>=0xF?true:false;
+	mode %= 0xF; 
+
+	DWORD creationFlags = NULL;
+
 	if(mode==LOAD_3D)
 	{
-		return BASS_StreamCreateFile(false, filename,offset,fileLength,BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP|BASS_SAMPLE_MONO|BASS_SAMPLE_3D);
-		BASS_Apply3D();
+		_AudioNeed3DUpdate=true;
+		creationFlags = _FX ? BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP|BASS_SAMPLE_MONO|BASS_SAMPLE_3D|BASS_SAMPLE_FX 
+							: BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP|BASS_SAMPLE_MONO|BASS_SAMPLE_3D;
 	}
 	else if(mode==LOAD_2D)
-		return BASS_StreamCreateFile(false, filename,offset,fileLength,BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP);
+		creationFlags = _FX ? BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP|BASS_SAMPLE_FX
+							: BASS_STREAM_AUTOFREE|BASS_SAMPLE_LOOP;
+	
+	return BASS_StreamCreateFile(false, filename,0,fileLength,creationFlags);
+}
+
+HSAMPLE
+_getSampleHandleByFilename(const char* filename,bool loop)
+{
+	FILE* file;
+	file = fopen(filename,"rb");
+	fseek(file,0,SEEK_END);
+	long fileLength=ftell(file);
+	fseek(file,0,SEEK_SET);
+	fclose(file);
+	long offset=0;
+	DWORD loadingFlags;
+
+	if(loop)
+		loadingFlags = BASS_SAMPLE_MONO|BASS_SAMPLE_LOOP|BASS_SAMPLE_3D;
+	else
+		loadingFlags = BASS_SAMPLE_MONO|BASS_SAMPLE_3D;
+
+	return BASS_SampleLoad(false,filename,offset,0,20,loadingFlags);
 }
 
 DWORD
 _getChannelData(DWORD channel,int mode,int size,void* buffer)
 {
-	DWORD flags = mode==FFT? size==256? BASS_DATA_FFT256:size==512?BASS_DATA_FFT512:size==1024?BASS_DATA_FFT1024:size: mode==BYTES?size:BASS_DATA_FLOAT;
+	DWORD flags = (mode==FFT) ? (size== 256) ? BASS_DATA_FFT256 
+							  : (size== 512) ? BASS_DATA_FFT512 
+							  : (size==1024) ? BASS_DATA_FFT1024 
+								             : size 
+				: (mode==BYTES) ? size 
+								: BASS_DATA_FLOAT;
+
 	return BASS_ChannelGetData(channel,buffer,flags);
 }
 
-HCHANNEL
-BassAudio::Loade3DSample(const char* filename,bool loop)
+HFX
+_setChannelFX(DWORD channel,unsigned BASSfxName,int priority=0)
 {
-	FILE* file;
-	file = fopen(filename,"rb");
-	long fileLength,offset;
-	fseek(file,0,SEEK_END);
-	fileLength=ftell(file);
-	fseek(file,0,SEEK_SET);
-	offset=0;
-	HSAMPLE sample;
-	if(loop)
-		sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_LOOP|BASS_SAMPLE_3D);
-	else
-		sample = BASS_SampleLoad(false,filename,offset,0,20,BASS_SAMPLE_MONO|BASS_SAMPLE_3D);
+	HFX fx = BASS_ChannelSetFX(channel,BASSfxName,priority);
+	if(fx==NULL)
+		printf("AUDIO: ERROR: %s \n",_GetErrorString());
+	return fx;
+}
+
+void
+_removeChannelFX(DWORD channel,HFX fx)
+{
+	BASS_ChannelRemoveFX(channel,fx);
+}
+
+void
+_setFXparameter(HFX fx,void* parameterStruct)
+{
+	BASS_FXSetParameters(fx,parameterStruct);
+}
+
+void
+_LinkChannelControll(DWORD channelA,DWORD channelB)
+{
+	BASS_ChannelSetLink(channelA,channelB);
+
+}
+
+HCHANNEL
+BassAudio::Loade3DSample(const char* filename,void* loadingObject,bool loop)
+{
+	HSAMPLE	sample = _getSampleHandleByFilename(filename,loop);
 	
 	if(sample!=NULL)
 	{
 		HCHANNEL channel = BASS_SampleGetChannel(sample,true);
 		if(channel!=NULL)
 		{
-			BASS_Apply3D();
+			Channel chan;
+			chan.ID = channel;
+			int i = -1;
+			while((++i<64) && ((chan.Name[i] = filename[i])!='\0'));
+			i = _GameObjects.Add(loadingObject);
+			if(_Channels[i].ID!=NULL)
+				BASS_ChannelStop(_Channels[i].ID);
+			_Channels[i]=chan;
+			_AudioNeed3DUpdate=true;
 			return channel;
 		}
 	}
@@ -269,11 +349,6 @@ BassAudio::GetChannelBuffer(DWORD channel,int sizeInByte)
 	return buffer;
 }
 
-unsigned
-BassAudio::GetChannelFFT(DWORD channel,void* buffer)
-{
-	return _getChannelData(channel,(int)FFT,(int)Small,buffer);
-}
 
 unsigned
 BassAudio::GetChannelFFT(DWORD channel,void* buffer,FFT_SIZE size)
@@ -301,13 +376,13 @@ void
 BassAudio::PerFrameReset(void)
 {
 	_BackroundFFTcalculated = false;
+
+	if(_AudioNeed3DUpdate)
+	{	BASS_Apply3D();
+		_AudioNeed3DUpdate=false; }
 }
 
-void*
-BassAudio::GetBackgroundAudioFFT(void)
-{
-	return GetBackgroundAudioFFT(Small);
-}
+
 
 HCHANNEL 
 BassAudio::GetSampleFromBank(unsigned slotNumber)
@@ -318,7 +393,7 @@ BassAudio::GetSampleFromBank(unsigned slotNumber)
 HCHANNEL 
 BassAudio::LoadeSampleToBank(unsigned& slotNumber,const char* filename)
 {
-	SampleBank.push_back(Loade3DSample(filename));
+	SampleBank.push_back(BASS_SampleGetChannel(_getSampleHandleByFilename(filename,true),true));
 	slotNumber = SampleBank.size()-1;
 	return SampleBank[slotNumber];
 }
@@ -332,7 +407,7 @@ BassAudio::BassAudio(void)
 	printf("Loading BASS-AUDIO: %s", _GetErrorString());
 	BASS_INFO *info = new BASS_INFO();
 	if( BASS_GetInfo(info))
-		printf("DirectSound version: %i\n",info->dsver);
+		printf("Detected DirectSound version: %i\n",info->dsver);
 	BASS_SetConfig(BASS_CONFIG_3DALGORITHM,BASS_3DALG_DEFAULT);
 	//std::cout<<_GetErrorString();
 	//HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
@@ -340,7 +415,8 @@ BassAudio::BassAudio(void)
 	//HPLUGIN plgnBASSDS = BASS_PluginLoad("BASS_DSHOW.dll",NULL);
 	//HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
 	//std::cout<<_GetErrorString();
-	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, 100);	
+	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, AUDIO_BUFFERS_UPDATE_PERIOD);
+	printf("Set BufferUpdatePeriod to: %i\n",AUDIO_BUFFERS_UPDATE_PERIOD);
 //	std::cout<<_GetErrorString();
 //	BASS_SetConfig(BASS_CONFIG_SRC_SAMPLE,2);
 //	std::cout<<_GetErrorString();
@@ -354,6 +430,11 @@ BassAudio::BassAudio(void)
 //	std::cout<<_GetErrorString();
 	
 	_get3Dfactors(distance,rollOff,doppler);
+
+	for(Channel channel : _Channels)
+	{
+		channel.ID=NULL;
+	}
 
 }
 
@@ -427,18 +508,32 @@ BassAudio::ToggleMasterResampling(void)
 }
 
 HSTREAM
-BassAudio::LoadeMusic(const char* fileName,LOAD_MODE mode)
+BassAudio::LoadeMusic(const char* fileName,LOAD_MODE mode,void* loadingObject)
 {
-	return _getAudioStreamByFileName((const string)fileName,(int)mode);
+	Channel chan;
+	chan.ID = _getAudioStreamByFileName((const string)fileName,(int)mode);
+	int i = -1;
+	while((++i < 64) && ((chan.Name[i]=fileName[i])!='\0'));
+	i = _GameObjects.Add(loadingObject);
+	if(_Channels[i].ID!=NULL)
+		 BASS_ChannelStop(_Channels[i].ID);
+	_Channels[i] = chan;
+	return chan.ID;
 }
-	
+
+void
+BassAudio::Update3Dchanges(void)
+{
+	 _AudioNeed3DUpdate=true;
+}
+
 
 void 
 BassAudio::SetListenerPosition(Transform* cameraTranform)
 {
 	BASS_Set3DPosition(&(BASS_3DVECTOR)cameraTranform->position,&(BASS_3DVECTOR)cameraTranform->movement,&(BASS_3DVECTOR)cameraTranform->forward,&(BASS_3DVECTOR)cameraTranform->up);
 	printf("AUDIO: %s\n",_GetErrorString());
-	BASS_Apply3D();
+	_AudioNeed3DUpdate=true;
 }
 
 void
@@ -497,3 +592,10 @@ BassAudio::GetMasterOutFFT(void)
 }
 
 
+IObjection<IConnectable>* 
+BassAudio::FindObjectByAudiochannel(DWORD channel)
+{
+	int i = -1;
+	while((++i<MAXIMUM_NUMBER_OF_AUDIOOBJECTS)&&(_Channels[i].ID!=channel));
+	return ((IConnectable*)_GameObjects[i])->Connection();
+}

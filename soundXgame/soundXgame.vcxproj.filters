@@ -161,6 +161,10 @@
     <ClCompile Include="ControlledValues.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="ObjectFollower.cpp">
+      <Filter>Objects\ConnectableComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -340,6 +344,10 @@
     </ClInclude>
     <ClInclude Include="ControlledValues.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h" />
+    <ClInclude Include="ObjectFollower.h">
+      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -540,9 +548,6 @@
     <Image Include="framen_1920x1080.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="Der Blaue Dunst.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <Image Include="Modus Grau_512x512.png">
       <Filter>Resources\Textures</Filter>
     </Image>
@@ -589,6 +594,9 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="button64.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Der Blaue Dunst_512x512.png">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>

@@ -15,7 +15,7 @@ public:
 	virtual bool Initialize(void);
 	virtual float* GetFFTData(void)
 	{
-		return (float*) this->Connection()->GetConnected<AudioEmitter>()->GetFFTWindow(FFT_SIZE::Small);
+		return (float*) this->Connection()->GetConnected<AudioEmitter>()->GetFFTData();
 	}
 	virtual ~MusicScaler(void);
 	virtual void MotivatorFunction(float Motivator,int number)
