@@ -135,8 +135,8 @@ private:
 													//timer = particles_stdvec[lastActivatedParticle]->time = lifetime;
 
 													particlesEmitted++;
-												//	if(particlesEmitted>0)
-												//		turnMarker += (turnMarker<NUMBER_OF_PARTICLES-1)? 1 : 0;
+													if(particlesEmitted>0)
+														turnMarker -= (turnMarker>0)? 1 : 0;
 												}
 											}
 	float									timer;
@@ -228,6 +228,9 @@ public:
 						if(this->IsVisible)	
 							Emmission(); 
 
+						if(lastActivatedParticle<0)
+							return;
+
 						if(NoBackfaceCulling)
 							glDisable(GL_CULL_FACE);
 						else
@@ -246,34 +249,34 @@ public:
 						float dist2 = (this->getTransform()->position + this->getTransform()->movement).distance(SCENE->camera->transform.position);
 						if(dist1>dist2)
 						{
-							//if(movingaway)
-							//{
-							//	movingaway = false;
-							//	turnMarker = lastActivatedParticle<0?NUMBER_OF_PARTICLES:lastActivatedParticle;
-							//}
-							for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
+							if(movingaway)
+							{
+								movingaway = false;
+								turnMarker = lastActivatedParticle;
+							}
+
+						//	for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
+						//		ParticleCalculation(ID);
+							 
+							
+							for(unsigned ID = particles.StartCycle(turnMarker); ID == particles.Cycle(); ID = particles.Next(ID))
 								ParticleCalculation(ID);
-							 // for(unsigned ID = particles.First(); ID <= turnMarker; ID = particles.Next(ID))
-								//ParticleCalculation(ID);
-							 // for(unsigned ID = particles.Last(); ID > turnMarker; ID = particles.Prev(ID))
-								//ParticleCalculation(ID);
-							//for(unsigned i=0;i<turnMarker;i++)
-							//	ParticleCalculation(i);
-							//for(unsigned i = NUMBER_OF_PARTICLES-1;i>=turnMarker;i--)
-							//	ParticleCalculation(i);
+
 						}
 						else
 						{
-		/*					if(!movingaway)
+							if(!movingaway)
 							{
 								movingaway = true;
-								turnMarker = lastActivatedParticle<0?NUMBER_OF_PARTICLES:lastActivatedParticle;
-							}*/
+								turnMarker = lastActivatedParticle;
+							}
 							
-							for(unsigned ID = particles.Last(); ID > particles.First(); ID = particles.Prev(ID))
-								 ParticleCalculation(ID);
-							ParticleCalculation(particles.First());
+						//	for(unsigned ID = particles.Last(); ID > particles.First(); ID = particles.Prev(ID))
+						//		 ParticleCalculation(ID);
+						//	ParticleCalculation(particles.First());
 
+							for(unsigned ID=particles.StartCycle(turnMarker);ID==particles.Cycle();ID=particles.Prev(ID))
+							   ParticleCalculation(ID);
 							//for(unsigned ID = turnMarker; ID > particles.First(); ID = particles.Prev(ID))
 							//	 ParticleCalculation(ID);
 							//ParticleCalculation(particles.First());

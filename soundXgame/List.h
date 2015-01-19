@@ -1,6 +1,10 @@
 #ifndef _LUECKLIST_H_
 #define _LUECKLIST_H_
 
+#ifndef EMPTY
+#define	EMPTY (4294967295u)
+#endif
+
 #include <stdio.h>
 
 //A List of variables of type <ListMember> , with a maximum amount of <MAXIMUM_SIZE> 
@@ -9,19 +13,21 @@ template<class ListMember,const unsigned MAXIMUM_SIZE> class List
 typedef unsigned ListMemberID;
 
 protected:
-	ListMember list[MAXIMUM_SIZE];
-	int numberOfMember;
-	ListMemberID highestSlotNumberInUse;
-	ListMember Nulled;
-
+	ListMember		list[MAXIMUM_SIZE];
+	int				numberOfMember;
+	ListMemberID	highestSlotNumberInUse;
+	ListMember		Nulled;
+	bool			CyclingActive;
+	int             CyclingCounter;
+	unsigned		CycleCheck;
 public:
-	bool MemberArePointers;
+	bool			MemberArePointers;
 	// Constructs a new list-instance..
 	List(void)
 	{
 		numberOfMember = 0;
 		highestSlotNumberInUse = 0;
-		
+		CyclingActive = false;
 
 		//check if ListMember are class-pointers or valuetypes
 		MemberArePointers = Utility::StringCompareRecursive( typeid(ListMember).name(),"class ") >= 6; 
@@ -135,32 +141,79 @@ public:
 		return numberOfMember;
 	}
 
+	int StartCycle(int ID)
+	{
+	    CycleCheck = Next(ID-1);
+		CyclingActive=true;
+		CyclingCounter=0;
+		return CycleCheck;
+	}
+
 	// returns the Next member's ID - the next used slot-number in the list
 	ListMemberID Next(int current)
 	{	
 		//return if list is empty.
 		if(numberOfMember==0)
-			return -1;
+			return EMPTY;
 		
 		//fastforward until finding next used slot.
 		while(list[++current]==Nulled);
 		
+		//If in cycle-mode jump to first if reached end...
+		if(CyclingActive)
+		{
+			CycleCheck = (current = current >= MAXIMUM_SIZE ? 0 : current);
+
+			if(++CyclingCounter>=numberOfMember)
+			{
+			   CyclingActive=false;
+			   CycleCheck = EMPTY;
+			}
+		}
 		//and return it's position.
 		return (ListMemberID)current;
 	}
 
 	// returns the previous member's ID - the first used slot-number found before [current]
-	ListMemberID Prev(int current)
+	int Prev(int current)
 	{	
+		if(current<=0)
+		{
+			if(CyclingActive)
+				current = Last()+1;
+			else
+				return EMPTY;
+		}
+
 		//return if already first element.
-		if(current == 0)  
-			return 0;	
+		//if(current <= First())  
+		//{
+		//	if(CyclingActive)
+		//	{
+		//		Last() : -1;
+		//	}
+		//}
 
 		//rewind the list until finding a used slot.
-		while(list[--current]==Nulled);
+		while(list[--current] == Nulled);
+
+		if(CyclingActive)
+		{
+			CycleCheck = current;
+			if(++CyclingCounter>=numberOfMember)
+			{
+				  CyclingActive=false;
+				  CycleCheck = EMPTY;
+			}
+		}
 
 		//return the found position.
 		return (ListMemberID)current;
+	}
+
+	unsigned Cycle(void)
+	{
+		return CyclingActive? CycleCheck : EMPTY;
 	}
 
 	// return the ID of the first member in the list..
