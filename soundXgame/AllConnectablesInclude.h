@@ -17,3 +17,4 @@
 #include "ObjectMover.h"
 #include "ButtonControl.h"
 #include "ObjectFollower.h"
+#include "SliderX.h"

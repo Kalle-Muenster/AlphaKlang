@@ -15,7 +15,7 @@ ButtonControl::ButtonControl(void)
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
-	texture.ID = Utility::loadTexture("button64.png");
+	texture.ID = Utility::loadTexture("button_64x64.png");
 	
 	//glGenTextures(1,&texture.ID);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);

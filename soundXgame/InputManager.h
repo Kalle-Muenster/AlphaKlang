@@ -1,6 +1,8 @@
 /*InputManager*/
-#ifndef __INPUTMANAGER_H__
-#define __INPUTMANAGER_H__
+#ifndef _INPUT_MANAGER_H_
+#define _INPUT_MANAGER_H_ 
+
+
 
 //Undefine to switch off Console-output of mouse data test or FPS calculation
 #define MOUSE_TEST_OUTPUT (1)
@@ -80,7 +82,6 @@ public:
 #include "UpdateManager.h"
 
 class InputManager
-//	: public IUpdateble
 {
 	//Con-and Destruction....
 private:
@@ -100,7 +101,7 @@ private:
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> KeyboardObservers;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> SpecialKeyObservers;
 	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> MouseWheelObservers;
-	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> mouseClickListener;
+	List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT> mouseClickObservers;
 	
 
 	/*private vars and functions
@@ -158,6 +159,7 @@ public:
 	void DetachKeyboard(IObserver* obs);
 	void DetachSpecialkeys(IObserver* obs);
 	void DetachMouseWheel(IObserver* obs);
+	void DetachMouseClick(IObserver* obs);
 
 	//Update-functions called by main-Api...
 	void notifySpecialKey(int key);

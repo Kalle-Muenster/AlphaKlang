@@ -51,7 +51,17 @@ Vecti::operator  *(float s)
 		return neu;
 	}
 
+VectorF::VectorF(void)
+{
+	x=0;
+	y=0;
+}
 
+VectorF::VectorF(float X,float Y)
+{
+	x=X;
+	y=Y;
+}
 
 VectorF::operator VectorI()
 	{
@@ -94,6 +104,13 @@ VectorF::operator /(float s)
 		newVector.y=y/s;
 		return newVector;
 	}
+VectorF 
+VectorF::operator +=(VectorF other)
+{
+	x=x+other.x;
+	y=y+other.y;
+	return *this;
+}
 
 bool
 	VectorF::operator==(VectorF other)

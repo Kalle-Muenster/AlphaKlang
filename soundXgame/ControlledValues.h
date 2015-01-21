@@ -28,7 +28,7 @@ template<typename ctrlType> class Controlled
 {	  
 protected:
 	ctrlType* _Value;  //pointer to the value wich is controlled; 
-	ctrlType MIN,MAX,MOVE;
+	
 	
 	bool CheckAtGet;
 
@@ -84,6 +84,7 @@ public:
 	//update-loop for example, to let its Value stay the same during the
 	//whole frame-cycle.
 	bool ControllerActive;
+	ctrlType MIN,MAX,MOVE;
 
 	//The sellectable modes...
 	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
@@ -118,6 +119,8 @@ public:
 	{
 		MOVE = val;
 	}
+
+	
 
 	//returns the UserMode instance if there's attached one..
 	template<typename Umode> Umode* GetUserMode(void)

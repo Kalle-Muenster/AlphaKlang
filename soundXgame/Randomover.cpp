@@ -61,6 +61,7 @@ Randomover::SetSpeed(float speed)
 bool
 SmoothObjectMover::Initialize(void)
 {
+	purzelnOn=false;
  	movingVector.SetUserMode<SineControlled<float>>();
 	movingVector.x.SetMIN(-30);
 	movingVector.x.SetMAX(40);
@@ -84,4 +85,9 @@ void
 SmoothObjectMover::DoUpdate(void)
 {
 	this->Connection()->move(movingVector);
+	//if(purzelnOn)
+	//{
+	//	Vector3 vec = this->Connection()->getTransform()->forward;
+	//	this->Connection()->rotate(Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0));
+	//}
 }

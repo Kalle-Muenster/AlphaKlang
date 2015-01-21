@@ -43,7 +43,7 @@ InputManager::InputManager(void)
 	this->MouseWheelObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->KeyboardObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 	this->SpecialKeyObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
-	this->mouseClickListener = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
+	this->mouseClickObservers = List<IObserver*,MAXIMUM_NUMBER_ON_OBSERVERS_PER_EVENT>();
 
 	FrameTime = 0;
 	Mouse.X=Mouse.Y=0;
@@ -108,7 +108,7 @@ void InputManager::attachSpecial(IObserver* obs)
 void InputManager::attachMouseClick(IObserver* obs)
 {
 	if(obs->checkForObservability(OBSERVATE_MOUSE)||obs->checkForObservability(OBSERVATE_CLICKS))
-		this->mouseClickListener.Add(obs);
+		this->mouseClickObservers.Add(obs);
 }
 
 void InputManager::attachMouseWheel(IObserver* obs)
@@ -123,7 +123,11 @@ InputManager::DetachMouseMove(IObserver* obs)
 {
 	this->MouseMotionObservers.Remove(obs);
 }
-
+void 
+InputManager::DetachMouseClick(IObserver* obs)
+{
+	this->mouseClickObservers.Remove(obs);
+}
 void
 InputManager::DetachKeyboard(IObserver* obs)
 {
@@ -232,71 +236,71 @@ InputManager::notifyWheel(int wheel)
 void
 InputManager::notifyQlicks(void)
 {
-	if(mouseClickListener.Count()==0)
+	if(mouseClickObservers.Count()==0)
 		return;
 
 	bool click = false;
 
 	if(Mouse.LEFT.CLICK)
 	{click=true;
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it)) 
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->LeftClick(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->LeftClick(Mouse.Position);
 			else 
-				((IInteractive*)mouseClickListener[it])->mouseClicks(0,click,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.LEFT.RELEASE)
 	{
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it)) 
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->LeftRelease(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)mouseClickListener[it])->mouseClicks(0,click,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(0,click,Mouse.Position);
 		}
 	}
 
 	if(click=Mouse.RIGHT.CLICK)
 	{click=true;
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it)) 
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->RightClick(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->RightClick(Mouse.Position);
 			else
-				((IInteractive*)mouseClickListener[it])->mouseClicks(1,click,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(1,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.RIGHT.RELEASE)
 	{
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it))
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it))
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->LeftRelease(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->LeftRelease(Mouse.Position);
 			else 
-				((IInteractive*)mouseClickListener[it])->mouseClicks(1,false,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(1,false,Mouse.Position);
 		}
 	}
 
 	if(click=Mouse.MIDDLE.CLICK)
 	{click=true;
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it)) 
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->MiddleClick(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->MiddleClick(Mouse.Position);
 			else
-				((IInteractive*)mouseClickListener[it])->mouseClicks(2,click,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(2,click,Mouse.Position);
 		}
 	}
 	else if(Mouse.MIDDLE.RELEASE)
 	{
-		for(unsigned it = mouseClickListener.First(); it <= mouseClickListener.Last(); it=mouseClickListener.Next(it)) 
+		for(unsigned it = mouseClickObservers.First(); it <= mouseClickObservers.Last(); it=mouseClickObservers.Next(it)) 
 		{
-			if(mouseClickListener[it]->checkForObservability(OBSERVATE_CLICKS))
-				((IClickable*)mouseClickListener[it])->MiddleRelease(Mouse.Position);
+			if(mouseClickObservers[it]->checkForObservability(OBSERVATE_CLICKS))
+				((IClickable*)mouseClickObservers[it])->MiddleRelease(Mouse.Position);
 			else 
-				((IInteractive*)mouseClickListener[it])->mouseClicks(2,false,Mouse.Position);
+				((IInteractive*)mouseClickObservers[it])->mouseClicks(2,false,Mouse.Position);
 		}
 	}
 }
@@ -319,12 +323,12 @@ InputManager::UpdateMouseButtons(int button,int state,int x,int y)
 
 		setMousePosition(x,y);
 
-		if(mouseClickListener.Count()>0)
+		if(mouseClickObservers.Count()>0)
 		{
-			for(unsigned ID = mouseClickListener.First(); ID <= mouseClickListener.Last(); ID = mouseClickListener.Next(ID))
+			for(unsigned ID = mouseClickObservers.First(); ID <= mouseClickObservers.Last(); ID = mouseClickObservers.Next(ID))
 			{
-				if(mouseClickListener[ID]->checkForObservability(OBSERVATE_KEYBOARD))
-					((IInteractive*)mouseClickListener[ID])->mouseClicks(button,state==GLUT_DOWN,Mouse.Position);
+				if(mouseClickObservers[ID]->checkForObservability(OBSERVATE_KEYBOARD))
+					((IInteractive*)mouseClickObservers[ID])->mouseClicks(button,state==GLUT_DOWN,Mouse.Position);
 			}
 		}
 }

@@ -10,6 +10,7 @@ class SmoothObjectMover
 	public IUpdateble
 {
 public:
+	bool purzelnOn;
 	ControlledVector3 movingVector;
 	virtual bool Initialize(void);
 	virtual void DoUpdate(void);

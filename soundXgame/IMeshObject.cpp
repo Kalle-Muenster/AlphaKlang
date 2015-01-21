@@ -154,7 +154,8 @@ Vector3
 IMeshObject::rotate(Vector3 to)
 {
 	getTransform()->rotation = to;
-	getTransform()->forward = (to - getTransform()->position).normalized();
+	if(!AlwaysFaceMovingdirection)
+		getTransform()->forward = (to - getTransform()->position).normalized();
 	return getTransform()->rotation;
 }
 

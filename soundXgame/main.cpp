@@ -9,8 +9,7 @@
 #include "ParticleSystem.h"
 //#include "EffectClass.h"
 
-#include <xercesc\dom\DOM.hpp>
-#include <xercesc\framework\LocalFileInputSource.hpp>
+
 
 
 //#define LATE_AFTER_DRAW
@@ -181,10 +180,9 @@ void LoadContent(void)
 	//fountain->createRange();
 	guiding = new GuiObject("testbild_1600x900.png");
 	guiding->scale(Vector3(256,256,1));
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel.y = 75;
+	//guiding->AddConnectable<ButtonControl>();
+	//guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
+	guiding->AddConnectable<SliderX>();
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);

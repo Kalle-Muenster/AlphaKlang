@@ -165,6 +165,7 @@
     <ClCompile Include="ObjectFollower.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
+    <ClCompile Include="SliderX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -311,9 +312,6 @@
     <ClInclude Include="StrangeChaoticView.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
-    <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
-      <Filter>Resources\Textures</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="ObjectManagement.h">
       <Filter>Core\RuntimeManagers</Filter>
@@ -348,6 +346,10 @@
     <ClInclude Include="Listener.h" />
     <ClInclude Include="ObjectFollower.h">
       <Filter>Objects\ConnectableComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderX.h" />
+    <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -548,55 +550,67 @@
     <Image Include="framen_1920x1080.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="Modus Grau_512x512.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <Image Include="testbild_1600x900.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Modus Grau_64x64.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="kubismus.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Deckelblech128-3channel.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Deckelblech128-1.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Deckelblech-2s.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Deckelblech-2.png">
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="Q2_1872x516.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="grau_128x128.png">
-      <Filter>Resources\Textures</Filter>
+    <Image Include="button_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
-    <Image Include="particle3_128x128.png">
-      <Filter>Resources\Textures</Filter>
+    <Image Include="knobA_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
-    <Image Include="particle2_128x128.png">
-      <Filter>Resources\Textures</Filter>
+    <Image Include="knobB_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
-    <Image Include="particle1_128x128.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="Deckelblech_128x128.png">
-      <Filter>Resources\Textures</Filter>
+    <Image Include="sliderX_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
     <Image Include="There Are Four Buttons !!!!_256x256.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="button64.png">
-      <Filter>Resources\Textures</Filter>
+      <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
     <Image Include="Der Blaue Dunst_512x512.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="grau_128x128.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="kubismus.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="Modus Grau_512x512.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="Modus Grau_64x64.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="particle1_128x128.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="particle2_128x128.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="particle3_128x128.png">
+      <Filter>Resources\Textures\Particles</Filter>
+    </Image>
+    <Image Include="Deckelblech-2.png">
+      <Filter>Resources\Textures\Bleche</Filter>
+    </Image>
+    <Image Include="Deckelblech-2s.png">
+      <Filter>Resources\Textures\Bleche</Filter>
+    </Image>
+    <Image Include="Deckelblech128-1.png">
+      <Filter>Resources\Textures\Bleche</Filter>
+    </Image>
+    <Image Include="Deckelblech128-3channel.png">
+      <Filter>Resources\Textures\Bleche</Filter>
+    </Image>
+    <Image Include="Deckelblech_128x128.png">
+      <Filter>Resources\Textures\Bleche</Filter>
+    </Image>
+    <Image Include="codefreaks_black.jpg">
       <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>
@@ -651,9 +665,6 @@
     <None Include="cylinder_quads.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
-    <None Include="Modus Grau_128x128.ppm">
-      <Filter>Resources\Textures</Filter>
-    </None>
     <None Include="Color_4.ppm">
       <Filter>Resources\Textures</Filter>
     </None>
@@ -675,7 +686,19 @@
     <None Include="drei_64x64.ppm">
       <Filter>Resources\Textures</Filter>
     </None>
+    <None Include="Modus Grau_128x128.ppm">
+      <Filter>Resources\Textures\Particles</Filter>
+    </None>
     <None Include="There Are Four Buttons !!!!_256x256.pgm">
+      <Filter>Resources\Textures\ControlEllements</Filter>
+    </None>
+    <None Include="ConvolutionKernel.tga">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Deckelblech128.tga">
+      <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="Deckelblech128-3channel.tga">
       <Filter>Resources\Textures</Filter>
     </None>
   </ItemGroup>
@@ -720,6 +743,15 @@
     </Filter>
     <Filter Include="Resources\Sounds\MP3">
       <UniqueIdentifier>{735abafb-4186-4430-a971-eb6b570e5cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\ControlEllements">
+      <UniqueIdentifier>{d7999985-e9e8-4eee-9292-dc9ca5b17c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\Particles">
+      <UniqueIdentifier>{27df9939-0d53-4701-8e17-6f177f8cedff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\Bleche">
+      <UniqueIdentifier>{c9a7def6-de72-4d8d-b394-e40429d8a41b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

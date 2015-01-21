@@ -317,14 +317,53 @@ ILocatable::move(float X,float Y,float Z)
 Vector3 
 ILocatable::move(Vector3 p)
 					{
+						if(p==getTransform()->position)
+							return p;
 						getTransform()->movement = p - getTransform()->position;
 							if(AlwaysFaceMovingdirection)
 							{
+							//	float aY,aX,aZ; 
+							// aY=aX=aZ=0;
 								Vector3 vec = getTransform()->movement.normalized();
+
+								//if(vec.x>0 && vec.x>=vec.z)
+								//	 aY = atan(vec.z / vec.x);
+								//else if(vec.x<0 && vec.x>=vec.z)
+								//	 aY= atan(vec.z / vec.x);
+								//else if(vec.z>0 && vec.z>=vec.x)
+								//	 aY= -atan(vec.x / vec.z);
+								//else if(vec.z<0 && vec.z>=vec.x)
+								//	 aY= -atan(vec.x / vec.z);
+
+								//if(vec.y>0 && vec.y>=vec.z)
+								//	 aX = atan(vec.z / vec.y);
+								//else if(vec.y<0 && vec.y>=vec.z)
+								//	 aX = atan(vec.z / vec.y);
+								//else if(vec.z>0 && vec.z>=vec.y)
+								//	 aX = -atan(vec.y / vec.z);
+								//else if(vec.z<0 && vec.z>=vec.y)
+								//	 aX = -atan(vec.y / vec.z);
+        //      
+								//if(vec.x>0 && vec.x>=vec.y)
+								//	 aZ = atan(vec.y / vec.x);
+								//else if(vec.x<0 && vec.x>=vec.y)
+								//	 aZ= atan(vec.y / vec.x);
+								//else if(vec.y>0 && vec.y>=vec.x)
+								//	 aZ= -atan(vec.x / vec.y);
+								//else if(vec.y<0 && vec.y>=vec.x)
+								//	 aZ= -atan(vec.x / vec.y);
+
+								//aX/=(M_PI/180);
+								//aY/=(M_PI/180);
+								//aZ/=(M_PI/180);
+
 								getTransform()->forward = vec;
 								getTransform()->right = Vector3(vec.y,-vec.x,-vec.z);
 								getTransform()->up = Vector3(-vec.z,-vec.x,vec.y);
-								this->rotate(Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0));
+								
+							//	this->rotate(aX,aY,aZ);
+								
+								rotate(Vector3(vec.y*180,(vec.x*180) + (vec.z*90),0));
 							}
 						getTransform()->position = p;
 						return p;
