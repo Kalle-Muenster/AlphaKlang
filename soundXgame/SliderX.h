@@ -13,9 +13,9 @@ class SliderX :
 	public IDrawable
 {
 private:
-	glm::vec2 uvs[12];
+	glm::vec2 uvs[16];
 	glm::vec3 verts[4];
-	GLuint frameUVBuffers[2];
+	GLuint frameUVBuffers[4];
 	GLuint vertexBufferID;
 	Texture texture;
 	char imageLayer;

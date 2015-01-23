@@ -20,7 +20,7 @@ SliderX::SliderX(void)
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
-	texture.ID = Utility::loadTexture("sliderX_64x64.png");
+	texture.ID = Utility::loadTexture("sliderX-2color_64x64.png");
 	
 	//glGenTextures(1,&texture.ID);
 	  glBindTexture(GL_TEXTURE_2D, texture.ID);
@@ -43,24 +43,33 @@ SliderX::SliderX(void)
 
 
 	 	uvs[0]=glm::vec2(0,ValueY.MOVE);
-		uvs[1]=glm::vec2(1,ValueY.MOVE);
-		uvs[2]=glm::vec2(1,0);
+		uvs[1]=glm::vec2(0.5,ValueY.MOVE);
+		uvs[2]=glm::vec2(0.5,0);
 		uvs[3]=glm::vec2(0,0);
 		glGenBuffers(1, &frameUVBuffers[0]);
 		glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[0]);
 		glBufferData(GL_ARRAY_BUFFER, (4 * sizeof(glm::vec2)), &uvs[0], GL_STATIC_DRAW);
 
+		uvs[4]=glm::vec2(0.5,ValueY.MOVE);
+		uvs[5]=glm::vec2(1,ValueY.MOVE);
+		uvs[6]=glm::vec2(1,0);
+		uvs[7]=glm::vec2(0.5,0);
+		glGenBuffers(1, &frameUVBuffers[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[1]);
+		glBufferData(GL_ARRAY_BUFFER, (4 * sizeof(glm::vec2)), &uvs[4], GL_STATIC_DRAW);
+
+
 	for(int Ypos=0;Ypos<2;Ypos++)
 	{
 		float p = 1.f/4.f;
-		uvs[0+(Ypos+1)*4]=glm::vec2(0,p*(Ypos+2));
-		uvs[1+(Ypos+1)*4]=glm::vec2(1,p*(Ypos+2));
-		uvs[2+(Ypos+1)*4]=glm::vec2(1,p*(Ypos+2)+p);
-		uvs[3+(Ypos+1)*4]=glm::vec2(0,p*(Ypos+2)+p);
+		uvs[8+(Ypos)*4]=glm::vec2(0,p*(Ypos+2));
+		uvs[9+(Ypos)*4]=glm::vec2(1,p*(Ypos+2));
+		uvs[10+(Ypos)*4]=glm::vec2(1,p*(Ypos+2)+p);
+		uvs[11+(Ypos)*4]=glm::vec2(0,p*(Ypos+2)+p);
 		
-		glGenBuffers(1, &frameUVBuffers[Ypos]);
-		glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[Ypos]);
-		glBufferData(GL_ARRAY_BUFFER, (4 * sizeof(glm::vec2)), &uvs[(Ypos+1)*4], GL_STATIC_DRAW);
+		glGenBuffers(1, &frameUVBuffers[Ypos+2]);
+		glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[Ypos+2]);
+		glBufferData(GL_ARRAY_BUFFER, (4 * sizeof(glm::vec2)), &uvs[(Ypos+2)*4], GL_STATIC_DRAW);
 	}
 
 	INPUT->attachMouseClick(this);
@@ -177,7 +186,7 @@ SliderX::mouseClicks(int button,bool IsPressed,VectorF position)
 		 }
 		 XIsUnderControll=button==0?IsPressed:XIsUnderControll;
 		 YIsUnderControll=button==2?IsPressed:YIsUnderControll;
-		 lastMouse = VectorF(ValueX* right-left,Area.GetCenter().y);
+		 lastMouse = VectorF(left + (ValueX* (right-left)),Area.GetCenter().y);
 		 glutWarpPointer(lastMouse.x,lastMouse.y);
 		 
 	 }
@@ -203,15 +212,15 @@ void SliderX::draw(void)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[2]);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF values = Panel.GetPosition() + PositionOnPanel;
+		VectorF values = (Panel.GetPosition() + PositionOnPanel);
 
-		glTranslatef(values.x, values.y, 0);
+		glTranslatef(values.x, values.y+Area.GetSize().y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
@@ -235,30 +244,35 @@ void SliderX::draw(void)
 
 
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
 
+	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[DimensionsSwitched?1:0]);
+	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF pos = ( Panel.GetPosition() + PositionOnPanel)-GetArea().GetHalbSize();
+		VectorF pos = ( Panel.GetPosition() + PositionOnPanel);
 		
 //		glTranslatef((pos.x+(DimensionsSwitched ? ValueY:ValueX )*size.x)-size.x, pos.y, 0);
-		glTranslatef(pos.x, pos.y, 0);
+		glTranslatef(pos.x, pos.y+Area.GetSize().y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 			
 		pos.x = right-left;
-
+		pos.y = bottom-top;
 
 		// Scaling:
 	
-		glScalef((DimensionsSwitched ? ValueY :ValueX ) * pos.x * 0.99,pos.y*0.5,0);
+		glScalef((DimensionsSwitched ? ValueY :ValueX ) * pos.x * 0.99,pos.y,0);
 		
-		short i = DimensionsSwitched ? 3:0;
+		//short i = DimensionsSwitched ? 4:0;
+		short i = 0;
 		glBegin(GL_QUADS);
 		glTexCoord2f(uvs[i].x,uvs[i].y);
 		glVertex3f(verts[0].x,verts[0].y,verts[0].z);
-		i = DimensionsSwitched ? 0:1;
+		i++;
 		glTexCoord2f(uvs[i].x,uvs[i].y);
 		glVertex3f(verts[1].x,verts[1].y,verts[1].z);
 		i++;
@@ -282,7 +296,7 @@ void SliderX::draw(void)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[3]);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
@@ -291,9 +305,9 @@ void SliderX::draw(void)
 	//	sprintf(&tempstring[0],"%f",test);
 	//	GuiManager::getInstance()->Write(tempstring,50,50);
 		// Translation:
-		VectorF values = Panel.GetPosition() + PositionOnPanel;
+		VectorF values = (Panel.GetPosition() + PositionOnPanel);
 
-		glTranslatef(values.x, values.y, 0);
+		glTranslatef(values.x, values.y+Area.GetSize().y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);

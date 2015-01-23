@@ -613,6 +613,9 @@
     <Image Include="codefreaks_black.jpg">
       <Filter>Resources\Textures</Filter>
     </Image>
+    <Image Include="sliderX-2color_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram31.cd" />
