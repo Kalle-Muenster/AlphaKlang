@@ -119,17 +119,24 @@ bool SliderX::Initialize(void)
 void SliderX::DoUpdate(void)
 {
 	GetArea();
-	
-	//if(INPUT->Mouse.LEFT.CLICK || INPUT->Mouse.LEFT.DOUBLE)
-	//	this->IsUnderControll = Area.Containes(INPUT->Mouse.Position);
+	if(XIsUnderControll)
+	{
+
+
+	if(INPUT->Mouse.LEFT.DOUBLE )
+	{ 
+		DimensionsSwitched = !DimensionsSwitched; 
+		return;
+	}
 
 	if(INPUT->Mouse.LEFT.RELEASE)
 		this->XIsUnderControll = false;
-	if(INPUT->Mouse.MIDDLE.RELEASE)
-		this->YIsUnderControll = false;
 
-//	SizeScaledPanel.x = ValueY;
-//	angle = 360 * ValueY;
+	}
+
+	if(YIsUnderControll)
+		if(INPUT->Mouse.MIDDLE.RELEASE)
+			this->YIsUnderControll = false;
 }
 
 void 
@@ -141,11 +148,11 @@ SliderX::mouseMotion(int x, int y)
 		lastMouse.x = x-lastMouse.x;
 		lastMouse.y = y-lastMouse.y;
 		
-		if(INPUT->Mouse.LEFT.DOUBLE)
-		{
-			DimensionsSwitched = !DimensionsSwitched;
-			XIsUnderControll = YIsUnderControll = false;
-		}
+		//if(INPUT->Mouse.LEFT.DOUBLE)
+		//{
+		//	DimensionsSwitched = !DimensionsSwitched;
+		////	XIsUnderControll = YIsUnderControll = false;
+		//}
 		
 		if(DimensionsSwitched)
 		{	
@@ -179,14 +186,10 @@ SliderX::mouseClicks(int button,bool IsPressed,VectorF position)
 		 if(IsPressed)
 			INPUT->attachMouseMove(this);
 
-		 if(INPUT->Mouse.LEFT.DOUBLE)
-		 { 
-			 DimensionsSwitched = !DimensionsSwitched; 
-			 return;
-		 }
+
 		 XIsUnderControll=button==0?IsPressed:XIsUnderControll;
 		 YIsUnderControll=button==2?IsPressed:YIsUnderControll;
-		 lastMouse = VectorF(left + (ValueX* (right-left)),Area.GetCenter().y);
+		 lastMouse = VectorF(left + ((DimensionsSwitched?ValueY:ValueX) * (right-left)),Area.GetCenter().y);
 		 glutWarpPointer(lastMouse.x,lastMouse.y);
 		 
 	 }
@@ -194,24 +197,37 @@ SliderX::mouseClicks(int button,bool IsPressed,VectorF position)
 
 void SliderX::draw(void)
 {
-		if(!vertexBufferID)
-			return;
-		
-		
-		
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+	if(DimensionsSwitched)
+	{
+		GuiManager::getInstance()->Write("Dimensions Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
+	}
+	else
+		GuiManager::getInstance()->Write("Dimensions NOT Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
 
+	if(!vertexBufferID)
+		return;
 
-		glColor3f(1,1,1);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texture.ID);
-	
-	
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	_DrawBackground();
+	_DrawBar(DimensionsSwitched?ValueY:ValueX);
+	_DrawForeground();	
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
+}
+
+void 
+SliderX::_DrawBackground(void)
+{
+	glColor3f(1,1,1);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture.ID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[2]);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
@@ -228,19 +244,25 @@ void SliderX::draw(void)
 		// Scaling:
 		values = GetArea().GetSize() * 0.98f;
 		glScalef(values.x,values.y,0);
-		
+
 		// Draw
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
 	glPopMatrix();
 
 	glBindBuffer(GL_ARRAY_BUFFER,0);
+
+}
+
+void 
+SliderX::_DrawBar(float position)
+{
 	glColor3f(1,1,1);
 	glEnable(GL_TEXTURE_2D);
+	short i = DimensionsSwitched ? 4:0;
+	uvs[i].y = uvs[i+1].y = (DimensionsSwitched ? ValueX + ValueX.MOVE : ValueY + ValueY.MOVE)/2.f;
+	uvs[i+2].y = uvs[i+3].y =  (uvs[i].y + (DimensionsSwitched ? ValueX.MOVE : ValueY.MOVE ))/2.f;
 
-	uvs[0].y = uvs[1].y = (DimensionsSwitched ? ValueX + ValueX.MOVE : ValueY + ValueY.MOVE)/2.f;
-	uvs[2].y = uvs[3].y =  (uvs[0].y + (DimensionsSwitched ? ValueX.MOVE : ValueY.MOVE ))/2.f;
-	
 
 
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
@@ -253,22 +275,21 @@ void SliderX::draw(void)
 	{
 		// Translation:
 		VectorF pos = ( Panel.GetPosition() + PositionOnPanel);
-		
-//		glTranslatef((pos.x+(DimensionsSwitched ? ValueY:ValueX )*size.x)-size.x, pos.y, 0);
+
+		//glTranslatef((pos.x+(DimensionsSwitched ? ValueY:ValueX )*size.x)-size.x, pos.y, 0);
 		glTranslatef(pos.x, pos.y+Area.GetSize().y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
-			
+
 		pos.x = right-left;
 		pos.y = bottom-top;
 
 		// Scaling:
-	
+
 		glScalef((DimensionsSwitched ? ValueY :ValueX ) * pos.x * 0.99,pos.y,0);
+
 		
-		//short i = DimensionsSwitched ? 4:0;
-		short i = 0;
 		glBegin(GL_QUADS);
 		glTexCoord2f(uvs[i].x,uvs[i].y);
 		glVertex3f(verts[0].x,verts[0].y,verts[0].z);
@@ -282,28 +303,28 @@ void SliderX::draw(void)
 		glTexCoord2f(uvs[i].x,uvs[i].y);
 		glVertex3f(verts[3].x,verts[3].y,verts[3].z);
 		glEnd();
-		// Draw
-	//	glDrawArrays(GL_QUADS, 0, 4);
+
 	}
 	glPopMatrix();
-   	glBindBuffer(GL_ARRAY_BUFFER,0);
 
-			glColor3f(1,1,1);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texture.ID);
+	glBindBuffer(GL_ARRAY_BUFFER,0);
+}
 
+void 
+SliderX::_DrawForeground(void)
+{
+	glColor3f(1,1,1);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture.ID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[3]);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
 	{
-
-	//	sprintf(&tempstring[0],"%f",test);
-	//	GuiManager::getInstance()->Write(tempstring,50,50);
 		// Translation:
 		VectorF values = (Panel.GetPosition() + PositionOnPanel);
 
@@ -315,12 +336,11 @@ void SliderX::draw(void)
 		// Scaling:
 		values = GetArea().GetSize();
 		glScalef(values.x,values.y,0);
-		
+
 		// Draw
 		glDrawArrays(GL_QUADS, 0, 4);
 	}
 	glPopMatrix();
 
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_TEXTURE_2D);
+	glBindBuffer(GL_ARRAY_BUFFER,0);
 }

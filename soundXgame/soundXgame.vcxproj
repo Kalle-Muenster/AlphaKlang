@@ -56,6 +56,10 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32.lib;BASS_DSHOW.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <HeapReserveSize>2048000</HeapReserveSize>
+      <HeapCommitSize>8192</HeapCommitSize>
+      <StackReserveSize>2048000</StackReserveSize>
+      <StackCommitSize>8192</StackCommitSize>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

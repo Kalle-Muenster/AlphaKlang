@@ -23,6 +23,10 @@ private:
 	bool XIsUnderControll,YIsUnderControll;
 	bool DimensionsSwitched;
 	VectorF lastMouse;
+	void _DrawBackground(void);
+	void _DrawBar(float position);
+	void _DrawForeground(void);
+
 public:
 	ProjectMappe::Rectangle Panel;
 	ProjectMappe::Rectangle Area;
