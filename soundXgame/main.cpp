@@ -70,7 +70,7 @@ void InitEngine(void)
 	AUDIO->Set3D_DopplerFXFactor(0.25f);
 //	AUDIO->Set3D_RollOffFactor(0.75f);
 	AUDIO->Set3D_DistanceFactor(0.75f);
-	AUDIO->Volume(0);
+	//AUDIO->Volume(0);
 }
 
 int prepareForExit(void)
@@ -180,8 +180,8 @@ void LoadContent(void)
 	//fountain->createRange();
 	guiding = new GuiObject("testbild_1600x900.png");
 	guiding->scale(Vector3(256,256,1));
-	//guiding->AddConnectable<ButtonControl>();
-	//guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
 	guiding->AddConnectable<SliderX>();
 	//fountain->SetLineBounds(0,0,4,3);
 	//fountain->SetClambt(0,-1,1);
@@ -419,7 +419,7 @@ void LoadContent(void)
 
 	AUDIO->BackgroundMusicVolume(0.95);
 
-	AUDIO->Volume(1);
+//	AUDIO->Volume(1);
 	
 	
 	printf("\nSCENE: Loaded... \n ...entering gameloop!\n\n");
