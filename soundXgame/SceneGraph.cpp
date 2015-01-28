@@ -47,7 +47,7 @@ SceneGraph::DrawAll()
 	camera->Update();
 	for(unsigned ID = drawables.First(); ID<=drawables.Last(); ID=drawables.Next(ID))
 	{
-		if(drawables[ID]->IsVisible)
+		if(drawables[ID]->isVisible())
 			drawables[ID]->draw();
 	}
 }

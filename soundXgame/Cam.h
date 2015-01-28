@@ -148,12 +148,12 @@ public:
 	CAM_MODE                Mode(CAM_MODE = set);
 	CAM_MODE                Mode(int);
 	CameraMode*			    ModeSocket;					// reference to attached mode-extensions...
-	template<class cM> cM*	mode(CAM_MODE value=set)
-							{
-								if(value==set)
-									return ModeSocket->Get<cM>(Mode(set));
-								return ModeSocket->Get<cM>(value);
-							}
+	//template<class cM> cM*	mode(CAM_MODE value=set)
+	//						{
+	//							if(value==set)
+	//								return ModeSocket->Get<cM>(Mode(set));
+	//							return ModeSocket->Get<cM>(value);
+	//						}
 };
 
 #endif

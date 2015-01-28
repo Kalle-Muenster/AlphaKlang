@@ -1,5 +1,5 @@
 #include "FirstPerson.h"
-#include "projectMacros.h"
+//#include "projectMacros.h"
 
 int FirstPerson::ID = -1;
 
@@ -10,10 +10,10 @@ FirstPerson::FirstPerson(void)
 	isPrimarMode=true;
 }
 
-FirstPerson::~FirstPerson(void)
-{
-
-}
+//FirstPerson::~FirstPerson(void)
+//{
+//
+//}
 
 
 

@@ -3,7 +3,7 @@
   <Class Name="IAudioEmitter" Collapsed="true">
     <Position X="11.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABIAAAAgAAAIAAAQAAAADAAAAAUIEgAgAIAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAgAAAIAAAQAAAADAAAAAUIEgAgAIADEAAAAAA=</HashCode>
       <FileName>AudioObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -31,7 +31,7 @@
   <Class Name="BassAudio" Collapsed="true">
     <Position X="24.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GgAggAAAAALEAAggEAAAAAAARFAAAAQgoBMBBABCAAA=</HashCode>
+      <HashCode>GgAggAAAAALEAAggEAAAAABARFAAAAQioBMBBABCAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -69,7 +69,7 @@
   <Class Name="IMeshObject" Collapsed="true">
     <Position X="2.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgCAACkAAEBSIiA=</HashCode>
+      <HashCode>AAAEAAAGQAAAAACCAAIQAAACACABAgAAACkAAEBSIiA=</HashCode>
       <FileName>IMeshObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -156,7 +156,7 @@
   <Class Name="InputManager" Collapsed="true">
     <Position X="28" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAmYQAGAAFBgAskUCADIBEAAAQEQAUgAgQAIAAECEc=</HashCode>
+      <HashCode>gBAmYQAGAAFBgAskUCADIBEAAAQEQgUgAgQAIAAECEc=</HashCode>
       <FileName>InputManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -272,7 +272,7 @@
   <Class Name="IDrawable" Collapsed="true">
     <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEAAAABIAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAEAAAABIAAAAAAAAAAACAAAgAAAAAAAA=</HashCode>
       <FileName>Connectable.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -342,7 +342,7 @@
   <Class Name="List&lt;ListMember, MAXIMUM_SIZE&gt;" Collapsed="true">
     <Position X="55.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BgIAAwAAAAAAAQAAgAABBAQAAAMAAEAAgAACAAAAAEI=</HashCode>
+      <HashCode>BgIAAwAAAACAgUAAgAABBAQIAAMAAEgAgAACAAAAAEI=</HashCode>
       <FileName>List.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -372,20 +372,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAIAAAgAABAAAQAAAAQAARAAAAAAEAAAAA=</HashCode>
       <FileName>ObjectManagement.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="IUpdateble" Collapsed="true">
-    <Position X="26.75" Y="11.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAAAAAAAAEICAAACAAAAAAAAACAAEAAA=</HashCode>
-      <FileName>UpdateManager.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="UpdateManager" Collapsed="true">
-    <Position X="57.5" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAABAABAAEgAIAEAAAQAAAAJAQQAEAAAAAAAAA=</HashCode>
-      <FileName>UpdateManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Loader" Collapsed="true">
@@ -433,7 +419,7 @@
   <Class Name="ParticleSystem&lt;NUMBER_OF_PARTICLES&gt;" Collapsed="true">
     <Position X="26.75" Y="13" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQYAQAAAAAAAABAAAoQUhJAAAEAAAAIAgEAEADwLAA=</HashCode>
+      <HashCode>AAQYAQAACAAAAABAAAoQUhJAAAEAAQAIAgEAEQDwLAA=</HashCode>
       <FileName>ParticleSystem.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -671,7 +657,7 @@
   <Class Name="Controlled&lt;ctrlType&gt;" Collapsed="true">
     <Position X="15" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAABABIMAQAhgAAgAAAAQCAAAAAACQAABgEAEiAJA=</HashCode>
+      <HashCode>AAEAABgBIMAQAhgAAgAAAAQCAAAAAACQAABgEAEiAJA=</HashCode>
       <FileName>ControlledValues.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -679,49 +665,63 @@
     <Position X="0.5" Y="23" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Jongleur&lt;cType, NUMBER_OF_PINS&gt;">
     <Position X="0.5" Y="20.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAgAAAAAAAAAAACABAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <HashCode>AAAAAAAAAICAAAAAAAAAAAAgAAAAAAAAAAACABAAAAA=</HashCode>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Trigger&lt;cType&gt;">
     <Position X="4.25" Y="20.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAACAAAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAgCAAAAAAA=</HashCode>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MovingValue&lt;cType&gt;">
     <Position X="2.5" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ClambController&lt;cType&gt;">
     <Position X="2.5" Y="15.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAE=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="InvertController&lt;cType&gt;">
     <Position X="2.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="UserModeControl&lt;cType&gt;">
     <Position X="0.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABEAAAAAgAEAAAQAAAAgAAAAAAAAAAACAAAAAJA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <HashCode>AAAAABEAAAAAgAEAAAQAAAAgAAAAAAAAAIACAAAAAJA=</HashCode>
+      <FileName>ValueControllerUserModes.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IUpdateble" Collapsed="true">
+    <Position X="26.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAEICAAACAAAAAAAAACAAEAAA=</HashCode>
+      <FileName>UpdateManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UpdateManager" Collapsed="true">
+    <Position X="57.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABAAEgAIAEAAAQAAAAJAQQAEAAAAAAAAA=</HashCode>
+      <FileName>UpdateManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="ListenerData" Collapsed="true">
@@ -769,7 +769,7 @@
   <Struct Name="VectorF" Collapsed="true">
     <Position X="28" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAAAAAAAAAAAAAQAAAQAAAAAAAAFgAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAAAAAEAAAAAAAAQAAAQAAAAAAAAFgAAAAAAA=</HashCode>
       <FileName>VoxelVector.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -917,7 +917,7 @@
     <Position X="57.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ControlledValues.h</FileName>
+      <FileName>ValueControllerUserModes.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Enum Name="FFT_SIZE" Collapsed="true">
@@ -937,7 +937,7 @@
   <Enum Name="LOAD_MODE" Collapsed="true">
     <Position X="29.75" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAAAAAAAAAAACQAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAAAAAAAAAAACAAAACQAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>BassAudio.h</FileName>
     </TypeIdentifier>
   </Enum>

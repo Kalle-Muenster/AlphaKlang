@@ -85,7 +85,7 @@ ButtonControl::DoEarly(void)
 
 	bool ButtonControl::Initialize(void)
 	{
-		area = *ProjectMappe::Rectangle::Zero;
+		Area = *ProjectMappe::Rectangle::Zero;
 		UPDATE->SignOutFromUpdate(this);
 		UPDATE->SignInForEarlyUpdate(this);
 		GuiManager::getInstance()->Add(this);
@@ -99,10 +99,7 @@ ButtonControl::DoEarly(void)
 		this->angle = 0;
 		GetArea();
 
-		movetest.SetUserMode<SineControlled<float>>(-35.756,57.9,0,0.05);
-		movetest.SetMOVE((float)(3.14159265358979323846 / 180));
-		movetest = 0;
-		movetest.ControllerActive=true;
+
 
 		return true;
 	}
@@ -110,19 +107,18 @@ ButtonControl::DoEarly(void)
 	ProjectMappe::Rectangle
 	ButtonControl::GetArea(void)
 	{
-		float mover = movetest;
+
 		VectorF	vec = Panel.GetSize();
-		vec.x *= (SizeScaledPanel.x*(mover*3/100));
+		vec.x *= SizeScaledPanel.x;
 		vec.y = vec.x/4;
-		area.SetSize(vec);
-		vec = (Panel.GetPosition() + PositionOnPanel )-area.GetHalbSize();
-		vec.x+=mover;
-		area.SetPosition(vec);
-		left=area.GetCenter().x-area.GetHalbSize().x;
-		right=area.GetCenter().x+area.GetHalbSize().x;
-		top=area.GetCenter().y-area.GetHalbSize().y;
-		bottom=area.GetCenter().y+area.GetHalbSize().y;
-		return area;
+		Area.SetSize(vec);
+		vec = (Panel.GetPosition() + PositionOnPanel )-Area.GetHalbSize();
+		Area.SetPosition(vec);
+		left=Area.GetCenter().x-Area.GetHalbSize().x;
+		right=Area.GetCenter().x+Area.GetHalbSize().x;
+		top=Area.GetCenter().y-Area.GetHalbSize().y;
+		bottom=Area.GetCenter().y+Area.GetHalbSize().y;
+		return Area;
 	}
 
 	ButtonControl::ButtonState 
@@ -177,19 +173,16 @@ ButtonControl::DoEarly(void)
 
 	glPushMatrix();
 	{
-		float test = movetest;
-	//	sprintf(&tempstring[0],"%f",test);
-	//	GuiManager::getInstance()->Write(tempstring,50,50);
 		// Translation:
 		VectorF values = Panel.GetPosition() + PositionOnPanel;
-		values.x += test;
+
 		glTranslatef(values.x, values.y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 
 		// Scaling:
-		values = area.GetSize();
+		values = GetArea().GetSize();
 		glScalef(values.x,values.y,0);
 		
 		// Draw

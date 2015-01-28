@@ -88,6 +88,7 @@
     <ClCompile Include="Combiner.cpp" />
     <ClCompile Include="Connectable.cpp" />
     <ClCompile Include="ControlledValues.cpp" />
+    <ClCompile Include="ControllElement.cpp" />
     <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="EffectClass.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Combiner.h" />
     <ClInclude Include="Connectable.h" />
     <ClInclude Include="ControlledValues.h" />
+    <ClInclude Include="ControllElement.h" />
     <ClInclude Include="Cubus.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="EffectClass.h" />
@@ -323,6 +325,7 @@
     <Image Include="kubismus.png" />
     <Image Include="Modus Grau_512x512.png" />
     <Image Include="Modus Grau_64x64.png" />
+    <Image Include="panel_256x512.png" />
     <Image Include="particle1_128x128.png" />
     <Image Include="particle2_128x128.png" />
     <Image Include="particle3_128x128.png" />

@@ -169,7 +169,7 @@ CamTargetMover::~CamTargetMover(void)
 void
 CamTargetMover::mouseMotion(int x,int y)
 {
-	if(SCENE->camera->mode<TargetGrabber>()->Mode()!=TargetGrabber::MODE::MOVE)
+	if(SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode()!=TargetGrabber::MODE::MOVE)
 		IsActive=false;
 	else if(IsActive)
 	{
@@ -212,7 +212,7 @@ CamTargetRotator::RotateOnMouseHold(void)
 void
 CamTargetRotator::DoUpdate(void)
 {
-	if(SCENE->camera->mode<TargetGrabber>()->Mode()!=TargetGrabber::MODE::ROTATE)
+	if((SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode()) != TargetGrabber::MODE::ROTATE)
 		IsActive=false;
 	else if(SCENE->camera->GetTarget()->GetID() == this->Connection()->GetID())
 	{
@@ -254,7 +254,7 @@ CamTargetScaler::Initialize(void)
 void 
 CamTargetScaler::DoUpdate(void)
 {
-	if(SCENE->camera->mode<TargetGrabber>()->Mode() != TargetGrabber::MODE::SCALE)
+	if(SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode() != TargetGrabber::MODE::SCALE)
 		IsActive=false;
 	else if(IsActive)
 	{

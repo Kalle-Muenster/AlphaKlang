@@ -4,9 +4,7 @@
 #define _UPDATEMANAGER_H_
 
 #define MAXIMUM_NUMBER_OF_UPDATECLIENTS (1000)
-//#define LATE_AFTER_DRAW
-
-//typedef unsigned UpdateID;
+#define UPDATE UpdateManager::getInstance()
 
 
 enum UPdTIME
@@ -21,8 +19,8 @@ struct UpdateID
 class IUpdateble
 {
 public:
-
 	UpdateID UpdID;
+	bool IsUpdatingActive;
 	IUpdateble(void);
 	virtual void InitiateUpdatable(void);
 	virtual ~IUpdateble(void);

@@ -1,7 +1,37 @@
 #include "Edit.h"
+#include "ButtonControl.h"
+#include "SliderX.h"
+#include "SceneGraph.h"
+#include "Cam.h"
 
 int
 Edit::ID = -1;
+unsigned _panel;
+bool _NoPanelGenerated=true;
+
+void
+_backButtonClick(IConnectable* sender)
+{
+	GUI->Element(_panel)->isVisible(false);
+	SceneGraph::getInstance()->camera->Mode(FIRSTPERSON);
+}
+
+void
+_generatePanel(void)
+{
+	_panel = (new GuiObject("panel_256x512.png"))->GetID();
+	GUI->Element(_panel)->scale(Vector3(256,256,1));
+	GUI->Element(_panel)->AddConnectable<SliderX>();
+	GUI->Element(_panel)->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
+	GUI->Element(_panel)->AddConnectable<ButtonControl>();
+	GUI->Element(_panel)->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	
+	GUI->Element(_panel)->SetName("Editor-Panel");
+	GUI->Element(_panel)->GetConnected<ButtonControl>()->SetClickerFunc(_backButtonClick);
+	GUI->Element(_panel)->isVisible(false);
+	_NoPanelGenerated=false;
+}
+
+
 
 Edit::Edit(void)
 {
@@ -29,10 +59,10 @@ Edit::Initialize(void)
 	mouseSpeed	= 1.0f;
 	mouseX = SCREENWIDTH/2;
 	mouseY = SCREENHEIGHT/2;
-	INPUT->attachKey(this);
-	INPUT->attachMouseMove(this);
-	INPUT->attachMouseWheel(this);
-	INPUT->attachSpecial(this);
+	InputManager::getInstance()->attachKey(this);
+	InputManager::getInstance()->attachMouseMove(this);
+	InputManager::getInstance()->attachMouseWheel(this);
+	InputManager::getInstance()->attachSpecial(this);
 	ID = this->CamModeID();
 	accelerate = false;
 	return true;
@@ -44,10 +74,11 @@ Edit::UpdateMode(void)
 { 
 	camera->move(x, eyeY, z);
 	camera->rotate(x+lx, y + 1.7f, z+lz); 
-	this->IsDirty=false;
-
+	
 	gluLookAt(camera->transform.position.x, camera->transform.position.y, camera->transform.position.z,
-	camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
+			  camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
+
+	this->IsDirty=false;
 }
 
 
@@ -120,8 +151,13 @@ Edit::specialKeyPressed(int key)
 void
 Edit::mouseMotion(int newX, int newY)
 {
+
 	if(!IsActive)
-		return;
+	{
+		if(!_NoPanelGenerated)
+			GUI->Element(_panel)->isVisible(false);
+	return;
+	}
 
 	if(INPUT->Mouse.RIGHT.HOLD)
 	{
@@ -157,10 +193,13 @@ Edit::mouseMotion(int newX, int newY)
 void
 Edit::OnActivate(void)
 {
-	//show cursor
+	if(_NoPanelGenerated)
+		_generatePanel();
+
 	glutSetCursor(GLUT_CURSOR_INHERIT);
 	//update view
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
+	GUI->Element(_panel)->isVisible(true);
 }
 

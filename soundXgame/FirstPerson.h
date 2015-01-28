@@ -1,14 +1,12 @@
 #ifndef _FIRSTPERSON_CAMERA_
 #define _FIRSTPERSON_CAMERA_
 
-
 #include "Cam.h"
-//#include "CameraMode.h"
 #include "Ground.h"
+
 
 class FirstPerson : public CameraMode , public IInteractive
 {
-
 protected:
 	bool					NeedViewUpdate;
 	int						mouseX, mouseY;			// last-frame mouse position within screen
@@ -17,15 +15,13 @@ protected:
 	float					eyeY;					// head rotation front/back
 	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
 	float					mouseSpeed;				// firstPerson Mouse sensitivity
-	virtual void			UpdateMode(void);		// Updates all datachanges in this Cam-Mode...
+	virtual void			UpdateMode(void);		// Updates all data-changes in this Cam-Mode...
 	bool					accelerate;				// State if currently running faster is enabled, e.g. Shift pressed
+
 public:
 	float					x, y, z;					// XZ position of the camera
-
-public:
-
 	FirstPerson(void);
-	virtual ~FirstPerson(void);
+//	virtual ~FirstPerson(void);
 	static int ID;
 	void UpdateHeight(float y);
 	virtual void OnActivate(void);

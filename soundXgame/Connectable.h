@@ -50,8 +50,6 @@ public:
 
 
 class IConnectable;
-//class Kollective;
-//#include "Connectable.h"
 struct Transform;
 struct Vector3;
 
@@ -278,8 +276,8 @@ public:
 		return NULL;
 	}
 
-	//Gets a component of an Object by givin its Connection-ID...
-	//Workes mutch faster....
+	//Gets a component of an Object by giving its Connection-ID...
+	//Works much faster....
 	template<typename T> T* GetConnected(ConID conid)
 	{
 		return (T*)getConnectables(conid-1);
@@ -288,7 +286,7 @@ public:
 
 	//Get's the ID of a "IConnectable" Component...
 	//use this, if you want to call a Component by it's ID , but it was
-	//previously Addet by Type,.. and not by ID...
+	//previously Added by Type,.. and not by ID...
 	template<typename T> ConID GetConnectionID(void)
 	{
 		ConID TypeHash = (ConID)typeid(T).hash_code();
@@ -369,14 +367,14 @@ public:
 
 
 
-	// Link's two Conections conXtor<->conXtor-whise and returns a pointer to the newly Added Conection's ConID,
-	// wich then will contain this Conection's ConID-Key as it's value. the ConID of this Object
-	// (where the AddConection-function has been called on) will contain the newAdded-Conection's
-	// ConID-Key as its value in oposide. so both Object's connected Components and Member-functions
-	// are Accsessible by eachother. So it is Possible to "merge" two objects from different Classes to one new
+	// Link's two Connections conXtor<->conXtor-wise and returns a pointer to the newly Added Connection's ConID,
+	// which then will contain this Connection's ConID-Key as it's value. the ConID of this Object
+	// (where the AddConection-function has been called on) will contain the newAdded-Connection's
+	// ConID-Key as its value in opposition. so both Object's connected Components and Member-functions
+	// are Accessible by each other. So it is Possible to "merge" two objects from different Classes to one new
 	// object at runtime. the new "merged" object will contain all functionality and Components-sets of both Instances it is merged from...
-	// -> calling "Conection()" on this Object's Components, will return this Object. (as usual..)
-	// -> calling "Conection()" on the other Object's Components, will also return this Object, (not the other Object itself)
+	// -> calling "Connection()" on this Object's Components, will return this Object. (as usual..)
+	// -> calling "Connection()" on the other Object's Components, will also return this Object, (not the other Object itself)
 	ConID* AddConnection(IObjection<IConnectable>* instance)
 	{
 		int x=0;

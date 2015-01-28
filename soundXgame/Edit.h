@@ -6,7 +6,8 @@
 class Edit :
 	public CameraMode , public IInteractive
 {
-	protected:
+
+protected:
 	
 	int						mouseX, mouseY;			// last-frame mouse position within screen
 	float					angle;					// angle of rotation for the camera direction
@@ -14,10 +15,11 @@ class Edit :
 	float					eyeY;					// head rotation front/back
 	float					moveSpeed;				// firstPerson Keyboard moving sensitivity
 	float					mouseSpeed;				// firstPerson Mouse sensitivity
-	virtual void			UpdateMode(void);		// Updates all datachanges in this Cam-Mode...
+	virtual void			UpdateMode(void);		// Updates all data-changes in this Cam-Mode...
 	bool					accelerate;				// State if currently running faster is enabled, e.g. Shift pressed
 
 public:
+
 	float					x, y, z;					// XZ position of the camera
 	static int ID;
 	Edit(void);

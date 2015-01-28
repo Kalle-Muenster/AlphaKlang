@@ -20,12 +20,13 @@ public:
 	void InitializeGUIObject(void);
 	virtual ~GuiObject(void);
 	void LoadTexture(char*);
-	ProjectMappe::Rectangle area;
+	ProjectMappe::Rectangle Area;
 	virtual Vector3 move(Vector3);
 	virtual Vector3 rotate(Vector3);
 	virtual Vector3 scale(Vector3);
 	bool UseTexture;
 	bool IsActive;
+
 	
 };
 
@@ -58,8 +59,8 @@ public:
 	~GuiManager(void);
 	GobID Add(IDrawable*);
 	void Remove(IDrawable*);
-	IObjection<Connectable<IDrawable>>* Element(string name);
-	IObjection<Connectable<IDrawable>>* Element(GobID id);
+	IObjection<IConnectable>* Element(string name);
+	IObjection<IConnectable>* Element(GobID id);
 	void DrawGUI(void);
 	void Write(const char*,short,short,unsigned=0xffffffff);
 	

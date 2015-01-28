@@ -116,21 +116,21 @@ GuiManager::Remove(IDrawable* element)
 			elements.Remove(ID);
 }
 
-IObjection<Connectable<IDrawable>>* 
+IObjection<IConnectable>* 
 GuiManager::Element(string name)
 {
 	for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
 		if(Utility::StringCompareRecursive(((IObjection<IConnectable>*)elements[ID])->GetName(),name))
-			return (IObjection<Connectable<IDrawable>>*)elements[ID];
+			return (IObjection<IConnectable>*)elements[ID];
 	return NULL;
 }
 
-IObjection<Connectable<IDrawable>>*
+IObjection<IConnectable>*
 GuiManager::Element(GobID id)
 {
 	GobID ID = id - MAX_MUM_SCENE_OBJECTS;
 	if(((IObjection<IConnectable>*)elements[ID])->GetID()==id)
-		return (IObjection<Connectable<IDrawable>>*)elements[ID];
+		return (IObjection<IConnectable>*)elements[ID];
 	return NULL;
 }
 
@@ -154,13 +154,16 @@ GuiManager::Write(const char* Text,short X,short Y,unsigned Color)
 
 void
 GuiManager::DrawGUI(void)
-{
+{	
+	if(elements.Count()==0 && writeOrders.Count()==0)
+		return;
+
 	Enable2DDrawing();
 	{
 		if(elements.Count()>0)
 		{
 			for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
-				if(elements[ID]->IsVisible)
+				if(elements[ID]->isVisible())
 					elements[ID]->draw();
 		}
 
@@ -187,16 +190,16 @@ GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color
 GuiObject::GuiObject(void)
 {
 	transform.scale = Vector3(1,1,1);
-	area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
+	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
 	InitializeGUIObject();
-	 SetUp("testbild_1600x900.png",false,false);
+	 SetUp("panel_256x512.png",false,false);
 
 }
 
  GuiObject::GuiObject(string name)
 {
 	transform.scale = Vector3(1,1,1);
-	area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
+	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
 	InitializeGUIObject();
 	SetUp(name,false,false);
 	SetName(name);	
@@ -208,11 +211,13 @@ GuiObject::~GuiObject(void)
 
 }
 
+
+
 void
 GuiObject::InitializeGUIObject(void)
 {
-	area.SetPosition(500,500);
-	area.SetSize(256,256);
+	Area.SetPosition(500,500);
+	Area.SetSize(256,256);
 
 	UseTexture = true;
 	IsVisible = IsActive = true;
@@ -245,7 +250,7 @@ GuiObject::LoadTexture(char* filename)
 Vector3 
 GuiObject::move(Vector3 m)
 {
-	area.SetPosition(m.x,m.y);
+	Area.SetPosition(m.x,m.y);
 	return m;
 }
 
@@ -260,9 +265,9 @@ GuiObject::rotate(Vector3 r)
 Vector3
 GuiObject::scale(Vector3 s)
 {
-	VectorF vec = area.GetSize();
+	VectorF vec = Area.GetSize();
 	vec.x*=s.x;
 	vec.y*=s.y;
-	area.SetSize(vec);
+	Area.SetSize(vec);
 	return s;
 }

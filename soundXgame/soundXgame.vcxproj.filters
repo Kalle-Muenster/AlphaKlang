@@ -166,6 +166,7 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
     <ClCompile Include="SliderX.cpp" />
+    <ClCompile Include="ControllElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -351,6 +352,7 @@
     <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
       <Filter>Resources\Textures\ControlEllements</Filter>
     </ClInclude>
+    <ClInclude Include="ControllElement.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -614,6 +616,9 @@
       <Filter>Resources\Textures</Filter>
     </Image>
     <Image Include="sliderX-2color_64x64.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
+    </Image>
+    <Image Include="panel_256x512.png">
       <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
   </ItemGroup>

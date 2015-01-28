@@ -87,10 +87,7 @@ bool SliderX::Initialize(void)
 		//UpdateManager::getInstance()->SignOutFromUpdate(this);
 		//UpdateManager::getInstance()->SignInForEarlyUpdate(this);
 		GuiManager::getInstance()->Add(this);
-		Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
-										&this->Connection()->getTransform()->position.y,
-										&this->Connection()->getTransform()->scale.x,
-										&this->Connection()->getTransform()->scale.y );
+
 		PositionOnPanel = Panel.GetHalbSize();
 		SizeScaledPanel.x = 0.3;
 		SizeScaledPanel.y = SizeScaledPanel.x/4;
@@ -99,22 +96,15 @@ bool SliderX::Initialize(void)
 		return true;
 }
 
-	ProjectMappe::Rectangle
-	SliderX::GetArea(void)
-	{
-		VectorF	vec = Panel.GetSize();
-		vec.x *= SizeScaledPanel.x;
-		vec.y = vec.x/4;
-		Area.SetSize(vec);
-		vec = (Panel.GetPosition() + PositionOnPanel );
-		Area.SetPosition(vec);
-		left=Area.GetCenter().x-Area.GetHalbSize().x;
-		right=Area.GetCenter().x+Area.GetHalbSize().x;
-		top=Area.GetCenter().y-Area.GetHalbSize().y;
-		bottom=Area.GetCenter().y+Area.GetHalbSize().y;
-		ValueY.MOVE=1/((right-left)+2);
-		return Area;
-	}
+ProjectMappe::Rectangle
+SliderX::GetArea(void)
+{
+	ControllElement::GetArea();
+	ValueY.MOVE=1/((right-left)+2);
+	return Area;
+}
+
+ 
 
 void SliderX::DoUpdate(void)
 {
@@ -197,12 +187,12 @@ SliderX::mouseClicks(int button,bool IsPressed,VectorF position)
 
 void SliderX::draw(void)
 {
-	if(DimensionsSwitched)
-	{
-		GuiManager::getInstance()->Write("Dimensions Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
-	}
-	else
-		GuiManager::getInstance()->Write("Dimensions NOT Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
+	//if(DimensionsSwitched)
+	//{
+	//	GuiManager::getInstance()->Write("Dimensions Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
+	//}
+	//else
+	//	GuiManager::getInstance()->Write("Dimensions NOT Switched",GetArea().GetPosition().x,GetArea().GetPosition().y);
 
 	if(!vertexBufferID)
 		return;

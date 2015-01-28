@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <vector>
-//#include "UpdateManager.h"
-#include "projectMacros.h"
 
+#include "UpdateManager.h"
+#include "InputManager.h"
+#include "Connectable.h"
 
 
 IUpdateble* _earlyUpdates[MAXIMUM_NUMBER_OF_UPDATECLIENTS/4];
@@ -31,7 +32,7 @@ UpdateManager::UpdateManager(void)
 }
 
 
-//Destuctor...
+//Destructor...
 UpdateManager::~UpdateManager(void)
 {
 	//delete _earlyUpdates;
@@ -41,7 +42,7 @@ UpdateManager::~UpdateManager(void)
 
 
 // Signing function...
-void // take's a pointer to an Invokationlist and signs in the given client to it..
+void // Takes a pointer to an invocation-list and signs in the given client to it..
 _SignIn( // before it will check if the client already is in there...
 		 IUpdateble** InvokationList, 
 		 IUpdateble* client, 
@@ -144,17 +145,25 @@ UpdateManager::DoTheUpdates(void)
 	while(counter<_NumberOfEarlyClients)
 	{
 		if(_earlyUpdates[i]!=NULL)
-			{ _earlyUpdates[i]->DoEarly(); counter++; }
+		{
+			if(_earlyUpdates[i]->IsUpdatingActive)
+				_earlyUpdates[i]->DoEarly(); 
+			counter++;
+		}
 		i++;
 	}
 
-	INPUT->FireEvents();
+	InputManager::getInstance()->FireEvents();
 
 	i = counter = 0;
 	while(counter<_NumberOfUpdateClients)
 	{
 		if(_updates[i]!=NULL)
-			{ _updates[i]->DoUpdate(); counter++; }
+		{
+			if(_updates[i]->IsUpdatingActive)
+				_updates[i]->DoUpdate(); 
+			counter++; 
+		}
 		i++;
 	}
 }
@@ -167,7 +176,11 @@ UpdateManager::DoTheLateUpdates(void)
 	while(counter<_NumberOfLateClients)
 	{
 		if(_lateUpdates[i]!=NULL)
-			{ _lateUpdates[i]->DoLate(); counter++;	}
+		{
+			if(_lateUpdates[i]->IsUpdatingActive)
+				_lateUpdates[i]->DoLate();
+			counter++;	
+		}
 		i++;
 	}
 }
@@ -215,5 +228,6 @@ IUpdateble::~IUpdateble(void)
 void
 IUpdateble::InitiateUpdatable(void)
 {
+	IsUpdatingActive = true;
 	UpdateManager::getInstance()->SignInForUpdate(this);
 }

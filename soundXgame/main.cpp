@@ -16,7 +16,7 @@
 #define LATE_BEFOR_DRAW
 
 
-//Global Declerations:
+//Global Declarations:
 int wnd;
 void* font;
 bool EXIT = false; 
@@ -47,7 +47,7 @@ void GamePadFunc(unsigned,int,int,int);
 //void WriteText2D(char*,int,int);
 
 
-//Entrypoint:
+//Entry-point:
 int main(int argc,char** argv)
 {
 	glutInit(&argc,argv);
@@ -140,7 +140,7 @@ void GlInit(void)
 
         
 	
-    glEnable(GL_MULTISAMPLE_ARB); // enable Multisample Antialiasing
+    glEnable(GL_MULTISAMPLE_ARB); // enable Multi-sample Anti-aliasing
 	glEnable(GL_BLEND); // enable transparency
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // do transparency
@@ -149,7 +149,7 @@ void GlInit(void)
 
 void ActionTest(IConnectable* sender)
 {
-	guiding->area.SetPosition(0,0);
+	guiding->Area.SetPosition(0,0);
 	AUDIO->Pause();
 	AUDIO->LoadeBackgroundAudio("06-cpu_-_deleted.mp3");
 	AUDIO->Play();
@@ -178,12 +178,13 @@ void LoadContent(void)
 	//fountain->SetPosition(Vector3(-40, 0, 0));
 	//fountain->size = 50;
 	//fountain->createRange();
-	guiding = new GuiObject("testbild_1600x900.png");
-	guiding->scale(Vector3(256,256,1));
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
-	guiding->AddConnectable<SliderX>();
-	//fountain->SetLineBounds(0,0,4,3);
+	//guiding = new GuiObject("panel_256x512.png");
+	//guiding->scale(Vector3(256,256,1));
+	//guiding->AddConnectable<SliderX>();
+	//guiding->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
+	//guiding->AddConnectable<ButtonControl>();
+	//guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	//fountain->SetLineBounds(0,0,4,3);
+	//guiding->IsVisible = false;
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);
 	//fountain->sensitivity = 5;
@@ -209,8 +210,8 @@ void LoadContent(void)
 
 	//Voxelplane... 
 	//on runtime use press"X"to choose a an Image file from list (watch console!)
-	//press "R" to loade the sellected image as Image.
-	//press "L" to loade the sellected image'as Bumpmap. -> press several times each colorchannl seperate...
+	//press "R" to loade the selected image as Image.
+	//press "L" to loade the selected image's Bump-map. -> press several times each color channel separate...
 	//(new VoxGrid("drei_.ppm"))->SetName("plane_front");
 	//SCENE->Object("plane_front")->AddConnectable<VoxControl>();
 	//SCENE->Object("plane_front")->move(-80,0,150);
@@ -526,7 +527,7 @@ void keyboardInput(unsigned char key,int x,int y)
 		if(lastKey!=key)
 			SCENE->camera->Mode(SPECTATOR);
 	}
-	else if(key=='s')
+	else if(key=='v')
 	{
 		if(lastKey!=key)
 			SCENE->camera->Mode(StrangeChaoticView::ID);

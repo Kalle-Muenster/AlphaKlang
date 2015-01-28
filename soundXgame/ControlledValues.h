@@ -1,7 +1,7 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
 |  Controlled<Value>:                    |
-|  a Variable value wich is controlled   |
-|  by a simple contolling-mechanism      |
+|  a Variable value which is controlled  |
+|  by a simple controlling-mechanism     |
 |  it provides:                          |
 |                                        |
 |        -Invert                         |
@@ -9,8 +9,8 @@
 |        -Cycle                          |
 |        -PingPong                       |
 |                                        |
-|  it also suport attaching UserDefined  |
-|  Mode-Properties wich can be derived   |
+|  it also support attaching UserDefined |
+|  Mode-Properties which can be derived  |
 |  from the UserMode<ValueType> class... |
 |                                        |
 |  by: Kalle Muenster                    |
@@ -27,7 +27,7 @@
 template<typename ctrlType> class Controlled
 {	  
 protected:
-	ctrlType* _Value;  //pointer to the value wich is controlled; 
+	ctrlType* _Value;  //pointer to the value which is controlled; 
 	
 	
 	bool CheckAtGet;
@@ -77,16 +77,16 @@ protected:
 
 public:
 	//If set "true", the Value will be checked and updated
-	//everytime it's ret or written. ...usefull for Clamping or Inverting
-	//If set to "false", it's Value wo'nt be checked and wo'nt be updated
-	//unless you call "Check()" on it manualy. ...usefull for MovingValues
+	//every time it's ret or written. ...usefull for Clamping or Inverting
+	//If set to "false", it's Value won't be checked and won't be updated
+	//unless you call "Check()" on it manually. ...usefull for MovingValues
 	//like pingpong or cycle. it than can be updated once per frame in an
 	//update-loop for example, to let its Value stay the same during the
 	//whole frame-cycle.
 	bool ControllerActive;
 	ctrlType MIN,MAX,MOVE;
 
-	//The sellectable modes...
+	//The selectable modes...
 	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
 	
 	//constructor...
@@ -129,7 +129,7 @@ public:
 	}
 
 	//template-function for setting the mode to an Usermode-class-type. 
-	//it will instanciate and attach the UserMode to the controller...
+	//it will instantiate and attach the UserMode to the controller...
 	template<typename Umode> void SetUserMode(ctrlType initial)
 	{
 
@@ -149,7 +149,7 @@ public:
 	}
 
 	//template-function for setting the mode to an Usermode-class-type. 
-	//it will instanciate, initialize and attach the UserMode to the controller...
+	//it will instantiate, initialize and attach the UserMode to the controller...
 	template<typename Umode> void SetUserMode(ctrlType min,ctrlType max,ctrlType initial,ctrlType move)
 	{
 		MIN=min;
@@ -172,8 +172,8 @@ public:
 	}
 
 	//Checks the Value and return it.  (even if Controller is deactivated)
-	//... use it to perform updating manualy and not to be called automaticly,
-	//everytime the value is "getted" when in a "MovingValue-Mode"...
+	//... use it to perform updating manually and not to be called automatically,
+	//every time the value is "getted" when in a "MovingValue-Mode"...
 	ctrlType Check(void)
 	{
 		ControllerActive=false;
@@ -230,7 +230,7 @@ public:
 		return this;
 	}
 
-	//reset's the pointer to a nother value by the given pointer... deletes the old one
+	//resets the pointer to another value by the given pointer... deletes the old one
 	virtual void SetVariable(ctrlType *var)
 	{
 		delete _Value;

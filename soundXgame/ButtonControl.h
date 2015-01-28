@@ -1,32 +1,16 @@
 #ifndef _CONNECTALE_BUTTON_
 #define	_CONNECTALE_BUTTON_
 
-#include "updatemanager.h"
-#include "Connectable.h"
-
-#include "IDrawable.h"
-
-
-
-
-
+#include "ControllElement.h"
 
 class ButtonControl :
-	public IConnectable,
-	public IDrawable, 
-	public IUpdateble
+	public ControllElement
 {
 private:
 	std::vector<glm::vec2> uvs;
-	glm::vec3 verts[4];
 	GLuint frameUVBuffers[4];
-	GLuint vertexBufferID;
-	Texture texture;
 	char btnState;
-	float left,right,top,bottom;
-	Controlled<float> movetest;
-	ProjectMappe::Rectangle area;
-
+	
 public:
 	static const char* States[];
 	enum ButtonState : char
@@ -36,15 +20,12 @@ public:
 	virtual ~ButtonControl(void);
 	virtual bool Initialize(void);
 	virtual ButtonState GetState(void);
-	virtual void SetState(ButtonState);
+	void SetState(ButtonState);
 	void SetClickerFunc(action);
 	action ClickAction;
 	virtual void draw(void);
-	ProjectMappe::Rectangle	Panel;
-	VectorF PositionOnPanel;
-	VectorF SizeScaledPanel;
-	ProjectMappe::Rectangle GetArea(void);
-	GLfloat angle;
+	virtual ProjectMappe::Rectangle GetArea(void);
+
 };
 
 #endif
