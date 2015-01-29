@@ -8,29 +8,14 @@ int
 Edit::ID = -1;
 unsigned _panel;
 bool _NoPanelGenerated=true;
+int lastCamMode = FIRSTPERSON;
 
 void
 _backButtonClick(IConnectable* sender)
 {
-	GUI->Element(_panel)->isVisible(false);
-	SceneGraph::getInstance()->camera->Mode(FIRSTPERSON);
+	GUI->Element("Editor-Panel")->isVisible(false);
+	SceneGraph::getInstance()->camera->Mode(lastCamMode);
 }
-
-void
-_generatePanel(void)
-{
-	_panel = (new GuiObject("panel_256x512.png"))->GetID();
-	GUI->Element(_panel)->scale(Vector3(256,256,1));
-	GUI->Element(_panel)->AddConnectable<SliderX>();
-	GUI->Element(_panel)->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
-	GUI->Element(_panel)->AddConnectable<ButtonControl>();
-	GUI->Element(_panel)->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	
-	GUI->Element(_panel)->SetName("Editor-Panel");
-	GUI->Element(_panel)->GetConnected<ButtonControl>()->SetClickerFunc(_backButtonClick);
-	GUI->Element(_panel)->isVisible(false);
-	_NoPanelGenerated=false;
-}
-
 
 
 Edit::Edit(void)
@@ -47,7 +32,6 @@ Edit::~Edit(void)
 bool 
 Edit::Initialize(void)
 {
-
 	angle		= 0;
 	lx			= 0;
 	lz			= -1;
@@ -154,9 +138,8 @@ Edit::mouseMotion(int newX, int newY)
 
 	if(!IsActive)
 	{
-		if(!_NoPanelGenerated)
-			GUI->Element(_panel)->isVisible(false);
-	return;
+	//	GUI->Element("Editor-Panel")->isVisible(false);
+		return;
 	}
 
 	if(INPUT->Mouse.RIGHT.HOLD)
@@ -193,13 +176,11 @@ Edit::mouseMotion(int newX, int newY)
 void
 Edit::OnActivate(void)
 {
-	if(_NoPanelGenerated)
-		_generatePanel();
-
 	glutSetCursor(GLUT_CURSOR_INHERIT);
 	//update view
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
-	GUI->Element(_panel)->isVisible(true);
+	GUI->Element("Editor-Panel")->isVisible(true);
+	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>()->ClickAction =  _backButtonClick;
 }
 

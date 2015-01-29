@@ -18,7 +18,7 @@
 #include <vector>
 #include <bass.h>
 #include <tags.h>
-#include <BASS_DSHOW.h>
+//#include <BASS_DSHOW.h>
 #include <bass_fx.h>
 #include <bassmix.h>
 #include "DataStructs.h"

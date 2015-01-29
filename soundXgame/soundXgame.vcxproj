@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -21,7 +29,20 @@
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
@@ -34,13 +55,24 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Libraries\freeglut\include;C:\Libraries\glew-1.10.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut\lib;C:\Libraries\glew-1.10.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24\c;C:\Libraries\bass24\bass_fx\C;C:\Libraries\bass24\bass_mix\c;C:\Libraries\bass24\bass_dshow\C;C:\Libraries\bass24\bass_tags\c;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x86;C:\Libraries\glew-1.11.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\tags17\c;C:\Libraries\glew-1.11.0\lib\Release MX\Win32;$(LibraryPath)</LibraryPath>
+    <SourcePath>$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\glsdk_0_5_2\glimg\lib\x64;C:\Libraries\glsdk_0_5_2\glload\lib\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -55,7 +87,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32.lib;BASS_DSHOW.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <HeapReserveSize>2048000</HeapReserveSize>
       <HeapCommitSize>8192</HeapCommitSize>
       <StackReserveSize>2048000</StackReserveSize>
@@ -65,7 +97,44 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <BrowseInformation>true</BrowseInformation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <HeapReserveSize>2048000</HeapReserveSize>
+      <HeapCommitSize>8192</HeapCommitSize>
+      <StackReserveSize>2048000</StackReserveSize>
+      <StackCommitSize>8192</StackCommitSize>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
@@ -91,14 +160,12 @@
     <ClCompile Include="ControllElement.cpp" />
     <ClCompile Include="Cubus.cpp" />
     <ClCompile Include="Edit.cpp" />
-    <ClCompile Include="EffectClass.cpp" />
     <ClCompile Include="FirstPerson.cpp" />
     <ClCompile Include="FollowTarget.cpp" />
     <ClCompile Include="Fountain.cpp" />
     <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="GuiManager.cpp" />
-    <ClCompile Include="IDrawable.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="Listener.cpp" />
@@ -118,7 +185,6 @@
     <ClCompile Include="Randomover.cpp" />
     <ClCompile Include="RuntimeInstances.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
-    <ClCompile Include="ScreenOverlay.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderObj.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -154,14 +220,12 @@
     <ClInclude Include="ControllElement.h" />
     <ClInclude Include="Cubus.h" />
     <ClInclude Include="Edit.h" />
-    <ClInclude Include="EffectClass.h" />
     <ClInclude Include="FirstPerson.h" />
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FountainObject.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="GuiManager.h" />
-    <ClInclude Include="IDrawable.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="Listener.h" />
@@ -187,7 +251,6 @@
     <ClInclude Include="projectMacros.h" />
     <ClInclude Include="Randomover.h" />
     <ClInclude Include="SceneGraph.h" />
-    <ClInclude Include="ScreenOverlay.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderObj.h" />
     <ClInclude Include="SkyBox.h" />
@@ -216,7 +279,6 @@
     <None Include="Bump_5.ppm" />
     <None Include="Bump_6.ppm" />
     <None Include="buntbild_128.ppm" />
-    <None Include="ClassDiagram31.cd" />
     <None Include="Color_1.ppm" />
     <None Include="Color_3.ppm" />
     <None Include="Color_4.ppm" />
@@ -236,7 +298,6 @@
     <None Include="sphere_tris_low.obi" />
     <None Include="There Are Four Buttons !!!!_256x256.pgm" />
     <None Include="tr.ppm" />
-    <None Include="ClassDiagram3.cd" />
     <None Include="tri_sphere.fbx" />
     <None Include="cylinder_quads.obi" />
     <None Include="X-7.tga" />

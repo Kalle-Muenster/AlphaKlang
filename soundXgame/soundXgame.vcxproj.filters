@@ -11,9 +11,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>UnderConstruction</Filter>
     </ClCompile>
-    <ClCompile Include="Combiner.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
     <ClCompile Include="Connectable.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -140,18 +137,6 @@
     <ClCompile Include="GuiManager.cpp">
       <Filter>Core\RuntimeManagers</Filter>
     </ClCompile>
-    <ClCompile Include="EffectClass.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="ScreenOverlay.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="IDrawable.cpp">
-      <Filter>UnderConstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="ButtonControl.cpp">
-      <Filter>Objects\ConnectableComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -165,8 +150,18 @@
     <ClCompile Include="ObjectFollower.cpp">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClCompile>
-    <ClCompile Include="SliderX.cpp" />
-    <ClCompile Include="ControllElement.cpp" />
+    <ClCompile Include="SliderX.cpp">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllElement.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonControl.cpp">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Combiner.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -182,9 +177,6 @@
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
-    <ClInclude Include="Combiner.h">
       <Filter>UnderConstruction</Filter>
     </ClInclude>
     <ClInclude Include="Connectable.h">
@@ -313,24 +305,11 @@
     <ClInclude Include="StrangeChaoticView.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="ObjectManagement.h">
       <Filter>Core\RuntimeManagers</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
       <Filter>Core\RuntimeManagers</Filter>
-    </ClInclude>
-    <ClInclude Include="EffectClass.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
-    <ClInclude Include="ScreenOverlay.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
-    <ClInclude Include="IDrawable.h">
-      <Filter>UnderConstruction</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonControl.h">
-      <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Core</Filter>
@@ -348,11 +327,24 @@
     <ClInclude Include="ObjectFollower.h">
       <Filter>Objects\ConnectableComponents</Filter>
     </ClInclude>
-    <ClInclude Include="SliderX.h" />
     <ClInclude Include="There Are Four Buttons !!!!_256x256.h">
       <Filter>Resources\Textures\ControlEllements</Filter>
     </ClInclude>
-    <ClInclude Include="ControllElement.h" />
+    <ClInclude Include="SliderX.h">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllElement.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonControl.h">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Combiner.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -623,8 +615,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram31.cd" />
-    <None Include="ClassDiagram3.cd" />
     <None Include="bluobbber.pix">
       <Filter>Resources\Textures</Filter>
     </None>
@@ -760,6 +750,9 @@
     </Filter>
     <Filter Include="Resources\Textures\Bleche">
       <UniqueIdentifier>{c9a7def6-de72-4d8d-b394-e40429d8a41b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\ConnectableControllElements">
+      <UniqueIdentifier>{e1b9a994-505a-47ce-b1cd-a0c3116d5463}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

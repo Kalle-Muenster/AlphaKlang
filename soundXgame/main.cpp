@@ -3,12 +3,6 @@
 #include "projectClasses.h"
 
 //#include "ShaderObj.h"
-#include "Musikubus.h"
-//#include "ScreenOverlay.h"
-
-#include "ParticleSystem.h"
-//#include "EffectClass.h"
-
 
 
 
@@ -22,8 +16,8 @@ void* font;
 bool EXIT = false; 
 
 //Objects:
-Sprite* Framen;
-GuiObject* guiding;
+
+
 
 
 //Functions:
@@ -78,8 +72,8 @@ int prepareForExit(void)
 	glutExit();
 	//deletions:
 	ProjectMappe::GlobalDestructor();
-	delete Framen;
-	delete guiding;
+
+
 	font = NULL;
 	delete font;
 	
@@ -147,13 +141,7 @@ void GlInit(void)
 }
 
 
-void ActionTest(IConnectable* sender)
-{
-	guiding->Area.SetPosition(0,0);
-	AUDIO->Pause();
-	AUDIO->LoadeBackgroundAudio("06-cpu_-_deleted.mp3");
-	AUDIO->Play();
-}
+
 
 ConID testID;
 void LoadContent(void)
@@ -178,13 +166,16 @@ void LoadContent(void)
 	//fountain->SetPosition(Vector3(-40, 0, 0));
 	//fountain->size = 50;
 	//fountain->createRange();
-	//guiding = new GuiObject("panel_256x512.png");
-	//guiding->scale(Vector3(256,256,1));
-	//guiding->AddConnectable<SliderX>();
-	//guiding->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
-	//guiding->AddConnectable<ButtonControl>();
-	//guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	//fountain->SetLineBounds(0,0,4,3);
-	//guiding->IsVisible = false;
+	GuiObject* guiding = new GuiObject("panel_256x512.png");
+	guiding->SetName("Editor-Panel");
+	guiding->scale(Vector3(256,256,1));
+	guiding->AddConnectable<SliderX>();
+	guiding->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
+	guiding->GetConnected<SliderX>()->SizeScaledPanel = VectorF(0.5,0.5/4);
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	//fountain->SetLineBounds(0,0,4,3);
+	guiding->GetConnected<ButtonControl>()->SizeScaledPanel = VectorF(0.5,0.5/4);
+	guiding->IsVisible = false;
 	//fountain->SetClambt(0,-1,1);
 	//fountain->SetThreshold(0,0.33);
 	//fountain->sensitivity = 5;
@@ -459,7 +450,7 @@ void RenderCycle(void)
 
 	SCENE->DrawAll();
 
-	SCENE->DrawGUI();
+	GUI->DrawGUI();
 	
 	glutSwapBuffers();
 }

@@ -60,10 +60,10 @@ char* _GetErrorString()
 	int error = BASS_ErrorGetCode();
 	if(error == -1)
 		error = 49;
-	if(error==BASS_ERROR_FX_NODECODE)
-		return "Not a decoding channel. ";
-	if(error ==BASS_ERROR_FX_BPMINUSE)
-		return "BPM / Beat detection is in use. ";
+	//if(error==BASS_ERROR_FX_NODECODE)
+	//	return "Not a decoding channel. ";
+	//if(error ==BASS_ERROR_FX_BPMINUSE)
+	//	return "BPM / Beat detection is in use. ";
 
 
 	return debugStrings[error];
@@ -404,31 +404,28 @@ BassAudio::BassAudio(void)
 	SampleBank = std::vector<HCHANNEL>();
 	initDebug();
 	BASS_Init(-1,44100,BASS_DEVICE_3D,GetActiveWindow(),NULL);
-	printf("Loading BASS-AUDIO: %s", _GetErrorString());
+	printf("Loading BASS-AUDIO: %s\n", _GetErrorString());
 	BASS_INFO *info = new BASS_INFO();
 	if( BASS_GetInfo(info))
 		printf("Detected DirectSound version: %i\n",info->dsver);
 	BASS_SetConfig(BASS_CONFIG_3DALGORITHM,BASS_3DALG_DEFAULT);
 	//std::cout<<_GetErrorString();
 	//HPLUGIN plgnBASSFX = BASS_PluginLoad("bass_fx.dll",BASS_UNICODE);
+	//std::cout<<_GetErrorString();
 	//HPLUGIN plgnBASSMIX = BASS_PluginLoad("bassmix.dll",BASS_UNICODE);
-	//HPLUGIN plgnBASSDS = BASS_PluginLoad("BASS_DSHOW.dll",NULL);
+	//std::cout<<_GetErrorString();
 	//HPLUGIN plgnBASSTAG = BASS_PluginLoad("tags.dll",BASS_UNICODE);
 	//std::cout<<_GetErrorString();
 	BASS_SetConfig(BASS_CONFIG_UPDATEPERIOD, AUDIO_BUFFERS_UPDATE_PERIOD);
 	printf("Set BufferUpdatePeriod to: %i\n",AUDIO_BUFFERS_UPDATE_PERIOD);
-//	std::cout<<_GetErrorString();
-//	BASS_SetConfig(BASS_CONFIG_SRC_SAMPLE,2);
-//	std::cout<<_GetErrorString();
 	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
-//	std::cout<<_GetErrorString();
-//	const BASS_PLUGININFO* bassMIXinfo = BASS_PluginGetInfo(plgnBASSMIX);
-//	std::cout<<_GetErrorString();
-//	const BASS_PLUGININFO* bassTAGSinfo = BASS_PluginGetInfo(plgnBASSTAG);
-//	std::cout<<_GetErrorString();
-//	const BASS_PLUGININFO* bassFXinfo = BASS_PluginGetInfo(plgnBASSFX);
-//	std::cout<<_GetErrorString();
-	
+	char stringBuffer[32];
+	itoa(BASS_Mixer_GetVersion(),&stringBuffer[0],16);
+	printf("Bass-Mixer-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
+	itoa(BASS_FX_GetVersion(),&stringBuffer[0],16);
+	printf("Bass-FX-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
+	itoa(TAGS_GetVersion(),&stringBuffer[0],16);
+	printf("Bass-Tags-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
 	_get3Dfactors(distance,rollOff,doppler);
 
 	for(Channel channel : _Channels)

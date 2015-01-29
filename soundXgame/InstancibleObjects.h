@@ -10,3 +10,5 @@
 #include "spectrumAnalyzer.h"
 #include "ScreenOverlay.h"
 #include "SkyBox.h"
+#include "ParticleSystem.h"
+#include "Musikubus.h"
