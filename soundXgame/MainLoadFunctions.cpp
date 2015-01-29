@@ -4,6 +4,7 @@
 
 #include "globalfunctions.h"
 
+using namespace ProjectMappe;
 
 void ProjectMappe::OnLoadContent(void)
 {
@@ -273,24 +274,33 @@ void ProjectMappe::OnLoadContent(void)
 }
 
 
-/* the Main-Updatecall */
-void ProjectMappe::UpdateCycle(void)
-{
-
-
+/* An Update-event handler */
+void 
+ProjectMappe::UpdateCycle(void)
+{ 
+	/*let UPTATE call every object signed in for update it's update-Functions.*/
 	UPDATE->DoTheUpdates();
-
-
+	
+	//  <<-- here is a good place for putting update-code when testing new classes or functions which need update.
+	//		 but don't implementing IUpdateble-Interface yet,... or for counting a counter..., or ... output to console the last updated values... 
 }
 
-/* the Draw Event Handler */
-void ProjectMappe::RenderCycle(void)
+/* A Draw Event Handler */
+void 
+ProjectMappe::RenderCycle(void)
 {
-
-
+	/*let SCENE draws all IDrawable objects contained..  */
 	SCENE->DrawAll();
 
+	//  <<-- need to manually draw some object 3D... do it here.
+
+
+
+	/*when all 3D-objects finished drawing to the Frame buffer, The GUI-Drawer will switch Matrices and View to 2D-mode,
+	 *and goes on drawing 2D-Overlays to the Frame, if there where some GUI-Object loaded...  */ 
 	GUI->DrawGUI();
 
-	
-}
+	// <<-- manually drawing 2D can be done here...
+
+
+}	//->when this function returns, Frame-buffers will swap and the Next frame will begin...  

@@ -12,6 +12,11 @@
 
 void ProjectMappe::OnIdle(void)
 {
+	if(SCENE->camera->NeedViewUpdate)
+	{
+		glutReshapeWindow(SCREENWIDTH+1,SCREENHEIGHT+1);
+		SCENE->camera->NeedViewUpdate=false;
+	}
 	glutPostRedisplay();
 }
 
@@ -24,14 +29,11 @@ void ProjectMappe::OnReshape(GLsizei size_x,GLsizei size_y)
 	SCENE->camera->Aspect((float)size_x/(float)size_y);
 }
 
+//Main Display-function called back by GL...
 void ProjectMappe::OnDisplay(void)
 {
-	if(SCENE->camera->NeedViewUpdate)
-	{
-		glutReshapeWindow(SCREENWIDTH+1,SCREENHEIGHT+1);
-		SCENE->camera->NeedViewUpdate=false;
-	}
 
+	//At first Invoke The OnUpdate
 	UpdateCycle();
 
 #ifdef LATE_BEFOR_DRAW
