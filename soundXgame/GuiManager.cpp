@@ -138,18 +138,16 @@ GuiManager::Element(GobID id)
 void _WriteText2D(const char * text, Vecti position,data32 color)		
 {
   unsigned short i=0;
-  glColor4f(color.byte[0]/255,color.byte[1]/255,color.byte[2]/255,color.byte[3]/255);
+  glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
   glRasterPos2i(position.ix, position.yps);
   while(text[i] != '\0') 
   { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
 }
 
 void
-GuiManager::Write(const char* Text,short X,short Y,unsigned Color)
+GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 {
-	data32 col;
-	col.u32 = Color;
-	writeOrders.Add(new WriteOrder(Text,X,Y,col));
+	writeOrders.Add(new WriteOrder(Text,X,Y,Color));
 }
 
 void

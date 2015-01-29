@@ -10,7 +10,8 @@ private:
 	std::vector<glm::vec2> uvs;
 	GLuint frameUVBuffers[4];
 	char btnState;
-	
+
+
 public:
 	static const char* States[];
 	enum ButtonState : char
@@ -24,7 +25,7 @@ public:
 	void SetClickerFunc(action);
 	action ClickAction;
 	virtual void draw(void);
-	virtual ProjectMappe::Rectangle GetArea(void);
+//	virtual ProjectMappe::Rectangle GetArea(void);
 
 };
 

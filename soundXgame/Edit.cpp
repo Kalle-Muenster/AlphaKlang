@@ -2,7 +2,7 @@
 #include "ButtonControl.h"
 #include "SliderX.h"
 #include "SceneGraph.h"
-#include "Cam.h"
+
 
 int
 Edit::ID = -1;

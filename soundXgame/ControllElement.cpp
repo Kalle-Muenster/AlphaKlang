@@ -3,7 +3,8 @@
 
 ControllElement::ControllElement(void)
 {
-
+	  Label[0]='\0';
+	  SetColor(255,255,0,255);
 }
 
 
@@ -31,9 +32,9 @@ ControllElement::GetArea(void)
 	Area.SetSize(vec);
 	vec = (Panel.GetPosition() + PositionOnPanel );
 	Area.SetPosition(vec);
-	left=Area.GetCenter().x-Area.GetHalbSize().x;
+	left=vec.x;
 	right=Area.GetCenter().x+Area.GetHalbSize().x;
-	top=Area.GetCenter().y-Area.GetHalbSize().y;
+	top=vec.y;
 	bottom=Area.GetCenter().y+Area.GetHalbSize().y;
 	return Area;
 }
@@ -47,4 +48,24 @@ ControllElement::isVisible(BOOL setter)
 		IsVisible = setter;
 
 	return IsVisible; 
+}
+
+char* 
+ControllElement::GetText(void)
+{
+	return &Label[0];
+}
+
+void
+ControllElement::SetText(char* label)
+{
+	short i = -1;
+	while((Label[++i]=label[i])!='\0' && (i<64));
+	Label[i]='\0';
+}
+
+unsigned int 
+ControllElement::GetElementID(void)
+{
+   return Connection()->GetID()+this->ConnectionID;
 }

@@ -12,6 +12,8 @@ class ControllElement :
 	public IDrawable
 {
 protected:
+
+	char Label[64];
 	Texture texture;
 	float left,right,top,bottom;
 	glm::vec3 verts[4];
@@ -28,6 +30,9 @@ public:
 	virtual ProjectMappe::Rectangle GetArea(void);
 	GLfloat angle;
 	virtual bool isVisible(BOOL=3);
+	unsigned int GetElementID(void);
+	void SetText(char*);
+	char* GetText(void);
 };
 
 #endif

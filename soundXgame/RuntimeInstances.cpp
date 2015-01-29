@@ -2,10 +2,10 @@
  *
  * Instances of all RuntimeManagers are stored and managed here.
  * and most other global variables and objects should move also
- * here too. It's "GlobalDistructor" function should be calld to
- * clean up the whole Aplication-environment whenn Exiting. 
- * these Runtimemannagement objects cam become quiet large, so
- * getting their ponters lost at Aplication-Exit or crash,is not
+ * here too. It's "GlobalDistructor" function should be called to
+ * clean up the whole Application-environment when Exiting. 
+ * these Runtime-management objects cam become quiet large, so
+ * getting their pointers lost at Application-Exit or crash,is not
  * good...
  */
 
@@ -21,7 +21,7 @@ UpdateManager*		_updateManagerInstance;
 GuiManager*			_guimanagerInstance;
 ObjectManagement*	_objectManagerInstance;
 
-//A data-array wich can be used as framebuffer-memory for aplying image-efects to the screen.. 
+//A data-array which can be used as frame buffer-memory for applying image-effects to the screen.. 
 //data32 screenBuffer[1920*1080];
 
 void 
@@ -39,13 +39,21 @@ void
 ProjectMappe::StartupRuntimeManagers(void)
 {
 	printf("Initiating Engine...\n");
-	printf(".... %s instanciated !\n",UpdateManager::start());
-	printf(".... %s instanciated !\n",InputManager::start());
-	printf(".... %s instanciated !\n",BassAudio::start());
-	printf(".... %s instanciated !\n",SceneGraph::start());
-	printf(".... %s instanciated !\n",GuiManager::start());
-	printf(".... %s instanciated !\n",ObjectManagement::start());
+	printf(".... %s instantiated !\n",UpdateManager::start());
+	printf(".... %s instantiated !\n",InputManager::start());
+	printf(".... %s instantiated !\n",BassAudio::start());
+	printf(".... %s instantiated !\n",SceneGraph::start());
+	printf(".... %s instantiated !\n",GuiManager::start());
+	printf(".... %s instantiated !\n",ObjectManagement::start());
 	printf("Done ! \n\n");
+}
+
+bool _terminate=false;
+bool ProjectMappe::EXIT(BOOL exit)
+{
+	if(exit<3)
+		_terminate = exit;
+	return _terminate;
 }
 
 //-------------------------------------------

@@ -420,11 +420,11 @@ BassAudio::BassAudio(void)
 	printf("Set BufferUpdatePeriod to: %i\n",AUDIO_BUFFERS_UPDATE_PERIOD);
 	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
 	char stringBuffer[32];
-	itoa(BASS_Mixer_GetVersion(),&stringBuffer[0],16);
+	_itoa(BASS_Mixer_GetVersion(),&stringBuffer[0],16);
 	printf("Bass-Mixer-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
-	itoa(BASS_FX_GetVersion(),&stringBuffer[0],16);
+	_itoa(BASS_FX_GetVersion(),&stringBuffer[0],16);
 	printf("Bass-FX-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
-	itoa(TAGS_GetVersion(),&stringBuffer[0],16);
+	_itoa(TAGS_GetVersion(),&stringBuffer[0],16);
 	printf("Bass-Tags-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
 	_get3Dfactors(distance,rollOff,doppler);
 

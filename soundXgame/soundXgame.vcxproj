@@ -168,7 +168,11 @@
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
+    <ClCompile Include="InputFunctions.cpp" />
     <ClCompile Include="Listener.cpp" />
+    <ClCompile Include="MainDisplayFunctions.cpp" />
+    <ClCompile Include="MainInitiations.cpp" />
+    <ClCompile Include="MainLoadFunctions.cpp" />
     <ClCompile Include="MusicListener.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="DataStructs.cpp" />
@@ -212,6 +216,7 @@
     <ClInclude Include="BassAudio.h" />
     <ClInclude Include="ButtonControl.h" />
     <ClInclude Include="Cam.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraModesIncluder.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Combiner.h" />
@@ -224,6 +229,7 @@
     <ClInclude Include="FollowTarget.h" />
     <ClInclude Include="Fountain.h" />
     <ClInclude Include="FountainObject.h" />
+    <ClInclude Include="globalfunctions.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="IGObject.h" />
@@ -386,6 +392,7 @@
     <Image Include="kubismus.png" />
     <Image Include="Modus Grau_512x512.png" />
     <Image Include="Modus Grau_64x64.png" />
+    <Image Include="panelT_256x512.png" />
     <Image Include="panel_256x512.png" />
     <Image Include="particle1_128x128.png" />
     <Image Include="particle2_128x128.png" />

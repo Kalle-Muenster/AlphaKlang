@@ -256,11 +256,11 @@ SliderX::_DrawBar(float position)
 
 
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
-	glVertexPointer(3, GL_FLOAT, 0, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+	//glVertexPointer(3, GL_FLOAT, 0, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[DimensionsSwitched?1:0]);
-	glTexCoordPointer(2, GL_FLOAT, 0, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[DimensionsSwitched?1:0]);
+	//glTexCoordPointer(2, GL_FLOAT, 0, 0);
 	glPushMatrix();
 	{
 		// Translation:

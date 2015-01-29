@@ -8,7 +8,7 @@ ButtonControl::States[] = {"DISABLED","NORMAL","HOVER","PRESSED"};
 ButtonControl::ButtonControl(void)
 {
 	btnState = ButtonState::NORMAL;
-
+	SetColor(255,255,0,255);
 
     texture.w = 64;
     texture.h = 64;
@@ -80,7 +80,8 @@ ButtonControl::DoEarly(void)
 	else
 		SetState(NORMAL);
 
-//	GuiManager::getInstance()->Write(States[btnState],10,160);
+	if(Label[0]!='\0')
+		GUI->Write(&Label[0],left+Area.GetHalbSize().x/2,bottom-Area.GetHalbSize().y/2,color);
 }
 
 	bool ButtonControl::Initialize(void)
@@ -104,22 +105,22 @@ ButtonControl::DoEarly(void)
 		return true;
 	}
 
-	ProjectMappe::Rectangle
-	ButtonControl::GetArea(void)
-	{
+	//ProjectMappe::Rectangle
+	//ButtonControl::GetArea(void)
+	//{
 
-		VectorF	vec = Panel.GetSize();
-		vec.x *= SizeScaledPanel.x;
-		vec.y = vec.x/4;
-		Area.SetSize(vec);
-		vec = (Panel.GetPosition() + PositionOnPanel )-Area.GetHalbSize();
-		Area.SetPosition(vec);
-		left=Area.GetCenter().x-Area.GetHalbSize().x;
-		right=Area.GetCenter().x+Area.GetHalbSize().x;
-		top=Area.GetCenter().y-Area.GetHalbSize().y;
-		bottom=Area.GetCenter().y+Area.GetHalbSize().y;
-		return Area;
-	}
+	//	VectorF	vec = Panel.GetSize();
+	//	vec.x *= SizeScaledPanel.x;
+	//	vec.y = vec.x/4;
+	//	Area.SetSize(vec);
+	//	vec = (Panel.GetPosition() + PositionOnPanel );
+	//	Area.SetPosition(vec);
+	//	left=vec.x;
+	//	right=Area.GetCenter().x+Area.GetHalbSize().x;
+	//	top=vec.y;
+	//	bottom=Area.GetCenter().y+Area.GetHalbSize().y;
+	//	return Area;
+	//}
 
 	ButtonControl::ButtonState 
 	ButtonControl::GetState(void)
@@ -146,7 +147,7 @@ ButtonControl::DoEarly(void)
 		ClickAction = clicFunc;
 	}
 
-	char tempstring[32];
+
 
 	void ButtonControl::draw(void)
 	{
@@ -174,7 +175,7 @@ ButtonControl::DoEarly(void)
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF values = Panel.GetPosition() + PositionOnPanel;
+		VectorF values = GetArea().GetCenter();
 
 		glTranslatef(values.x, values.y, 0);
 
@@ -182,7 +183,7 @@ ButtonControl::DoEarly(void)
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 
 		// Scaling:
-		values = GetArea().GetSize();
+		values = Area.GetSize();
 		glScalef(values.x,values.y,0);
 		
 		// Draw
@@ -190,6 +191,9 @@ ButtonControl::DoEarly(void)
 	}
 	glPopMatrix();
 
+
+
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_TEXTURE_2D);
+
 	}

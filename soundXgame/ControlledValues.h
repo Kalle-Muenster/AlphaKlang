@@ -277,15 +277,15 @@ public:
 };
 
 //überflüssig, kommt weg...
-class ControlledFloat : public Controlled<float>
-{
-protected:
-	virtual float checkValue(unsigned short mode);
-public:
-	ControlledFloat(void);
-	virtual ~ControlledFloat(void);
-	virtual ControlledFloat* SetUp(Controlled<float>::ControllMode mode,float initial);
-	virtual ControlledFloat* SetUp(float min,float max,float move,float initial,Controlled<float>::ControllMode mode);
-};
+//class ControlledFloat : public Controlled<float>
+//{
+//protected:
+//	virtual float checkValue(unsigned short mode);
+//public:
+//	ControlledFloat(void);
+//	virtual ~ControlledFloat(void);
+//	virtual ControlledFloat* SetUp(Controlled<float>::ControllMode mode,float initial);
+//	virtual ControlledFloat* SetUp(float min,float max,float move,float initial,Controlled<float>::ControllMode mode);
+//};
 
 #endif

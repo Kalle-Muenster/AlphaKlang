@@ -162,6 +162,10 @@
     <ClCompile Include="Combiner.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="InputFunctions.cpp" />
+    <ClCompile Include="MainInitiations.cpp" />
+    <ClCompile Include="MainDisplayFunctions.cpp" />
+    <ClCompile Include="MainLoadFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -345,6 +349,8 @@
     <ClInclude Include="Combiner.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="globalfunctions.h" />
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -611,6 +617,9 @@
       <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
     <Image Include="panel_256x512.png">
+      <Filter>Resources\Textures\ControlEllements</Filter>
+    </Image>
+    <Image Include="panelT_256x512.png">
       <Filter>Resources\Textures\ControlEllements</Filter>
     </Image>
   </ItemGroup>

@@ -62,7 +62,7 @@ public:
 	IObjection<IConnectable>* Element(string name);
 	IObjection<IConnectable>* Element(GobID id);
 	void DrawGUI(void);
-	void Write(const char*,short,short,unsigned=0xffffffff);
+	void Write(const char*,short,short,data32);
 	
 };
 
