@@ -1,5 +1,4 @@
 # debug folder
-#soundXgame/[Dd]ebug/
 Debug/soundXgame.*
 x64/Debug/soundXgame.*
 soundXgame/[Dd]ebug/*
@@ -11,13 +10,13 @@ soundXgame/x64/[Dd]ebug/*
 *.sln.docstates
 soundXgame.sdf
 soundXgame.opensdf
-*.cd
 
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
 
 # Folder config file
+Desktop.ini
 Desktop.ini
 
 # Recycle Bin used on file shares
