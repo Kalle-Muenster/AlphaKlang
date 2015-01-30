@@ -436,16 +436,11 @@ protected:
 
 	action ConnectionAction;
 public:
-		IConXtor(void)
-		{
-			_idLocked=false;
-			SetID(EMPTY);
-			connection = (IObjection<IConXtor>*)this;
-		}
+		IConXtor(void);
 		virtual ~IConXtor(void);
 	GobID GetID(void);
-	const char* GetName(void);
-	void SetName(const char*);
+	char* GetName(void);
+	void SetName(char*);
 	virtual bool Initialize(void);
 	bool AddToSceneAndLockID(void);
 	unsigned SetID(unsigned);

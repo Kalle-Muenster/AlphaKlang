@@ -18,7 +18,7 @@ ITransform::ITransform(void)
 	physics.depth = 1;
 	physics.thickness = 0.5;
 	physics.speed = Controlled<float>();
-	physics.speed.SetUp(-1,1,0,0.005,physics.speed.Cycle);
+//	physics.speed.SetUp(-1,1,0,0.005,physics.speed.Cycle);
 	physics.speed.Mode(physics.speed.Cycle);
 	physics.mass = Controlled<float>();
 	physics.mass.SetUserMode<Calculator<float,3>>(-1000,1000,0.5f,0);

@@ -166,6 +166,10 @@
     <ClCompile Include="MainInitiations.cpp" />
     <ClCompile Include="MainDisplayFunctions.cpp" />
     <ClCompile Include="MainLoadFunctions.cpp" />
+    <ClCompile Include="IPrimitive.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Kubus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -351,6 +355,10 @@
     </ClInclude>
     <ClInclude Include="globalfunctions.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="IPrimitive.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Kubus.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -595,9 +603,6 @@
     <Image Include="particle3_128x128.png">
       <Filter>Resources\Textures\Particles</Filter>
     </Image>
-    <Image Include="Deckelblech-2.png">
-      <Filter>Resources\Textures\Bleche</Filter>
-    </Image>
     <Image Include="Deckelblech-2s.png">
       <Filter>Resources\Textures\Bleche</Filter>
     </Image>
@@ -621,6 +626,9 @@
     </Image>
     <Image Include="panelT_256x512.png">
       <Filter>Resources\Textures\ControlEllements</Filter>
+    </Image>
+    <Image Include="Deckelblech2_256x256.png">
+      <Filter>Resources\Textures\Bleche</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

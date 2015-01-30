@@ -156,10 +156,18 @@ cTransform::Initialize(void)
 
 
 
-  IConXtor::~IConXtor()
-  {
 
-  }
+IConXtor::IConXtor(void)
+{
+	_idLocked=false;
+	SetID(EMPTY);
+	connection = (IObjection<IConXtor>*)this;
+}
+
+ IConXtor::~IConXtor()
+ {
+
+ }
 
 bool
 IConXtor::Initialize(void)
@@ -175,18 +183,18 @@ IConXtor::AddToSceneAndLockID(void)
 	return _idLocked;
 }
 
-const char* 
+char* 
 IConXtor::GetName(void)
 	{
-		 return &this->Name[0];
+		 return &Name[0];
 	}
 
 void 
-IConXtor::SetName(const char* name)
+IConXtor::SetName(char* name)
 	{
-		this->Name[63]='\0';
+		Name[63]='\0';
 		char i = 0;
-		do this->Name[i] = name[i];
+		do Name[i] = name[i];
 		while( (++i<63) && (Name[i-1]!='\0') );
 	}
 

@@ -5,6 +5,8 @@
 
 #include "GuiManager.h"
 
+#define SCENE SceneGraph::getInstance()
+
 typedef unsigned int GobID;
 typedef char* string;
 
@@ -27,7 +29,8 @@ public:
 	void DrawAll(void);
 	void DrawSky(void);
 	void DrawGUI(void);
-	//Activate Colorflashing Sky drawer !...
+
+	//Activate Color-flashing Sky drawer !...
 	bool SkyFlasherActive;
 
 	//Add's an object to the scene and generate a new ID that will be returned... 
@@ -35,7 +38,7 @@ public:
 
 
 
-	// removes an object from the scene, but does not distroy it.
+	// removes an object from the scene, but does not destroy it.
 	// use "Destruct(IGObject*)" to delete an object permanently...
 	void Remove(IDrawable* object);
 

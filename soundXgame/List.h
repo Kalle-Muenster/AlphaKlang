@@ -1,3 +1,16 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
+| file: list.h                         |
+| class: List					       |
+| description: 
+|		list-type. Elements	|
+|		can be Added and removed.      |
+|	    it is very fast at iterating,  |
+|		through but a little slow at   |
+|		adding or searching ellements  |
+|		by name. it provides Foreach-Mode
+|
+\~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 #ifndef _LUECKLIST_H_
 #define _LUECKLIST_H_
 

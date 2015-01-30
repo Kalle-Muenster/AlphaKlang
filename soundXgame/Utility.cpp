@@ -2,6 +2,7 @@
 #include "projectGrafics.h"
 #include "Utility.h"
 
+
 Vector3	
 Utility::GlobalX = Vector3(1,0,0);
 
@@ -10,6 +11,7 @@ Utility::GlobalY = Vector3(0,1,0);
 
 Vector3	
 Utility::GlobalZ = Vector3(0,0,-1);
+
 
 
 void _rotate90(float partOf90,float & a,float &b)
@@ -376,16 +378,54 @@ Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::v
 }
 
 
+std::vector<Texture*> _loadedtTextures;
+std::vector<char*> _textureNames;
+
 GLuint
 Utility::loadTexture(const char* filename)
 {
+	if(!_loadedtTextures.size())
+	{	
+		try
+		{
+			glload::LoadTest loadTest = glload::LoadFunctions();
+			_textureNames = std::vector<char*>();
+			_loadedtTextures = std::vector<Texture*>();
+			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
+			_loadedtTextures.push_back(new Texture());
+			char temp[64];
+			sprintf(&temp[0],"%s","hallo computer");
+			_textureNames.push_back(temp);
+			_loadedtTextures.at(0)->ID=glimg::CreateTexture(pImageSet.get(), 0);
+			sprintf(_textureNames.at(0),"%s",filename);
+			return _loadedtTextures[0]->ID;
+		}
+		catch(glimg::loaders::stb::StbLoaderException &e)
+		{
+			std::cerr << "Failed loading file";
+		}
+		catch(glimg::TextureGenerationException &e)
+		{
+			std::cerr << "Texture creation failed";
+		}
 
+	}
+	else
+	{
+
+	
+	int i = -1;
+	while(++i<_textureNames.size() && !Utility::StringCompareIterative(_textureNames.at(i),filename));
+	if(i==_loadedtTextures.size())
+	{
 	glload::LoadTest loadTest = glload::LoadFunctions();
 
 	try
 	{
 		std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
-		return glimg::CreateTexture(pImageSet.get(), 0);
+		_loadedtTextures.push_back(new Texture());
+		_loadedtTextures[i]->ID = glimg::CreateTexture(pImageSet.get(), 0);
+		sprintf(&_textureNames.at(0)[0],"%s",filename);
 	}
 	catch(glimg::loaders::stb::StbLoaderException &e)
 	{
@@ -395,8 +435,11 @@ Utility::loadTexture(const char* filename)
 	{
 		std::cerr << "Texture creation failed";
 	}
-
-	return 0;
+	}
+	return _loadedtTextures[i]->ID;
+	}
+	
+	
 }
 
 void 
@@ -468,8 +511,8 @@ Utility::GetScalevectorByAspect(int width,int height,float zDepth)
 	return result;
 }
 
-// recursive string comperation... returns -1 if strings are equal, 
-// else returns the number of character at wich they where different.
+// recursive string cooperation... returns -1 if strings are equal, 
+// else returns the number of character at which they where different.
 int
 _cmprStrngsRec(const char* A,const char* B,int position)
 {
@@ -481,7 +524,7 @@ _cmprStrngsRec(const char* A,const char* B,int position)
 		return position;
 }
 
-//Compare 2 strings case sensetive by iteration..
+//Compare 2 strings case sensitive by iteration..
 bool
 _compareStrings(const char* A,const char* B)
 {

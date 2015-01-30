@@ -21,7 +21,17 @@ struct Texture
 	short w,h;
 	GLint format;
 	void* pData;
+
 	void Loade(string fileName,short Width,short Height,Format textureFormat = Texture::Format::BGRA);
+	Texture operator =(Texture setter)
+	{
+		ID = setter.ID;
+		h=setter.h;
+		w=setter.w;
+		format = setter.format;
+		pData = setter.pData;
+		return *this;
+	}
 };
 
 template<const int NUMBER_OF_FRAMES>  

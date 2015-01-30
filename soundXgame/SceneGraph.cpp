@@ -142,12 +142,12 @@ SceneGraph::Object(char* name)
 {
 	//check's the name case-sensitive...
 	for(GobID ID = drawables.First(); ID <= drawables.Last(); ID = drawables.Next(ID))
-		if(Utility::StringCompareRecursive(name,((IGObject*)drawables[ID])->GetName())>64)
-				return (IObjection<IConnectable>*)drawables[ID];
+		if(Utility::StringCompareRecursive(name,((IObjection<IConXtor>*)drawables[ID])->GetName())>64)
+				return(IObjection<IConnectable>*)drawables[ID];
 
 	//if "Name" not found,check's case-insensitive...
 	for(GobID ID = drawables.First(); ID <= drawables.Last(); ID = drawables.Next(ID))
-		if(_stricmp(((IGObject*)drawables[ID])->GetName(),name)==0)
+		if(_stricmp(((IObjection<IConXtor>*)drawables[ID])->GetName(),name)==0)
 				return (IObjection<IConnectable>*)drawables[ID];
 
 	//if "Name" not found...

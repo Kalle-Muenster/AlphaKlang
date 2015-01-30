@@ -169,6 +169,8 @@
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="InputFunctions.cpp" />
+    <ClCompile Include="IPrimitive.cpp" />
+    <ClCompile Include="Kubus.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="MainDisplayFunctions.cpp" />
     <ClCompile Include="MainInitiations.cpp" />
@@ -234,6 +236,8 @@
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
+    <ClInclude Include="IPrimitive.h" />
+    <ClInclude Include="Kubus.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="MusicController.h" />
     <ClInclude Include="MusicInteractor.h" />
@@ -379,7 +383,7 @@
     <Image Include="button_64x64.png" />
     <Image Include="codefreaks_black.jpg" />
     <Image Include="CubusX_256.bmp" />
-    <Image Include="Deckelblech-2.png" />
+    <Image Include="Deckelblech2_256x256.png" />
     <Image Include="Deckelblech-2s.png" />
     <Image Include="Deckelblech128-1.png" />
     <Image Include="Deckelblech_128x128.png" />

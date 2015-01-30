@@ -10,8 +10,9 @@
  */
 
 
-
+#include "IPrimitive.h"
 #include "projectMacros.h"
+
 
 
 InputManager*		_inputManagerInstance;
@@ -21,8 +22,7 @@ UpdateManager*		_updateManagerInstance;
 GuiManager*			_guimanagerInstance;
 ObjectManagement*	_objectManagerInstance;
 
-//A data-array which can be used as frame buffer-memory for applying image-effects to the screen.. 
-//data32 screenBuffer[1920*1080];
+
 
 void 
 ProjectMappe::GlobalDestructor(void)
@@ -45,8 +45,19 @@ ProjectMappe::StartupRuntimeManagers(void)
 	printf(".... %s instantiated !\n",SceneGraph::start());
 	printf(".... %s instantiated !\n",GuiManager::start());
 	printf(".... %s instantiated !\n",ObjectManagement::start());
+	
+	printf(".... loading Primitives !\n");
+	InitFlatQuat();
+	InitICubic();
+	InitIBall();
+	InitZylinder();
+	InitIspheree();
+	
+
 	printf("Done ! \n\n");
 }
+
+
 
 bool _terminate=false;
 bool ProjectMappe::EXIT(BOOL exit)

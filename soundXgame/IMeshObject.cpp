@@ -119,7 +119,8 @@ IMeshObject::GetTexture(void)
 void 
 IMeshObject::SetTexture(Texture* tex)
 {
-	 texture = *tex;
+	 texture = Texture(*tex);
+
 }
 
 Vector3

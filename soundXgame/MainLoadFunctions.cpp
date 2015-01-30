@@ -71,7 +71,6 @@ void ProjectMappe::OnLoadContent(void)
 //	SCENE->Object("plane_front")->AddConnectable<MusicVox>()->sensitivity = 200;
 
 
-	
 
    /*
 
@@ -225,7 +224,12 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->IsVisible=true;
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
 	}
-	   
+	  
+	//new Kubus();
+	//GobID temp = SCENE->Object("last created")->GetID();
+	//SCENE->Object(temp)->GetConnected<ICubeXtor>()->texture.Loade("Deckelblech2_256x256.png",256,256,Texture::Format::RGBA);
+	//SCENE->Object(temp)->isVisible(true);
+	//SCENE->Object(temp)->move(10,10,10);
 
 	// Spectrum Analyzer
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
