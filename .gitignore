@@ -1,6 +1,11 @@
-# Custom added
+# debug folder
+#soundXgame/[Dd]ebug/
 Debug/soundXgame.*
-soundXgame/[Dd]ebug/
+x64/Debug/soundXgame.*
+soundXgame/[Dd]ebug/*
+soundXgame/x64/[Dd]ebug/*
+
+# visual studio
 *.suo
 *.user
 *.sln.docstates
@@ -24,19 +29,14 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# =========================
-# Operating System Files
-# =========================
-
 # OSX
-# =========================
-
 .DS_Store
 .AppleDouble
 .LSOverride
 
 # Icon must end with two \r
 Icon
+
 # Thumbnails
 ._*
 
@@ -51,9 +51,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 # VisualStudio Komisches sql-dings-file....
 soundXgame.sdf
-
-# everything in the debug-folder...
-soundXgame/Debug/*
