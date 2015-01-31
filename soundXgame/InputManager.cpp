@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include "DataStructs.h"
+#include "projectMacros.h"
 
 DWORD _timerTicks;
 DWORD _lastTicks;
@@ -7,7 +8,7 @@ DWORD _frameTicks;
 DWORD _clicktimer;
 DWORD _doubleClickLength;
 int _fps;
-float _Viewport[]={0,0,800,600};
+float _Viewport[]={0,0,SCREENWIDTH_STARTUP,SCREENHEIGHT_STARTUP};
 Vector3 _ViewPortNormalizedMouseCoordinates;
 bool _buttonChange[16];
 bool _axisChange[16];

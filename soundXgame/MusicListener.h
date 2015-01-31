@@ -55,12 +55,12 @@ public:
 
 	MusicListener(void);
 	virtual ~MusicListener(void);
-	ListenerData* GetLineData(int);
+	ListenerData* GetLineData(int number);
 	float motivator[NUMBER_OF_LISTENINGLINES];
-	void SetThreshold(int,float);
-	void SetClambt(int,bool);
-	void SetClambt(int,float,float);
-	bool Enabled(int,BOOL=3);
+	void SetThreshold(int line,float value);
+	void SetClambt(int line,bool clamb);
+	void SetClambt(int line,float min,float max);
+	bool Enabled(int lineNumber,BOOL=3);
 	void SetLineBounds(int line,int lower,int upper,int width);
 	float sensitivity;
 	virtual void DoEarly(void);

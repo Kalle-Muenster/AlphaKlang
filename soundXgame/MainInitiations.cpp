@@ -28,7 +28,7 @@ ProjectMappe::InitGlut(void)
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowSize(SCREENWIDTH,SCREENHEIGHT);
-	_wnd = glutCreateWindow("-soundXgame-");
+	_wnd = glutCreateWindow("AlphaKlang - achived with Step One Framework - (c) by Kalle Münster and Dario D. Müller");
 //	ProjectMappe::font = GLUT_BITMAP_HELVETICA_18;
 
 	glutDisplayFunc(OnDisplay);

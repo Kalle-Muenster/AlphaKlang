@@ -2,7 +2,6 @@
 #include "projectMacros.h"
 #include "MusicController.h"
 
-
 Ground* instance;
 
 Ground* Ground::getInstance()
@@ -11,7 +10,6 @@ Ground* Ground::getInstance()
 		instance = new Ground();
 	return instance;
 }
-
   
 Ground::Ground(void) :
 	count_x(40),
@@ -32,8 +30,7 @@ Ground::Ground(void) :
 	// states
 	drawPlanes(true), 
 	drawLines(true),
-	coloredTiles(false),
-	dynamicToTop(true)
+	coloredTiles(false)
 {
 	// individuell vars
 	depth = width * -1;
@@ -52,18 +49,6 @@ Ground::Ground(void) :
 						    00 ,    0 ,    5 ,   25 ,   70 
 						};
 
-	// Base Height Map
-	/*int Tmp[10][10]	=	{  100 ,    0 ,  100 ,   40 ,  100 ,    0 ,  100 ,   40 ,  100,  100  ,
-						    70 ,   20 ,   50 ,   10 ,   30 ,   20 ,   50 ,   10 ,   30,   30  ,
-						    20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  ,
-						     0 ,   25 ,   35 ,    0 ,   40 ,   25 ,   35 ,    0 ,   40,   40  ,
-						    65 ,   40 ,   85 ,   35 ,  100 ,   40 ,   85 ,   35 ,  100,  100  ,
-							70 ,   20 ,   50 ,   10 ,   30 ,   20 ,   50 ,   10 ,   30,   30  ,
-							20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  ,
-							 0 ,   25 ,   35 ,    0 ,   40 ,   25 ,   35 ,    0 ,   40,   40  ,
-							65 ,   40 ,   85 ,   35 ,  100 ,   40 ,   85 ,   35 ,  100,  100  ,
-							20 ,    0 ,   30 ,   40 ,   80 ,    0 ,   30 ,   40 ,   80,   80  
-						};*/
 	for (int i = 0; i < 5; i++)
 	{
 		configMap[i] = new int [10];
@@ -72,11 +57,6 @@ Ground::Ground(void) :
 		configMap[i][2] = Tmp[i][2];
 		configMap[i][3] = Tmp[i][3];
 		configMap[i][4] = Tmp[i][4];
-		/*configMap[i][5] = Tmp[i][5];
-		configMap[i][6] = Tmp[i][6];
-		configMap[i][7] = Tmp[i][7];
-		configMap[i][8] = Tmp[i][8];
-		configMap[i][9] = Tmp[i][9];*/
 	}
 	heightMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
@@ -85,7 +65,6 @@ Ground::Ground(void) :
 	}
 
 	// Dynamic Height Map
-	
 	int Tmp2[9][9]	=	{  100 ,  100 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
 						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
@@ -96,27 +75,9 @@ Ground::Ground(void) :
 						    30 ,   30 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,  100  ,
 						    20 ,   30 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 
 						};
-	/*
-	int Tmp2[16][16] =	{  100 ,   90 ,   60 ,   80 ,  100 ,   40 ,   80 ,  100 ,   50 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
-						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
-						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
-						    20 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
-						    40 ,   10 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50  ,
-						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70  ,
-						    50 ,   10 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90  ,
-						    30 ,   30 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,   10 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,  100  ,
-						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
-						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
-						    20 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
-						    40 ,   10 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50  ,
-						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70  ,
-						    50 ,   10 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90  ,
-						    30 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,   10 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
-						    20 ,   30 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 
-						};*/
 	for (int i = 0; i < 9; i++)
 	{
-		dynamicConfigMap[i] = new int [16];
+		dynamicConfigMap[i] = new int [9];
 		dynamicConfigMap[i][0] = Tmp2[i][0];
 		dynamicConfigMap[i][1] = Tmp2[i][1];
 		dynamicConfigMap[i][2] = Tmp2[i][2];
@@ -126,13 +87,6 @@ Ground::Ground(void) :
 		dynamicConfigMap[i][6] = Tmp2[i][6];
 		dynamicConfigMap[i][7] = Tmp2[i][7];
 		dynamicConfigMap[i][8] = Tmp2[i][8];
-		/*dynamicConfigMap[i][9] = Tmp2[i][9];
-		dynamicConfigMap[i][10] = Tmp2[i][10];
-		dynamicConfigMap[i][11] = Tmp2[i][11];
-		dynamicConfigMap[i][12] = Tmp2[i][12];
-		dynamicConfigMap[i][13] = Tmp2[i][13];
-		dynamicConfigMap[i][14] = Tmp2[i][14];
-		dynamicConfigMap[i][15] = Tmp2[i][15];*/
 	}
 	dynamicMap = new int* [count_z+1];
 	for (int i = 0; i < count_z+1; i++)
@@ -148,21 +102,20 @@ Ground::Ground(void) :
 	valueList[0] = &heightVal;
 	valueList[1] = &dynamicVal;
 	
-
-	// initize map once
+	// initialize map once
 	heightMap = CalculateMap(heightMap, configMap, sizeof(configMap) / sizeof(configMap[0]));
 	dynamicMap = CalculateMap(dynamicMap, dynamicConfigMap, sizeof(dynamicConfigMap) / sizeof(dynamicConfigMap[0]));
 
+	// initialize music listener options
 	this->AddConnectable<MusicController>();
-	//->SetLineBounds(0, 100, 128, 14);
-	//this->GetConnected<MusicController>()->SetClambt(0, 0, 100);
-
+	this->GetConnected<MusicController>()->SetLineBounds(0, 10, 38, 14);
+	this->GetConnected<MusicController>()->SetClambt(0, 0, 100);
+	this->GetConnected<MusicController>()->SetThreshold(0, 0.01f);
 
 }
 
 Ground::~Ground(void)
 {
-	
 //	delete[] configMap;
 	delete[] heightMap;
 //	delete[] dynamicConfigMap;
@@ -403,29 +356,13 @@ void Ground::draw(void)
 
 void Ground::Update(void)
 {
-	float line0 = 1;
-	if(this->HasConnected<MusicController>())
-		line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
+	//float line0 = 0;
+	//if(this->HasConnected<MusicController>())
+	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
 	//std::cout << line0 << std::endl;
 
 	dynamicVal = line0 * 10;
-
-	//float speed = 35.0f * (float)INPUT->FrameTime;
-	//float speed = 0;
-	/*if(dynamicToTop)
-		dynamicVal += speed;
-	else
-		dynamicVal -= speed;
-	if(dynamicVal >= 100)
-	{
-		dynamicVal = 100;
-		dynamicToTop = false;
-	}
-	else if(dynamicVal <= 0)
-	{
-		dynamicVal = 0;
-		dynamicToTop = true;
-	}*/
+	*valueList[1] = dynamicVal;
 
 	// Update First Person Camera
 	Cam* cam = SceneGraph::getInstance()->camera;
@@ -496,7 +433,7 @@ float Ground::GetGroundY(float posX, float posZ)
 		line12 -= normalized;
 		float heightX = ((line34 - line12) * restZ + normalized);
 
-	//float posDynY1 += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
+		//float posDynY1 += (float)dynamicMap[count_z - indexZ][indexX] / 100 * dynamicRange / 100 * dynamicVal;
 		posY += point1;
 		posY += heightX;
 	}

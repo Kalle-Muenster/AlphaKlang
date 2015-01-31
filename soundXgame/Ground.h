@@ -39,7 +39,6 @@ private:
 	bool drawPlanes;
 	bool drawLines;
 	bool coloredTiles;
-	bool dynamicToTop;
 	float heightVal;
 	float dynamicVal;
 
