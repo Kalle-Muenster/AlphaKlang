@@ -45,7 +45,7 @@ protected:
 	{
 		switch(mode)
 		{
-		// OFF - value will be let how it is..
+		// OFF - value will be let as it is..
 		case 0:	
 			return *_Value;
 
@@ -100,7 +100,7 @@ protected:
 
 		// USERMODE - implement whatever you able thinking about and attach it to the controller...
 		default:
-			if(mode == UserMode->ID)
+			if(UserMode!=NULL)
 				return UserMode->checkVALUE(_Value);
 		}	
 		return *_Value;
@@ -143,6 +143,7 @@ public:
 		UserMode = NULL;
 	}
 
+	//Destructor...
 	virtual ~Controlled(void)
 	{
 		if(UserMode!=NULL)
@@ -150,15 +151,18 @@ public:
 		delete _Value;
 	}
 
-	
+	//Set MIN and reset the value itself to the new given MIN. 
 	void SetMIN(ctrlType val)
 	{
 		*_Value = MIN = val;
 	}
+	//Set MAX and reset the value to MAX.
 	void SetMAX(ctrlType val)
 	{
 		*_Value = MAX = val;
 	}
+
+	//Set MOVE and set the Controller Active !
 	void SetMOVE(ctrlType val)
 	{
 		MOVE = val;

@@ -1,6 +1,5 @@
 #include <iostream>
 #include "projectMacros.h"
-//#include "DataStructs.h"
 #include "Utility.h"
 #include "Connectable.h"
 #include "IGObject.h"
@@ -10,8 +9,6 @@
 
 static unsigned objIDs = 99;
 std::vector<GobID> usedIDs = std::vector<GobID>();
-
-
 
 bool
 _IDIsFree(GobID id)
@@ -24,11 +21,7 @@ _IDIsFree(GobID id)
 
 IGObject::IGObject(void)
 {
-	
-	
 	IsVisible=true;
-//	this->_idIsLocked=false;
-//	this->ID=NULL;
 	conXtor = new IConXtor();
 	conXtor->SetConnection(this);
 	GroundValue = 0;
@@ -48,16 +41,6 @@ IGObject::SetID(GobID id)
 		return true;
 	else
 		return false;
-
-	//if(this->_idIsLocked==false)
-	//{
-	//	this->ID = id;
-	//	itoa(this->ID,&this->Name[0],10);
-	//	usedIDs.push_back(id);
-	////	return this->_idIsSet=true;
-	//}
-	//else
-	//	return false;
 }
 
 unsigned
@@ -67,19 +50,6 @@ IGObject::LockID(void)
 		return conXtor->GetID();
 	else 
 		return EMPTY;
-
-	//if(!this->_idIsLocked)
-	//{
-	//	if(this->ID==NULL)
-	//	{
-	//		while(!_IDIsFree(++objIDs));
-	//		this->ID = objIDs;
-	//		usedIDs.push_back(this->ID);
-	//		itoa(this->ID,&this->Name[0],10);
-	//	}
-	//this->_idIsLocked=true;
-	//}
-	//return this->ID;
 }
 
 void

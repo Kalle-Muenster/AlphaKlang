@@ -18,15 +18,15 @@ SpectrumAnalyzer::Initialize(void)
 	color.byte[0]=60;
 
 	// Setting up an offset-vector 
-	// (will be addet to each Subobject's vertices)  
-	Vector3 offset = this->getTransform()->position;
+	// (will be added to each Sub-object's vertices's)  
+	Vector3 offset = getTransform()->position;
 	offset.y += 0.5;
 	float X = offset.x;
 	X-=(SPECTRUM_SIZE*0.5);
 	
-	// Instanciate as many Cubes as there are frequency-bands 
-	// in the used fft-window... for each, increase its possition-offset
-	// by its size allong the offset-direction.
+	// Instantiate as many Cubes as there are frequency-bands 
+	// in the used fft-window... for each, increase its position-offset
+	// by its size along the offset-direction.
 	for(int i = 0; i<SPECTRUM_SIZE;i++)
 	{
 		offset.x = X + i;
@@ -42,39 +42,38 @@ SpectrumAnalyzer::Initialize(void)
 	/* Setting the Meters "FallOff"...
 	 * as lower the value, as slower the visuals will
 	 * Fall back to Zero if there's no signal. */
-	fallOffAmount = 0.05f / 3.0f * this->ChartHeight;
+	fallOffAmount = 0.05f / 3.0f * ChartHeight;
 	
 	// this set's the hight of the analyzers chart.
-	// band meshures will multiplied by it.
-	this->getTransform()->scale.y = this->ChartHeight;
+	// band measures will multiplied by it.
+	getTransform()->scale.y = ChartHeight;
 
-	//get beeing invoked at EarlyUpdate, to get the FFT-Data...
+	//get being invoked at EarlyUpdate, to get the FFT-Data...
 	UPDATE->SignInForEarlyUpdate(this);
 
 }
 
 void
 SpectrumAnalyzer::DoEarly(void)
-{ // Get The FFT-Datta-Buffer from desired audio-channel.
-  // ...in this case the Backgroundaudio channel....
-	this->fftData = (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);
+{ // Get The FFT-Data-Buffer from desired audio-channel.
+  // ...in this case the Background audio channel....
+	fftData = (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);
 }
 
 void
 SpectrumAnalyzer::DoUpdate(void)
-{//Reading out the Early-getted fft-buffer and aply
+{//Reading out the Early-getted fft-buffer and apply
  //it's values on the Sub-Cubes....
 	float changeFactor;
 	for(int i=0;i<SPECTRUM_SIZE;i++)
 	{
-		//scaling datavalues to the desired size...
+		//scaling data values to the desired size...
 		//also let's flatten the scale and maybe do some compression 
-		//to make the chart look's more strait, and the bands 
+		//to make the chart looks more strait, and the bands 
 		//look'n more equivalent then real spectrum-data will do...  
 
-	//	changeFactor = (this->fftData[i]*((float)i*0.1));
-		changeFactor = (this->fftData[i]*((float)1+i*0.128));         
-		ChangeSize(i,changeFactor * this->getTransform()->scale.y);
+		changeFactor = (fftData[i]*((float)1+i*0.128));         
+		ChangeSize(i,changeFactor * getTransform()->scale.y);
 		ChangeColor(i,changeFactor);
 	}
 }
@@ -88,7 +87,7 @@ SpectrumAnalyzer::DoLate(void)
 void 
 SpectrumAnalyzer::ChangeColor(int index,float factor)
 {
-	//Do flashing the collors.....
+	//Do flashing the colors.....
 	color.byte[1] = ((factor*10) * 255.0);
 	color.byte[2] = (1.0 - (factor*10))*255.0;
 	bands[index]->SetColor(color);
@@ -96,11 +95,11 @@ SpectrumAnalyzer::ChangeColor(int index,float factor)
 void
 SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 {   
-	//apllie the measured and compressed signalvalues to the
-	//Subcube's Transform scale's if the values have changed...
+	//apply the measured and compressed signal values to the
+	//Sub-cube's Transform scale's if the values have changed...
 
 	//if the new value is lower than the old value,
-	//shrink the cube's Y-Axis by the "Fallback"-value...
+	//shrink the cube's Y-Axis by the "Fall-back"-value...
 	if(newScaleY < bands[band]->getTransform()->scale.y)
 		bands[band]->getTransform()->scale.y -= fallOffAmount;
 	else  // if th new value is higher than the old one, just set it's Y-scale to the new value...
@@ -116,13 +115,10 @@ SpectrumAnalyzer::draw(void)
 	Vector3 vec;
 	for(int i = 0;i<360;i+=90)
 	{
-		vec = getTransform()->rotation+Vector3(0,i,0);
-
-		this->rotate(vec.x,vec.y,vec.z);
+		vec = getTransform()->rotation + Vector3(0,i,0);
+		rotate(vec.x,vec.y,vec.z);
 		drawOnce();
 	}
-
-
 }
 
 void
@@ -130,14 +126,13 @@ SpectrumAnalyzer::drawOnce(void)
 {
 	if(_CHANGEDposition || _CHANGEDrotation || _CHANGEDscale)
 	{
-		// Re-Positioning,sizeing and rotating the SubCubes
-		// if the whole analyzerobject has been moved,resized 
-		// or rotated during last update..  -->> maybe this coul'd be don at LateUpdate better... dont know....
+		// Re-Positioning,seizing and rotating the SubCubes
+		// if the whole analyzer object has been moved,resized 
+		// or rotated during last update..  -->> maybe this could be don at LateUpdate better... don't know....
 		for(int i=0;i<SPECTRUM_SIZE;i++)
 		{
 			if(_CHANGEDposition)
 				bands[i]->getTransform()->position += transform.movement;
-			//bands[i]->getTransform()->position += offset;
 			if(_CHANGEDrotation)
 				bands[i]->getTransform()->rotation = getTransform()->rotation;
 			if(_CHANGEDscale)
@@ -147,10 +142,9 @@ SpectrumAnalyzer::drawOnce(void)
 		transform.movement = *Vector3::Zero;
 	}
 
-	//draw each subcube....
+	//draw each sub-cube....
 	for(int i=0;i<SPECTRUM_SIZE;i++)
 	{
-		//bands[i]->getTransform()->position.y = Ground::getInstance()->GetGroundY(bands[i]->getTransform()->position.x, bands[i]->getTransform()->position.z);
 		bands[i]->draw();
 	}	
 }
@@ -170,7 +164,7 @@ SpectrumAnalyzer::rotate(float X,float Y,float Z)
 	return IMeshObject::rotate(Vector3(X,Y,Z));
 }
 
-// scale this object to the size each subobject will have.. 
+// scale this object to the size each sub object will have.. 
 Vector3
 SpectrumAnalyzer::scale(float X,float Y,float Z)
 {
@@ -179,8 +173,8 @@ SpectrumAnalyzer::scale(float X,float Y,float Z)
 }
 
 SpectrumAnalyzer::~SpectrumAnalyzer(void)
-{   // dont forget signing out from the
-	// Events we're registerd to if destructing...
+{   // don't forget signing out from the
+	// Events we're registered to if destructing...
 	UPDATE->SignOutFromEarlyUpdate(this);
 	UPDATE->SignOutFromUpdate(this);
 	UPDATE->SignOutFromLateUpdate(this);

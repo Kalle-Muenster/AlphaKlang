@@ -103,28 +103,9 @@ ButtonControl::DoEarly(void)
 		SizeScaledPanel.y = SizeScaledPanel.x/4;
 		this->angle = 0;
 		GetArea();
-
-
-
 		return true;
 	}
 
-	//ProjectMappe::Rectangle
-	//ButtonControl::GetArea(void)
-	//{
-
-	//	VectorF	vec = Panel.GetSize();
-	//	vec.x *= SizeScaledPanel.x;
-	//	vec.y = vec.x/4;
-	//	Area.SetSize(vec);
-	//	vec = (Panel.GetPosition() + PositionOnPanel );
-	//	Area.SetPosition(vec);
-	//	left=vec.x;
-	//	right=Area.GetCenter().x+Area.GetHalbSize().x;
-	//	top=vec.y;
-	//	bottom=Area.GetCenter().y+Area.GetHalbSize().y;
-	//	return Area;
-	//}
 
 	ButtonControl::ButtonState 
 	ButtonControl::GetState(void)

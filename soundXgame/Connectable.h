@@ -133,17 +133,17 @@ public:
 
 	virtual GobID GetID(void)
 	{
-		return this->GetID();
+		return ((IConXtor*)this)->GetID();
 	}
 
 	virtual const char* GetName(void)
 	{
-		return this->GetName();
+		return ((IConXtor*)this)->GetName();
 	}
 
 	virtual void SetName(char* name)
 	{
-		this->SetName(name);
+		((IConXtor*)this)->SetName(name);
 	}
 
 	operator IDrawable*(void)
@@ -212,7 +212,7 @@ public:
 	virtual ~IConnectable(void);
 
 
-	//Returns the Connaction's owner...
+	//Returns the Connection's owner...
 	//The "Main"-Object where all other Connectables are connected to
 	//or the "Head" of the Connection...
 	IObjection<IConnectable>* Connection(void);
