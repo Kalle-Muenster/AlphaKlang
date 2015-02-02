@@ -67,10 +67,10 @@ Ground::Ground(void) :
 	// Dynamic Height Map
 	int Tmp2[9][9]	=	{  100 ,  100 ,  100 ,  100 ,  100 ,   70 ,  100 ,  100 ,  100  ,
 						    70 ,   20 ,   50 ,   50 ,   60 ,   20 ,   50 ,   50 ,   90  ,
-						    50 ,   00 ,   30 ,   25 ,   30 ,   00 ,   30 ,   25 ,   50  ,
+						    50 ,   00 ,   30 ,   25 ,   30 ,    0 ,   30 ,   25 ,   50  ,
 						    20 ,   20 ,   10 ,   10 ,   10 ,   10 ,   20 ,   10 ,  100  ,
 						    40 ,   10 ,   20 ,    0 ,   35 ,   20 ,    0 ,   10 ,   50  ,
-						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   50 ,   10 ,   70  ,
+						    70 ,   30 ,    0 ,   10 ,   20 ,   30 ,   20 ,   10 ,   70  ,
 						    50 ,   10 ,   20 ,   25 ,   10 ,    0 ,   20 ,    0 ,   90  ,
 						    30 ,   30 ,   25 ,   20 ,    0 ,   10 ,   30 ,   20 ,  100  ,
 						    20 ,   30 ,   55 ,   35 ,   30 ,   30 ,    5 ,   25 ,  100 
@@ -108,10 +108,11 @@ Ground::Ground(void) :
 
 	// initialize music listener options
 	this->AddConnectable<MusicController>();
-	this->GetConnected<MusicController>()->SetLineBounds(0, 10, 38, 14);
-	this->GetConnected<MusicController>()->SetClambt(0, 0, 100);
-	this->GetConnected<MusicController>()->SetThreshold(0, 0.01f);
-
+	this->GetConnected<MusicController>()->SetLineBounds(0, 1, 38, 2);
+	this->GetConnected<MusicController>()->SetClambt(0, 1, 6);
+	this->GetConnected<MusicController>()->SetThreshold(0, 0.1f);
+	this->GetConnected<MusicController>()->GetLineData(0)->fallOff = 0.1f;
+	this->GetConnected<MusicController>()->sensitivity = 70;
 }
 
 Ground::~Ground(void)
@@ -359,9 +360,9 @@ void Ground::Update(void)
 	//float line0 = 0;
 	//if(this->HasConnected<MusicController>())
 	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
-	//std::cout << line0 << std::endl;
+	std::cout << line0 << std::endl;
 
-	dynamicVal = line0 * 10;
+	dynamicVal = line0*30 + 6;
 	*valueList[1] = dynamicVal;
 
 	// Update First Person Camera
