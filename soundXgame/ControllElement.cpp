@@ -59,9 +59,10 @@ ControllElement::GetText(void)
 void
 ControllElement::SetText(char* label)
 {
+	Label[63]='\0';
 	short i = -1;
 	while((Label[++i]=label[i])!='\0' && (i<64));
-	Label[i]='\0';
+	
 }
 
 unsigned int 

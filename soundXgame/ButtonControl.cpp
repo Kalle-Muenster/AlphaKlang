@@ -2,11 +2,15 @@
 #include "projectMacros.h"
 
 
+bool const
+ButtonControl::canHaveMultipleInstances = true;
+
  const char*
 ButtonControl::States[] = {"DISABLED","NORMAL","HOVER","PRESSED"};
 
 ButtonControl::ButtonControl(void)
 {
+	TypeHashCode = (unsigned)typeid(ButtonControl).hash_code();
 	btnState = ButtonState::NORMAL;
 	SetColor(255,255,0,255);
 

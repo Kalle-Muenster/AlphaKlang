@@ -15,14 +15,15 @@ typedef unsigned int ConID;
 
 struct Texture 
 {
-	enum class Format
+	enum Format
 	{DUAL=1,GRAY=16,RGB=24,RGBA=GL_RGBA,BGRA=GL_BGRA_EXT,ABGR=GL_ABGR_EXT};
 	GLuint ID;
 	short w,h;
 	GLint format;
 	void* pData;
 
-	void Loade(string fileName,short Width,short Height,Format textureFormat = Texture::Format::BGRA);
+	void Loade(string filename);
+	void Loade(string fileName,short Width,short Height,Format = RGBA);
 	Texture operator =(Texture setter)
 	{
 		ID = setter.ID;

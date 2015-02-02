@@ -288,10 +288,16 @@ Data64::Data64(void)
 
 //Texture Struct:
 //############################################
+void Texture::Loade(string fileName)
+{
+	sscanf(fileName,"_%ix%i.",&w,&h);
+	Loade(fileName,w,h);
+}
+
 void Texture::Loade(string fileName,short Width,short Height,Format textureFormat)
 {
-	ID = Utility::loadTexture(fileName);
 	w = Width;
 	h = Height;
 	format=(int)textureFormat;
+	ID = Utility::loadTexture(fileName);
 }

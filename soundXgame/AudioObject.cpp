@@ -245,7 +245,7 @@ IAudioEmitter::Set3Dparameter(float minDistance,float maxDistance)
 
 AudioEmitter::AudioEmitter(void)
 {
-
+	 TypeHashCode = (unsigned)typeid(AudioEmitter).hash_code();
 }
 
 

@@ -384,20 +384,31 @@ std::vector<char*> _textureNames;
 GLuint
 Utility::loadTexture(const char* filename)
 {
+	glload::LoadTest loadTest = glload::LoadFunctions();
+	char temp[64];
+	temp[63]='\0';
+	short i = -1;
+
 	if(!_loadedtTextures.size())
-	{	
+	{//if there are no texture's loaded yet, and lists need initialization...
 		try
-		{
-			glload::LoadTest loadTest = glload::LoadFunctions();
+		{	 
+			//init vector-lists-variables..
 			_textureNames = std::vector<char*>();
 			_loadedtTextures = std::vector<Texture*>();
-			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
 			_loadedtTextures.push_back(new Texture());
-			char temp[64];
-			sprintf(&temp[0],"%s","hallo computer");
+			
+			//load the image-file:
+			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
+			
+			//save the textureID...
+			_loadedtTextures.at(0)->ID = glimg::CreateTexture(pImageSet.get(), 0);
+			
+			//save the texture filename...
+			while(((temp[++i]=filename[i])!='\0')&&(i<64)); 
 			_textureNames.push_back(temp);
-			_loadedtTextures.at(0)->ID=glimg::CreateTexture(pImageSet.get(), 0);
-			sprintf(_textureNames.at(0),"%s",filename);
+
+			//return the textureID
 			return _loadedtTextures[0]->ID;
 		}
 		catch(glimg::loaders::stb::StbLoaderException &e)
@@ -408,38 +419,45 @@ Utility::loadTexture(const char* filename)
 		{
 			std::cerr << "Texture creation failed";
 		}
+	}
+	else 
+	{//if list vectors already initialized and contain at least one texture...
+		for(auto it=_textureNames.begin();it!=_textureNames.end();it++)
+		{i++; //iterate through all loaded textures and check if requested one
+			  //already contained in list.
 
-	}
-	else
-	{
+			if(Utility::StringCompareRecursive(filename,(*it))<0)
+				return _loadedtTextures[i]->ID; //return the already contained textureID;
+		}
+		i = -1;
+		try
+		{//if the requested texture is a new one:
 
-	
-	int i = -1;
-	while(++i<_textureNames.size() && !Utility::StringCompareIterative(_textureNames.at(i),filename));
-	if(i==_loadedtTextures.size())
-	{
-	glload::LoadTest loadTest = glload::LoadFunctions();
+			//load the texture-data...
+			Texture* loadTexture = new Texture();
+			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
+			loadTexture->ID = glimg::CreateTexture(pImageSet.get(), 0);
+			
+			//save the textureID to list...
+			_loadedtTextures.push_back(loadTexture);
+			
+			//save the texture's filename...
+			while(((temp[++i]=filename[i])!='\0')&&(i<64));
+			_textureNames.push_back(temp);
 
-	try
-	{
-		std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
-		_loadedtTextures.push_back(new Texture());
-		_loadedtTextures[i]->ID = glimg::CreateTexture(pImageSet.get(), 0);
-		sprintf(&_textureNames.at(0)[0],"%s",filename);
+			//and return the textureID.
+			return loadTexture->ID;
+		}
+		catch(glimg::loaders::stb::StbLoaderException &e)
+		{
+			std::cerr << "Failed loading file";
+		}
+		catch(glimg::TextureGenerationException &e)
+		{
+			std::cerr << "Texture creation failed";
+		}
 	}
-	catch(glimg::loaders::stb::StbLoaderException &e)
-	{
-		std::cerr << "Failed loading file";
-	}
-	catch(glimg::TextureGenerationException &e)
-	{
-		std::cerr << "Texture creation failed";
-	}
-	}
-	return _loadedtTextures[i]->ID;
-	}
-	
-	
+	return 0;
 }
 
 void 

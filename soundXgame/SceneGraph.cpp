@@ -163,7 +163,7 @@ SceneGraph::Object(GobID ID)
 	if(drawables[ID]!=NULL)
 	{
 		if(ID == ((IGObject*)drawables[ID])->GetID())
-			return (IObjection<IConnectable>*)drawables[ID];
+			return (IObjection<IConnectable>*)(IGObject*)drawables[ID];
 	}
 	
 	return NULL;

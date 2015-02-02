@@ -11,8 +11,8 @@ private:
 	GLuint frameUVBuffers[4];
 	char btnState;
 
-
 public:
+	static bool const canHaveMultipleInstances;
 	static const char* States[];
 	enum ButtonState : char
 	{DISABLED=0,NORMAL=1,HOVER=2,PRESSED=3};

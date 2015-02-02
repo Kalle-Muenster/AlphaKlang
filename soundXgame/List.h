@@ -1,13 +1,13 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
 | file: list.h                         |
 | class: List					       |
-| description: 
-|		list-type. Elements	|
-|		can be Added and removed.      |
-|	    it is very fast at iterating,  |
-|		through but a little slow at   |
-|		adding or searching ellements  |
-|		by name. it provides Foreach-Mode
+| description: 			               |	
+|		 a tiny list-type, very fast   |
+|		at Iterrating , but slower at  |
+|		adding or searching elements.  |
+|		by name. it provides Foreach-  |
+|       like iterration-style but with
+|       advantage of possy
 |
 \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

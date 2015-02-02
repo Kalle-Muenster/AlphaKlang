@@ -2,9 +2,13 @@
 #include "Utility.h"
 #include <math.h>
 
+bool const
+SliderX::canHaveMultipleInstances = true;
+
 #define INPUT InputManager::getInstance()
 SliderX::SliderX(void)
 {
+	TypeHashCode = (unsigned)typeid(SliderX).hash_code();
 	float  step=1.f/128.f;
 	ValueX.SetUp(0,1,0,step,ValueX.Clamp);
 	ValueX.ControllerActive=true;

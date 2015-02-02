@@ -21,7 +21,7 @@ private:
 	void _DrawForeground(void);
 
 public:
-
+	static bool const canHaveMultipleInstances;
 	Controlled<float> ValueX;
 	Controlled<float> ValueY;
 	SliderX(void);

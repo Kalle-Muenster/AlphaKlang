@@ -193,15 +193,6 @@ void
 IGObject::SetName(char* name)
 {
 	conXtor->SetName(name);
-	//int i = 0;
-	//while(i<63)
-	//{
-	//	this->Name[i] = name[i];
-	//	if(this->Name[i]=='\0')
-	//		return;
-	//	i++;
-	//}
-	//Name[63]='\0';
 }
 
 Transform*

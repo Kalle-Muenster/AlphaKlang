@@ -8,6 +8,38 @@
 #include "IMeshObject.h"
 #include "Ground.h"
 
+
+
+ICubeXtor::ICubeXtor(void)
+{
+	TypeHashCode = (unsigned) typeid(ICubeXtor).hash_code();
+	ConnectionID = 0;
+	UseTexture=false;
+	NoBackfaceCulling=false;
+}
+
+bool
+ICubeXtor::useTexture(BOOL use)
+{
+	if(use<3)
+		UseTexture=use;
+	return UseTexture;
+}
+
+void
+ICubeXtor::draw(void)
+{		
+
+}
+
+IObjection<IConnectable>*  
+ICubeXtor::Connection(void)
+{
+	return (IObjection<IConnectable>*) this->connection;
+}
+
+
+
 IMeshObject::IMeshObject(void)
 {
 	angle = 0.0f;

@@ -170,6 +170,7 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Kubus.cpp" />
+    <ClCompile Include="primitivSwitcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -359,6 +360,7 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Kubus.h" />
+    <ClInclude Include="primitivSwitcher.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -715,6 +717,18 @@
     </None>
     <None Include="Deckelblech128-3channel.tga">
       <Filter>Resources\Textures</Filter>
+    </None>
+    <None Include="capsula_tris_32.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="capsula_tris_Groupt.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="cone_tris_32.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="capsula_quads_32.obi">
+      <Filter>Resources\Meshes</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

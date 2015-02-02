@@ -14,7 +14,7 @@
 #include "projectMacros.h"
 
 
-
+//Singleton instances..
 InputManager*		_inputManagerInstance;
 BassAudio*			_bassaudioInstance;
 SceneGraph*			_scenegraphInstance;
@@ -23,7 +23,7 @@ GuiManager*			_guimanagerInstance;
 ObjectManagement*	_objectManagerInstance;
 
 
-
+//Destroy all Singleton-instances...
 void 
 ProjectMappe::GlobalDestructor(void)
 {
@@ -39,6 +39,8 @@ void
 ProjectMappe::StartupRuntimeManagers(void)
 {
 	printf("Initiating Engine...\n");
+
+	//Invoke all Singletons calling their Constructors at application-start.
 	printf(".... %s instantiated !\n",UpdateManager::start());
 	printf(".... %s instantiated !\n",InputManager::start());
 	printf(".... %s instantiated !\n",BassAudio::start());
@@ -46,19 +48,26 @@ ProjectMappe::StartupRuntimeManagers(void)
 	printf(".... %s instantiated !\n",GuiManager::start());
 	printf(".... %s instantiated !\n",ObjectManagement::start());
 	
+	
+
+	//Load all Primitive Meshes and generate the Vertex-buffers to GL 
+	//and generate static pointers to these buffers. so every 
+	//Object will use thees same buffers as their mesh-draw-source... 
 	printf(".... loading Primitives !\n");
 	InitFlatQuat();
 	InitICubic();
 	InitIBall();
 	InitZylinder();
 	InitIspheree();
-	
-
+	InitICone();
+	InitICapsule();
 	printf("Done ! \n\n");
 }
 
 
-
+//EXIT:	 - calling this [true] let the application 
+//		   begin shutting down the next few frames
+//------------------------------------------------
 bool _terminate=false;
 bool ProjectMappe::EXIT(BOOL exit)
 {
@@ -67,6 +76,12 @@ bool ProjectMappe::EXIT(BOOL exit)
 	return _terminate;
 }
 
+
+
+
+// SINGLETON HANDLUING:
+////////////////////////////////////////////////
+//INPUT: singleton handling
 //-------------------------------------------
 const char* 
 InputManager::start(void)
@@ -83,6 +98,8 @@ InputManager::getInstance(void)
 }
 
 
+
+//GUI - singleton
 //-------------------------------------------
 
 const char*
@@ -99,7 +116,7 @@ GuiManager::getInstance(void)
 	return _guimanagerInstance;
 }
 
-
+//AUDIO - audio interface wrapper (singleton) 
 //-------------------------------------------
 const char*
 BassAudio::start(void)
@@ -109,7 +126,6 @@ BassAudio::start(void)
 	return typeid(*_bassaudioInstance).name();
 }
 
-
 BassAudio*
 BassAudio::GetInstance(void)
 {
@@ -117,9 +133,9 @@ BassAudio::GetInstance(void)
 }
 
 
-
+//SCENE - rendering and object-management 
+//		  singleton
 //-------------------------------------------
-
 const char*
 SceneGraph::start(void)
 {
@@ -133,15 +149,10 @@ SceneGraph::getInstance(void)
 {
 	return _scenegraphInstance;
 }
-/*
-data32* 
-SceneGraph::GetFXbufferData(void)
-{
-	return &screenBuffer[0];
-}
- */
-//-------------------------------------------
 
+//UPDATE - singleton-instance for handling all 
+//		   per-frame Update callings
+//-------------------------------------------
 const char*
 UpdateManager::start(void)
 {
@@ -156,8 +167,10 @@ UpdateManager::getInstance(void)
 	return _updateManagerInstance;
 }
 
+//OBJECT - Object-management, generate and supplies Objects
+//		   with instance-ID's and component-link-ID's (ConIDs)
+//		   and takes care of them being unique.
 //--------------------------------------------------------
-
 const char*
 ObjectManagement::start(void)
 {

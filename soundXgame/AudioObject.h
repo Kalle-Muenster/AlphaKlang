@@ -47,6 +47,7 @@ public:
 class AudioEmitter : public IConnectable , public IAudioEmitter, public IUpdateble
 {
 public:
+	static bool const canHaveMultipleInstances = true;
 	virtual void PlaySample(HCHANNEL sample);
 	AudioEmitter(void);
 	virtual void LoadeSample(const char*,bool loop = true);

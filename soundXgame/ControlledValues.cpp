@@ -1,12 +1,13 @@
+
 #include "ControlledValues.h"
 
 ControlledVector3::ControlledVector3(void)
 {
-	x.SetUp(-20,20,0,0.1,x.PingPong);
+	x.SetUp(0,255,128,1.0f/128,x.Clamp);
 	x.ControllerActive = true;
-	y.SetUp(-30,30,0,0.1,y.PingPong);
+	x.SetUp(0,255,128,1.0f/128,y.Clamp);
 	y.ControllerActive = true;
-	z.SetUp(-40,40,0,0.1,z.PingPong);
+	x.SetUp(0,255,128,1.0f/128,z.Clamp);
 	z.ControllerActive = true;
 }
 
@@ -35,6 +36,30 @@ ControlledVector3::SetMode(Controlled<float>::ControllMode mode)
 	x.Mode(mode);
 	y.Mode(mode);
 	z.Mode(mode);
+}
+
+void
+ControlledVector3::SetMIN(Vector3 min)
+{
+	 x.MIN = min.x;
+	 y.MIN = min.y;
+	 z.MIN = min.z;
+}
+
+void
+ControlledVector3::SetMAX(Vector3 max)
+{
+	x.MAX = max.x;
+	y.MAX = max.y;
+	z.MAX = max.z;
+}
+
+void
+ControlledVector3::SetMOVE(Vector3 move)
+{
+	x.MOVE = move.x;
+	y.MOVE = move.y;
+	z.MOVE = move.z;
 }
 
 ControlledVector3::operator Vector3(void)

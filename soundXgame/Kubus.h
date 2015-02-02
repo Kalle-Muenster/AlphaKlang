@@ -8,18 +8,42 @@
 
 
 class Kubus :
-	public IObjection<ICubeXtor>
+	public IObjection<IConXtor>,
+	public IPrimitiv<ICubic>
 {
 protected:
-	virtual bool useTexture(BOOL=3);
+	bool	NoBackfaceCulling;
 
 public:
 	Kubus(void);
 	virtual ~Kubus(void);
 	virtual void InitializeObject(void);
 	virtual void draw(void);
-	virtual operator ICubeXtor(void);
-	virtual void LoadTexture(string textureFileName);
+	virtual Transform* getTransform(void);
+	template<typename PT> void SetPrimitiv(void)
+		{
+			this->primitiv->SetPrimitiv<PT>();
+			//this->primitiv = PT();
+			//this->primitiv->component = this;
+		}
+	IlPrimitivo* Prim;
+};
+
+
+class PrimitivObject : 
+	public IObjection<IConXtor>,
+	public IPrimitiv<IBall>
+{
+protected:
+	bool	NoBackfaceCulling;
+
+public:
+	PrimitivObject(void);
+	virtual ~PrimitivObject(void);
+	virtual void InitializeObject(void);
+	virtual void draw(void);
+	virtual Transform* getTransform(void);
+
 };
 
 

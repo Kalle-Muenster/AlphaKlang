@@ -15,6 +15,10 @@ class IConXtor;
 
 class IDrawable
 {
+protected:
+	Texture			texture;
+	bool			_useTexture;
+
 public:
 	bool			IsVisible;
 	data32			color;
@@ -22,6 +26,8 @@ public:
 	virtual bool	isVisible(BOOL=3);
 	virtual void	SetColor(data32 newColor);
 	virtual void	SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	virtual void	LoadTexture(string fileName);
+	virtual bool	UseTexture(BOOL=3);
 };
 
  class ILocatable 
@@ -58,78 +64,86 @@ typedef unsigned int GobID;
 typedef unsigned int ConID;
 
 template<class Objected>
-class IObjection : public ILocatable, public IDrawable
+class IObjection : public IDrawable, public ILocatable
 {
-//#define this ((IObjection<Objected>*)this)
+#define this conXtor
 public:
 	Objected* conXtor;
 
+	virtual IObjection<Objected>* Connection(void)
+	{
+#undef this
+		return this;
+#define this conXtor
+	}
 
 	template<typename cT> cT* AddConnectable(void)
 	{
-		return this->conXtor->AddConnectable<cT>(); 
+		return this->AddConnectable<cT>(); 
 	}
 	template<typename cT> cT* AddConnectable(ConID* id)
 	{
-		return conXtor->AddConnectable<cT>(id);
+		return this->AddConnectable<cT>(id);
 	}
 	template<typename uT> uT* AddUnconnectable(void)
 	{
-		return (uT*)conXtor->AddConnectable<Connectable<uT>>();
+		return (uT*)this->AddConnectable<Connectable<uT>>();
 	}
 	template<typename uT> uT* GetUnconnectable(void)
 	{
-		return (uT*)conXtor->GetConnected<Connectable<uT>>();
+		return (uT*)this->GetNAdd<Connectable<uT>>();
 	}
 	template<typename cT> void Remove(ConID id=NULL)
 	{
 		if(this==NULL)
 			return;
 		if(id)
-			conXtor->RemoveConnected<cT>(id);
+			this->RemoveConnected<cT>(id);
 		else
-			conXtor->RemoveConnected<cT>();
+			this->RemoveConnected<cT>();
 	}
 	template<typename cT> cT* GetConnected(ConID id=EMPTY)
 	{
-		if(id == EMPTY) return this->conXtor->GetConnected<cT>();
-		else if(id == NULL) return this->conXtor->GetConnected<cT>(0);
-		else return this->conXtor->GetConnected<cT>(id);
+		if(id == EMPTY) return this->GetConnected<cT>();
+		else if(id == NULL) return (cT*)conXtor;
+		else return this->GetConnected<cT>(id);
 	}
 	template<typename cT> cT* Set(cT* connectableInstance)
 	{
-		return this->conXtor->ConnectConnectable<cT>(connectableInstance);
+		return this->ConnectConnectable<cT>(connectableInstance);
 	}
 	template<typename cT> cT* Disconnect(ConID id=EMPTY)
 	{
-		cT* detached = (id==EMPTY)? this->conXtor->GetConnected<cT>() :this->conXtor->GetConnected<cT>(id);
-		if(id==EMPTY) this->conXtor->Remove<cT>();
-		else this->conXtor->Remove<cT>(id);
+		cT* detached = (id==EMPTY)? this->GetConnected<cT>() : this->GetConnected<cT>(id);
+		if(id==EMPTY) this->Remove<cT>();
+		else this->Remove<cT>(id);
 		return detached;
 	}
 
 	template<class cT> cT* GetOrAdd(void)
 	{
-		cT* get = conXtor->GetConnected<cT>();
-		if(!get)
-			get = conXtor->AddConnectable<cT>();
+		//cT* get = conXtor->GetConnected<cT>();
+		//if(!get)
+		//	get = conXtor->AddConnectable<cT>();
 
-		return get;
+		//return get;
+
+		return this->GetNAdd<cT>();
 	}
 
 	virtual GobID GetID(void)
 	{
-		return GetConnected<IConXtor>(0)->GetID();
+		return this->GetID();
 	}
 
 	virtual const char* GetName(void)
 	{
-		return GetConnected<IConXtor>(0)->GetName();
+		return this->GetName();
 	}
 
 	virtual void SetName(char* name)
 	{
-		GetConnected<IConXtor>(0)->SetName(name);
+		this->SetName(name);
 	}
 
 	operator IDrawable*(void)
@@ -142,26 +156,23 @@ public:
 		return GetOrAdd<Connectable<ILocatable>>();
 	}
 
-	//operator IConXtor(void)
-	//{
-	//	return GetOrAdd<IConXtor>();
-	//}
+	operator Objected(void)
+	{
+		return conXtor!=NULL? *conXtor : *GetOrAdd<Objected>();
+	}
 
 	virtual Transform* getTransform()
 	{
-		return ((ILocatable*)this)->getTransform();
+		return GetUnconnectable<Transform>();
 	}
 
-	virtual void draw(void)
-	{
-		((IDrawable*)this)->draw();
-	}
+	//virtual void draw(void)
+	//{
+	//	((IDrawable*)this)->draw();
+	//}
 
-	virtual IObjection<Objected>* Connection(void)
-	{
-		return this;
-	}
-//#undef this
+
+	#undef this
 };
 
 class IConnectable
@@ -170,11 +181,11 @@ protected:
 	void AddCombiner(void*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
 	unsigned TypeHashCode;
-	bool canHaveMultipleInstances;
+	
 
 public:
-	
-	static int MaximumNumberOfConnectioms;
+	static bool const canHaveMultipleInstances;
+	static int const MaximumNumberOfConnectioms;
 	unsigned ConnectionID;
 	void* connection;
 	bool _initialized;
@@ -191,7 +202,6 @@ public:
 public:
 	IConnectable(void)
 	{
-		canHaveMultipleInstances=false;
 		_initialized=false;
 		Not_hasInitialized();
 		NumberOfConnectedObjects=0;
@@ -205,8 +215,19 @@ public:
 	//Returns the Connaction's owner...
 	//The "Main"-Object where all other Connectables are connected to
 	//or the "Head" of the Connection...
-	virtual IObjection<IConnectable>* Connection(void);
+	IObjection<IConnectable>* Connection(void);
+
+	template<typename ConnectorType> 
+	IObjection<ConnectorType>* Objected(void)
+		{
+			  return (IObjection<ConnectorType>*)connection;
+		}
 	
+	template<typename ConnectorType> operator ConnectorType*(void)
+		{
+			return Objected<ConnectorType>()->conXtor;
+		}
+
 	//StartUp-Initializer...
 	//override and put code in it for handling dependencies on other Components
 	//or objects if there where some. it will bee executed each frame, as long as
@@ -224,19 +245,34 @@ public:
 	//if you later want to call it by ID, you can get it's ID later by "GetConnectionID<IConnectable>()"
 	template<typename T> T* AddConnectable(void)
 	{
-
-	Not_hasInitialized();
+		ConID thcode;
+		Not_hasInitialized();
 		
-	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-		if(ConIDs[i]==0)
-		{
-			IConnectable* newcon = new T();
-			newcon->SetConnection((IObjection<IConnectable>*)this->connection);	
-			newcon->ConnectionID=typeid(T).hash_code(); 
-			setConnectables(i,(T*)newcon);
-			NumberOfConnectedObjects++;
-			return (T*)getConnectables(i);
+		if(!T::canHaveMultipleInstances)
+			thcode = typeid(T).hash_code();
+
+		for(int i=0;i<MaximumNumberOfConnectioms;i++)
+		{	
+			if(ConIDs[i]!=NULL)
+			{
+				if(!T::canHaveMultipleInstances)
+					if(Connectables[i]->TypeHashCode==thcode)
+						return (T*)getConnectables(i);
+			}
+			else
+			{
+				IConnectable* newcon = new T();
+				newcon->SetConnection(this->connection);	
+				newcon->TypeHashCode = newcon->ConnectionID = (unsigned)typeid(T).hash_code(); 
+				setConnectables(i,(T*)newcon);
+				NumberOfConnectedObjects++;
+				newcon->ConnectionID = this->ConnectionID*10+i+1;
+				return (T*)getConnectables(i);
+			}
 		}
+		/*	for(char i=1;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+		getConnectables(i)->AddConnectable<T>();*/
+
 		return NULL;
 	}
 
@@ -248,14 +284,14 @@ public:
 
 	Not_hasInitialized();
 		
-	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+	for(int i=0;i<MaximumNumberOfConnectioms;i++)
 		if(ConIDs[i] == 0)
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(this->connection);
-			newcon->ConnectionID = i+1;
+			*id = newcon->ConnectionID = this->ConnectionID*10 + i + 1;
+			newcon->TypeHashCode = (unsigned)typeid(T).hash_code();
 			setConnectables(i,(T*)newcon);
-			*id=i+1;
 			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
 		}
@@ -270,10 +306,11 @@ public:
 		ConID TypeHash = (ConID)typeid(T).hash_code();
 		if(TypeHash==TypeHashCode)
 			return (T*)this;
-		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == TypeHash)
-				return (T*)getConnectables(i);
-		return NULL;
+		for(int i = 0; i < MaximumNumberOfConnectioms ;i++)
+			if(ConIDs[i]!=NULL)
+				if(Connectables[i]->TypeHashCode == TypeHash)
+					return (T*)Connectables[i];
+		return (T*)this;
 	}
 
 	//Gets a component of an Object by giving its Connection-ID...
@@ -283,6 +320,30 @@ public:
 		return (T*)getConnectables(conid-1);
 	}
 
+	template<typename T> T* GetNAdd(void)
+	{
+		ConID TypeHash = (ConID)typeid(T).hash_code();
+		if(TypeHash==TypeHashCode)
+			return (T*)this;
+		for(int i = 0; i < MaximumNumberOfConnectioms ;i++)
+			if(ConIDs[i]!=NULL)
+			{
+				if(Connectables[i]->TypeHashCode == TypeHash)
+					return (T*)Connectables[i];
+			}
+			else
+			{
+				IConnectable* newcon = new T();
+				newcon->SetConnection((IObjection<IConnectable>*)this->connection);	
+				newcon->TypeHashCode = newcon->ConnectionID = (unsigned)typeid(T).hash_code(); 
+				setConnectables(i,(T*)newcon);
+				NumberOfConnectedObjects++;
+				newcon->ConnectionID=this->ConnectionID*10+i+1;
+				return (T*)getConnectables(i);
+			}
+			return (T*)this;
+	}
+
 
 	//Get's the ID of a "IConnectable" Component...
 	//use this, if you want to call a Component by it's ID , but it was
@@ -290,9 +351,10 @@ public:
 	template<typename T> ConID GetConnectionID(void)
 	{
 		ConID TypeHash = (ConID)typeid(T).hash_code();
-		for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
-			if(ConIDs[i] == TypeHash)
-				return i+1;
+		for(int i = 0; i < MaximumNumberOfConnectioms ;i++)
+			if(ConIDs[i]!=NULL)
+				if(Connectables[i]->TypeHashCode == TypeHash)
+					return Connectables[i]->ConnectionID;
 		return NULL;
 	}
 
@@ -300,8 +362,9 @@ public:
 	template<typename T> void RemoveConnected(void)
 	{
 		ConID TypeHash = (ConID)typeid(T).hash_code();
-		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
-			if(ConIDs[i]==TypeHash)
+		for(int i=0;i<MaximumNumberOfConnectioms;i++)
+		  if(ConIDs[i]!=NULL)
+			if(Connectables[i]->TypeHashCode==TypeHash)
 			{
 				delete getConnectables(i);
 				ConIDs[i] = NULL;
@@ -336,12 +399,12 @@ public:
 
 	Not_hasInitialized();
 		
-	for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+	for(int i=0;i<MaximumNumberOfConnectioms;i++)
 		if(gobject->conXtor->ConIDs[i]==0)
 		{
 			IConnectable* newcon = new T();
 			newcon->SetConnection(gobject);
-			newcon->ConnectionID=ConIDs[i]=(ConID)typeid(T).hash_code();
+			newcon->TypeHashCode = newcon->ConnectionID = ConIDs[i] = (ConID)typeid(T).hash_code();
 			setConnectables(i,(T*)newcon);
 			NumberOfConnectedObjects++;
 			return (T*)getConnectables(i);
@@ -351,7 +414,7 @@ public:
 
 	ConID* ConnectConnectableInstance(IConnectable* inst)
 	{
-		for(int i=0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+		for(int i=0;i<MaximumNumberOfConnectioms;i++)
 			if(inst->Connection()->conXtor->ConIDs[i]==0)
 		{
 			this->Connectables[i]=inst;
@@ -378,11 +441,11 @@ public:
 	ConID* AddConnection(IObjection<IConnectable>* instance)
 	{
 		int x=0;
-		for(int i= 0;i<MAXIMUM_NUMBER_OF_CONNECTIONS;i++)
+		for(int i= 0;i<MaximumNumberOfConnectioms;i++)
 		{
 			if(ConIDs[i]==0)
 			{
-				for(int n = 0;n<MAXIMUM_NUMBER_OF_CONNECTIONS;n++)
+				for(int n = 0;n<MaximumNumberOfConnectioms;n++)
 					if((instance)->conXtor->ConIDs[n]==0)
 					{
 						this->ConIDs[i]=n+1;
@@ -410,14 +473,26 @@ public:
 template<typename NonConnectableType> 
 class Connectable 
 	: 
-	public NonConnectableType,
+	//public NonConnectableType,
 	public IConnectable 
 {
+protected:
+	static bool const canHaveMultipleInstances = true;
+	NonConnectableType* member;
+
 public:
-	virtual bool Initialize(void)
+	Connectable(void)
 	{
-		TypeHashCode = typeid(this).hash_code();
-		return true;
+		member = new NonConnectableType();
+		TypeHashCode = typeid(Connectable<NonConnectableType>).hash_code();
+	}
+	virtual ~Connectable(void)
+	{
+		delete member;
+	}
+	virtual operator NonConnectableType*(void)
+	{
+		return member;
 	}
 };
 
@@ -427,24 +502,26 @@ typedef void(*action)(IConnectable*);
 	public IConnectable
 {
 private:
-	GobID ID;
-	char Name[64];
-	bool _idLocked;
+
+	GobID	ID;
+	char	Name[64];
+	bool	_idLocked;
+
 protected:
 
-		
+	static bool const	canHaveMultipleInstances = true;
+	action				ConnectionAction;
 
-	action ConnectionAction;
 public:
-		IConXtor(void);
-		virtual ~IConXtor(void);
-	GobID GetID(void);
-	char* GetName(void);
-	void SetName(char*);
-	virtual bool Initialize(void);
-	bool AddToSceneAndLockID(void);
-	unsigned SetID(unsigned);
-	bool LockID(unsigned);
+					IConXtor(void);
+	virtual			~IConXtor(void);
+	GobID			GetID(void);
+	char*			GetName(void);
+	void			SetName(char*);
+	virtual bool	Initialize(void);
+	bool			AddToSceneAndLockID(void);
+	unsigned		SetID(unsigned);
+	bool			LockID(unsigned);
 };
 
 class cTransform :

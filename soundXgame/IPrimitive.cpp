@@ -3,8 +3,24 @@
 #include <vector>
 #include <glm.hpp>
 
+//Very simple vectors...
 typedef GLfloat dreier[3];
 typedef GLfloat zweier[2];
+
+//A Type-Array, containing constants of the primitives Type-ID's
+const type_info* primitive[7] = { &(typeid(ICubic)),
+								  &(typeid(IBall)),
+								  &(typeid(ISphere)),
+								  &(typeid(IZylinder)),
+								  &(typeid(ICone)),
+								  &(typeid(ICapsule)),
+								  &(typeid(IFlatquad)) };
+
+
+
+//////////////////////////////////////////////////////////////
+// Flatquad static definitions:
+//////////////////////////////////////////////////////////////
 
 GLuint
 IFlatquad::vertsBufferID=0; 
@@ -21,7 +37,7 @@ IFlatquad::shape = 0;
 GLuint 
 IFlatquad::VertsCount=0;
 
-
+// Initiation-function for IFlatquad-static's
 void
 ProjectMappe::InitFlatQuat(void)
 {
@@ -74,6 +90,11 @@ ProjectMappe::InitFlatQuat(void)
 }
 
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//CUBE:
+/////////////////////////////////////////////////////////////////////////////////////////
+
 GLuint 
 ICubic::vertsBufferID=0;
 
@@ -114,15 +135,22 @@ ProjectMappe::InitICubic(void)
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// BALL (a sphere, build up by triangular faces(like some footballs are...))
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GLuint
 IBall::vertsBufferID=0;
+
 GLuint
 IBall::paintBufferID=0;
+
 GLuint
 IBall::normsBufferID=0;
+
 GLuint
 IBall::shape = 0;
+
 GLuint
 IBall::VertsCount = 0; 
 
@@ -149,6 +177,11 @@ ProjectMappe::InitIBall(void)
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// ZYLINDER:
+//////////////////////////////////////////////////////////////////////////////////////
 
 GLuint
 	IZylinder::vertsBufferID=0;
@@ -185,6 +218,13 @@ ProjectMappe::InitZylinder(void)
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
 }
 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// SPHERE:
+/////////////////////////////////////////////////////////////////////////////////////////
+
 GLuint
 	ISphere::vertsBufferID=0;
 GLuint
@@ -202,7 +242,7 @@ ProjectMappe::InitIspheree(void)
 	std::vector<glm::vec3> vertsTemp;
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
-	GLuint shape;
+
 
 	Utility::loadObj("sphere_quads_low.obi",vertsTemp,paintTemp,normsTemp,ISphere::shape);
 
@@ -219,3 +259,94 @@ ProjectMappe::InitIspheree(void)
 	glBindBuffer(GL_ARRAY_BUFFER, ISphere::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
 }
+
+
+
+
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CONE:
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GLuint 
+	ICone::shape = 0;
+GLuint 
+	ICone::vertsBufferID = 0;
+GLuint 
+	ICone::paintBufferID = 0;
+GLuint 
+	ICone::normsBufferID = 0;
+GLuint 
+	ICone::VertsCount = 0;
+
+void
+ProjectMappe::InitICone(void)
+{
+	std::vector<glm::vec3> vertsTemp;
+	std::vector<glm::vec2> paintTemp;
+	std::vector<glm::vec3> normsTemp;
+
+	Utility::loadObj("cone_tris_32.obi",vertsTemp,paintTemp,normsTemp,ICone::shape);
+
+	glGenBuffers(1, &ICone::vertsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, ICone::vertsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
+	ICone::VertsCount = vertsTemp.size();
+
+	glGenBuffers(1, &ICone::paintBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER,ICone::paintBufferID);
+	glBufferData(GL_ARRAY_BUFFER, paintTemp.size() * sizeof(glm::vec2), &paintTemp[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &ICone::normsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, ICone::normsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CAPSULE:
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GLuint 
+ICapsule::shape = 0;
+
+GLuint 
+ICapsule::vertsBufferID = 0;
+
+GLuint 
+ICapsule::paintBufferID = 0;
+
+GLuint 
+ICapsule::normsBufferID = 0;
+
+GLuint 
+ICapsule::VertsCount = 0;
+
+void
+ProjectMappe::InitICapsule(void)
+{
+	std::vector<glm::vec3> vertsTemp;
+	std::vector<glm::vec2> paintTemp;
+	std::vector<glm::vec3> normsTemp;
+
+	Utility::loadObj("capsula_quads_32.obi",vertsTemp,paintTemp,normsTemp,ICapsule::shape);
+
+	glGenBuffers(1, &ICapsule::vertsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, ICapsule::vertsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
+	ICapsule::VertsCount = vertsTemp.size();
+
+	glGenBuffers(1, &ICapsule::paintBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER,ICapsule::paintBufferID);
+	glBufferData(GL_ARRAY_BUFFER, paintTemp.size() * sizeof(glm::vec2), &paintTemp[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &ICapsule::normsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, ICapsule::normsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+}
+
+//EOF
+
+
+
+	

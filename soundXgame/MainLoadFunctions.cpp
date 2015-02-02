@@ -37,7 +37,7 @@ void ProjectMappe::OnLoadContent(void)
 	guiding->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
 	guiding->GetConnected<SliderX>()->SizeScaledPanel = VectorF(0.5,0.5/4);
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	//fountain->SetLineBounds(0,0,4,3);
+	guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	
 	guiding->GetConnected<ButtonControl>()->SizeScaledPanel = VectorF(0.5,0.5/4);
 	guiding->GetConnected<ButtonControl>(2)->SetText("Back");
 	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
@@ -69,13 +69,33 @@ void ProjectMappe::OnLoadContent(void)
 	//SCENE->Object("plane_front")->move(-80,0,150);
 	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.x=0.2;
 	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y=0.045f;
-	//SCENE->Object("plane_front")->GetConnected<VoxControl>()->Connection()->SetName("voxels");
-	//SCENE->Object("plane_front")->AddConnectable<MusicVox>()->sensitivity = 200;
 
-	//(new GuiObject("Deckelblech_128x128.png"))->SetName("TestButton");
-	//GUI2D->Element("TestButton")->AddConnectable<ButtonControl>();
-	//GUI2D->Element("TestButton")->GetConnected<ButtonControl>()->SetClickerFunc(ActionTest);
-	//GUI2D->Element("TestButton")->area.SetPosition(100,100);
+
+	new Kubus();
+	GobID temp = SCENE->Object("last created")->GetID();
+	((Kubus*)SCENE->Object(temp))->SetPrimitiv<ICapsule>();
+	SCENE->Object(temp)->LoadTexture("Deckelblech2_256x256.png");
+	SCENE->Object(temp)->move(5,2,-5);
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,5,20));
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,1,-30));
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMOVE(Vector3(Circle/100,Circle/200,Circle/150));
+	SCENE->Object(temp)->GetConnected<SmoothObjectMover>()->IsActive = true;
+	SCENE->Object(temp)->isVisible(true);
+	SCENE->Object(temp)->SetName("PrimitivKubus");
+	SCENE->Object(temp)->AlwaysFaceMovingdirection = true;
+	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("PrimitivKubus-emission");
+	SCENE->Object("PrimitivKubus-emission")->AlwaysFaceMovingdirection=true;
+	SCENE->Object("PrimitivKubus-emission")->AddConnectable<ObjectFollower>();
+	SCENE->Object("PrimitivKubus-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object(temp));
+	SCENE->Object("PrimitivKubus-emission")->IsGrounded(false);
+	((ParticleSystem<100>*)SCENE->Object("PrimitivKubus-emission"))->emittingFrequency = 0.001f;
+	((ParticleSystem<100>*)SCENE->Object("PrimitivKubus-emission"))->lifetime = 1.6f;
+	((ParticleSystem<100>*)SCENE->Object("PrimitivKubus-emission"))->InitialSize = 0.7f;
+	((ParticleSystem<100>*)SCENE->Object("PrimitivKubus-emission"))->ValueChangeReleasepoint = 0.6;
+	SCENE->Object(temp)->AddConnectable<primitivSwitcher>();
+	SCENE->Object("PrimitivKubus-emission")->SetColor(160,180,255,66);
+	SCENE->Object("PrimitivKubus-emission")->IsVisible = true;
+	
 
 	//GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
 	//SCENE->Object(vox2)->SetName("VoxelPlane2");
@@ -229,11 +249,7 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
 	}
 	  
-	//new Kubus();
-	//GobID temp = SCENE->Object("last created")->GetID();
-	//SCENE->Object(temp)->GetConnected<ICubeXtor>()->texture.Loade("Deckelblech2_256x256.png",256,256,Texture::Format::RGBA);
-	//SCENE->Object(temp)->isVisible(true);
-	//SCENE->Object(temp)->move(10,10,10);
+
 
 	// Spectrum Analyzer
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");

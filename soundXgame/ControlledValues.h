@@ -1,3 +1,4 @@
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
 |  Controlled<Value>:                    |
 |  a Variable value which is controlled  |
@@ -6,6 +7,9 @@
 |                                        |
 |        -Invert                         |
 |        -Clamp                          |
+|        -Compress                       |
+|        -Expand                         |
+|        -Moderate                       |
 |        -Cycle                          |
 |        -PingPong                       |
 |                                        |
@@ -32,32 +36,71 @@ protected:
 	
 	bool CheckAtGet;
 
-	short _mode;
-	short userModesCount;
+	unsigned char _mode;
+	char userModesCount;
 	UserModeControl<ctrlType> * UserMode;
 
 	//the controlling-function
-	virtual ctrlType checkValue(unsigned short mode)
+	virtual ctrlType checkValue(unsigned char mode)
 	{
 		switch(mode)
 		{
-		case 0:
+		// OFF - value will be let how it is..
+		case 0:	
 			return *_Value;
-		case (unsigned short)Controlled<ctrlType>::ControllMode::Invert:
+
+		/* STILL VALUES */
+
+		// INVERT: - the value will stay the same, but when it's requested it will be returned negated when GET!.
+		case Controlled<ctrlType>::ControllMode::Invert:
 			return mode==Invert? -(*_Value) : *_Value;
-		case (unsigned short)Controlled<ctrlType>::ControllMode::Clamp:
+
+		// CLAMP: - the value will be clamp to MIN/MAX when it's being SET!... 
+		case Controlled<ctrlType>::ControllMode::Clamp:
 			*_Value = *_Value<MIN?MIN:*_Value>MAX?MAX:*_Value;
 			break;
-		case (unsigned short)Controlled<ctrlType>::ControllMode::Cycle:
+
+
+
+		/* DYNAMICS: */
+
+		// COMPRESS: - if the value's delta-movement becomes greater than MIN, it will be damped/Amplified by factor MAX (MAX from 0 to 1 will effect reduction, MAX greater 1 effect's amplification)... 
+		case Controlled<ctrlType>::Compress:
+			MOVE = *_Value = ( ((*_Value - MOVE) > MIN) || ((*_Value - MOVE) < -MIN) ) ? MOVE + ((*_Value - MOVE)*MAX) : *_Value ;
+			break;
+
+		// EXPAND: - if delta-movement will stay below MIN, it will	be effected by factor MAX...
+		case Controlled<ctrlType>::Expand:
+			MOVE = *_Value = ( ((*_Value - MOVE) < MIN) || ((*_Value - MOVE) > -MIN) ) ? MOVE + ((*_Value - MOVE)*MAX) : *_Value ;
+			break;
+
+		// MODERATE: - When delta is greater MIN or lower -MIN, it will be Compressed by 1/MAX. - when delta is between MIN and -MIN, it will be Expanded by MAX...
+		case Controlled<ctrlType>::Moderate:
+			MOVE = *_Value = ( ((*_Value - MOVE) > MIN) || ((*_Value - MOVE) < -MIN) ) ? MOVE + ((*_Value - MOVE)*(1.0f/MAX)) : MOVE + ((*_Value - MOVE)*MAX) ;
+			break;
+
+
+		/* MOTIVATORS: */
+
+		// CYCLE:  - every time the value is checked, it will move by adding MOVE to it... if it get's greater MAX, it will reset to MIN...
+		case Controlled<ctrlType>::ControllMode::Cycle:
 			*_Value = *_Value<MIN?MAX-(MIN- *_Value):*_Value>MAX?MIN+(*_Value - MAX): (*_Value+MOVE); 
 			break;
-		case (unsigned short)Controlled<ctrlType>::ControllMode::PingPong:
-			*_Value = (*_Value < MIN)? ( MIN + ( MIN - *_Value ) ) + ( MOVE = (-MOVE) ) 
-								     : (*_Value > MAX)? ( MAX -(*_Value - MAX) ) + ( MOVE = (-MOVE) ) 
-												      : (*_Value + MOVE); 
+
+		// PINGPONG: - every time it's checked, will move by MOVE. when reaches MAX or MIN, MOVE changes it's sign.	so the movement will change direction.
+		case Controlled<ctrlType>::ControllMode::PingPong:
+			*_Value = 											(*_Value < MIN) 
+																		? 
+					  ( MIN + ( MIN - *_Value ) ) + ( MOVE = (-MOVE) )  : 			(*_Value <= MAX) 
+																							 ? 
+																		   (*_Value + MOVE ) : ( MAX -(*_Value - MAX) ) + ( MOVE = (-MOVE) )   
+																																					
+					  ; 
 			break;
+
+		// USERMODE - implement whatever you able thinking about and attach it to the controller...
 		default:
-			if((userModesCount>4)&&(UserMode!=NULL)&&(UserMode->ID==mode))
+			if(mode == UserMode->ID)
 				return UserMode->checkVALUE(_Value);
 		}	
 		return *_Value;
@@ -77,7 +120,7 @@ protected:
 
 public:
 	//If set "true", the Value will be checked and updated
-	//every time it's ret or written. ...usefull for Clamping or Inverting
+	//every time it's ret or written. ...useful for Clamping or Inverting
 	//If set to "false", it's Value won't be checked and won't be updated
 	//unless you call "Check()" on it manually. ...usefull for MovingValues
 	//like pingpong or cycle. it than can be updated once per frame in an
@@ -87,13 +130,14 @@ public:
 	ctrlType MIN,MAX,MOVE;
 
 	//The selectable modes...
-	enum ControllMode {NONE=0,Invert=1,Clamp=2,Cycle=3,PingPong=4};	
+	enum ControllMode : unsigned char
+	{NONE=0,Invert=1,Clamp=2,Compress=3,Expand=4,Moderate=5,Cycle=6,PingPong=7};
 	
 	//constructor...
 	Controlled(void)
 	{
 		_Value = new ctrlType();
-		userModesCount=4;
+		userModesCount=7;
 		ControllerActive = false;
 		CheckAtGet = true;
 		UserMode = NULL;
@@ -109,20 +153,22 @@ public:
 	
 	void SetMIN(ctrlType val)
 	{
-		MIN = val;
+		*_Value = MIN = val;
 	}
 	void SetMAX(ctrlType val)
 	{
-		MAX = val;
+		*_Value = MAX = val;
 	}
 	void SetMOVE(ctrlType val)
 	{
 		MOVE = val;
+		ControllerActive = true;
+		checkValue(_mode);
 	}
 
 	
 
-	//returns the UserMode instance if there's attached one..
+	//returns the UserMode-Class instance if there's one attached...
 	template<typename Umode> Umode* GetUserMode(void)
 	{
 		return (Umode*)UserMode;
@@ -180,7 +226,7 @@ public:
 		return checkValue(Mode());
 	}
 
-	//set the controller-Mode
+	//set the controller's mode to one of the build-in modes
 	virtual ControllMode Mode(ControllMode mode=ControllMode::NONE)
 	{
 		if(mode!=ControllMode::NONE)
@@ -230,20 +276,20 @@ public:
 		return this;
 	}
 
-	//resets the pointer to another value by the given pointer... deletes the old one
+	//resets the pointer to the value an deletes it. and takes the given pointer as new Controlling-Target
 	virtual void SetVariable(ctrlType *var)
 	{
 		delete _Value;
 		_Value = var;
 	}
 
-	//getter...
+	//read the value
 	virtual operator ctrlType(void)
 	{
 		return GetValue();
 	}
 
-	//setter
+	//write the value
 	virtual ctrlType operator =(ctrlType set)
 	{
 		return this->SetValue(set);
@@ -253,7 +299,7 @@ public:
 };
 
 
-//A Vector3 of Controlled<float>s
+// A Vector of 3 Controlled<float>s
 class ControlledVector3
 {
 public:
@@ -264,6 +310,9 @@ public:
 	ControlledVector3(void);
 	virtual ~ControlledVector3(void);
 	void SetMode(Controlled<float>::ControllMode);
+	void SetMIN(Vector3 min);
+	void SetMAX(Vector3 max);
+	void SetMOVE(Vector3 move);
 	void ControllersActive(bool);
 	Vector3 Check(void);
 	template<typename usermode> void SetUserMode(void)
@@ -276,16 +325,5 @@ public:
 	virtual Vector3 operator =(Vector3 setter);
 };
 
-//überflüssig, kommt weg...
-//class ControlledFloat : public Controlled<float>
-//{
-//protected:
-//	virtual float checkValue(unsigned short mode);
-//public:
-//	ControlledFloat(void);
-//	virtual ~ControlledFloat(void);
-//	virtual ControlledFloat* SetUp(Controlled<float>::ControllMode mode,float initial);
-//	virtual ControlledFloat* SetUp(float min,float max,float move,float initial,Controlled<float>::ControllMode mode);
-//};
 
 #endif

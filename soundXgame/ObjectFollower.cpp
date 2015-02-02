@@ -3,6 +3,7 @@
 
 ObjectFollower::ObjectFollower(void)
 {
+	TypeHashCode = (unsigned)typeid(ObjectFollower).hash_code();
 	IsActive=false;
 	OffsetAsScale=true;
 }

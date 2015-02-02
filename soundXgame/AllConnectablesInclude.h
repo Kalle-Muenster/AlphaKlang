@@ -18,3 +18,4 @@
 #include "ButtonControl.h"
 #include "ObjectFollower.h"
 #include "SliderX.h"
+#include "primitivSwitcher.h"

@@ -5,16 +5,18 @@
 #include "Connectable.h"
 #include "projectMacros.h"
 
-int
+int	const
 IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
 
+bool const
+IConnectable::canHaveMultipleInstances = false;
 
 bool
 IConnectable::Not_hasInitialized(void)
 {
 	if(!this->_initialized)
 	{
-		for(int i=0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ; i++)
+		for(int i=0; i < MaximumNumberOfConnectioms ; i++)
 		{	this->ConIDs[i] = NULL; this->Connectables[i]=NULL;}
 		this->NumberOfConnectedObjects = 0;
 		this->current = -1;
@@ -32,18 +34,11 @@ IConnectable::Not_hasInitialized(void)
 
 IConnectable::~IConnectable(void)
 {
-	for(int i = 0; i < MAXIMUM_NUMBER_OF_CONNECTIONS ;i++)
+	for(int i = 0; i < MaximumNumberOfConnectioms ;i++)
 	{
 		if(Connectables[i]!=NULL)
 		{
 			RemoveConnected<IConnectable>(i);
-			/*int index = 0;
-			while(Connectables[i]->GetNumberOfConnected()>0)
-			{
-				if(Connectables[i]->getConnectables(index)!=NULL)
-					Connectables[i]->RemoveConnected<IConnectable>(Connectables[i]->ConIDs[i]-1);
-			}
-			delete this->Connectables[i];*/
 			NumberOfConnectedObjects--;
 		}
 	}
@@ -51,7 +46,7 @@ IConnectable::~IConnectable(void)
 
 
 void
-	IConnectable::AddCombiner(void* igobject,ConID* id1,ConID* id2,int componentSlot)
+IConnectable::AddCombiner(void* igobject,ConID* id1,ConID* id2,int componentSlot)
 {
 		setConnectables(componentSlot,(new Combiner())->SetConiIDKeyPair(id1,id2));
 }
@@ -72,7 +67,7 @@ void
 IConnectable::setConnectables(int index,IConnectable* connectable)
 {
 	this->Connectables[index] = connectable;
-	this->ConIDs[index]= connectable->ConnectionID;
+	this->ConIDs[index] = connectable->ConnectionID;
 	this->needOneMoreStartupCycle = !connectable->Initialize();
 }
 
@@ -162,6 +157,8 @@ IConXtor::IConXtor(void)
 	_idLocked=false;
 	SetID(EMPTY);
 	connection = (IObjection<IConXtor>*)this;
+	TypeHashCode=(unsigned)typeid(IConXtor).hash_code();
+	ConnectionID = 0;
 }
 
  IConXtor::~IConXtor()
@@ -292,6 +289,19 @@ IDrawable::SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned 
 	color.byte[1] = r;
 	color.byte[2] = g;
 	color.byte[3] = b;
+}
+
+void
+IDrawable::LoadTexture(string fileName)
+{
+	texture.Loade(fileName);
+	UseTexture(true);
+}
+
+bool
+IDrawable::UseTexture(BOOL use)
+{
+	return use>=2?_useTexture:_useTexture=use;
 }
 
 ILocatable::ILocatable(void)

@@ -1,6 +1,6 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\
 |  Controlled<Value>::Usermodes:                          |
-|  attacheble properties for the Controlled<Value> class. |
+|  attachable properties for the Controlled<Value> class. |
 |  by: K. Muenster                                        |
 \~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #ifndef _VALUECONTROLLER_USERMODES_
@@ -11,7 +11,7 @@
 typedef const unsigned char cBYTE;
 #define Circle (360 * 3.14159265358979323846 / 180)
 
-//base-class... not instacible..
+//abstract base-class... 
 template<typename cType> class UserModeControl
 {
 protected:
@@ -28,7 +28,7 @@ protected:
 		MOVE = move;
 	};
 
-	UserModeControl(void){ID = -1;}
+	UserModeControl(void){ID = NULL;}
 	virtual ~UserModeControl(void)
 	{
 		delete MIN;
@@ -37,7 +37,7 @@ protected:
 		delete controller;
 	}
 	virtual cType checkVALUE(cType* pVALUE)=0;
-	unsigned short ID;
+	unsigned char ID;
 };
 
  
@@ -78,7 +78,7 @@ public:
 	}
 };
 
-//In- or (if INVERT) Decrement the Value by MOVE everytime it's getted. 
+//In- or (if INVERT) Decrement the Value by MOVE every time it's checked. 
 template<typename cType> class MovingValue 
 	: public ClambController<cType>
 {
@@ -99,7 +99,7 @@ public:
 };
 
 //Like a normal pingpong but following a sine-curve
-//...usefull for LFO's in Audio or for Movement-Automation things elsewhere 
+//...useful for LFO's in Audio or for Movement-Automation things elsewhere 
 template<typename cType> class SineControlled
 	: public MovingValue<cType>
 {
@@ -127,7 +127,7 @@ public:
 	}
 };
 
-//take's a pointer to another value...
+//takes a pointer to another value...
 //when that changes, the Value "tries" to 
 //follow it by In-or Decrementing by MOVE...
 template<typename cType> class Follower 
@@ -153,8 +153,8 @@ public:
 
 //If it's Value is Set higher than MAX it will be MOVE
 //if it's Set lower than MIN it will be -MOVE
-//if it's set to somthing between MIN/MAX it will not change.
-//..usefull for implementing functions using Threshold-Values... 
+//if it's set to something between MIN/MAX it will not change.
+//..useful for implementing functions using Threshold-Values... 
 template<typename cType> class Trigger 
 	: public MovingValue<cType>
 {
@@ -184,7 +184,7 @@ public:
 //then it switches the pointers and continues,- now Moving the second one,
 //until it reaches the third, then switches the pointer and goes on moving the third
 //when reached the last PIN it switch's back to the first....
-//...maybe usefull for somthing...
+//...maybe useful for something...
 template<typename cType,cBYTE NUMBER_OF_PINS> class Jongleur 
 	: public Follower<cType>
 {
