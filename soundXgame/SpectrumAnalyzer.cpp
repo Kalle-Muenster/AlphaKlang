@@ -113,6 +113,21 @@ SpectrumAnalyzer::draw(void)
 	if(!IsVisible)
 		return;
 
+	Vector3 vec;
+	for(int i = 0;i<360;i+=90)
+	{
+		vec = getTransform()->rotation+Vector3(0,i,0);
+
+		this->rotate(vec.x,vec.y,vec.z);
+		drawOnce();
+	}
+
+
+}
+
+void
+SpectrumAnalyzer::drawOnce(void)
+{
 	if(_CHANGEDposition || _CHANGEDrotation || _CHANGEDscale)
 	{
 		// Re-Positioning,sizeing and rotating the SubCubes
@@ -122,7 +137,7 @@ SpectrumAnalyzer::draw(void)
 		{
 			if(_CHANGEDposition)
 				bands[i]->getTransform()->position += transform.movement;
-				//bands[i]->getTransform()->position += offset;
+			//bands[i]->getTransform()->position += offset;
 			if(_CHANGEDrotation)
 				bands[i]->getTransform()->rotation = getTransform()->rotation;
 			if(_CHANGEDscale)
@@ -137,7 +152,7 @@ SpectrumAnalyzer::draw(void)
 	{
 		//bands[i]->getTransform()->position.y = Ground::getInstance()->GetGroundY(bands[i]->getTransform()->position.x, bands[i]->getTransform()->position.z);
 		bands[i]->draw();
-	}
+	}	
 }
 
 Vector3

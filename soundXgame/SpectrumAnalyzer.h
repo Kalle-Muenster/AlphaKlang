@@ -30,6 +30,7 @@ public:
 	virtual void DoUpdate(void);
 	virtual void DoLate(void);
 	virtual void draw(void);
+	void drawOnce(void);
 	virtual Vector3 move(float,float,float);
 	virtual Vector3 rotate(float,float,float);
 	virtual Vector3 scale(float,float,float);
