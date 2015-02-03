@@ -24,9 +24,9 @@ FirstPerson::Initialize(void)
 	angle		= 0;
 	lx			= 0;
 	lz			= -1;
-	x			= -17.0f*3.5f;
+	x			= -17.0f*2.5f;
 	y			= 0;
-	z			= 17.0f*3.5f;
+	z			= 17.0f*2.5f;
 	eyeY		= 1;
 	moveSpeed	= 0.5f;
 	mouseSpeed	= 1.0f;

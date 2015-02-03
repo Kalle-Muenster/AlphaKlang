@@ -43,7 +43,7 @@ void ProjectMappe::OnLoadContent(void)
 	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
 	guiding->IsVisible = false;
 
-	// GUI - Object Mover
+	// Qualle
 	(new AnimatedSprite<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
 	SCENE->Object("Q2animated")->IsGrounded(false);
@@ -70,14 +70,14 @@ void ProjectMappe::OnLoadContent(void)
 	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.x=0.2;
 	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y=0.045f;
 
-
+	// Kubus -> fliegender Cube
 	new Kubus();
 	GobID temp = SCENE->Object("last created")->GetID();
 	((Kubus*)SCENE->Object(temp))->SetPrimitiv<ICapsule>();
 	SCENE->Object(temp)->LoadTexture("Deckelblech2_256x256.png");
-	SCENE->Object(temp)->move(5,2,-5);
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,5,20));
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,1,-30));
+	SCENE->Object(temp)->move(5,20,-5);
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,21,-30));
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMOVE(Vector3(Circle/100,Circle/200,Circle/150));
 	SCENE->Object(temp)->GetConnected<SmoothObjectMover>()->IsActive = true;
 	SCENE->Object(temp)->isVisible(true);
@@ -170,7 +170,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->sensitivity=2;
 	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
 
-	// AUDIO 11
+	// Cubus - fliegender Cube
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
 	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
 	SCENE->Object("AUDIO11")->AddConnectable<MusicScaler>();
@@ -253,7 +253,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Spectrum Analyzer
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
-	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -30.0f);
+	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
 
