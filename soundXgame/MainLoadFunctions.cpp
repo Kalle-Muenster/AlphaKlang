@@ -11,7 +11,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Background Music
 	//unsigned int brummsound;
 	//AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("DaRioGame v03.wav");
+	AUDIO->LoadeBackgroundAudio("DaRioGame v05.wav");
 	AUDIO->Play();
 	AUDIO->BackgroundMusicVolume(1);
 
@@ -96,6 +96,30 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("PrimitivKubus-emission")->SetColor(160,180,255,66);
 	SCENE->Object("PrimitivKubus-emission")->IsVisible = true;
 	
+	/*
+	Vector3[] pos = Vector3[18];
+		pos[0] = new Vector3(0,0,0);
+		pos[1] = new Vector3(5,0,5);
+
+	for(int i = 1; i < 18; i++)
+	{
+		char dig = (char)(((int)'0')+i);
+		(new Cubus("X-7.png"))->SetName("AUDIO01");
+		SCENE->Object("AUDIO0" + dig)->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
+		SCENE->Object("AUDIO01")->move(pos[i]);
+		SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
+		SCENE->Object("AUDIO01")->IsGrounded(true);
+		SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
+		SCENE->Object("AUDIO01")->GetConnected<MusicScaler>()->sensitivity=2;
+		SCENE->Object("AUDIO01")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
+	}
+	*/
+
+	//IMeshObject* meshObj;
+	//meshObj = (IMeshObject*)SCENE->Object("AUDIO01");	
+	//meshObj->GroundedWithPivot = true;
+
+
 
 	//GobID vox2 = (new VoxGrid("buntbild_128.ppm"))->GetID();
 	//SCENE->Object(vox2)->SetName("VoxelPlane2");
@@ -104,7 +128,7 @@ void ProjectMappe::OnLoadContent(void)
 	//((VoxGrid*)SCENE->Object(vox2))->flip();
 	
 	// AUDIO 01
-	(new Cubus("X-7.png"))->SetName("AUDIO01");
+	/*(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
 	SCENE->Object("AUDIO01")->move(-20,0,-4);
 	SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
@@ -169,6 +193,12 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO10")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->sensitivity=2;
 	SCENE->Object("AUDIO10")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
+	
+	// AUDIO 12
+	(new Cubus("X-7.png"))->SetName("AUDIO12");
+	SCENE->Object("AUDIO12")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/09-Brite Strings.mp3");
+	SCENE->Object("AUDIO12")->move(20,0,-18);
+	*/
 
 	// Cubus - fliegender Cube
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
@@ -194,14 +224,9 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO11-emission")->SetColor(160,180,255,66);
 	SCENE->Object("AUDIO11-emission")->IsVisible = true;
 
-	// AUDIO 12
-	(new Cubus("X-7.png"))->SetName("AUDIO12");
-	SCENE->Object("AUDIO12")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/09-Brite Strings.mp3");
-	SCENE->Object("AUDIO12")->move(20,0,-18);
-
 	// Play from AUDIO 01 till AUDIO 12
-	SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
+	//SCENE->Object("AUDIO01")->GetConnected<AudioEmitter>()->PlayAudio();
+	/*SCENE->Object("AUDIO02")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO03")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO04")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO05")->GetConnected<AudioEmitter>()->PlayAudio();
@@ -210,8 +235,8 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO08")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO09")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO10")->GetConnected<AudioEmitter>()->PlayAudio();
+	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->PlayAudio();*/
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
-	SCENE->Object("AUDIO12")->GetConnected<AudioEmitter>()->PlayAudio();
 	AUDIO->Play();
 
 	// Music Cube
@@ -240,7 +265,7 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
 		SCENE->Object(obj)->GetOrAdd<AudioEmitter>();
-		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("mp3/03-Kit-808.mp3",false);
+		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("mp3/3-Audio.mp3",false);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicInteractor>();
 		SCENE->Object(obj)->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
