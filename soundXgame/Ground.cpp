@@ -111,11 +111,11 @@ Ground::Ground(void) :
 
 	// initialize music listener options
 	this->AddConnectable<MusicController>();
-	this->GetConnected<MusicController>()->SetLineBounds(0, 1, 38, 2);
-	this->GetConnected<MusicController>()->SetClambt(0, 1, 6);
-	this->GetConnected<MusicController>()->SetThreshold(0, 0.1f);
+	this->GetConnected<MusicController>()->SetLineBounds(0, 1, 30, 2);
+	this->GetConnected<MusicController>()->SetClambt(0, 2, 3);
+	this->GetConnected<MusicController>()->SetThreshold(0, 0.01f);
 	this->GetConnected<MusicController>()->GetLineData(0)->fallOff = 0.1f;
-	this->GetConnected<MusicController>()->sensitivity = 70;
+	this->GetConnected<MusicController>()->sensitivity = 50;
 }
 
 Ground::~Ground(void)
@@ -366,7 +366,7 @@ void Ground::Update(void)
 	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
 	std::cout << line0 << std::endl;
 
-	dynamicVal = line0*30 + 6;
+	dynamicVal = line0*50 + 6;
 	*valueList[1] = dynamicVal;
 
 	// Update First Person Camera

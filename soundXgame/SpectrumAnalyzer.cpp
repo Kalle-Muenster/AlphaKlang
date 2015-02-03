@@ -5,7 +5,7 @@
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
-	this->ChartHeight = 50.0f;
+	this->ChartHeight = 100.0f;
 }
 
 void
