@@ -23,6 +23,8 @@ private:
 	List<IDrawable*,MAX_MUM_SCENE_OBJECTS> drawables;
 	float r,g,b;
 	void UpdateSky(void);
+	
+
 
 public:
 	~SceneGraph(void);
@@ -32,6 +34,8 @@ public:
 	void DrawSky(void);
 	void DrawGUI(void);
 
+
+	bool ShowFPS;
 	//Activate Color-flashing Sky drawer !...
 	bool SkyFlasherActive;
 

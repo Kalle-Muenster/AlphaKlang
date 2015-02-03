@@ -1,6 +1,11 @@
 #include "GuiManager.h"
 #include "Utility.h"
 #include "SceneGraph.h"
+#include "InputManager.h"
+
+ data32 _color;
+ Vecti fpsTextPosition = Vecti();
+ char fpsSTRING[32];
 
 
 
@@ -14,6 +19,12 @@ GuiManager::GuiManager(void)
 	elements = List<IDrawable*,MAX_NUM_GUI_OBJECTS>();
 	writeOrders = List<WriteOrder*,100>();
 	r=g=b=a=1.f;
+	_color.byte[0]=255;
+	_color.byte[1]=255;
+	_color.byte[2]=255;
+	_color.byte[3]=255;
+	fpsTextPosition.ix=20;
+	fpsTextPosition.yps=20;
 }
 
 
@@ -144,6 +155,12 @@ void _WriteText2D(const char * text, Vecti position,data32 color)
   { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
 }
 
+void _writeFPS()
+{
+	sprintf(&fpsSTRING[0],"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
+	_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
+}
+
 void
 GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 {
@@ -153,7 +170,7 @@ GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 void
 GuiManager::DrawGUI(void)
 {	
-	if(elements.Count()==0 && writeOrders.Count()==0)
+	if(elements.Count()==0 && writeOrders.Count() == 0)
 		return;
 
 	Enable2DDrawing();
@@ -172,6 +189,8 @@ GuiManager::DrawGUI(void)
 				_WriteText2D(writeOrders[ID]->text,writeOrders[ID]->position,writeOrders[ID]->color);
 				writeOrders.Distruct(ID);
 			}
+			if(scene->ShowFPS)
+				_writeFPS();
 		}
 	}	
 	Disable2DDrawing();

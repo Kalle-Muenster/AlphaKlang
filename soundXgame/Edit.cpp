@@ -9,6 +9,26 @@ Edit::ID = -1;
 unsigned _panel;
 bool _NoPanelGenerated=true;
 int lastCamMode = FIRSTPERSON;
+bool mousereleased = true;
+
+void
+_button_1_click(IConnectable* sender)
+{	
+	if(mousereleased)
+	{
+		if(SCENE->ShowFPS)
+		{
+			GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->SetText("Hide FPS");
+			SCENE->ShowFPS = false;
+		}
+		else
+		{	
+			GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->SetText("Show FPS");
+			SCENE->ShowFPS = true;
+		}
+		mousereleased = false;
+	}
+}
 
 void
 _backButtonClick(IConnectable* sender)
@@ -61,6 +81,9 @@ Edit::UpdateMode(void)
 	
 	gluLookAt(camera->transform.position.x, camera->transform.position.y, camera->transform.position.z,
 			  camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
+
+	if(INPUT->Mouse.LEFT.RELEASE)
+		mousereleased=true;
 
 	this->IsDirty=false;
 }
@@ -181,6 +204,7 @@ Edit::OnActivate(void)
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
 	GUI->Element("Editor-Panel")->isVisible(true);
-	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>()->ClickAction =  _backButtonClick;
+	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->ClickAction =  _button_1_click;
+	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(2)->ClickAction =  _backButtonClick;
 }
 

@@ -33,12 +33,13 @@ void ProjectMappe::OnLoadContent(void)
 	GuiObject* guiding = new GuiObject("panelT_256x512.png");
 	guiding->SetName("Editor-Panel");
 	guiding->scale(Vector3(256,256,1));
-	guiding->AddConnectable<SliderX>();
-	guiding->GetConnected<SliderX>()->PositionOnPanel = VectorF(10,10);
-	guiding->GetConnected<SliderX>()->SizeScaledPanel = VectorF(0.5,0.5/4);
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>()->PositionOnPanel = VectorF(10,60);	
-	guiding->GetConnected<ButtonControl>()->SizeScaledPanel = VectorF(0.5,0.5/4);
+	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(10,10);
+	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.5,0.5/4);
+	guiding->GetConnected<ButtonControl>(1)->SetText("Show FPS");
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(10,60);	
+	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.5,0.5/4);
 	guiding->GetConnected<ButtonControl>(2)->SetText("Back");
 	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
 	guiding->IsVisible = false;
@@ -153,6 +154,7 @@ void ProjectMappe::OnLoadContent(void)
 		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
 		SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
 		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); // load music
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10,50);
 		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
 		SCENE->Object(id)->IsGrounded(true); // grounded
 		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
