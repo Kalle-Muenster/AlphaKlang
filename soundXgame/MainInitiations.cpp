@@ -17,7 +17,9 @@ ProjectMappe::InitEngine(int &argc,char** argv)
 
 	INPUT->SetDoubleclickTime(400);
 
+
 	AUDIO->Set3D_DopplerFXFactor(0.66f);
+
 	AUDIO->Set3D_DistanceFactor(1.0f);
 	AUDIO->Set3D_RollOffFactor(10.0f);
 	//AUDIO->Volume(0);

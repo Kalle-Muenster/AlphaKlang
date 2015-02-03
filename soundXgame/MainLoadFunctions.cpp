@@ -136,32 +136,41 @@ void ProjectMappe::OnLoadContent(void)
 	//SCENE->Object(vox2)->AddConnectable<VoxControl>();
 	//SCENE->Object(vox2)->AddConnectable<MusicVox>();
 	//((VoxGrid*)SCENE->Object(vox2))->flip();
-	Vector3  CubeSpwns[18] = {Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
-							  Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
-							  Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
-							  Vector3(5,2,15),Vector3(5,2,5),Vector3(-5,-2,-5),Vector3(-5,2,5),
-							  Vector3(5,-2,5),Vector3(5,2,-5)};
+	Vector3  CubeSpwns[22] = {
+								Vector3(0,0,0),Vector3(0,0,0),Vector3(-45,2,45),Vector3(-15,2,50),
+								Vector3(-40,2,15),Vector3(-22,2,31),Vector3(-10,2,10),Vector3(0,0,0),
+								Vector3(21,2,50),Vector3(15,2,25),Vector3(37,2,30),Vector3(50,2,15),
+								Vector3(22,2,-8),Vector3(15,2,-27),Vector3(50,2,-30),Vector3(0,0,0),
+								Vector3(45,2,-50),Vector3(0,0,0),Vector3(50,2,40),Vector3(-30,2,-45),
+								Vector3(-23,-2,-28),Vector3(-33,2,-50)
+							};
 	char tempString[32];
-	for(int i = 14;i<18;i++)
+	for(int i = 1;i<22;i++)
 	{
-		//CubeSpwns[i].x+=i*3;
-		sprintf(&tempString[0],"AUDIO_%i",i);
-		sprintf(&tempString[10],"mp3/%i-Audio.mp3",i);
 
-		new IPrimitivObject();
-		GobID id = SCENE->Object("last created")->GetID();
-		SCENE->Object(id)->SetName(&tempString[0]);
-		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
-		SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
-		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); // load music
-		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10,50);
-		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
-		SCENE->Object(id)->IsGrounded(true); // grounded
-		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
-		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
-		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio(); // play audio
+		if(i != 1 && i != 2 && i != 8 && i != 16 && i != 18)
+		{
+			sprintf(&tempString[0],"AUDIO_%i",i);
+			sprintf(&tempString[10],"mp3/%i-Audio.mp3",i);
+
+			new IPrimitivObject();
+			GobID id = SCENE->Object("last created")->GetID();
+			SCENE->Object(id)->SetName(&tempString[0]);
+			((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
+			SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
+			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); 
+			// load music
+			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(20, 30);
+			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
+			SCENE->Object(id)->IsGrounded(true); // grounded
+			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
+			SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
+			SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+			SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
+			SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio(); // play audio
+		}
+
+
 	}
 
 	// AUDIO 01
