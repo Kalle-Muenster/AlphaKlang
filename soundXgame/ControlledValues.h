@@ -146,8 +146,8 @@ public:
 	//Destructor...
 	virtual ~Controlled(void)
 	{
-		if(UserMode!=NULL)
-			delete UserMode;
+		//if(UserMode!=NULL)
+		//	delete UserMode;
 		delete _Value;
 	}
 
@@ -299,7 +299,10 @@ public:
 		return this->SetValue(set);
 	}
 
-
+	ctrlType operator +=(float other)
+		{
+			return this->SetValue(this->GetValue()+other);
+		}
 };
 
 

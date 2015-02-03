@@ -12,13 +12,15 @@ protected:
 	float*			fftData;
 	HCHANNEL		channel;
 	virtual void	GetFFTData(void);
-
+	bool			dataRecieved;
+	float			MidRange;
 public:
-	Controlled<float> MotivatorA,MotivatorB,TriggerA,TriggerB;
+	Controlled<float> MotivatorA,MotivatorB,Moderator,follow;
+	float splitA,splitB;
 	Listener(void);
 	virtual ~Listener(void);
 	virtual bool Initialize(void);
-	virtual void ListenToChannel(HCHANNEL AudioChannel);
+	virtual void SetListenToChannel(HCHANNEL AudioChannel);
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
 

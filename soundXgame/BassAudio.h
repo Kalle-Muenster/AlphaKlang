@@ -10,7 +10,10 @@
 	Playing Background-Musik and controling the master-output.
 	also Provides Getting FFT-Data for any audio chanel in Scene..
 */
+//#ifndef _POJECT_MACROS__
 #define AUDIO BassAudio::GetInstance()
+//#endif
+
 #define AUDIO_BUFFERS_UPDATE_PERIOD			(100)
 #define FFT_WINDOW_SIZE						(1024)
 #define MAXIMUM_NUMBER_OF_AUDIOOBJECTS		(1024)
@@ -67,6 +70,7 @@ public:
 	float Set3D_DopplerFXFactor(float dopplerFxFactor);
 	void Update3Dchanges(void);
 	IObjection<IConnectable>* FindObjectByAudiochannel(DWORD channel);	//better outsource to SCENE!...
+	HCHANNEL GetBackgroundChannelHandle(void);
 
 private:
 	float distance;

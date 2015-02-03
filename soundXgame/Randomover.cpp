@@ -66,14 +66,14 @@ SmoothObjectMover::Initialize(void)
 	movingVector.x.SetMIN(-30);
 	movingVector.x.SetMAX(40);
 	movingVector.x.SetMOVE(Circle/180);
-	movingVector.y.SetMIN(0.5);
-	movingVector.y.SetMAX(25);
+	movingVector.y.SetMIN(20);
+	movingVector.y.SetMAX(75);
 	movingVector.y.SetMOVE(Circle/120);
 	movingVector.z.SetMIN(-50);
 	movingVector.z.SetMAX(50);
 	movingVector.z.SetMOVE(Circle/220);
 	movingVector.x = 10;
-	movingVector.y = 1;
+	movingVector.y = 25;
 	movingVector.z = 0;
 	movingVector.ControllersActive(true);
 	return true;

@@ -19,7 +19,8 @@ private:
 	bool _CHANGEDposition,_CHANGEDrotation,_CHANGEDscale;
 	virtual void ChangeColor(int band,float changefactor);
 	virtual void ChangeSize(int band,float changefactor);
-	
+	void drawOnce(void);
+
 public:
 	float ChartHeight;
 	SpectrumAnalyzer(void);
@@ -30,7 +31,6 @@ public:
 	virtual void DoUpdate(void);
 	virtual void DoLate(void);
 	virtual void draw(void);
-	void drawOnce(void);
 	virtual Vector3 move(float,float,float);
 	virtual Vector3 rotate(float,float,float);
 	virtual Vector3 scale(float,float,float);

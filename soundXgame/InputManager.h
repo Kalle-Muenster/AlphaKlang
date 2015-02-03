@@ -2,7 +2,9 @@
 #ifndef _INPUT_MANAGER_H_
 #define _INPUT_MANAGER_H_ 
 
-
+//#ifndef _POJECT_MACROS__
+//#define INPUT InputManager::getInstance()
+//#endif
 
 //Undefine to switch off Console-output of mouse data test or FPS calculation
 #define MOUSE_TEST_OUTPUT (1)

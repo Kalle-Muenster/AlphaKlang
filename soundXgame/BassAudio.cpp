@@ -596,3 +596,9 @@ BassAudio::FindObjectByAudiochannel(DWORD channel)
 	while((++i<MAXIMUM_NUMBER_OF_AUDIOOBJECTS)&&(_Channels[i].ID!=channel));
 	return ((IConnectable*)_GameObjects[i])->Connection();
 }
+
+HCHANNEL
+BassAudio::GetBackgroundChannelHandle(void)
+{
+	return derAudio;
+}

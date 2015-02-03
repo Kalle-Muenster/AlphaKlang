@@ -5,7 +5,9 @@
 
 #include "GuiManager.h"
 
-#define SCENE SceneGraph::getInstance()
+//#ifndef _POJECT_MACROS__
+//#define SCENE SceneGraph::getInstance()
+//#endif
 
 typedef unsigned int GobID;
 typedef char* string;

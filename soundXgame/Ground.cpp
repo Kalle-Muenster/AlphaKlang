@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "MusicController.h"
 
+
 Ground* instance;
 
 Ground* Ground::getInstance()
@@ -93,6 +94,8 @@ Ground::Ground(void) :
 	{
 		dynamicMap[i] = new int [count_x+1];
 	}
+
+
 
 	// save both array to list
 	mapList[0] = heightMap;
@@ -293,6 +296,7 @@ void Ground::draw(void)
 						heightFrontRight +=  (float)dynamicMap[count_z - nz    ][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
 						heightRearLeft   +=  (float)dynamicMap[count_z - nz - 1][nx    ] / 100 * dynamicRange / 100 * dynamicVal;
 						heightRearRight  +=  (float)dynamicMap[count_z - nz - 1][nx + 1] / 100 * dynamicRange / 100 * dynamicVal;
+
 					
 						if(coloredTiles == true)
 						{

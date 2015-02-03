@@ -1,25 +1,25 @@
-#include "Kubus.h"
+#include "PrimitivObject.h"
 
 //
 
-Kubus::Kubus(void)
+IPrimitivObject::IPrimitivObject(void)
 {
 	conXtor =  new IConXtor();
 	conXtor->SetConnection(this);
 	conXtor->SetName("last created");
 	InitializeObject();
-
+	
+//	SetPrimitiv<IBall>();
 }
 
-//#define this this->conXtor
 
-Kubus::~Kubus(void)
+IPrimitivObject::~IPrimitivObject(void)
 {
 }
 
 
 void 
-Kubus::InitializeObject(void)
+IPrimitivObject::InitializeObject(void)
 {
 	conXtor->AddToSceneAndLockID();
 	color.byte[1] = 32;
@@ -31,11 +31,8 @@ Kubus::InitializeObject(void)
 }
 
 
-
-
-
 Transform*
-Kubus::getTransform(void)
+IPrimitivObject::getTransform(void)
 {
 
 	return &this->transform;
@@ -43,9 +40,9 @@ Kubus::getTransform(void)
 }
 
 void 
-Kubus::draw(void)
+IPrimitivObject::draw(void)
 {
-	if(!primitiv->vertsBufferID)
+	if(!pri.vertsBufferID)
 		return;
 
 	if(NoBackfaceCulling == false)
@@ -65,10 +62,10 @@ Kubus::draw(void)
 		glColor4b(Connection()->color.byte[1],Connection()->color.byte[2],Connection()->color.byte[3],Connection()->color.byte[0]);
 	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, primitiv->vertsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, pri.vertsBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, primitiv->paintBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, pri.paintBufferID);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
@@ -95,7 +92,7 @@ Kubus::draw(void)
 		glScalef(values.x,values.y,values.z);
 
 		// Draw
-		glDrawArrays(primitiv->shape, 0, primitiv->VertsCount);
+		glDrawArrays(pri.shape, 0, pri.VertsCount);
 	}
 	glPopMatrix();
 
@@ -106,4 +103,3 @@ Kubus::draw(void)
 
 
 
-//#undef this

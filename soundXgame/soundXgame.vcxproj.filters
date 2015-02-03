@@ -169,8 +169,8 @@
     <ClCompile Include="IPrimitive.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Kubus.cpp" />
     <ClCompile Include="primitivSwitcher.cpp" />
+    <ClCompile Include="PrimitivObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -359,8 +359,8 @@
     <ClInclude Include="IPrimitive.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Kubus.h" />
     <ClInclude Include="primitivSwitcher.h" />
+    <ClInclude Include="PrimitivObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="03.wav">
@@ -728,6 +728,12 @@
       <Filter>Resources\Meshes</Filter>
     </None>
     <None Include="capsula_quads_32.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="ball_low_tris.obi">
+      <Filter>Resources\Meshes</Filter>
+    </None>
+    <None Include="ball_high_tris.obi">
       <Filter>Resources\Meshes</Filter>
     </None>
   </ItemGroup>

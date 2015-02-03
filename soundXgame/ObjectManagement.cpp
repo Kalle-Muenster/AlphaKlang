@@ -55,3 +55,42 @@ ObjectManagement::FreeID(unsigned id)
 	}
 }
 
+IObjection<IConXtor>* 
+ObjectManagement::Find(unsigned ID)
+{
+	IObjection<IConXtor>* obj;
+	if(ID<MAX_MUM_SCENE_OBJECTS)
+		obj = (IObjection<IConXtor>*)SCENE->Object(ID);
+	else if	(ID<_managedIDs)
+		obj = (IObjection<IConXtor>*)GUI->Element(ID);
+	else
+		{
+			//todo
+		}
+
+	return obj;
+}
+
+IObjection<IConXtor>* 
+ObjectManagement::Find(char* name)
+{
+	 IObjection<IConnectable>* obj = SCENE->Object(name);
+	 if(obj==NULL)
+		 obj = GUI->Element(name);
+
+	 return (IObjection<IConXtor>*)obj;
+}
+
+ControllElement*
+ObjectManagement::FindGUIControll(char* PanelName,char* label)
+{
+	GuiObject* panel = (GuiObject*)GUI->Element(PanelName);
+	for(unsigned c = 1;c<panel->conXtor->GetNumberOfConnected();c++)
+		{
+			 ControllElement* cnt = panel->GetConnected<ControllElement>(c);
+			 if(cnt->GetText()==label)
+				 return cnt;
+		}
+	return NULL;
+}
+

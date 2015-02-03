@@ -4,8 +4,10 @@
 #define _UPDATEMANAGER_H_
 
 #define MAXIMUM_NUMBER_OF_UPDATECLIENTS (1000)
-#define UPDATE UpdateManager::getInstance()
 
+//#ifndef _POJECT_MACROS__
+//#define UPDATE UpdateManager::getInstance()
+//#endif
 
 enum UPdTIME
 {EARLY=0,MAIN=1,LATE=2};

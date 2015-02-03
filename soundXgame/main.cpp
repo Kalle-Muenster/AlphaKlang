@@ -17,13 +17,19 @@ int main(int argc,char** argv)
 	return ProjectMappe::prepareForExit();
 }
 
+void ProjectMappe::LoadContent(void)
+{
+	printf("ENGINE: Loading Scene...\n");
 
+	ProjectMappe::OnLoadContent();
+
+	printf("\nSCENE: Loaded... \n ...entering game-loop!\n\n");
+}
 
 int ProjectMappe::prepareForExit(void)
 {
 	printf("ENGINE: preparing for exit...\n     .....     unloading objects...\n");
-//	glutExit();
-	//deletions:
+
 	ProjectMappe::GlobalDestructor();
 	
 	printf("\n     .....unloading done ! \n    - EXIT\n");
@@ -31,19 +37,6 @@ int ProjectMappe::prepareForExit(void)
 }
 
 
-
-
-
-
-//ConID testID;
-void ProjectMappe::LoadContent(void)
-{
-	printf("ENGINE: Loading Scene...\n");
-	
-	ProjectMappe::OnLoadContent();
-
-	printf("\nSCENE: Loaded... \n ...entering gameloop!\n\n");
-}
 
 
 

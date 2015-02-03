@@ -1,5 +1,5 @@
 #include "primitivSwitcher.h"
-#include "Kubus.h"
+#include "PrimitivObject.h"
 #include "Camera.h"
  
 
@@ -64,22 +64,25 @@ primitivSwitcher::Switch(PRIMITIVES prim)
 		switch(currentSellected)
 		{
 		case CUBE:
-			((Kubus*)Connection())->SetPrimitiv<ICubic>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<ICubic>();
 			break;
 		case BALL:
-			((Kubus*)Connection())->SetPrimitiv<IBall>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<IBall>();
 			break;
 		case SPHERE:
-			((Kubus*)Connection())->SetPrimitiv<ISphere>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<ISphere>();
 			break;
 		case ZYLINDER:
-			((Kubus*)Connection())->SetPrimitiv<IZylinder>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<IZylinder>();
 			break;
 		case CONE:
-			((Kubus*)Connection())->SetPrimitiv<ICone>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<ICone>();
 			break;
 		case CAPSULE:
-			((Kubus*)Connection())->SetPrimitiv<ICapsule>();
+			((IPrimitivObject*)Connection())->SetPrimitiv<ICapsule>();
+			break;
+		case FLATQUAD:
+			((IPrimitivObject*)Connection())->SetPrimitiv<IFlatquad>();
 			break;
 		}
 

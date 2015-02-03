@@ -71,10 +71,10 @@ void ProjectMappe::OnLoadContent(void)
 	//((VoxGrid*)SCENE->Object("plane_front"))->MainSizzes.y=0.045f;
 
 
-	new Kubus();
+	new IPrimitivObject();
 	GobID temp = SCENE->Object("last created")->GetID();
-	((Kubus*)SCENE->Object(temp))->SetPrimitiv<ICapsule>();
-	SCENE->Object(temp)->LoadTexture("Deckelblech2_256x256.png");
+	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<ICubic>();
+	SCENE->Object(temp)->LoadTexture("X-7.png");
 	SCENE->Object(temp)->move(5,2,-5);
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,5,20));
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,1,-30));
@@ -102,7 +102,34 @@ void ProjectMappe::OnLoadContent(void)
 	//SCENE->Object(vox2)->AddConnectable<VoxControl>();
 	//SCENE->Object(vox2)->AddConnectable<MusicVox>();
 	//((VoxGrid*)SCENE->Object(vox2))->flip();
-	
+	Vector3  CubeSpwns[18] = {Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
+							  Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
+							  Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),Vector3(5,2,5),
+							  Vector3(5,2,15),Vector3(5,2,5),Vector3(-5,-2,-5),Vector3(-5,2,5),
+							  Vector3(5,-2,5),Vector3(5,2,-5)};
+	char tempString[32];
+	for(int i = 14;i<18;i++)
+	{
+		//CubeSpwns[i].x+=i*3;
+		sprintf(&tempString[0],"AUDIO_%i",i);
+		sprintf(&tempString[10],"mp3/%i-Audio.mp3",i);
+
+		new IPrimitivObject();
+		GobID id = SCENE->Object("last created")->GetID();
+		SCENE->Object(id)->SetName(&tempString[0]);
+		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
+		SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
+		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); // load music
+		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
+		SCENE->Object(id)->IsGrounded(true); // grounded
+		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
+		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio(); // play audio
+
+
+	}
 	// AUDIO 01
 	(new Cubus("X-7.png"))->SetName("AUDIO01");
 	SCENE->Object("AUDIO01")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
@@ -277,7 +304,12 @@ void ProjectMappe::OnLoadContent(void)
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
 	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
 	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
-
+//	SCENE->Object("ParticleSystem")->AddConnectable<Listener>();
+//	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->SetListenToChannel(AUDIO->GetBackgroundChannelHandle());
+//	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->IsActive=true;
+	
+	
+	
 	// Camera
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
 	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>()->IsActive=false;

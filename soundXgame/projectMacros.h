@@ -36,6 +36,7 @@
 /* 
 	handles the Scene... (how this could be ?) 
 */
+
 #define SCENE	SceneGraph::getInstance()
 
 
@@ -48,6 +49,7 @@
    It also handles InvokationList where IObserver-derived
    objects can be attatched to, to be calld when Input ocurres.. 
 */
+
 #define INPUT	InputManager::getInstance()			
 
 
@@ -59,7 +61,8 @@
 		DoEarly	  - happens at first.. calls it's update-client-object's "DoEarly()"-function... happens just before the ObserverPattern-based Events are Fired !
 		DoUpdate  - same as above but happenes after he Observer-Invokations... call's "DoUpdate()"-functiom on all objects signed in for Update... 
 		DoLate    - It's calling-Time depends on the "LATE_BEFORE_DRAW / LATE_AFTER_DRAW" directive..  calls "DoLate()"-function on it's clients...
-*/		
+*/	
+
 #define UPDATE	UpdateManager::getInstance()
 
 
@@ -71,7 +74,10 @@
   for drawing 2D-Textures, writing text and setting up buttons and sliders., etc... 
   also should contain options for saving, loading, xml-serialization and such stuff soon...
 */
+
 #define GUI GuiManager::getInstance()
+
+
 
 #define OBJECT ObjectManagement::getInstance()
 

@@ -66,8 +66,8 @@ public:
 		virtual void Init(void)
 		{
 			InvertController<cType>::Init();
-			*MIN = -1;
-			*MAX = 1;
+			*MIN = -100;
+			*MAX = 100;
 			CLAMP = true;
 		}
 	bool CLAMP;
@@ -87,7 +87,7 @@ public:
 		{
 			ClambController<cType>::Init();
 			CLAMP = false;
-			*MOVE = 0.001f;
+			*MOVE = 1;
 		}
 
 
@@ -164,7 +164,7 @@ public:
 			MovingValue<cType>::Init();
 			*MIN = -10;
 			*MAX = 10;
-			*MOVE = 1.f;
+			*MOVE = 1;
 		}
 
     cType* pTARGET;
@@ -192,9 +192,9 @@ protected:
 		virtual void Init(void)
 		{
 			Follower<cType>::Init();
-			*MIN = -1;
-			*MAX = 1;
-			*MOVE = 0.001f;
+			*MIN = -100;
+			*MAX = 100;
+			*MOVE = 1;
 			currentPIN = 0;
 		}
 public:

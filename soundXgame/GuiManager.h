@@ -3,9 +3,14 @@
 
 #define MAX_NUM_GUI_OBJECTS 1024
 
+//#ifndef _POJECT_MACROS__
+//#define GUI GuiManager::getInstance()
+//#endif
+
 #include "DataStructs.h"
 #include "Sprite.h"
 #include "list.h"
+
 
 
 class SceneGraph;

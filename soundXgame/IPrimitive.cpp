@@ -7,46 +7,81 @@
 typedef GLfloat dreier[3];
 typedef GLfloat zweier[2];
 
-//A Type-Array, containing constants of the primitives Type-ID's
-const type_info* primitive[7] = { &(typeid(ICubic)),
-								  &(typeid(IBall)),
-								  &(typeid(ISphere)),
-								  &(typeid(IZylinder)),
-								  &(typeid(ICone)),
-								  &(typeid(ICapsule)),
-								  &(typeid(IFlatquad)) };
 
+
+//A Type-Array, containing constants of the primitives Type-ID's
+const type_info* _primitiveTypes[7] = { &(typeid(IFlatquad)),
+									    &(typeid(ICubic)),
+									    &(typeid(IBall)),
+									    &(typeid(ISphere)),
+									    &(typeid(IZylinder)),
+									    &(typeid(ICone)),
+									    &(typeid(ICapsule)) };
+
+PrimitiveType* _primitivs[7] = { new IFlatquad(),
+								 new ICubic(),
+								 new IBall(),
+								 new ISphere(),
+								 new IZylinder(),
+								 new ICone(),
+								 new ICapsule() };
+
+IFlatquad	_flatquad	= IFlatquad();
+ICubic		_qube		= ICubic();
+IBall		_ball		= IBall();
+ISphere		_sphere		= ISphere();
+IZylinder	_zylinder	= IZylinder();
+ICone		_cone		= ICone();
+ICapsule	_capsula	= ICapsule();
+
+
+const IFlatquad const *
+	PrimitiveType::FlatQuad = (IFlatquad const*) _primitivs[PRIMITIVE::FLATQUAD]; 
+
+const ICubic const *
+	PrimitiveType::Qube = (ICubic const*) _primitivs[PRIMITIVE::QUBE];
+
+const IBall const *
+	PrimitiveType::Ball = (IBall const*) _primitivs[PRIMITIVE::BALL];
+
+const ISphere const *
+	PrimitiveType::Sphere = (ISphere const*) _primitivs[PRIMITIVE::SPHERE];
+
+const IZylinder const *
+	PrimitiveType::Zylinder = (IZylinder const*) _primitivs[PRIMITIVE::ZYLINDER];
+
+const ICone const *
+	PrimitiveType::Cone = (ICone const*) _primitivs[PRIMITIVE::CONE];
+
+const ICapsule const *
+	PrimitiveType::Capsula = (ICapsule const*) _primitivs[PRIMITIVE::CAPSULA];
 
 
 //////////////////////////////////////////////////////////////
 // Flatquad static definitions:
 //////////////////////////////////////////////////////////////
 
-GLuint
-IFlatquad::vertsBufferID=0; 
 
+const GLuint
+	IFlatquad::shape = GL_QUADS;
+const GLuint 
+	IFlatquad::VertsCount = 4;
 GLuint
-IFlatquad::paintBufferID=0;
-
+	IFlatquad::vertsBufferID = 0; 
 GLuint
-IFlatquad::normsBufferID=0;
-
+	IFlatquad::paintBufferID = 0;
 GLuint
-IFlatquad::shape = 0;
+	IFlatquad::normsBufferID = 0;
 
-GLuint 
-IFlatquad::VertsCount=0;
+
 
 // Initiation-function for IFlatquad-static's
 void
 ProjectMappe::InitFlatQuat(void)
 {
-	dreier vertsTemp[4];
-	zweier paintTemp[4];
+	dreier vertsTemp[IFlatquad::VertsCount];
+	zweier paintTemp[IFlatquad::VertsCount];
 	dreier normsTemp[1];
-
-	IFlatquad::shape = GL_QUADS;
-	IFlatquad::VertsCount = 4;
 
 	vertsTemp[0][0] = -0.5f;
 	vertsTemp[0][1] = -0.5f;
@@ -78,15 +113,25 @@ ProjectMappe::InitFlatQuat(void)
 
 	glGenBuffers(1, &IFlatquad::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IFlatquad::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(dreier), &vertsTemp[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, IFlatquad::VertsCount * sizeof(dreier), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &IFlatquad::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IFlatquad::paintBufferID);
-	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(zweier), &paintTemp[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, IFlatquad::VertsCount * sizeof(zweier), &paintTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &IFlatquad::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IFlatquad::normsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, 1 * sizeof(dreier), &normsTemp[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(dreier), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::FLATQUAD]->buffers.vertsBufferID = IFlatquad::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::FLATQUAD]->buffers.paintBufferID = IFlatquad::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::FLATQUAD]->buffers.normsBufferID = IFlatquad::normsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::FLATQUAD]->buffers.VertsCount	   = IFlatquad::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::FLATQUAD]->buffers.shape		   = IFlatquad::shape;
+
+	_flatquad.vertsBufferID = IFlatquad::vertsBufferID;
+	_flatquad.paintBufferID = IFlatquad::paintBufferID;
+	_flatquad.normsBufferID = IFlatquad::normsBufferID;
 }
 
 
@@ -95,20 +140,18 @@ ProjectMappe::InitFlatQuat(void)
 //CUBE:
 /////////////////////////////////////////////////////////////////////////////////////////
 
+GLuint
+	ICubic::shape = 0;
+GLuint
+	ICubic::VertsCount = 0;
 GLuint 
-ICubic::vertsBufferID=0;
-
+	ICubic::vertsBufferID=0;
 GLuint
-ICubic::paintBufferID=0;
-
+	ICubic::paintBufferID=0;
 GLuint
-ICubic::normsBufferID=0;
+	ICubic::normsBufferID=0;
+ 
 
-GLuint
-ICubic::shape = 0;
-
-GLuint
-ICubic::VertsCount = 0; 
 
 void
 ProjectMappe::InitICubic(void)
@@ -117,13 +160,12 @@ ProjectMappe::InitICubic(void)
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
 
-
 	Utility::loadObj("cube_quads.obi",vertsTemp,paintTemp,normsTemp,ICubic::shape);
+	ICubic::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &ICubic::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICubic::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	ICubic::VertsCount = vertsTemp.size();
+	glBufferData(GL_ARRAY_BUFFER, ICubic::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ICubic::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICubic::paintBufferID);
@@ -133,26 +175,33 @@ ProjectMappe::InitICubic(void)
 	glBindBuffer(GL_ARRAY_BUFFER, ICubic::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
 
+	_primitivs[PrimitiveType::PRIMITIVE::QUBE]->buffers.vertsBufferID = ICubic::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::QUBE]->buffers.paintBufferID = ICubic::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::QUBE]->buffers.normsBufferID = ICubic::normsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::QUBE]->buffers.VertsCount    = ICubic::VertsCount;
+
+	_qube.vertsBufferID = ICubic::vertsBufferID;
+	_qube.paintBufferID = ICubic::paintBufferID;
+	_qube.normsBufferID = ICubic::normsBufferID;
+	_qube.VertsCount    = ICubic::VertsCount;
+	_qube.shape		    = ICubic::shape;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BALL (a sphere, build up by triangular faces(like some footballs are...))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const GLuint
+	IBall::shape = GL_TRIANGLES;
 GLuint
-IBall::vertsBufferID=0;
-
+	IBall::vertsBufferID=0;
 GLuint
-IBall::paintBufferID=0;
-
+	IBall::paintBufferID=0;
 GLuint
-IBall::normsBufferID=0;
-
+	IBall::normsBufferID=0;
 GLuint
-IBall::shape = 0;
-
-GLuint
-IBall::VertsCount = 0; 
+	IBall::VertsCount = 0; 
 
 void
 ProjectMappe::InitIBall(void)
@@ -160,13 +209,13 @@ ProjectMappe::InitIBall(void)
 	std::vector<glm::vec3> vertsTemp;
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
-
-	Utility::loadObj("sphere_tris_low.obi",vertsTemp,paintTemp,normsTemp,IBall::shape);
+	GLuint temp;
+	Utility::loadObj("ball_low_tris.obi",vertsTemp,paintTemp,normsTemp,temp);
+	IBall::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &IBall::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IBall::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	IBall::VertsCount = vertsTemp.size();
+	glBufferData(GL_ARRAY_BUFFER, IBall::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &IBall::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IBall::paintBufferID);
@@ -175,6 +224,17 @@ ProjectMappe::InitIBall(void)
 	glGenBuffers(1, &IBall::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IBall::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::BALL]->buffers.shape		  = IBall::shape;
+	_primitivs[PrimitiveType::PRIMITIVE::BALL]->buffers.VertsCount    = IBall::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::BALL]->buffers.vertsBufferID = IBall::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::BALL]->buffers.paintBufferID = IBall::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::BALL]->buffers.normsBufferID = IBall::normsBufferID;
+
+	_ball.VertsCount    = IBall::VertsCount;
+	_ball.vertsBufferID = IBall::vertsBufferID;
+	_ball.paintBufferID = IBall::paintBufferID;
+	_ball.normsBufferID = IBall::normsBufferID;
 }
 
 
@@ -183,14 +243,14 @@ ProjectMappe::InitIBall(void)
 // ZYLINDER:
 //////////////////////////////////////////////////////////////////////////////////////
 
+const GLuint
+	IZylinder::shape = GL_QUADS;
 GLuint
-	IZylinder::vertsBufferID=0;
+	IZylinder::vertsBufferID = 0;
 GLuint
-	IZylinder::paintBufferID=0;
+	IZylinder::paintBufferID = 0;
 GLuint
-	IZylinder::normsBufferID=0;
-GLuint
-	IZylinder::shape=0;
+	IZylinder::normsBufferID = 0;
 GLuint
 	IZylinder::VertsCount = 0; 
 
@@ -201,13 +261,13 @@ ProjectMappe::InitZylinder(void)
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
 
-
-	Utility::loadObj("cylinder_quads.obi",vertsTemp,paintTemp,normsTemp,IZylinder::shape);
+	GLuint temp;
+	Utility::loadObj("cylinder_quads.obi",vertsTemp,paintTemp,normsTemp,temp);
+	IZylinder::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &IZylinder::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IZylinder::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	IZylinder::VertsCount = vertsTemp.size();
+	glBufferData(GL_ARRAY_BUFFER, IZylinder::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &IZylinder::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER,IZylinder::paintBufferID);
@@ -216,6 +276,17 @@ ProjectMappe::InitZylinder(void)
 	glGenBuffers(1, &IZylinder::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, IZylinder::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::ZYLINDER]->buffers.shape		  = IZylinder::shape;
+	_primitivs[PrimitiveType::PRIMITIVE::ZYLINDER]->buffers.VertsCount    = IZylinder::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::ZYLINDER]->buffers.vertsBufferID = IZylinder::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::ZYLINDER]->buffers.paintBufferID = IZylinder::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::ZYLINDER]->buffers.normsBufferID = IZylinder::normsBufferID;
+
+	_zylinder.VertsCount    = IZylinder::VertsCount;
+	_zylinder.vertsBufferID = IZylinder::vertsBufferID;
+	_zylinder.paintBufferID = IZylinder::paintBufferID;
+	_zylinder.normsBufferID = IZylinder::normsBufferID;
 }
 
 
@@ -225,14 +296,14 @@ ProjectMappe::InitZylinder(void)
 // SPHERE:
 /////////////////////////////////////////////////////////////////////////////////////////
 
+const GLuint
+	ISphere::shape = GL_QUADS;
 GLuint
 	ISphere::vertsBufferID=0;
 GLuint
 	ISphere::paintBufferID=0;
 GLuint
 	ISphere::normsBufferID=0;
-GLuint
-	ISphere::shape = 0;
 GLuint
 	ISphere::VertsCount = 0; 
 
@@ -243,13 +314,13 @@ ProjectMappe::InitIspheree(void)
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
 
-
-	Utility::loadObj("sphere_quads_low.obi",vertsTemp,paintTemp,normsTemp,ISphere::shape);
+	GLuint temp;
+	Utility::loadObj("sphere_quads_low.obi",vertsTemp,paintTemp,normsTemp,temp);
+	ISphere::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &ISphere::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ISphere::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	ISphere::VertsCount = vertsTemp.size();
+	glBufferData(GL_ARRAY_BUFFER, ISphere::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ISphere::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER,ISphere::paintBufferID);
@@ -258,6 +329,17 @@ ProjectMappe::InitIspheree(void)
 	glGenBuffers(1, &ISphere::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ISphere::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::SPHERE]->buffers.shape		    = ISphere::shape;
+	_primitivs[PrimitiveType::PRIMITIVE::SPHERE]->buffers.VertsCount    = ISphere::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::SPHERE]->buffers.vertsBufferID = ISphere::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::SPHERE]->buffers.paintBufferID = ISphere::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::SPHERE]->buffers.normsBufferID = ISphere::normsBufferID;
+
+	_sphere.VertsCount    = ISphere::VertsCount;
+	_sphere.vertsBufferID = ISphere::vertsBufferID;
+	_sphere.paintBufferID = ISphere::paintBufferID;
+	_sphere.normsBufferID = ISphere::normsBufferID;
 }
 
 
@@ -267,8 +349,8 @@ ProjectMappe::InitIspheree(void)
 // CONE:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-GLuint 
-	ICone::shape = 0;
+const GLuint 
+	ICone::shape = GL_TRIANGLES;
 GLuint 
 	ICone::vertsBufferID = 0;
 GLuint 
@@ -285,12 +367,13 @@ ProjectMappe::InitICone(void)
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
 
-	Utility::loadObj("cone_tris_32.obi",vertsTemp,paintTemp,normsTemp,ICone::shape);
+	GLuint temp;
+	Utility::loadObj("cone_tris_32.obi",vertsTemp,paintTemp,normsTemp,temp);
+	ICone::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &ICone::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICone::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	ICone::VertsCount = vertsTemp.size();
+	glBufferData(GL_ARRAY_BUFFER, ICone::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ICone::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER,ICone::paintBufferID);
@@ -299,7 +382,18 @@ ProjectMappe::InitICone(void)
 	glGenBuffers(1, &ICone::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICone::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
-}
+
+	_primitivs[PrimitiveType::PRIMITIVE::CONE]->buffers.shape		  = ICone::shape;
+	_primitivs[PrimitiveType::PRIMITIVE::CONE]->buffers.VertsCount    = ICone::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::CONE]->buffers.vertsBufferID = ICone::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::CONE]->buffers.paintBufferID = ICone::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::CONE]->buffers.normsBufferID = ICone::normsBufferID;
+
+	_cone.VertsCount    = ICone::VertsCount;
+	_cone.vertsBufferID = ICone::vertsBufferID;
+	_cone.paintBufferID = ICone::paintBufferID;
+	_cone.normsBufferID = ICone::normsBufferID;
+}							
 
 
 
@@ -307,20 +401,16 @@ ProjectMappe::InitICone(void)
 // CAPSULE:
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const GLuint 
+	ICapsule::shape = GL_QUADS;
 GLuint 
-ICapsule::shape = 0;
-
+	ICapsule::vertsBufferID = 0;
 GLuint 
-ICapsule::vertsBufferID = 0;
-
+	ICapsule::paintBufferID = 0;
 GLuint 
-ICapsule::paintBufferID = 0;
-
+	ICapsule::normsBufferID = 0;
 GLuint 
-ICapsule::normsBufferID = 0;
-
-GLuint 
-ICapsule::VertsCount = 0;
+	ICapsule::VertsCount = 0;
 
 void
 ProjectMappe::InitICapsule(void)
@@ -329,13 +419,14 @@ ProjectMappe::InitICapsule(void)
 	std::vector<glm::vec2> paintTemp;
 	std::vector<glm::vec3> normsTemp;
 
-	Utility::loadObj("capsula_quads_32.obi",vertsTemp,paintTemp,normsTemp,ICapsule::shape);
+	GLuint temp;
+	Utility::loadObj("capsula_quads_32.obi",vertsTemp,paintTemp,normsTemp,temp);
+	ICapsule::VertsCount = vertsTemp.size();
 
 	glGenBuffers(1, &ICapsule::vertsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICapsule::vertsBufferID);
-	glBufferData(GL_ARRAY_BUFFER, vertsTemp.size() * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
-	ICapsule::VertsCount = vertsTemp.size();
-
+	glBufferData(GL_ARRAY_BUFFER, ICapsule::VertsCount * sizeof(glm::vec3), &vertsTemp[0], GL_STATIC_DRAW);
+	
 	glGenBuffers(1, &ICapsule::paintBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER,ICapsule::paintBufferID);
 	glBufferData(GL_ARRAY_BUFFER, paintTemp.size() * sizeof(glm::vec2), &paintTemp[0], GL_STATIC_DRAW);
@@ -343,6 +434,17 @@ ProjectMappe::InitICapsule(void)
 	glGenBuffers(1, &ICapsule::normsBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, ICapsule::normsBufferID);
 	glBufferData(GL_ARRAY_BUFFER, normsTemp.size() * sizeof(glm::vec3), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::CAPSULA]->buffers.shape	     = ICapsule::shape;
+	_primitivs[PrimitiveType::PRIMITIVE::CAPSULA]->buffers.VertsCount    = ICapsule::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::CAPSULA]->buffers.vertsBufferID = ICapsule::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::CAPSULA]->buffers.paintBufferID = ICapsule::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::CAPSULA]->buffers.normsBufferID = ICapsule::normsBufferID;
+
+	_capsula.VertsCount    = ICapsule::VertsCount;
+	_capsula.vertsBufferID = ICapsule::vertsBufferID;
+	_capsula.paintBufferID = ICapsule::paintBufferID;
+	_capsula.normsBufferID = ICapsule::normsBufferID;
 }
 
 //EOF

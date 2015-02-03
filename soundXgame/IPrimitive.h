@@ -6,6 +6,39 @@ typedef unsigned GLuint;
 
 #include "Connectable.h"
 
+struct IFlatquad;
+struct ICubic;
+struct IBall;
+struct ISphere;
+struct IZylinder;
+struct ICone;
+struct ICapsule;
+
+
+struct PrimitivMesh	
+{
+	GLuint shape;
+	GLuint vertsBufferID;
+	GLuint paintBufferID;
+	GLuint normsBufferID;
+	GLuint VertsCount;
+};
+
+class PrimitiveType
+{
+public:
+	enum PRIMITIVE : char
+	{FLATQUAD,QUBE,BALL,SPHERE,ZYLINDER,CONE,CAPSULA};
+	PrimitivMesh buffers;
+	static const IFlatquad * FlatQuad;
+	const static ICubic * Qube;
+	const static IBall * Ball;
+	const static ISphere * Sphere;
+	const static IZylinder * Zylinder;
+	const static ICone * Cone;
+	const static ICapsule * Capsula;
+};
+
 namespace ProjectMappe
 {
 	void InitFlatQuat(void);
@@ -14,87 +47,72 @@ namespace ProjectMappe
 	void InitZylinder(void);
 	void InitIspheree(void);
 	void InitICone(void);
-	void InitICapsule(void);
+	void InitICapsule(void); 
 };
-
-
-
 		
 // IPrimitiv - interface:
-template<typename pt>
-class IPrimitiv					
-{
-public:
-	pt* primitiv;
-	IPrimitiv(void)
-		{
-			primitiv = new pt();	
-			primitiv->component = this;
-		}
-	virtual ~IPrimitiv(void)
-		{
-			delete primitiv;
-		}
-	pt* getPrimitiv(void)
-		{
-			return (pt*)primitiv;
-		}
-
-
-
-};
+//template<typename pType>
+//class IPrimitiv					
+//{
+//public:
+//	pType* primitiv;
+//	IPrimitiv(void)
+//		{
+//			primitiv = new pType();	
+//			primitiv->component = this;
+//		}
+//	virtual ~IPrimitiv(void)
+//		{
+//			delete primitiv;
+//		}
+//	virtual operator pType(void)
+//	{
+//		return *primitiv;
+//	}
+//};
 
 //base class for all Static Primitive types...
 //used for switching the primitive on an objects at runtime
-struct IlPrimitivo
-{
-	//static GLuint shape;
-	//static GLuint vertsBufferID;
-	//static GLuint paintBufferID;
-	//static GLuint normsBufferID;
-	//static GLuint VertsCount;
-
-public:
-	void* component;
-	IPrimitiv<IlPrimitivo>* Primitive()
-		{
-			//shape=0;
-			//vertsBufferID=0;
-			//paintBufferID=0;
-			//normsBufferID=0;
-			//VertsCount=0;
-			return (IPrimitiv<IlPrimitivo>*)component;
-		}
-	template<typename P> P* GetPrimitiv(int index = 1000)
-		{
-			unsigned thc = typeid(P).hash_code();
-
-			if(index!=1000)
-				{
-					for(int i=0;i<5;i++)
-						if(*Primitive[i]->hash_code() == thc)
-							return &P
-				}
-		}
-	template<typename P> void SetPrimitiv(void)
-		{
-			Primitive()->primitiv = new P();
-		}
-};
+//struct PrimitivType	
+//
+//
+//public:
+//	void* component;
+//	IPrimitiv<PrimitivType>* Primitive()
+//		{
+//			return (IPrimitiv<PrimitivType>*)component;
+//		}
+//	template<typename P> P* GetPrimitiv(int index = 1000)
+//		{
+//			unsigned thc = typeid(P).hash_code();
+//
+//			if(index!=1000)
+//				{
+//					for(int i=0;i<5;i++)
+//						if(*Primitive[i]->hash_code() == thc)
+//							return &P
+//				}
+//		}
+//	template<typename P> void SetPrimitiv(void)
+//		{
+//			Primitive()->primitiv = new P();
+//		}
+//};
 
 
 // the primitive types themselves:
 
-struct IFlatquad  : public IlPrimitivo
+
+struct IFlatquad : public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
-	static GLuint VertsCount;
+	static const GLuint VertsCount;
 };
 
-struct ICubic : public IlPrimitivo
+struct ICubic : public PrimitiveType
 {   
 	static GLuint shape;
 	static GLuint vertsBufferID;
@@ -103,45 +121,45 @@ struct ICubic : public IlPrimitivo
 	static GLuint VertsCount;
 };
 
-struct IZylinder : public IlPrimitivo
+struct IZylinder : public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
 	static GLuint VertsCount;
 };
 
-struct IBall : public IlPrimitivo
+struct IBall : public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
 	static GLuint VertsCount;
 };
 
-struct ISphere : public IlPrimitivo
+struct ISphere : public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
 	static GLuint VertsCount;
 };
 
-struct ICone : public IlPrimitivo
+struct ICone : public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
 	static GLuint VertsCount;
 };
 
-struct ICapsule	: public IlPrimitivo
+struct ICapsule	: public PrimitiveType
 {
-	static GLuint shape;
+	static const GLuint shape;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;

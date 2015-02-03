@@ -26,13 +26,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <InterproceduralOptimization>false</InterproceduralOptimization>
     <NumberOfCilkThreads>
@@ -41,14 +41,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -182,7 +182,7 @@
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="InputFunctions.cpp" />
     <ClCompile Include="IPrimitive.cpp" />
-    <ClCompile Include="Kubus.cpp" />
+    <ClCompile Include="PrimitivObject.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="MainDisplayFunctions.cpp" />
     <ClCompile Include="MainInitiations.cpp" />
@@ -250,7 +250,7 @@
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="IPrimitive.h" />
-    <ClInclude Include="Kubus.h" />
+    <ClInclude Include="PrimitivObject.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="MusicController.h" />
     <ClInclude Include="MusicInteractor.h" />
@@ -297,6 +297,7 @@
     <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ball_low_tris.obi" />
     <None Include="bluobbber.pix" />
     <None Include="bluobbber.ppm" />
     <None Include="Bump_3.ppm" />
@@ -434,6 +435,11 @@
       <FileType>Document</FileType>
     </None>
     <None Include="cone_tris_32.obi">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ball_high_tris.obi">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
