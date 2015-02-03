@@ -136,12 +136,12 @@ void ProjectMappe::OnLoadContent(void)
 	//SCENE->Object(vox2)->AddConnectable<MusicVox>();
 	//((VoxGrid*)SCENE->Object(vox2))->flip();
 	Vector3  CubeSpwns[22] = {
-								Vector3(0,0,0),Vector3(0,0,0),Vector3(-30,2,30),Vector3(-10,2,35),
-								Vector3(-25,2,10),Vector3(-15,2,23),Vector3(-5,2,5),Vector3(0,0,0),
-								Vector3(15,2,30),Vector3(10,2,15),Vector3(25,2,20),Vector3(35,2,10),
-								Vector3(15,2,-5),Vector3(10,2,-15),Vector3(40,2,-20),Vector3(0,0,0),
-								Vector3(30,2,-40),Vector3(0,0,0),Vector3(40,2,30),Vector3(-20,2,-30),
-								Vector3(-15,-2,-15),Vector3(-22,2,-40)
+								Vector3(0,0,0),Vector3(0,0,0),Vector3(-45,2,45),Vector3(-15,2,50),
+								Vector3(-40,2,15),Vector3(-22,2,31),Vector3(-10,2,10),Vector3(0,0,0),
+								Vector3(21,2,50),Vector3(15,2,25),Vector3(37,2,30),Vector3(50,2,15),
+								Vector3(22,2,-8),Vector3(15,2,-27),Vector3(50,2,-30),Vector3(0,0,0),
+								Vector3(45,2,-50),Vector3(0,0,0),Vector3(50,2,40),Vector3(-30,2,-45),
+								Vector3(-23,-2,-28),Vector3(-33,2,-50)
 							};
 	char tempString[32];
 	for(int i = 1;i<22;i++)
