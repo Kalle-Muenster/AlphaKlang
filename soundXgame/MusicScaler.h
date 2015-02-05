@@ -22,7 +22,7 @@ public:
 	{
 		if(number==0)
 		{	
-			Motivator+=10;
+			Motivator+=5;
 			Motivator/=3;
 			((ILocatable*)this->Connection())->scale(Motivator,Motivator,Motivator);
 		}

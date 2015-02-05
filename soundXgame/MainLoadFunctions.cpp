@@ -185,8 +185,9 @@ void ProjectMappe::OnLoadContent(void)
 			((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
 			SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
 			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); 
+			//SCENE->Object(id)->scale(0.5f, 0.5f, 0.5f);
 			// load music
-			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(20, 30);
+			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(30, 200);
 			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
 			SCENE->Object(id)->IsGrounded(true); // grounded
 			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->

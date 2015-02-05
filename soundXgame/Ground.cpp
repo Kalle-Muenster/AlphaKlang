@@ -364,7 +364,7 @@ void Ground::Update(void)
 	//float line0 = 0;
 	//if(this->HasConnected<MusicController>())
 	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
-	std::cout << line0 << std::endl;
+	//std::cout << line0 << std::endl;
 
 	dynamicVal = line0*50 + 6;
 	*valueList[1] = dynamicVal;
