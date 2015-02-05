@@ -95,8 +95,11 @@ Loader::Pixel(int x,int y)
 
 
 void*
-Loader::LoadeFile(char* filename)
+Loader::LoadeFile(char* tmp)
 {
+	char filename[64];
+	sprintf(&filename[0],"Data/%s",tmp);
+
 	u32_2s16_4b8 pixel;
 	pixel.u32 = 0;
 	bool read = true;
@@ -171,8 +174,11 @@ else// other file-type.. later..
  * loades vertices,uv's and normals from OBJ-file to given vectors and the Shape within it's faces are made up...
  * returns a string containing the Object's Name or Type if's specified in file.. */
 char* 
-Utility::loadObj(const char* filename,  std::vector<glm::vec3> &vertices, std::vector<glm::vec2> &uvs, std::vector<glm::vec3> &normals,GLuint &faceShape)
+Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector<glm::vec2> &uvs, std::vector<glm::vec3> &normals,GLuint &faceShape)
 {     
+	char filename[64];
+	sprintf(&filename[0],"Data/%s",tmp);
+
 	faceShape = GL_TRIANGLES;
 	bool HasNormals = false;
 	char ObjectName[64];
@@ -382,8 +388,11 @@ std::vector<Texture*> _loadedtTextures;
 std::vector<char*> _textureNames;
 
 GLuint
-Utility::loadTexture(const char* filename)
+Utility::loadTexture(const char* tmp)
 {
+	char filename[64];
+	sprintf(&filename[0],"Data/%s",tmp);
+
 	glload::LoadTest loadTest = glload::LoadFunctions();
 	char temp[64];
 	temp[63]='\0';

@@ -252,8 +252,11 @@ _getAudioStreamByFileName(const string filename,int mode)
 }
 
 HSAMPLE
-_getSampleHandleByFilename(const char* filename,bool loop)
+_getSampleHandleByFilename(const char* tmp,bool loop)
 {
+	char* filename = new char[strlen(tmp)+1+5]();
+	sprintf(&filename[0],"Data/%s",tmp);
+
 	FILE* file;
 	file = fopen(filename,"rb");
 	fseek(file,0,SEEK_END);
@@ -505,16 +508,21 @@ BassAudio::ToggleMasterResampling(void)
 }
 
 HSTREAM
-BassAudio::LoadeMusic(const char* fileName,LOAD_MODE mode,void* loadingObject)
+BassAudio::LoadeMusic(const char* tmp,LOAD_MODE mode,void* loadingObject)
 {
+	char* filename = new char[strlen(tmp)+1+5]();
+	sprintf(&filename[0],"Data/%s",tmp);
+
 	Channel chan;
-	chan.ID = _getAudioStreamByFileName((const string)fileName,(int)mode);
+	chan.ID = _getAudioStreamByFileName((const string)filename,(int)mode);
 	int i = -1;
-	while((++i < 64) && ((chan.Name[i]=fileName[i])!='\0'));
+	while((++i < 64) && ((chan.Name[i]=filename[i])!='\0'));
 	i = _GameObjects.Add(loadingObject);
 	if(_Channels[i].ID!=NULL)
 		 BASS_ChannelStop(_Channels[i].ID);
 	_Channels[i] = chan;
+
+	delete[] filename;
 	return chan.ID;
 }
 
@@ -534,12 +542,17 @@ BassAudio::SetListenerPosition(Transform* cameraTranform)
 }
 
 void
-BassAudio::LoadeBackgroundAudio(const char* fileName)
+BassAudio::LoadeBackgroundAudio(const char* tmp)
 {
-	derAudio = _getAudioStreamByFileName((string)fileName,LOAD_2D);
+	char* filename = new char[strlen(tmp)+1+5]();
+	sprintf(&filename[0],"Data/%s",tmp);
+
+	derAudio = _getAudioStreamByFileName((string)filename,LOAD_2D);
 	BASS_ChannelSetDevice(derAudio,-1);
-	printf("AUDIO: %s loadet as Backgroundmusic !\n",fileName);
+	printf("AUDIO: %s loadet as Backgroundmusic !\n",filename);
 	_backgroundAudioLoadet = true;
+
+	delete[] filename;
 }
 
 void
