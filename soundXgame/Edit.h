@@ -31,6 +31,7 @@ public:
 	virtual void specialKeyPressed(int key);
 	virtual void mouseMotion(int newX, int newY);
 	virtual void mouseWheel(int wheel,WHEEL state){};
+	void switchBack(void);
 };
 
 #endif

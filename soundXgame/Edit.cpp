@@ -12,18 +12,18 @@ int lastCamMode = FIRSTPERSON;
 bool mousereleased = true;
 
 void
-_button_1_click(IConnectable* sender)
+_button_fps_click(IConnectable* sender)
 {	
 	if(mousereleased)
 	{
 		if(SCENE->ShowFPS)
 		{
-			GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->SetText("Hide FPS");
+			GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Hide FPS");
 			SCENE->ShowFPS = false;
 		}
 		else
 		{	
-			GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->SetText("Show FPS");
+			GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Show FPS");
 			SCENE->ShowFPS = true;
 		}
 		mousereleased = false;
@@ -33,8 +33,20 @@ _button_1_click(IConnectable* sender)
 void
 _backButtonClick(IConnectable* sender)
 {
-	GUI->Element("Editor-Panel")->isVisible(false);
+	GUI->Element("Main-Menu")->isVisible(false);
 	SceneGraph::getInstance()->camera->Mode(lastCamMode);
+}
+
+void
+_exitButtonClick(IConnectable* sender)
+{
+	ProjectMappe::EXIT(true);
+}
+
+void
+Edit::switchBack(void)
+{
+	_backButtonClick(this);
 }
 
 
@@ -92,7 +104,7 @@ Edit::UpdateMode(void)
 void 
 Edit::keyPress(char key)
 {
-
+	/*
 	if(IsActive)
 	{
 		switch(key)
@@ -121,7 +133,7 @@ Edit::keyPress(char key)
 				
 
 		UpdateMode();
-	}
+	}*/
 }
 
 void
@@ -203,8 +215,11 @@ Edit::OnActivate(void)
 	//update view
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
-	GUI->Element("Editor-Panel")->isVisible(true);
-	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(1)->ClickAction =  _button_1_click;
-	GUI->Element("Editor-Panel")->GetConnected<ButtonControl>(2)->ClickAction =  _backButtonClick;
+	GUI->Element("Main-Menu")->isVisible(true);
+	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(1)->ClickAction =  _backButtonClick;
+	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->ClickAction =  _button_fps_click;
+	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(3)->ClickAction =  _exitButtonClick;
+
+	eyeY = 4.0f;
 }
 

@@ -6,6 +6,13 @@
 
 using namespace ProjectMappe;
 
+void
+ProjectMappe::_backButtonClick(IConnectable* sender)
+{
+	//GUI->Element("Editor-Panel")->isVisible(false);
+	//SceneGraph::getInstance()->camera->Mode(lastCamMode);
+}
+
 void ProjectMappe::OnLoadContent(void)
 {
 	// Background Music
@@ -30,19 +37,38 @@ void ProjectMappe::OnLoadContent(void)
 	fountain->sensitivity = 5;
 
 	// GUI
-	GuiObject* guiding = new GuiObject("panelT_256x512.png");
+	/*GuiObject* guiding = new GuiObject("panel_menu.png");
 	guiding->SetName("Editor-Panel");
 	guiding->scale(Vector3(256,256,1));
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(10,10);
-	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.5,0.5/4);
-	guiding->GetConnected<ButtonControl>(1)->SetText("Show FPS");
+	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,150);
+	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.4,0);
+	guiding->GetConnected<ButtonControl>(1)->SetText("FPS");
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(10,60);	
-	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.5,0.5/4);
-	guiding->GetConnected<ButtonControl>(2)->SetText("Back");
+	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,230);	
+	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.4,0);
+	guiding->GetConnected<ButtonControl>(2)->SetText(" Back");
 	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
-	guiding->IsVisible = false;
+	guiding->IsVisible = false;*/
+
+	// GUI
+	GuiObject* menu = new GuiObject("panel_menu.png");
+	menu->SetName("Main-Menu");
+	menu->scale(Vector3(256,256,1));
+	menu->AddConnectable<ButtonControl>();
+	menu->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,150);
+	menu->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.4,0);
+	menu->GetConnected<ButtonControl>(1)->SetText("Play game");
+	menu->AddConnectable<ButtonControl>();
+	menu->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,230);	
+	menu->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.4,0);
+	menu->GetConnected<ButtonControl>(2)->SetText("  Show FPS");
+	menu->AddConnectable<ButtonControl>();
+	menu->GetConnected<ButtonControl>(3)->PositionOnPanel = VectorF(100,310);	
+	menu->GetConnected<ButtonControl>(3)->SizeScaledPanel = VectorF(0.4,0);
+	menu->GetConnected<ButtonControl>(3)->SetText("     Exit");
+	menu->isVisible(true);
+	//GUI->Element("Main-Menu")->GetConnected<ButtonControl>(1)->ClickAction = _backButtonClick;
 
 	// Qualle
 	(new AnimatedSprite<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
@@ -350,6 +376,10 @@ void ProjectMappe::OnLoadContent(void)
 
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
+
+	// Show Menu
+	SCENE->camera->Mode(Edit::ID);
+
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
 	

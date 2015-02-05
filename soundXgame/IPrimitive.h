@@ -48,6 +48,7 @@ namespace ProjectMappe
 	void InitIspheree(void);
 	void InitICone(void);
 	void InitICapsule(void); 
+	void _backButtonClick(IConnectable* sender);
 };
 		
 // IPrimitiv - interface:

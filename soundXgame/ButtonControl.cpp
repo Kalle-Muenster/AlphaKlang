@@ -85,7 +85,7 @@ ButtonControl::DoEarly(void)
 		SetState(NORMAL);
 
 	if(Label[0]!='\0')
-		GUI->Write(&Label[0],left+Area.GetHalbSize().x/2,bottom-Area.GetHalbSize().y/2,color);
+		GUI->Write(&Label[0],left+Area.GetHalbSize().x/2,bottom-Area.GetHalbSize().y/1+5,color);
 }
 
 	bool ButtonControl::Initialize(void)

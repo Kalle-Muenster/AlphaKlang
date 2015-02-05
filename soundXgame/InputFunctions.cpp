@@ -6,48 +6,44 @@
 
 
 //Keyboard:
-unsigned char lastKey='\0';
 void ProjectMappe::keyboardInput(unsigned char key,int x,int y)
 {
-	/* Switches Cam-Modes..*/
-	if(key=='p')
-	{	
-		if(lastKey!=key)
-			SCENE->camera->Mode(FIRSTPERSON);
-	}
-	else if(key=='f')
-	{	
-		if(lastKey!=key)
-			SCENE->camera->Mode(FOLLOWTARGET);
-	}
-	else if(key=='o')
-	{
-		if(lastKey!=key)
-			SCENE->camera->Mode(SPECTATOR);
-	}
-	else if(key=='v')
-	{
-		if(lastKey!=key)
-			SCENE->camera->Mode(StrangeChaoticView::ID);
-	}
-	else if(key=='e')
-	{
-		if(lastKey!=key)
-			SCENE->camera->Mode(Edit::ID);
-	}
-	else if(key == 27) // ESC
-	{
-		if(lastKey!=key)
-			ProjectMappe::EXIT(true);
-	}
-
-	lastKey = key;
 	INPUT->registerKey(key);
 }
 
 void ProjectMappe::keyboardUpInput(unsigned char key,int x,int y)
 {
 	INPUT->registerKeyUp(key);
+
+	
+	/* Switches Cam-Modes..*/
+	if(key=='p')
+	{	
+		SCENE->camera->Mode(FIRSTPERSON);
+	}
+	else if(key=='f')
+	{	
+		SCENE->camera->Mode(FOLLOWTARGET);
+	}
+	else if(key=='o')
+	{
+		SCENE->camera->Mode(SPECTATOR);
+	}
+	else if(key=='v')
+	{
+		SCENE->camera->Mode(StrangeChaoticView::ID);
+	}
+	else if(key == 27) // ESC
+	{
+		if(GUI->Element("Main-Menu")->IsVisible)
+		{
+			SCENE->camera->ModeSocket->GetCameraMode<Edit>()->switchBack();
+		}
+		else
+		{
+			SCENE->camera->Mode(Edit::ID);
+		}
+	}
 }
 
 void ProjectMappe::processSpecialKeys(int key, int xx, int yy)
