@@ -102,9 +102,9 @@ void ProjectMappe::OnLoadContent(void)
 	GobID temp = SCENE->Object("last created")->GetID();
 	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<ICubic>();
 	SCENE->Object(temp)->LoadTexture("X-7.png");
-	SCENE->Object(temp)->move(5,2,-5);
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,5,20));
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,1,-30));
+	SCENE->Object(temp)->move(5,20,-5);
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
+	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,21,-30));
 /*
 	new Kubus();
 	GobID temp = SCENE->Object("last created")->GetID();
@@ -282,6 +282,8 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO11")->move(12,0,-18);
 	SCENE->Object("AUDIO11")->IsGrounded(false);
 	SCENE->Object("AUDIO11")->AddConnectable<SmoothObjectMover>();
+	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-40,20,-40));
+	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMAX(Vector3(40,30,40));
 	SCENE->Object("AUDIO11")->AlwaysFaceMovingdirection=true;
 	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
 	SCENE->Object("AUDIO11-emission")->AlwaysFaceMovingdirection=true;
