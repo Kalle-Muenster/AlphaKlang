@@ -12,14 +12,14 @@ ButtonControl::ButtonControl(void)
 {
 	TypeHashCode = (unsigned)typeid(ButtonControl).hash_code();
 	btnState = ButtonState::NORMAL;
-	SetColor(255,255,0,255);
+	SetColor(0,0,0,255);
 
     texture.w = 64;
     texture.h = 64;
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
-	texture.ID = Utility::loadTexture("button_64x64.png");
+	texture.ID = Utility::loadTexture("GUI/buttons_256x256.png");
 	
 	//glGenTextures(1,&texture.ID);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);

@@ -157,7 +157,7 @@ void _WriteText2D(const char * text, Vecti position,data32 color)
 
 void _writeFPS()
 {
-	//sprintf(&fpsSTRING[0],"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
+	sprintf(&fpsSTRING[0],"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
 	_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
 }
 
