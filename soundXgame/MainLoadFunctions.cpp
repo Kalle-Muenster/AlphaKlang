@@ -58,7 +58,7 @@ void ProjectMappe::OnLoadContent(void)
 	menu->AddConnectable<ButtonControl>();
 	menu->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,150);
 	menu->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.4,0);
-	menu->GetConnected<ButtonControl>(1)->SetText("Play game");
+	menu->GetConnected<ButtonControl>(1)->SetText("  Play game");
 	menu->AddConnectable<ButtonControl>();
 	menu->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,220);	
 	menu->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.4,0);
@@ -66,7 +66,7 @@ void ProjectMappe::OnLoadContent(void)
 	menu->AddConnectable<ButtonControl>();
 	menu->GetConnected<ButtonControl>(3)->PositionOnPanel = VectorF(100,290);	
 	menu->GetConnected<ButtonControl>(3)->SizeScaledPanel = VectorF(0.4,0);
-	menu->GetConnected<ButtonControl>(3)->SetText("     Exit");
+	menu->GetConnected<ButtonControl>(3)->SetText("      Exit");
 	menu->isVisible(true);
 	//GUI->Element("Main-Menu")->GetConnected<ButtonControl>(1)->ClickAction = _backButtonClick;
 

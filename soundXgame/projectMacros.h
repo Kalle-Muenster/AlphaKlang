@@ -14,7 +14,7 @@
 #include "ObjectManagement.h"
 
 #define SCREENWIDTH_STARTUP 1100
-#define SCREENHEIGHT_STARTUP 800
+#define SCREENHEIGHT_STARTUP 700
 #define SCREENWIDTH InputManager::getInstance()->GetViewportRectangle()[2]
 #define SCREENHEIGHT InputManager::getInstance()->GetViewportRectangle()[3]
 #define MAIMUM_NUMBER_OF_VOXELS (16384)
