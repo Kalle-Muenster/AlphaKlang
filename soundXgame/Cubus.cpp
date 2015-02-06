@@ -7,7 +7,7 @@
 Cubus::Cubus(void)
 {
 	InitializeCubus(true);
-	SetCollisionSound("03.wav");
+	SetCollisionSound("Audio/03.wav");
 	this->GetConnected<AudioEmitter>()->DoUpdate();
 	this->SetName("Cubus");
 	this->IsVisible=true;

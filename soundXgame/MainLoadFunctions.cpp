@@ -18,7 +18,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Background Music
 	//unsigned int brummsound;
 	//AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
-	AUDIO->LoadeBackgroundAudio("DaRioGame v05.wav");
+	AUDIO->LoadeBackgroundAudio("Music/Background_v05.wav");
 	AUDIO->Play();
 	AUDIO->BackgroundMusicVolume(1.0);
 
