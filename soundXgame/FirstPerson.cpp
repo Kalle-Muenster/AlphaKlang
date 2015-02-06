@@ -24,9 +24,9 @@ FirstPerson::Initialize(void)
 	angle		= 0;
 	lx			= 0;
 	lz			= -1;
-	x			= -42.0f;
+	x			= -40.0f;
 	y			= 0;
-	z			= 42.0f;
+	z			= 40.0f;
 	eyeY		= 1;
 	moveSpeed	= 0.5f;
 	mouseSpeed	= 1.0f;
@@ -174,4 +174,11 @@ FirstPerson::UpdateHeight(float y)
 	float diffEyeY = y - this->y;
 	this->y = y;
 	eyeY += diffEyeY;
+}
+
+VectorF
+FirstPerson::GetPlayerPosition()
+{
+	VectorF pos = VectorF(x, z);
+	return pos;
 }

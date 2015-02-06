@@ -3,6 +3,7 @@
 
 #include "Cam.h"
 #include "Ground.h"
+#include "VoxelVector.h"
 
 
 class FirstPerson : public CameraMode , public IInteractive
@@ -30,6 +31,7 @@ public:
 	virtual void specialKeyPressed(int key);
 	virtual void mouseMotion(int newX, int newY);
 	virtual void mouseWheel(int wheel,WHEEL state){};
+	VectorF GetPlayerPosition(void);
 };
 
 #endif

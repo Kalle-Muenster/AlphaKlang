@@ -20,7 +20,7 @@ void ProjectMappe::OnLoadContent(void)
 	//AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("DaRioGame v05.wav");
 	AUDIO->Play();
-	AUDIO->BackgroundMusicVolume(1);
+	AUDIO->BackgroundMusicVolume(1.0);
 
 	// Gameplay Elements
 	Ground* ground = Ground::getInstance();
@@ -174,7 +174,7 @@ void ProjectMappe::OnLoadContent(void)
 	for(int i = 1;i<22;i++)
 	{
 
-		if(i != 1 && i != 2 && i != 8 && i != 16 && i != 18)
+		if(i != 1 && i != 2 && i != 3 && i != 4 && i != 8 && i != 16 && i != 18)
 		{
 			sprintf(&tempString[0],"AUDIO_%i",i);
 			sprintf(&tempString[10],"mp3/%i-Audio.mp3",i);

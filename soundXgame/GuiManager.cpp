@@ -3,8 +3,15 @@
 #include "SceneGraph.h"
 #include "InputManager.h"
 
+// for Camera -> getting player's x and z position
+#include "projectMacros.h"
+#include "globalfunctions.h"
+#include "Camera.h"
+#include "FirstPerson.h"
+
  data32 _color;
  Vecti fpsTextPosition = Vecti();
+ Vecti posTextPosition = Vecti();
  char fpsSTRING[32];
 
 
@@ -19,12 +26,14 @@ GuiManager::GuiManager(void)
 	elements = List<IDrawable*,MAX_NUM_GUI_OBJECTS>();
 	writeOrders = List<WriteOrder*,100>();
 	r=g=b=a=1.f;
-	_color.byte[0]=255;
-	_color.byte[1]=255;
-	_color.byte[2]=255;
-	_color.byte[3]=255;
-	fpsTextPosition.ix=20;
-	fpsTextPosition.yps=20;
+	_color.byte[0] = 255;
+	_color.byte[1] = 255;
+	_color.byte[2] = 255;
+	_color.byte[3] = 255;
+	fpsTextPosition.ix = 20;
+	fpsTextPosition.yps = 20;
+	posTextPosition.ix = 300;
+	posTextPosition.yps = 20;
 }
 
 
@@ -161,6 +170,14 @@ void _writeFPS()
 	_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
 }
 
+void _writePosition()
+{
+	VectorF pos = SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>()->GetPlayerPosition();
+
+	sprintf(&fpsSTRING[0],"Pos: %i / %i \n",(int)pos.x, (int)pos.y);
+	_WriteText2D(&fpsSTRING[0],posTextPosition,_color);
+}
+
 void
 GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 {
@@ -191,6 +208,7 @@ GuiManager::DrawGUI(void)
 			}
 			if(scene->ShowFPS)
 				_writeFPS();
+			_writePosition();
 		}
 	}	
 	Disable2DDrawing();
