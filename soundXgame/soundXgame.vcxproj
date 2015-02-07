@@ -178,10 +178,13 @@
     <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="IEditable.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="InputFunctions.cpp" />
     <ClCompile Include="IPrimitive.cpp" />
+    <ClCompile Include="Knob.cpp" />
+    <ClCompile Include="PointAndClick.cpp" />
     <ClCompile Include="PrimitivObject.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="MainDisplayFunctions.cpp" />
@@ -246,10 +249,14 @@
     <ClInclude Include="FountainObject.h" />
     <ClInclude Include="globalfunctions.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="GuiControlls.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="IEditable.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="IPrimitive.h" />
+    <ClInclude Include="Knob.h" />
+    <ClInclude Include="PointAndClick.h" />
     <ClInclude Include="PrimitivObject.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="MusicController.h" />
@@ -294,6 +301,17 @@
     <ClInclude Include="Voxel.h" />
     <ClInclude Include="VoxelMap.h" />
     <ClInclude Include="VoxGrid.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\GUI\button_64x64.png" />
+    <Image Include="Data\GUI\knobA_64x64.png" />
+    <Image Include="Data\GUI\knobB_64x64.png" />
+    <Image Include="Data\GUI\sliderX-2color_64x64.png" />
+    <Image Include="Data\GUI\sliderX_64x64.png" />
+    <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png" />
+    <Image Include="Data\panelT_256x512.png" />
+    <Image Include="Data\panel_256x512.png" />
+    <Image Include="Data\panel_menu.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

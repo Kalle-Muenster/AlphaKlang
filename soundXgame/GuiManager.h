@@ -15,11 +15,18 @@
 
 class SceneGraph;
 
+//class GuiConXtor : public IConXtor
+//{
+//public:
+//	virtual unsigned GetElementID(void);
+//	virtual void draw(void);
+//};
+
 class GuiObject
 	: public Sprite
 {
 public:
-	
+	bool ShowTitle;
 	GuiObject(void);
 	GuiObject(char*);
 	void InitializeGUIObject(void);
@@ -31,12 +38,16 @@ public:
 	virtual Vector3 scale(Vector3);
 	bool UseTexture;
 	bool IsActive;
-
+	virtual unsigned GetElementID(void);
+	//operator GuiConXtor*(void);
+	virtual void draw(void);
+	virtual bool isVisible(BOOL=3);
 	
 };
 
+class ControllElement;
 
-
+#define NOLL *GuiManager::NoColor
 
 class GuiManager
 {
@@ -48,27 +59,32 @@ class GuiManager
 		data32 color; 
 		WriteOrder(const char*,short,short,data32);
 	};
+
 private:
 	static bool NotIsInstanciated;
 	GuiManager(void);
-	List<IDrawable*,MAX_NUM_GUI_OBJECTS> elements;
+	List<GuiObject*,MAX_NUM_GUI_OBJECTS> elements;
 	List<WriteOrder*,100> writeOrders;
-	float r,g,b,a;
+	data32 color;
 	void Enable2DDrawing(void);
 	void Disable2DDrawing(void);
 
 public:
+	static const data32 * NoColor;
 	static const char* start(void);
 	static GuiManager* getInstance(void);
 	SceneGraph* scene;
 	~GuiManager(void);
-	GobID Add(IDrawable*);
-	void Remove(IDrawable*);
-	IObjection<IConnectable>* Element(string name);
-	IObjection<IConnectable>* Element(GobID id);
+	GobID Add(GuiObject*);
+	void Remove(GuiObject*);
+	void Remove(unsigned ID);
+	GuiObject* Panel(string name);
+	GuiObject* Panel(GobID id);
+	ControllElement* Element(string panelName,ConID ID);
+	ControllElement* Element(unsigned panelID,unsigned elementID);
 	void DrawGUI(void);
-	void Write(const char*,short,short,data32);
-	
+	void Write(const char*,short,short,data32=NOLL);
+	void Write(const char*,VectorF);
 };
 
 #endif

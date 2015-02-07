@@ -1,6 +1,12 @@
 #include "Listener.h"
 #include "projectMacros.h"
 
+
+
+
+
+
+
 Listener::Listener(void)
 {
 	this->IsActive = false;

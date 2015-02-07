@@ -66,16 +66,21 @@ typedef unsigned int ConID;
 template<class Objected>
 class IObjection : public IDrawable, public ILocatable
 {
-#define this conXtor
+
 public:
 	Objected* conXtor;
 
 	virtual IObjection<Objected>* Connection(void)
 	{
-#undef this
 		return this;
-#define this conXtor
 	}
+
+	virtual operator IConnectable*(void)
+	{
+		return (IConnectable*)conXtor;
+	}
+
+#define this conXtor
 
 	template<typename cT> cT* AddConnectable(void)
 	{
@@ -141,12 +146,12 @@ public:
 		return ((IConXtor*)this)->GetName();
 	}
 
-	virtual void SetName(char* name)
+	virtual void SetName(const char* name)
 	{
 		((IConXtor*)this)->SetName(name);
 	}
 
-	operator IDrawable*(void)
+	 operator IDrawable*(void)
 	{
 		return GetOrAdd<Connectable<IDrawable>>();
 	}
@@ -219,14 +224,19 @@ public:
 
 	template<typename ConnectorType> 
 	IObjection<ConnectorType>* Objected(void)
-		{
-			  return (IObjection<ConnectorType>*)connection;
-		}
-	
+	{
+		return (IObjection<ConnectorType>*)connection;
+	}
+
 	template<typename ConnectorType> operator ConnectorType*(void)
-		{
-			return Objected<ConnectorType>()->conXtor;
-		}
+	{
+		return Objected<ConnectorType>()->GetNAdd<ConnectorType>();
+	}
+
+	virtual operator IObjection<IConnectable>*(void)
+	{
+		return Connection();
+	}
 
 	//StartUp-Initializer...
 	//override and put code in it for handling dependencies on other Components
@@ -262,7 +272,7 @@ public:
 			else
 			{
 				IConnectable* newcon = new T();
-				newcon->SetConnection(this->connection);	
+				newcon->SetConnection(this);	
 				newcon->TypeHashCode = newcon->ConnectionID = (unsigned)typeid(T).hash_code(); 
 				setConnectables(i,(T*)newcon);
 				NumberOfConnectedObjects++;
@@ -334,7 +344,7 @@ public:
 			else
 			{
 				IConnectable* newcon = new T();
-				newcon->SetConnection((IObjection<IConnectable>*)this->connection);	
+				newcon->SetConnection(connection);	
 				newcon->TypeHashCode = newcon->ConnectionID = (unsigned)typeid(T).hash_code(); 
 				setConnectables(i,(T*)newcon);
 				NumberOfConnectedObjects++;
@@ -516,12 +526,13 @@ public:
 					IConXtor(void);
 	virtual			~IConXtor(void);
 	GobID			GetID(void);
-	char*			GetName(void);
-	void			SetName(char*);
+	virtual const char*			GetName(void);
+	void			SetName(const char*);
 	virtual bool	Initialize(void);
 	bool			AddToSceneAndLockID(void);
 	unsigned		SetID(unsigned);
 	bool			LockID(unsigned);
+	virtual bool	ShowDialog(void);
 };
 
 class cTransform :

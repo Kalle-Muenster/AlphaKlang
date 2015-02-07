@@ -54,7 +54,7 @@ IConnectable::AddCombiner(void* igobject,ConID* id1,ConID* id2,int componentSlot
 IObjection<IConnectable>* 
 IConnectable::Connection(void)
 {
-	return (IObjection<IConnectable>* )this->connection;
+	return (IObjection<IConnectable>* )connection;
 }
 
 IConnectable*
@@ -180,14 +180,14 @@ IConXtor::AddToSceneAndLockID(void)
 	return _idLocked;
 }
 
-char* 
+const char* 
 IConXtor::GetName(void)
 	{
 		 return &Name[0];
 	}
 
 void 
-IConXtor::SetName(char* name)
+IConXtor::SetName(const char* name)
 	{
 		Name[63]='\0';
 		char i = 0;
@@ -220,6 +220,12 @@ IConXtor::LockID(unsigned lockTO)
 		this->_idLocked=true;
 
 	return _idLocked;
+}
+
+bool
+IConXtor::ShowDialog(void)
+{
+   return false;
 }
 
 Dimensionality::Dimensionality(void)

@@ -17,6 +17,7 @@ void ProjectMappe::OnIdle(void)
 		glutReshapeWindow(SCREENWIDTH+1,SCREENHEIGHT+1);
 		SCENE->camera->NeedViewUpdate=false;
 	}
+
 	glutPostRedisplay();
 }
 
@@ -43,16 +44,22 @@ void ProjectMappe::OnDisplay(void)
 
 	SCENE->DrawSky();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	RenderCycle();
-	glutSwapBuffers();
+	
 
+
+	glutSwapBuffers();
+	INPUT->PerFrameReset();
+	AUDIO->PerFrameReset();
 #ifdef LATE_AFTER_DRAW
 	UPDATE->DoTheLateUpdates();
 #endif
 
-	INPUT->PerFrameReset();
-	AUDIO->PerFrameReset();
+
 
 	if(EXIT())
 		prepareForExit();
+
+
 }

@@ -17,6 +17,7 @@ protected:
 	float					mouseSpeed;				// firstPerson Mouse sensitivity
 	virtual void			UpdateMode(void);		// Updates all data-changes in this Cam-Mode...
 	bool					accelerate;				// State if currently running faster is enabled, e.g. Shift pressed
+	bool					MouseCapture;			// Indicates if the mouse-cursor always will be centered at screen-center.
 
 public:
 	float					x, y, z;					// XZ position of the camera
@@ -30,6 +31,8 @@ public:
 	virtual void specialKeyPressed(int key);
 	virtual void mouseMotion(int newX, int newY);
 	virtual void mouseWheel(int wheel,WHEEL state){};
+	void DisableMouseCapture(void);
+	void EnableMouseCapture(void);
 };
 
 #endif

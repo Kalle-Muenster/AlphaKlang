@@ -23,7 +23,7 @@ public:
 	virtual Transform*		getTransform(void);
 	virtual GobID	GetID(void);
 	virtual const char*	GetName(void);
-	virtual void	SetName(char*);
+	virtual void	SetName(const char*);
 	virtual operator IConnectable();
 	float			SomeValue;
 	virtual void	Action(IConnectable* sender);

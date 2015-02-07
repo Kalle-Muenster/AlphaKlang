@@ -47,7 +47,7 @@ ObjectManagement::FreeID(unsigned id)
 	}
 	else if(id >= MAX_MUM_SCENE_OBJECTS)
 	{
-		GUI->Remove(GUI->Element(id));
+		GUI->Remove((GuiObject*)GUI->Panel(id));
 	}
 	else
 	{
@@ -62,7 +62,7 @@ ObjectManagement::Find(unsigned ID)
 	if(ID<MAX_MUM_SCENE_OBJECTS)
 		obj = (IObjection<IConXtor>*)SCENE->Object(ID);
 	else if	(ID<_managedIDs)
-		obj = (IObjection<IConXtor>*)GUI->Element(ID);
+		obj = (IObjection<IConXtor>*)GUI->Panel(ID);
 	else
 		{
 			//todo
@@ -76,15 +76,15 @@ ObjectManagement::Find(char* name)
 {
 	 IObjection<IConnectable>* obj = SCENE->Object(name);
 	 if(obj==NULL)
-		 obj = GUI->Element(name);
+		 obj = ((IConXtor*)GUI->Panel(name)->conXtor)->Connection();
 
-	 return (IObjection<IConXtor>*)obj;
+	 return obj->conXtor->Objected<IConXtor>();
 }
 
 ControllElement*
 ObjectManagement::FindGUIControll(char* PanelName,char* label)
 {
-	GuiObject* panel = (GuiObject*)GUI->Element(PanelName);
+	GuiObject* panel = (GuiObject*)GUI->Panel(PanelName);
 	for(unsigned c = 1;c<panel->conXtor->GetNumberOfConnected();c++)
 		{
 			 ControllElement* cnt = panel->GetConnected<ControllElement>(c);

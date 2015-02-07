@@ -5,12 +5,14 @@
 #include "Cubus.h"
 #include "UpdateManager.h"
 #include "Ground.h"
+#include "IEditable.h"
 
 #define SPECTRUM_SIZE (128)
 
 class SpectrumAnalyzer :
 	public Cubus,
-	public IUpdateble
+	public IUpdateble,
+	public IEditable
 {
 private: 
 	short bandWidth;

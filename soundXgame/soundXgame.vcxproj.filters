@@ -171,6 +171,11 @@
     </ClCompile>
     <ClCompile Include="primitivSwitcher.cpp" />
     <ClCompile Include="PrimitivObject.cpp" />
+    <ClCompile Include="Knob.cpp">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClCompile>
+    <ClCompile Include="IEditable.cpp" />
+    <ClCompile Include="PointAndClick.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -358,6 +363,12 @@
     </ClInclude>
     <ClInclude Include="primitivSwitcher.h" />
     <ClInclude Include="PrimitivObject.h" />
+    <ClInclude Include="Knob.h">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiControlls.h" />
+    <ClInclude Include="IEditable.h" />
+    <ClInclude Include="PointAndClick.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -381,5 +392,43 @@
     <Filter Include="Objects\ConnectableControllElements">
       <UniqueIdentifier>{e1b9a994-505a-47ce-b1cd-a0c3116d5463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{2e156eb6-c02f-4fee-bf6b-73cc5d4257f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\GUI">
+      <UniqueIdentifier>{2d464ce9-eb26-47e2-96a5-b2f7e15de729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Bleche">
+      <UniqueIdentifier>{91021cae-a6d6-4a11-ae6c-a2aa17faa8a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\GUI\knobA_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\button_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX-2color_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\knobB_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panel_256x512.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panel_menu.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panelT_256x512.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
   </ItemGroup>
 </Project>
