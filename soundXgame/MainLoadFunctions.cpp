@@ -37,7 +37,7 @@ void ProjectMappe::OnLoadContent(void)
 	fountain->sensitivity = 5;	  */
 
 	// GUI
-	GuiObject* guiding = new GuiObject("panelT_256x512.png");
+	GuiObject* guiding = new GuiObject("GUI/panelT_256x512.png");
 	guiding->SetName("Editor-Panel");
 	guiding->scale(Vector3(256,256,1));
 	guiding->move(Vector3(20,20,0));
@@ -56,7 +56,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	guiding->isVisible(false);
 
-	GuiObject* menu = new GuiObject("panel_menu.png");
+	GuiObject* menu = new GuiObject("GUI/panel_menu.png");
 	menu->SetName("Main-Menu");
 	menu->scale(Vector3(256,256,1));
 	menu->AddConnectable<ButtonControl>();
@@ -74,7 +74,7 @@ void ProjectMappe::OnLoadContent(void)
 	menu->isVisible(true);
 
 	// Qualle
-	(new AnimatedSprite<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
+	(new AnimatedSprite<36,3>("SpriteSheets/Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
 	SCENE->Object("Q2animated")->IsGrounded(false);
 	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
@@ -113,7 +113,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object(temp)->isVisible(true);
 	SCENE->Object(temp)->SetName("PrimitivKubus");
 	SCENE->Object(temp)->AlwaysFaceMovingdirection = true;
-	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("PrimitivKubus-emission");
+	(new ParticleSystem<100>("Particles/Der Blaue Dunst_512x512.png"))->SetName("PrimitivKubus-emission");
 	SCENE->Object("PrimitivKubus-emission")->AlwaysFaceMovingdirection=true;
 	SCENE->Object("PrimitivKubus-emission")->AddConnectable<ObjectFollower>();
 	SCENE->Object("PrimitivKubus-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object(temp));
@@ -280,7 +280,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-40,20,-40));
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMAX(Vector3(40,30,40));
 	SCENE->Object("AUDIO11")->AlwaysFaceMovingdirection=true;
-	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
+	(new ParticleSystem<100>("Particles/Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
 	SCENE->Object("AUDIO11-emission")->AlwaysFaceMovingdirection=true;
 	SCENE->Object("AUDIO11-emission")->AddConnectable<ObjectFollower>();
 	SCENE->Object("AUDIO11-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object("AUDIO11"));
@@ -298,7 +298,7 @@ void ProjectMappe::OnLoadContent(void)
 	AUDIO->Play();
 
 	// Music Cube
-	(new Cubus("kubismus.png"))->SetName("muckubus");
+	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
@@ -317,7 +317,7 @@ void ProjectMappe::OnLoadContent(void)
 	{
 		x-=((float)i);
 		z+=(2.f*(float)i/15.0f);
-		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
+		obj = (new Cubus("Bleche/Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
@@ -349,7 +349,7 @@ void ProjectMappe::OnLoadContent(void)
 	particleImages[2] = "particle3_128x128.png";*/
 	
 	// Particles
-	(new ParticleSystem<500>("particle4_128x128.png"))->SetName("ParticleSystem");
+	(new ParticleSystem<500>("Particles/particle4_128x128.png"))->SetName("ParticleSystem");
 	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));

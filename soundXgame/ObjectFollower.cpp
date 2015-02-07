@@ -1,5 +1,7 @@
 #include "ObjectFollower.h"
 #include "ParticleSystem.h"
+#include <typeinfo>
+
 
 ObjectFollower::ObjectFollower(void)
 {

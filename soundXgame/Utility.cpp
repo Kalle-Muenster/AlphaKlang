@@ -14,11 +14,11 @@ Utility::GlobalZ = Vector3(0,0,-1);
 
 
 
-void _rotate90(float partOf90,float & a,float &b)
-{
-	a=a*partOf90;
-	b=b/(1.0-partOf90);
-}
+//void _rotate90(float partOf90,float & a,float &b)
+//{
+//	a=a*partOf90;
+//	b=b/(1.0-partOf90);
+//}
 
 
 
@@ -387,47 +387,78 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 std::vector<Texture*> _loadedtTextures;
 std::vector<char*> _textureNames;
 
+
+Texture* _loadeWithLodePNG(const char* fileName)
+{
+	Texture* tex = new Texture();
+	std::vector<unsigned char> image;
+	std::vector<unsigned char> reversi;
+	unsigned width, height;
+	unsigned error = lodepng::decode(image, width, height, &fileName[0],LCT_RGBA);
+
+	// If there's an error, display it.
+	if(error != 0)
+	{	std::cout << "error " << error << ": " << lodepng_error_text(error) << std::endl;
+		return NULL; }
+
+	tex->w = width;
+	tex->h = height;
+	tex->format=tex->RGBA;
+
+	//reverse Y-order !!!
+	int stride = tex->w*4;
+	for(int Y=tex->h-1;Y>=0;Y--)
+		for(int X=0;X<stride;X+=4)
+		{
+			reversi.push_back(image[(Y*stride)+X]);
+			reversi.push_back(image[(Y*stride)+X+1]);
+			reversi.push_back(image[(Y*stride)+X+2]);
+			reversi.push_back(image[(Y*stride)+X+3]);
+		}
+
+	tex->pData = &reversi[0];
+
+	glEnable(GL_TEXTURE_2D);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //GL_NEAREST = no smoothing
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glGenTextures(1,&tex->ID);
+	glBindTexture(GL_TEXTURE_2D,tex->ID);
+	glTexImage2D(GL_TEXTURE_2D, 0, 4, tex->w, tex->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->pData);
+
+	return tex;
+}
+
 GLuint
 Utility::loadTexture(const char* tmp)
 {
+
 	char filename[64];
 	sprintf(&filename[0],"Data/%s",tmp);
 
-	glload::LoadTest loadTest = glload::LoadFunctions();
+	//glload::LoadTest loadTest = glload::LoadFunctions();
+	
 	char temp[64];
 	temp[63]='\0';
 	short i = -1;
 
 	if(!_loadedtTextures.size())
 	{//if there are no texture's loaded yet, and lists need initialization...
-		try
-		{	 
+	 
 			//init vector-lists-variables..
 			_textureNames = std::vector<char*>();
 			_loadedtTextures = std::vector<Texture*>();
-			_loadedtTextures.push_back(new Texture());
 			
-			//load the image-file:
-			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
-			
-			//save the textureID...
-			_loadedtTextures.at(0)->ID = glimg::CreateTexture(pImageSet.get(), 0);
-			
+			//loade the texture and save it'ID to list...
+			_loadedtTextures.push_back(_loadeWithLodePNG(filename));
+
 			//save the texture filename...
 			while(((temp[++i]=filename[i])!='\0')&&(i<64)); 
 			_textureNames.push_back(temp);
 
 			//return the textureID
 			return _loadedtTextures[0]->ID;
-		}
-		catch(glimg::loaders::stb::StbLoaderException &e)
-		{
-			std::cerr << "Failed loading file";
-		}
-		catch(glimg::TextureGenerationException &e)
-		{
-			std::cerr << "Texture creation failed";
-		}
+
 	}
 	else 
 	{//if list vectors already initialized and contain at least one texture...
@@ -437,43 +468,25 @@ Utility::loadTexture(const char* tmp)
 
 			if(Utility::StringCompareRecursive(filename,(*it))<0)
 				return _loadedtTextures[i]->ID; //return the already contained textureID;
-		}
-		i = -1;
-		try
-		{//if the requested texture is a new one:
+		}i = -1;
 
-			//load the texture-data...
-			Texture* loadTexture = new Texture();
-			std::auto_ptr<glimg::ImageSet> pImageSet(glimg::loaders::stb::LoadFromFile(filename));
-			loadTexture->ID = glimg::CreateTexture(pImageSet.get(), 0);
+		
 			
-			//save the textureID to list...
-			_loadedtTextures.push_back(loadTexture);
-			
-			//save the texture's filename...
-			while(((temp[++i]=filename[i])!='\0')&&(i<64));
-			_textureNames.push_back(temp);
+		//save the textureID to list...
+		_loadedtTextures.push_back(_loadeWithLodePNG(filename));
 
-			//and return the textureID.
-			return loadTexture->ID;
-		}
-		catch(glimg::loaders::stb::StbLoaderException &e)
-		{
-			std::cerr << "Failed loading file";
-		}
-		catch(glimg::TextureGenerationException &e)
-		{
-			std::cerr << "Texture creation failed";
-		}
+		//save the texture's filename...	
+		while(((temp[++i]=filename[i])!='\0')&&(i<64));
+		_textureNames.push_back(temp);
+
+		i=_loadedtTextures.size()-1;
+		//and return the textureID.
+		return _loadedtTextures[i]->ID;
+		
 	}
 	return 0;
 }
 
-void 
-Utility::Rotate90(float partOf90,float & A,float & B)
-{
-	_rotate90(partOf90,A,B);
-}
 
 /*
  * Returns a values between 0 and 1

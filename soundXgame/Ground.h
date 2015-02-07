@@ -2,11 +2,12 @@
 #define __GROUND_H__
 
 #include <vector>
-#include <GL\glew.h>
-#include <GL\freeglut.h>
-#include <glm.hpp>
-#include <glload\gl_load.hpp>
-#include <glimg/glimg.h>
+#include "projectGrafics.h"
+//#include <GL\glew.h>
+//#include <GL\freeglut.h>
+//#include <glm.hpp>
+//#include <glload\gl_load.hpp>
+//#include <glimg/glimg.h>
 
 #include "IGObject.h"
 #include "Cam.h"

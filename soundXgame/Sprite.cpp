@@ -99,7 +99,7 @@ Sprite::SetUp(string textureFile,bool backFace,bool addToScene)
 	transform.right = temp2;
 	transform.up = temp3;
 
-
+	
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);

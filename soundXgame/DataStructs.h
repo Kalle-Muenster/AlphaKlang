@@ -23,7 +23,7 @@ struct Texture
 	void* pData;
 
 	void Loade(string filename);
-	void Loade(string fileName,short Width,short Height,Format = RGBA);
+	void Loade(string fileName,unsigned short Width,unsigned short Height,Format = RGBA);
 	Texture operator =(Texture setter)
 	{
 		ID = setter.ID;

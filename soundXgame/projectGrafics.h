@@ -6,8 +6,8 @@
 #define FREEGLUT_STATIC
 #include <GL\freeglut.h>
 #include <glm.hpp>
-#include <glload\gl_load.hpp>
-#include <glimg\glimg.h>
+//#include <glload\gl_load.hpp>
+//#include <glimg\glimg.h>
 
 
 

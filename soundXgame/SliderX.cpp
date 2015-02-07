@@ -24,7 +24,7 @@ SliderX::SliderX(void)
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
-	texture.ID = Utility::loadTexture("sliderX-2color_64x64.png");
+	texture.ID = Utility::loadTexture("GUI/sliderX-2color_64x64.png");
 	
 	//glGenTextures(1,&texture.ID);
 	  glBindTexture(GL_TEXTURE_2D, texture.ID);

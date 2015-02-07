@@ -1,7 +1,7 @@
 #ifndef _CONNECTABLE_H_
 #define _CONNECTABLE_H_
 
-//#include "IGObject.h"
+#include <typeinfo>
 #include "Transform.h"
 
 struct Transform;
