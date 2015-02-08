@@ -13,7 +13,8 @@
  
  Vecti fpsTextPosition = Vecti();
  Vecti posTextPosition = Vecti();
- char fpsSTRING[32];
+char fpsSTRING[32];
+char posSTRING[32];
 float _gm_tc_r = 1;
 float _gm_tc_g = 1;
 float _gm_tc_b = 1;
@@ -225,17 +226,18 @@ void _writeFPS()
 {
 	//sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
 	//_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
-	timeCounter +=	InputManager::getInstance()->FrameTime;
+	timeCounter += InputManager::getInstance()->FrameTime;
 	frameCounter++;
 	
-	_WriteText2D(&fpsSTRING[0],fpsTextPosition);
-
 	if(frameCounter>10)
 	{
 		sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f",((float)frameCounter/timeCounter));
 		timeCounter=0;
 		frameCounter=0;
 	}
+
+	_WriteText2D(&fpsSTRING[0],fpsTextPosition);
+
 }
 
 void
@@ -248,8 +250,8 @@ void _writePosition()
 {
 	VectorF pos = SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>()->GetPlayerPosition();
 
-	sprintf_s(fpsSTRING, sizeof(fpsSTRING),"Pos: %i / %i \n",(int)pos.x, (int)pos.y);
-	_WriteText2D(&fpsSTRING[0],posTextPosition,_color);
+	sprintf_s(posSTRING, sizeof(posSTRING),"Pos: %i / %i \n",(int)pos.x, (int)pos.y);
+	_WriteText2D(&posSTRING[0],posTextPosition,_color);
 }
 
 void

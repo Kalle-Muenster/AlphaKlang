@@ -19,11 +19,7 @@ ButtonControl::ButtonControl(void)
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
-<<<<<<< HEAD
 	texture.ID = Utility::loadTexture("GUI/buttons_256x256.png");
-=======
-	texture.ID = Utility::loadTexture("GUI/button_64x64.png");
->>>>>>> kalle_07_02_15
 	
 	//glGenTextures(1,&texture.ID);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);

@@ -165,10 +165,10 @@ FirstPerson::mouseMotion(int newX, int newY)
 		eyeY += (float)diffY / 300;
 
 		// set fixed restriction to top and bottom
-		if(eyeY < -0.5f + y)
-			eyeY = -0.5f+ y;
-		else if(eyeY > 2.5f+ y)
-			eyeY = 2.5f+ y;
+		if(eyeY < 1.5f + y)
+			eyeY = 1.5f+ y;
+		else if(eyeY > 4.5f+ y)
+			eyeY = 4.5f+ y;
 
 		// set mouse pos center to screen
 		mouseX = SCREENWIDTH / 2;
