@@ -1,8 +1,12 @@
-# debug folder
-Debug/soundXgame.*
-x64/Debug/soundXgame.*
+# Debug & Release folder
+[Dd]ebug/soundXgame.*
+[Rr]elease/soundXgame.*
+x64/[Dd]ebug/soundXgame.*
+x64/[Rr]elease/soundXgame.*
 soundXgame/[Dd]ebug/*
+soundXgame/[Rr]elease/*
 soundXgame/x64/[Dd]ebug/*
+soundXgame/x64/[Rr]elease/*
 
 # visual studio
 *.suo
