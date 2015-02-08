@@ -170,21 +170,22 @@ void ProjectMappe::OnLoadContent(void)
 								Vector3(45,2,-50),Vector3(0,0,0),Vector3(50,2,40),Vector3(-30,2,-45),
 								Vector3(-23,-2,-28),Vector3(-33,2,-50)
 							};
-	char tempString[32];
+	char tempString[16];
+	char tempString2[32];
 	for(int i = 1;i<22;i++)
 	{
 
 		if(i != 1 && i != 2 && i != 3 && i != 4 && i != 8 && i != 16 && i != 18)
 		{
-			sprintf(&tempString[0],"AUDIO_%i",i);
-			sprintf(&tempString[10],"mp3/%i-Audio.mp3",i);
+			sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
+			sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
 
 			new IPrimitivObject();
 			GobID id = SCENE->Object("last created")->GetID();
 			SCENE->Object(id)->SetName(&tempString[0]);
 			((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
 			SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
-			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString[10]); 
+			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
 			//SCENE->Object(id)->scale(0.5f, 0.5f, 0.5f);
 			// load music
 			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(30, 200);

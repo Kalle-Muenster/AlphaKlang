@@ -166,7 +166,7 @@ void _WriteText2D(const char * text, Vecti position,data32 color)
 
 void _writeFPS()
 {
-	sprintf(&fpsSTRING[0],"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
+	sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
 	_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
 }
 
@@ -174,7 +174,7 @@ void _writePosition()
 {
 	VectorF pos = SCENE->camera->ModeSocket->GetCameraMode<FirstPerson>()->GetPlayerPosition();
 
-	sprintf(&fpsSTRING[0],"Pos: %i / %i \n",(int)pos.x, (int)pos.y);
+	sprintf_s(fpsSTRING, sizeof(fpsSTRING),"Pos: %i / %i \n",(int)pos.x, (int)pos.y);
 	_WriteText2D(&fpsSTRING[0],posTextPosition,_color);
 }
 

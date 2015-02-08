@@ -220,16 +220,13 @@ _ToggleRecordFromMasterOut(void)
 HSTREAM
 _getAudioStreamByFileName(const string filename,int mode)
 {
-	/*
 	FILE* file;
-	file = fopen(filename,"rb");
-	long fileLength;
-	fseek(file,0,SEEK_END);
-	fileLength=ftell(file);
-	fseek(file,0,SEEK_SET);
-	fclose(file);  	 */
-
-	FILE* file = fopen(filename,"rb");
+	fopen_s(&file, filename,"rb");
+	if(!file)
+	{
+		throw "error loading file";
+		return 0;
+	}
 	long fileLength=fseek(file,0,SEEK_END);
 	fclose(file);	 
 
@@ -254,11 +251,16 @@ _getAudioStreamByFileName(const string filename,int mode)
 HSAMPLE
 _getSampleHandleByFilename(const char* tmp,bool loop)
 {
-	char* filename = new char[strlen(tmp)+1+5]();
-	sprintf(&filename[0],"Data/%s",tmp);
+	char filename[64];
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	FILE* file;
-	file = fopen(filename,"rb");
+	fopen_s(&file, filename,"rb");
+	if(!file)
+	{
+		throw "error loading file";
+		return 0;
+	}
 	fseek(file,0,SEEK_END);
 	long fileLength=ftell(file);
 	fseek(file,0,SEEK_SET);
@@ -423,11 +425,11 @@ BassAudio::BassAudio(void)
 	printf("Set BufferUpdatePeriod to: %i\n",AUDIO_BUFFERS_UPDATE_PERIOD);
 	BASS_SetConfig(BASS_CONFIG_REC_BUFFER,1500);
 	char stringBuffer[32];
-	_itoa(BASS_Mixer_GetVersion(),&stringBuffer[0],16);
+	_itoa_s(BASS_Mixer_GetVersion(),stringBuffer, sizeof(stringBuffer),16);
 	printf("Bass-Mixer-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
-	_itoa(BASS_FX_GetVersion(),&stringBuffer[0],16);
+	_itoa_s(BASS_FX_GetVersion(),stringBuffer, sizeof(stringBuffer),16);
 	printf("Bass-FX-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
-	_itoa(TAGS_GetVersion(),&stringBuffer[0],16);
+	_itoa_s(TAGS_GetVersion(),stringBuffer, sizeof(stringBuffer),16);
 	printf("Bass-Tags-version: %c.%c.%c.%c\n",stringBuffer[0],stringBuffer[2],stringBuffer[4],stringBuffer[6]);
 	_get3Dfactors(distance,rollOff,doppler);
 
@@ -510,8 +512,8 @@ BassAudio::ToggleMasterResampling(void)
 HSTREAM
 BassAudio::LoadeMusic(const char* tmp,LOAD_MODE mode,void* loadingObject)
 {
-	char* filename = new char[strlen(tmp)+1+5]();
-	sprintf(&filename[0],"Data/%s",tmp);
+	char filename[64];
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	Channel chan;
 	chan.ID = _getAudioStreamByFileName((const string)filename,(int)mode);
@@ -522,7 +524,6 @@ BassAudio::LoadeMusic(const char* tmp,LOAD_MODE mode,void* loadingObject)
 		 BASS_ChannelStop(_Channels[i].ID);
 	_Channels[i] = chan;
 
-	delete[] filename;
 	return chan.ID;
 }
 
@@ -544,15 +545,14 @@ BassAudio::SetListenerPosition(Transform* cameraTranform)
 void
 BassAudio::LoadeBackgroundAudio(const char* tmp)
 {
-	char* filename = new char[strlen(tmp)+1+5]();
-	sprintf(&filename[0],"Data/%s",tmp);
+	char filename[64];
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	derAudio = _getAudioStreamByFileName((string)filename,LOAD_2D);
 	BASS_ChannelSetDevice(derAudio,-1);
 	printf("AUDIO: %s loadet as Backgroundmusic !\n",filename);
 	_backgroundAudioLoadet = true;
 
-	delete[] filename;
 }
 
 void

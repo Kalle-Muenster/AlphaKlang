@@ -53,7 +53,7 @@ void
 _writeFPS(int X,int Y)
 {
 	char fpsString[32];
-	sprintf(&fpsString[0],"FPS: %f\n\0",(float)(1.0f/INPUT->FrameTime));
+	sprintf_s(fpsString, sizeof(fpsString),"FPS: %f\n\0",(float)(1.0f/INPUT->FrameTime));
 	GUI->Write(&fpsString[0], X,Y,_fpsDisplayColor);
 	printf("%s",&fpsString[0]);
 }

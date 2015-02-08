@@ -98,7 +98,7 @@ void*
 Loader::LoadeFile(char* tmp)
 {
 	char filename[64];
-	sprintf(&filename[0],"Data/%s",tmp);
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	u32_2s16_4b8 pixel;
 	pixel.u32 = 0;
@@ -108,8 +108,14 @@ Loader::LoadeFile(char* tmp)
 	int W=0;
 	int H=0;
 	char readBuffer[32];
-	FILE* file = fopen(filename,"rb");
-	fscanf(file,"%s\n",readBuffer);
+	FILE* file;
+	fopen_s(&file, filename,"rb");
+	if(!file)
+	{
+		throw "error loading file";
+		return 0;
+	}
+	fscanf_s(file,"%s\n",readBuffer, sizeof(readBuffer));
 	if(strcmp(readBuffer,"P3")==0)
 	{// --File is RGB PPM file...
 		bool W_H_ok=false;
@@ -118,7 +124,7 @@ Loader::LoadeFile(char* tmp)
 		int pixelCount=-1;
 		while(pixelCount<W*H)
 		{
-		fscanf(file,"%s\n",readBuffer);
+			fscanf_s(file,"%s\n",readBuffer, sizeof(readBuffer));
 			if(readBuffer[0]=='#')
 			{
 				char readChar='x';
@@ -129,7 +135,7 @@ Loader::LoadeFile(char* tmp)
 							{readChar='\n';break;}
 						}
 					if(readChar!='\n')
-						fscanf(file,"%s\n",readBuffer);
+						fscanf_s(file,"%s\n",readBuffer, sizeof(readBuffer));
 				}while(readChar!='\n');
 			}
 			else
@@ -164,8 +170,11 @@ Loader::LoadeFile(char* tmp)
 		fclose(file);
 		return data;
 	}
-else// other file-type.. later..
-	return NULL;
+	else// other file-type.. later..
+	{
+		fclose(file);
+		return NULL;
+	}
 }
 
 
@@ -177,7 +186,7 @@ char*
 Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector<glm::vec2> &uvs, std::vector<glm::vec3> &normals,GLuint &faceShape)
 {     
 	char filename[64];
-	sprintf(&filename[0],"Data/%s",tmp);
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	faceShape = GL_TRIANGLES;
 	bool HasNormals = false;
@@ -192,7 +201,8 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 	std::vector<glm::vec2> tempVertexTextures;
 	std::vector<glm::vec3> tempNormals;
 
-	FILE* file = fopen(filename, "r");
+	FILE* file;
+	fopen_s(&file, filename, "r");
 
 	//if(file == NULL) 
 	if(!file)
@@ -206,7 +216,7 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 	{
 		char line[64];
 
-		int Result = fscanf(file, "%s", line);
+		int Result = fscanf_s(file, "%s", line, sizeof(line));
 
 		if(Result == -1) 
 		{
@@ -214,30 +224,30 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 		}
 		if(strcmp(line, "o") == 0)
 		{
-			fscanf(file,"%s", ObjectName); 
+			fscanf_s(file,"%s", ObjectName, sizeof(ObjectName)); 
 		}
 		else if(strcmp(line, "v") == 0) 
 		{
 			glm::vec3 vertex;
-			fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+			fscanf_s(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z, sizeof(glm::vec3));
 			tempVertices.push_back(vertex);
 		}
 		else if(strcmp(line, "vt") == 0) 
 		{
 			glm::vec2 vertexTexture;
-			fscanf(file, "%f %f\n", &vertexTexture.x, &vertexTexture.y);
+			fscanf_s(file, "%f %f\n", &vertexTexture.x, &vertexTexture.y, sizeof(glm::vec2));
 			tempVertexTextures.push_back(vertexTexture);
 		}
 		else if(strcmp(line, "vn") == 0) 
 		{
 			HasNormals = true;
 			glm::vec3 normal;
-			fscanf(file, "%f %f %f\n",  &normal.x, &normal.y, &normal.z);
+			fscanf_s(file, "%f %f %f\n",  &normal.x, &normal.y, &normal.z, sizeof(glm::vec3));
 			tempNormals.push_back(normal);
 		}
 		else if(strcmp(line, "fs") == 0)
 		{ 
-			fscanf(file, "%s", line);
+			fscanf_s(file, "%s", line, sizeof(line));
 			if(strcmp(line,"QUADS")==0)
 				faceShape = GL_QUADS;
 		}
@@ -260,11 +270,12 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 				//Read Quads wth predefined Normals
 				if(HasNormals)
 				{
-					fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n",
+					fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n",
 						&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
 						&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
 						&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2],
-						&tempVertexIndex[3], &tempVertexTextureIndex[3], &tempNormalIndex[3]);
+						&tempVertexIndex[3], &tempVertexTextureIndex[3], &tempNormalIndex[3],
+						sizeof(unsigned int)*12);
 
 					vertexIndices.push_back(tempVertexIndex[0]);
 					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
@@ -284,11 +295,12 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 				}
 				else // Quads without normals..
 				{
-					fscanf(file, "%d/%d %d/%d %d/%d %d/%d\n",
+					fscanf_s(file, "%d/%d %d/%d %d/%d %d/%d\n",
 						&tempVertexIndex[0], &tempVertexTextureIndex[0],
 						&tempVertexIndex[1], &tempVertexTextureIndex[1],
 						&tempVertexIndex[2], &tempVertexTextureIndex[2],
-						&tempVertexIndex[3], &tempVertexTextureIndex[3]);
+						&tempVertexIndex[3], &tempVertexTextureIndex[3],
+						sizeof(unsigned int)*8);
 
 					vertexIndices.push_back(tempVertexIndex[0]);
 					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
@@ -319,10 +331,11 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 
 				if(HasNormals) //Triangles with predefined normals...
 				{
-					fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+					fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
 						&tempVertexIndex[0], &tempVertexTextureIndex[0], &tempNormalIndex[0],
 						&tempVertexIndex[1], &tempVertexTextureIndex[1], &tempNormalIndex[1],
-						&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2]);
+						&tempVertexIndex[2], &tempVertexTextureIndex[2], &tempNormalIndex[2],
+						sizeof(unsigned int)*12);
 
 					vertexIndices.push_back(tempVertexIndex[0]);
 					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
@@ -341,7 +354,8 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 					fscanf(file, "%d/%d %d/%d %d/%d\n", 
 						&tempVertexIndex[0], &tempVertexTextureIndex[0],
 						&tempVertexIndex[1], &tempVertexTextureIndex[1],
-						&tempVertexIndex[2], &tempVertexTextureIndex[2]);
+						&tempVertexIndex[2], &tempVertexTextureIndex[2],
+						sizeof(unsigned int)*8);
 
 					vertexIndices.push_back(tempVertexIndex[0]);
 					vertexTextureIndices.push_back(tempVertexTextureIndex[0]);
@@ -378,7 +392,8 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 		glm::vec3 normale = tempNormals[normalIndices[i] - 1];
 		normals.push_back(normale);
 	}
-
+	
+	fclose(file);
 	//returning the Object's name if found in the file,otherwhise a "blank"-string...
 	return &ObjectName[0];
 }
@@ -391,7 +406,7 @@ GLuint
 Utility::loadTexture(const char* tmp)
 {
 	char filename[64];
-	sprintf(&filename[0],"Data/%s",tmp);
+	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
 
 	glload::LoadTest loadTest = glload::LoadFunctions();
 	char temp[64];
