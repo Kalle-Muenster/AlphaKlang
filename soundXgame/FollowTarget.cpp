@@ -46,7 +46,7 @@ FollowTarget::SetTarget(IGObject *targetObject)
 	return camera->SetTarget((IObjection<IConnectable> *)targetObject);
 }
 
-IGObject* 
+IObjection<IConXtor>* 
 FollowTarget::GetTarget(void)
 {
 	return camera->GetTarget();

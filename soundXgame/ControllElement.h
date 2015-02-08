@@ -21,7 +21,7 @@ protected:
 
 public:
 	ControllElement(void);
-//	virtual bool Initialize(void);
+	virtual bool Initialize(void);
 	virtual ~ControllElement(void);
 	ProjectMappe::Rectangle Panel;
 	ProjectMappe::Rectangle Area;

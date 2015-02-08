@@ -6,7 +6,11 @@ void BackButton(IConnectable* sender)
 	sender->Connection()->isVisible(false);
 }
 
-
+void _scaleFunc(IConnectable* sender)
+{
+	if(((ControllElement*)sender)->GetText()=="Scale x")
+		printf("yeah");	
+}
 
 IEditable::IEditable(void)
 {
@@ -14,8 +18,12 @@ IEditable::IEditable(void)
 
 	std::strcpy(&Bindings[0].labelName[0],"Back");
 	Bindings[0].TypeInfo = &typeid(bool);
-	Bindings[0].VariableData = &((IObjection<IConXtor>*)this)->IsVisible;
+	Bindings[0].VariableData =&((IObjection<IConXtor>*)this)->IsVisible;
 	Bindings[0].OnChange = BackButton;
+
+
+
+
 }
 
 IEditable::~IEditable(void)
@@ -61,7 +69,7 @@ IEditable::BindValueToMenu(float& VariableToBind,action handler,string name)
 	return -1;
 }
 
-void 
+bool 
 IEditable::ShowDialog(void)
 {
 	if(panel)
@@ -89,7 +97,7 @@ IEditable::ShowDialog(void)
 			panel->GetConnected<ControllElement>(index)->SizeScaledPanel = (VectorF(0.5,1.f/numberOfControlls) * 0.9);
 			panel->GetConnected<ControllElement>(index)->PositionOnPanel = VectorF(10,5+(60*index));
 		}
-		panel->isVisible(true);
+		return panel->isVisible(true);
 
 	//	glutSetCursor(GLUT_CURSOR_INHERIT);
 	}

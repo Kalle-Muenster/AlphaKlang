@@ -20,7 +20,7 @@ public:
 	ButtonControl(void);
 	virtual void DoUpdate(void);
 	virtual ~ButtonControl(void);
-	virtual bool Initialize(void);
+//	virtual bool Initialize(void);
 	virtual ButtonState GetState(void);
 	void SetState(ButtonState);
 	void SetClickerFunc(action);

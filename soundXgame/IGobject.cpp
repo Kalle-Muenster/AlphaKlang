@@ -27,6 +27,8 @@ IGObject::IGObject(void)
 	GroundValue = 0;
 	IsGrounded(false);
 	AlwaysFaceMovingdirection=false;
+	iherited.push_back((unsigned)typeid(IDrawable).hash_code());
+	iherited.push_back((unsigned)typeid(ILocatable).hash_code());
 }
 
 IGObject::~IGObject(void)

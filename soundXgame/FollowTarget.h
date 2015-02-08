@@ -21,7 +21,7 @@ public:
 
 	void					SetTarget(Vector3*);
 	IGObject*				SetTarget(IGObject*);
-	IGObject*				GetTarget(void);
+	IObjection<IConXtor>*	GetTarget(void);
 	Vector3					GetPosition(void);
 	float					GetDistance(void);
 	void					follow(void);

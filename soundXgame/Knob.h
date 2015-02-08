@@ -27,7 +27,7 @@ public:
 	virtual void DoUpdate(void);
 	virtual void draw(void);
 	action ClickAction;
-
+	virtual ProjectMappe::Rectangle GetArea(void);
 
 	virtual void mouseMotion(int x, int y);
 	virtual void mouseClicks(int button,bool IsPressed,VectorF position);

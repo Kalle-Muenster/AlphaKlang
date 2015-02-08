@@ -1,6 +1,7 @@
 #ifndef _CONNECTABLE_H_
 #define _CONNECTABLE_H_
 
+#include <vector>
 #include <typeinfo>
 #include "Transform.h"
 
@@ -11,7 +12,7 @@ struct Transform;
 
 typedef unsigned int ConID;
 class IConXtor;
-
+class IEditable;
 
 class IDrawable
 {
@@ -67,8 +68,13 @@ template<class Objected>
 class IObjection : public IDrawable, public ILocatable
 {
 
+	
+
+protected:
+	 std::vector<unsigned> iherited;
+
 public:
-	Objected* conXtor;
+	 Objected* conXtor;
 
 	virtual IObjection<Objected>* Connection(void)
 	{
@@ -80,8 +86,30 @@ public:
 		return (IConnectable*)conXtor;
 	}
 
-#define this conXtor
+	template<class cT> cT* GetOrAdd(void)
+	{
+		short interfaceCount = iherited.size();
+		unsigned t = typeid(cT).hash_code();
+		for(int i = 0;i<interfaceCount;i++)
+			if(iherited.at(i)==t)
+				return (cT*)Connection();
+		return conXtor->GetNAdd<cT>();
+	}
 
+	#define this conXtor
+	template<typename t> bool has(unsigned=EMPTY)
+	{
+		int i = -1;
+		unsigned t = typeid(t).hash_code();
+		while((this->ConIDs[++i]!=t) && (i<IConnectable::MaximumNumberOfConnectioms));
+		if(i<IConnectable::MaximumNumberOfConnectioms) return true;	
+		else 
+			for(auto it = iherited.begin();it!=iherited.end();it++)
+				if(*it==t)
+					return true;
+		return false;
+	}
+	 
 	template<typename cT> cT* AddConnectable(void)
 	{
 		return this->AddConnectable<cT>(); 
@@ -95,6 +123,10 @@ public:
 		return (uT*)this->AddConnectable<Connectable<uT>>();
 	}
 	template<typename uT> uT* GetUnconnectable(void)
+	{
+		return (uT*)this->GetConnected<Connectable<uT>>();
+	}
+	template<typename uT> uT* GetUnAdd(void)
 	{
 		return (uT*)this->GetNAdd<Connectable<uT>>();
 	}
@@ -125,16 +157,7 @@ public:
 		return detached;
 	}
 
-	template<class cT> cT* GetOrAdd(void)
-	{
-		//cT* get = conXtor->GetConnected<cT>();
-		//if(!get)
-		//	get = conXtor->AddConnectable<cT>();
 
-		//return get;
-
-		return this->GetNAdd<cT>();
-	}
 
 	virtual GobID GetID(void)
 	{
@@ -171,6 +194,14 @@ public:
 		return GetUnconnectable<Transform>();
 	}
 
+	operator IEditable*(void)
+	{
+		void* obj =  GetUnconnectable<IEditable>();
+		if(obj==NULL)
+			obj = AddUnconnectable<IEditable>();
+		return (IEditable*)obj;
+	}
+
 	//virtual void draw(void)
 	//{
 	//	((IDrawable*)this)->draw();
@@ -185,10 +216,11 @@ class IConnectable
 protected:
 	void AddCombiner(void*,ConID*,ConID*,int);
 	bool needOneMoreStartupCycle;
-	unsigned TypeHashCode;
+	
 	
 
 public:
+	unsigned TypeHashCode;
 	static bool const canHaveMultipleInstances;
 	static int const MaximumNumberOfConnectioms;
 	unsigned ConnectionID;
@@ -320,7 +352,7 @@ public:
 			if(ConIDs[i]!=NULL)
 				if(Connectables[i]->TypeHashCode == TypeHash)
 					return (T*)Connectables[i];
-		return (T*)this;
+		return NULL;
 	}
 
 	//Gets a component of an Object by giving its Connection-ID...
@@ -487,14 +519,16 @@ class Connectable
 	public IConnectable 
 {
 protected:
-	static bool const canHaveMultipleInstances = true;
+	
 	NonConnectableType* member;
 
 public:
+	static bool const canHaveMultipleInstances = true;
 	Connectable(void)
 	{
 		member = new NonConnectableType();
-		TypeHashCode = typeid(Connectable<NonConnectableType>).hash_code();
+	//	TypeHashCode = typeid(Connectable<NonConnectableType>).hash_code();
+		TypeHashCode = typeid(NonConnectableType).hash_code();
 	}
 	virtual ~Connectable(void)
 	{

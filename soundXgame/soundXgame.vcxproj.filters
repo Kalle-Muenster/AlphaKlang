@@ -175,12 +175,14 @@
       <Filter>Objects\ConnectableControllElements</Filter>
     </ClCompile>
     <ClCompile Include="IEditable.cpp" />
-    <ClCompile Include="PointAndClick.cpp" />
     <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.cpp">
       <Filter>LodePNG</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.cpp">
       <Filter>LodePNG</Filter>
+    </ClCompile>
+    <ClCompile Include="PointAndClick.cpp">
+      <Filter>Objects\ConnectableCameraModes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -374,12 +376,14 @@
     </ClInclude>
     <ClInclude Include="GuiControlls.h" />
     <ClInclude Include="IEditable.h" />
-    <ClInclude Include="PointAndClick.h" />
     <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.h">
       <Filter>LodePNG</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.h">
       <Filter>LodePNG</Filter>
+    </ClInclude>
+    <ClInclude Include="PointAndClick.h">
+      <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -430,13 +434,7 @@
     <Image Include="Data\GUI\button_64x64.png">
       <Filter>Resources\GUI</Filter>
     </Image>
-    <Image Include="Data\GUI\sliderX-2color_64x64.png">
-      <Filter>Resources\GUI</Filter>
-    </Image>
     <Image Include="Data\GUI\knobB_64x64.png">
-      <Filter>Resources\GUI</Filter>
-    </Image>
-    <Image Include="Data\GUI\sliderX_64x64.png">
       <Filter>Resources\GUI</Filter>
     </Image>
     <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png">
@@ -504,6 +502,12 @@
     </Image>
     <Image Include="Data\SpriteSheets\Q2_1872x516.png">
       <Filter>Resources\SpriteSheets</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX1_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX_64x64.png">
+      <Filter>Resources\GUI</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

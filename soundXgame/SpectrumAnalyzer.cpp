@@ -2,11 +2,26 @@
 #include "projectMacros.h"
 #include "Connectable.h"
 
+void
+_OnScaleY(IConnectable* sender)
+{
+	GUI->Write("Y-changed",200,200);
+}
+
+void
+_OnBackButton(IConnectable* sender)
+{
+	sender->Connection()->isVisible(false);
+}
 
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
+	IGObject::iherited.push_back((unsigned)typeid(IEditable).hash_code());
 	IGObject::InitializeObject();
 	this->ChartHeight = 100.0f;
+
+	this->BindValueToMenu(getTransform()->scale.y,_OnScaleY,"Scale Y");
+	this->BindValueToMenu(this->IsVisible,_OnBackButton,"Disable");
 }
 
 void

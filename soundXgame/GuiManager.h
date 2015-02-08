@@ -84,7 +84,7 @@ public:
 	ControllElement* Element(unsigned panelID,unsigned elementID);
 	void DrawGUI(void);
 	void Write(const char*,short,short,data32=NOLL);
-	void Write(const char*,VectorF);
+	void Write(const char*,VectorF,data32=NOLL);
 };
 
 #endif
