@@ -1,30 +1,28 @@
-The Experience of Sound
+![](https://github.com/KallePower/ProjectMappe/blob/development/soundXgame/codefreaks_black.jpg)
+std::cout << Team Code Freaks << Programming by Kalle Münster and Dario D. Müller << std::endl
+
+Framework: Stepflow
 ==============
 
 * Custom-build Graphics Framework build with C++ and OpenGL
-* 3D Spectrum Analyzer
+* Build-in Audio-Recognition, TTF-Analyser and 3D Sound Spectrum
+* Graphics libraries: freeglut, glew, glm, glsdk, BassAudio
 
-Framework
-===
+Alphaklang - The Experience of Sound
+==============
 
-  * Custom-build C++ Framwork
-  * Rendering: OpenGL
-  * Graphics libraries: freeglut, glew, glm, glsdk
-  * Audio library: BassAudio
-
-3D Spectrum Analyzer
-===
-  * 3D Demo
+  * 3D Spectrum Analyzer
+  * Game still in devleopment
+  * Skill Demo ;)
 
 About
-======
+============
 
-* Final Project
-* University:	SAE Hamburg, Germany
-* Version: 		0.1
-* Date: 	    2014
-* Copyright (c) 2014
+* Final Project at SAE Institute University, Hamburg, Germany
+* Copyright (c) 09/2014 - 01/2015
+* by Kalle Münster and Dario D. Müller
 
-Development & Programming by
-  * Kalle Münster
-  * Dario D. Müller (www.dariodomi.de)
+Links
+============
+  * Documentation: https://docs.google.com/document/d/1_fZ0rWXhQemJyiExTHA93nG4yES0Mfp_2MNUDu5DR-E/edit?usp=sharing
+  * Blog: www.dariodomi.de
