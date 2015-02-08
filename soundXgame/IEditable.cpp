@@ -1,5 +1,5 @@
 #include "IEditable.h"
-
+#include <string.h>
 
 void BackButton(IConnectable* sender)
 {
@@ -16,7 +16,8 @@ IEditable::IEditable(void)
 {
 	Bindings.push_back(BINDING());
 
-	std::strcpy(&Bindings[0].labelName[0],"Back");
+	strcpy_s(&Bindings[0].labelName[0], sizeof(&Bindings[0].labelName[0]),"Back");
+	
 	Bindings[0].TypeInfo = &typeid(bool);
 	Bindings[0].VariableData =&((IObjection<IConXtor>*)this)->IsVisible;
 	Bindings[0].OnChange = BackButton;
@@ -44,7 +45,7 @@ IEditable::BindValueToMenu(bool& VariableToBind,action Handler,string name)
 	if(index<10)
 	{
 		Bindings.push_back(BINDING());
-		std::strcpy(&Bindings[index].labelName[0],name);
+		strcpy_s(&Bindings[index].labelName[0], sizeof(&Bindings[index].labelName[0]),name);
 		Bindings[index].TypeInfo = &typeid(bool);
 		Bindings[index].VariableData = &VariableToBind;
 		Bindings[index].OnChange = Handler;
@@ -60,7 +61,7 @@ IEditable::BindValueToMenu(float& VariableToBind,action handler,string name)
 	if(index<10)
 	{
 		Bindings.push_back(BINDING());
-		std::strcpy(&Bindings[index].labelName[0],name);
+		strcpy_s(&Bindings[index].labelName[0], sizeof(&Bindings[index].labelName[0]),name);
 		Bindings[index].TypeInfo = &typeid(float);
 		Bindings[index].VariableData = &VariableToBind;
 		Bindings[index].OnChange = handler;

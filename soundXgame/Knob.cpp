@@ -151,7 +151,7 @@ Knob::mouseMotion(int x, int y)
 
 		Value = Value + lastMouse.y;
 
-		sprintf(&Label[0],"%f",(float)Value);
+		sprintf_s(Label, sizeof(Label),"%f",(float)Value);
 
 		lastMouse.x = x;
 		lastMouse.y = y;
