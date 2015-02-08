@@ -19,6 +19,8 @@ float _gm_tc_g = 1;
 float _gm_tc_b = 1;
 float _gm_tc_a = 1;
 
+//this defines "NOLL" - (a constant  union variable of 4bytes length containing the color 0x00000000 - which means "Transparent-Black" or No Color..)
+#define NOLL *GuiManager::NoColor
  const data32 _noColor = {0x00000000};
  const data32* GuiManager::NoColor = &_noColor;
 
@@ -237,9 +239,9 @@ void _writeFPS()
 }
 
 void
-GuiManager::Write(const char* Text,VectorF position)
+GuiManager::Write(const char* Text,VectorF position,data32 coll)
 {
-	writeOrders.Add(new WriteOrder(Text,position.x,position.y,NOLL));
+	writeOrders.Add(new WriteOrder(Text,position.x,position.y,coll));
 }
 
 void _writePosition()

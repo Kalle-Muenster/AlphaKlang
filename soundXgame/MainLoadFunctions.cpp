@@ -40,19 +40,30 @@ void ProjectMappe::OnLoadContent(void)
 	GuiObject* guiding = new GuiObject("GUI/panelT_256x512.png");
 	guiding->SetName("Editor-Panel");
 	guiding->scale(Vector3(256,256,1));
-	guiding->move(Vector3(20,20,0));
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(40,250);
-	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.8,0.8);
-	guiding->GetConnected<ButtonControl>(1)->SetText(" Back");
-	guiding->GetConnected<ButtonControl>(1)->SetColor(0,0,0,255);
-	guiding->GetConnected<ButtonControl>(1)->connection = guiding->Connection();
+	guiding->move(Vector3(SCREENWIDTH-276,20,0));
 	guiding->AddConnectable<SliderX>();
-	guiding->GetConnected<SliderX>(2)->PositionOnPanel = VectorF(40,40);
+	/*guiding->GetConnected<SliderX>(2)->PositionOnPanel = VectorF(40,40);
 	guiding->GetConnected<SliderX>(2)->SizeScaledPanel = VectorF(0.8,0.1);
 	guiding->GetConnected<SliderX>(2)->SetText(" Back");
 	guiding->GetConnected<SliderX>(2)->SetColor(0,0,0,255);
-	guiding->GetConnected<SliderX>(2)->connection = guiding->Connection();
+	guiding->GetConnected<SliderX>(2)->connection = guiding->Connection();*/
+	guiding->GetConnected<SliderX>(1)->PositionOnPanel = VectorF(40,40);
+	guiding->GetConnected<SliderX>(1)->SizeScaledPanel = VectorF(0.8,0.8);
+	guiding->GetConnected<SliderX>(1)->SetText(" slider");
+	guiding->GetConnected<SliderX>(1)->SetColor(0,0,0,255);
+	guiding->GetConnected<SliderX>(1)->connection = guiding->Connection();
+	guiding->AddConnectable<ButtonControl>();
+	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(40,400);
+	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.8,0.8);
+	guiding->GetConnected<ButtonControl>(2)->SetText(" Back");
+	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
+	guiding->GetConnected<ButtonControl>(2)->connection = guiding->Connection();
+	guiding->AddConnectable<Knob>();
+	guiding->GetConnected<Knob>(3)->SetText(" knopper");
+	guiding->GetConnected<Knob>(3)->PositionOnPanel = VectorF(40,100);
+	guiding->GetConnected<Knob>(3)->SizeScaledPanel = VectorF(0.2,0.2);
+	guiding->GetConnected<Knob>(3)->SetColor(0,0,0,255);
+	guiding->GetConnected<Knob>(3)->connection = guiding->Connection();
 	guiding->isVisible(false);
 
 
@@ -341,17 +352,14 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindMenuObject(guiding);
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindValueToMenu(SCENE->Object("SpectrumAnalyzer")->getTransform()->scale.y,NULL,"Scale");
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindValueToMenu(((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->fallOffAmount,NULL,"fall-off");
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->HideDialog();
+
 	/*string particleImages[3];
 	particleImages[0] = "particle1_128x128.png";
 	particleImages[1] = "particle2_128x128.png";
 	particleImages[2] = "particle3_128x128.png";*/
 	
 	// Particles
-	(new ParticleSystem<500>("Particles/particle4_128x128.png"))->SetName("ParticleSystem");
+	(new ParticleSystem<150>("Particles/kubismus.png"))->SetName("ParticleSystem");
 	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
@@ -362,12 +370,12 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
 	SCENE->Object("ParticleSystem")->scale(7.5,7.5,0);
 	SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
-	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
-	((ParticleSystem<500>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
-	SCENE->Object("ParticleSystem")->AddConnectable<MusicInteractor>();
-//	SCENE->Object("ParticleSystem")->AddConnectable<Listener>();
-//	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->SetListenToChannel(AUDIO->GetBackgroundChannelHandle());
-//	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->IsActive=true;
+	((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
+	((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindMenuObject(guiding);
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindValueToMenu(SCENE->Object("SpectrumAnalyzer")->getTransform()->scale.y,NULL,"Scale");
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindValueToMenu(((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->fallOffAmount,NULL,"fall-off");
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->HideDialog();
 	
 
 	

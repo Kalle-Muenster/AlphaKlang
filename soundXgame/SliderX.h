@@ -11,13 +11,13 @@ class SliderX :
 {
 private:
 	glm::vec2 uvs[16];
-	GLuint frameUVBuffers[4];
+	GLuint frameUVBuffers[2];
 	char imageLayer;
 	bool XIsUnderControll,YIsUnderControll;
 	bool DimensionsSwitched;
 	VectorF lastMouse;
 	void _DrawBackground(void);
-	void _DrawBar(float position);
+	void _DrawBar(short i,float position,float move);
 	void _DrawForeground(void);
 
 public:
@@ -26,7 +26,6 @@ public:
 	Controlled<float> ValueY;
 	SliderX(void);
 	virtual ~SliderX(void);
-	virtual bool Initialize(void);
 	virtual void DoUpdate(void);
 	virtual void draw(void);
 	action ClickAction;

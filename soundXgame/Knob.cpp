@@ -11,8 +11,8 @@ Knob::Knob(void)
 {
 	TypeHashCode = (unsigned)typeid(Knob).hash_code();
 	float  step=1.0f;
-	Value.SetUp(0,360,0,step,Value.Clamp);
-	Value.ControllerActive=true;
+	Value.SetUp(0,360,0,step,Value.Cycle);
+	Value.ControllerActive=false;
 
 
 	lastMouse = VectorF(0,0);
@@ -24,7 +24,7 @@ Knob::Knob(void)
 	texture.format =  GL_RGBA;
 
 	glEnable(GL_TEXTURE_2D);
-	texture.ID = Utility::loadTexture("knobA_64x64.png");
+	texture.ID = Utility::loadTexture("GUI/knobA_64x64.png");
 
 	//glGenTextures(1,&texture.ID);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
@@ -35,10 +35,10 @@ Knob::Knob(void)
 	//glGenerateMipmap(GL_TEXTURE_2D);
 
 
-	verts[0] = glm::vec3(0,0,0);
-	verts[1] = glm::vec3(1,0,0);
-	verts[2] = glm::vec3(1,-1,0);
-	verts[3] = glm::vec3(0,-1,0);
+	verts[0] = glm::vec3(-0.5,0.5,0);
+	verts[1] = glm::vec3(0.5,0.5,0);
+	verts[2] = glm::vec3(0.5,-0.5,0);
+	verts[3] = glm::vec3(-0.5,-0.5,0);
 
 	glGenBuffers(1, &vertexBufferID);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
@@ -93,20 +93,12 @@ Knob::~Knob(void)
 
 bool Knob::Initialize(void)
 {
-	Area = *ProjectMappe::Rectangle::Zero;
-
-//	GuiManager::getInstance()->Add(this);
-
+	bool ok = ControllElement::Initialize();
 	PositionOnPanel = Panel.GetHalbSize();
-	SizeScaledPanel.x = 0.25;
-	SizeScaledPanel.y = 0.25;
-	this->angle = 0;
-	GetArea();
-	return true;
+	SizeScaledPanel.x = 0.1;
+	SizeScaledPanel.y = 0.1;
+	return ok;
 }
-
-
-
 
 
 void 
@@ -118,41 +110,79 @@ Knob::DoUpdate(void)
 		if(INPUT->Mouse.LEFT.RELEASE)
 			this->IsUnderControll = false;
 	}
+
+	if(Label[0]!='\0')
+		GuiManager::getInstance()->Write(&Label[0],Area.GetPosition(),color);
 }
+
+ProjectMappe::Rectangle
+Knob::GetArea(void)
+{
+	VectorF	vec = Panel.GetSize();
+	vec.x *= SizeScaledPanel.x;
+	vec.y *= SizeScaledPanel.x/2;
+	Area.SetSize(vec);
+
+	vec = (Panel.GetPosition() + PositionOnPanel );
+	Area.SetPosition(vec);
+	
+	left=vec.x;
+	top=vec.y;
+
+	vec = Area.GetCenter() + Area.GetHalbSize();
+
+	right=vec.x;
+	bottom=vec.y;
+
+	return Area;
+}
+
 
 void 
 Knob::mouseMotion(int x, int y)
 {	
-	if(lastMouse.x==x &&lastMouse.y==y )
+	if(lastMouse.x == x && lastMouse.y == y )
 		return;
 
-if(IsUnderControll)
-{
-	lastMouse.x = x-lastMouse.x;
-	lastMouse.y = y-lastMouse.y;
+	if(IsUnderControll)
+	{
+		lastMouse.x = x-lastMouse.x;
+		lastMouse.y = y-lastMouse.y;
 
-	Value = Value + lastMouse.y;
+		Value = Value + lastMouse.y;
 
-	lastMouse.x = x;
-	lastMouse.y = y;
-}
-else
-	INPUT->DetachMouseMove(this);
+		sprintf(&Label[0],"%f",(float)Value);
+
+		lastMouse.x = x;
+		lastMouse.y = y;
+
+		color.u32 = 0xffffff00;
+	}
+	else
+	{
+		INPUT->DetachMouseMove(this);
+		color.u32 = 0xffffffff;
+	}
 }
 
 void 
 Knob::mouseClicks(int button,bool IsPressed,VectorF position)
 {
 	GetArea();
-	if((button!=1) &&  Area.Containes(position))
+
+
+	if(button==0)
 	{
-		if(IsPressed)
-			INPUT->attachMouseMove(this);
+		if(Area.Containes(position))
+		{
+			IsUnderControll = IsPressed;
+			
+			if(IsUnderControll)
+				INPUT->attachMouseMove(this);
 
-
-		IsUnderControll=button==0?IsPressed:IsUnderControll;
-		//lastMouse = VectorF(left + (Value * (right-left)),Area.GetCenter().y);
-		//glutWarpPointer(lastMouse.x,lastMouse.y);
+			//lastMouse = VectorF(left + (Value * (right-left)),Area.GetCenter().y);
+			//glutWarpPointer(lastMouse.x,lastMouse.y);
+		}
 	}
 }
 
@@ -189,15 +219,15 @@ Knob::_DrawBackground(void)
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF values = (Panel.GetPosition() + PositionOnPanel);
+		VectorF values = GetArea().GetCenter();
 
-		glTranslatef(values.x, values.y+Area.GetSize().y, 0);
+		glTranslatef(values.x, values.y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 
 		// Scaling:
-		values = GetArea().GetSize();
+		values = Area.GetSize();
 		glScalef(values.x,values.y,0);
 
 		// Draw
@@ -224,24 +254,17 @@ Knob::_DrawBar(float position)
 
 	glPushMatrix();
 	{
-		// rotating the chart:
-		VectorF pos = GetArea().GetHalbSize() / 2;
-		pos.y = -pos.y;
-		glTranslatef(pos.x,pos.y,0);
-		glRotatef(position,0,0,-1);
-		glTranslatef(-pos.x,-pos.y,0);
-
 		//translate:
-		pos = ( Panel.GetPosition() + PositionOnPanel);
-		glTranslatef(pos.x, pos.y+Area.GetSize().y, 0);
+		VectorF pos = Area.GetCenter();
+		glTranslatef(pos.x, pos.y, 0);
 
 		// Rotate:
-		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
+		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle + position, 0, 0, -1);
 
 		// Scaling:
 		pos.x = right-left;
 		pos.y = bottom-top;
-		glScalef(Value * pos.x * 0.99,pos.y,0);
+		glScalef(pos.x,pos.y,0);
 
 		// Draw
 		glDrawArrays(GL_QUADS, 0, 4);
@@ -262,14 +285,14 @@ Knob::_DrawForeground(void)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[3]);
+	glBindBuffer(GL_ARRAY_BUFFER, frameUVBuffers[2]);
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF values = (Panel.GetPosition() + PositionOnPanel);
-		glTranslatef(values.x, values.y+Area.GetSize().y, 0);
+		VectorF values = Area.GetCenter();
+		glTranslatef(values.x, values.y, 0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);

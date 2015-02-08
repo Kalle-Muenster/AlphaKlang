@@ -33,11 +33,11 @@ PointAndClick::OnActivate(void)
 		glutSetCursor(GLUT_CURSOR_INHERIT);
 
 		if(camera->GetTarget())
-			if(camera->GetTarget()->conXtor->ShowDialog())
+			if(camera->GetTarget()->Connection()->has<Connectable<IEditable>>())
 				{
-					targetBindings = ((IObjection<Connectable<IEditable>>*)camera->GetTarget())->conXtor->operator IEditable *()->GetDialogBindings();
-					((IObjection<Connectable<IEditable>>*)camera->GetTarget())->conXtor->operator IEditable *()->BindMenuObject(this->guiObject);
-					((IObjection<Connectable<IEditable>>*)camera->GetTarget())->conXtor->operator IEditable *()->ShowDialog();
+					targetBindings = camera->GetTarget()->operator IEditable *()->GetDialogBindings();
+					camera->GetTarget()->operator IEditable *()->BindMenuObject(this->guiObject);
+					camera->GetTarget()->operator IEditable *()->ShowDialog();
 				}
 			else
 				this->guiObject->SetName(camera->GetTarget()->GetName());
@@ -54,7 +54,7 @@ void
 PointAndClick::switchBack(void)
 {
 	camera->ModeSocket->GetCameraMode<FirstPerson>()->EnableMouseCapture();
-   this->guiObject->isVisible(false);
+    this->guiObject->isVisible(false);
 }
 
 
@@ -137,8 +137,9 @@ void
 PointAndClick::mouseMotion(int newX, int newY)
 {
 	if(!IsActive)
-	{
-		this->guiObject->isVisible(false);
+	{	
+		if(guiObject!=NULL)
+			this->guiObject->isVisible(false);
 		return;
 	}
 }

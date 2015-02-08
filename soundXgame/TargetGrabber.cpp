@@ -118,7 +118,7 @@ IGObject*
 TargetGrabber::GrabTarget(void)
 {
 	_targetGRABBED = camera->GetTarget()!=NULL;
-	return camera->GetTarget();
+	return (IGObject*)camera->GetTarget();
 }
 
 void

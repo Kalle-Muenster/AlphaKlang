@@ -90,20 +90,15 @@ VectorF::operator-(VectorF subtractor)
 VectorF
 VectorF::operator *(float s)
 	{
-		VectorF newVector=*VectorF::Zero;
-		newVector.x=x*s;
-		newVector.y=y*s;
-		return newVector;
+		return VectorF(x*s,y*s);
 	}
 
 VectorF
 VectorF::operator /(float s)
 	{
-		VectorF newVector=*VectorF::Zero;
-		newVector.x=x/s;
-		newVector.y=y/s;
-		return newVector;
+		return VectorF(x/s,y/s);
 	}
+
 VectorF 
 VectorF::operator +=(VectorF other)
 {
@@ -146,18 +141,15 @@ VectorF
 
 VectorPF::operator VectorI()
 	{
-		VectorI newVector;
-		newVector.iX = *x;
-		newVector.Yps = *y;
-		return newVector;
+		VectorI re = *VectorI::Zero;
+		re.iX = *x;
+		re.Yps = *y;
+		return re;
 	}
 
 VectorPF::operator VectorF()
 	{
-		VectorF newVector;
-		newVector.x = *x;
-		newVector.y = *y;
-		return newVector;
+		return VectorF(*x,*y);
 	}
 
 void
@@ -169,38 +161,26 @@ VectorPF::operator =(VectorF setter)
 
 VectorF
 VectorPF::operator *(float s)
-	{
-		VectorF newVector;
-		newVector.x= *x *s;
-		newVector.y= *y *s;
-		return newVector;
-	}
+{
+	return VectorF(*x *s,*y *s);
+}
 
 VectorF
 VectorPF::operator /(float s)
-	{
-		VectorF newVector;
-		newVector.x=*x/s;
-		newVector.y=*y/s;
-		return newVector;
-	}
+{
+	return VectorF(*x/s,*y/s);
+}
 
 VectorF
 VectorPF::operator +(VectorPF vec)
 {
-	VectorF neuVector;
-	neuVector.x = *x + *vec.x;
-	neuVector.y = *y + *vec.y;
-	return neuVector;
+	return VectorF(*x + *vec.x,*y + *vec.y);
 }
 
 VectorF
 VectorPF::operator -(VectorPF vec)
 {
-	VectorF neuVector;
-	neuVector.x = *x - *vec.x;
-	neuVector.y = *y - *vec.y;
-	return neuVector;
+	return VectorF(*x - *vec.x,*y - *vec.y);
 }
 
 ProjectMappe::Rectangle::Rectangle(void)

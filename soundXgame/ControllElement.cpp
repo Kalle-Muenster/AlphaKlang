@@ -23,16 +23,25 @@ ControllElement::~ControllElement(void)
 
 }
 
-//bool
-//ControllElement::Initialize(void)
-//{
-//	if(connection)
-//		Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
-//										&this->Connection()->getTransform()->position.y,
-//										&this->Connection()->getTransform()->scale.x,
-//										&this->Connection()->getTransform()->scale.y );
-//	return (bool)connection;
-//}
+bool
+ControllElement::Initialize(void)
+{
+	Area = *ProjectMappe::Rectangle::Zero;
+	//UPDATE->SignOutFromUpdate(this);
+	//UPDATE->SignInForEarlyUpdate(this);
+
+	Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
+									&this->Connection()->getTransform()->position.y,
+									&this->Connection()->getTransform()->scale.x,
+									&this->Connection()->getTransform()->scale.y );
+
+	PositionOnPanel = Panel.GetHalbSize();
+	SizeScaledPanel.x = 0.1;
+	SizeScaledPanel.y = SizeScaledPanel.x/4;
+	this->angle = 0;
+	GetArea();
+	return true;
+}
 
 ProjectMappe::Rectangle
 ControllElement::GetArea(void)
@@ -62,8 +71,9 @@ void
 ControllElement::SetText(char* label)
 {
 	Label[63]='\0';
-	short i = -1;
-	while((Label[++i]=label[i])!='\0' && (i<64));
+	short i = 0;
+	while((Label[i]=label[i])!='\0' && (i<64))
+		{i++;}
 	
 }
 

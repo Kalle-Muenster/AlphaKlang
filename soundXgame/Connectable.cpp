@@ -5,6 +5,8 @@
 #include "Connectable.h"
 #include "projectMacros.h"
 
+#include "IEditable.h"
+
 int	const
 IConnectable::MaximumNumberOfConnectioms = MAXIMUM_NUMBER_OF_CONNECTIONS;
 
@@ -225,7 +227,7 @@ IConXtor::LockID(unsigned lockTO)
 bool
 IConXtor::ShowDialog(void)
 {
-   return false;
+   return ((IEditable*)Connection())->ShowDialog();
 }
 
 Dimensionality::Dimensionality(void)

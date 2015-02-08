@@ -24,7 +24,7 @@ public:
 	void		BindMenuObject(GuiObject*);
 	short		BindValueToMenu(float& VariableToBind,action,string);
 	short		BindValueToMenu(bool& VariableToBind,action,string);
-	void		ShowDialog(void);
+	virtual bool ShowDialog(void);
 	void		HideDialog(void);
 	std::vector<BINDING>*  GetDialogBindings(void);
 };
