@@ -290,7 +290,7 @@ Data64::Data64(void)
 //############################################
 void Texture::Loade(string fileName)
 {
-	sscanf(fileName,"_%ix%i.",&w,&h);
+	sscanf_s(fileName,"_%ix%i.",&w,&h, sizeof(short)*2);
 	Loade(fileName,w,h);
 }
 

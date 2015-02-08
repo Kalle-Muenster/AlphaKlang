@@ -270,7 +270,7 @@ GuiObject::LoadTexture(char* filename)
 	int i = 0;
 	while((++i<64)&&(filename[i]!='_'));
 	if(i<64)
-		sscanf(&filename[i],"_%ix%i.",&texture.w,&texture.h);
+		sscanf_s(&filename[i], "_%ix%i.",&texture.w,&texture.h, sizeof(Texture)*2);
 
 	texture.ID = Utility::loadTexture(filename);
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);

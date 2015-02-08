@@ -142,7 +142,7 @@ Loader::LoadeFile(char* tmp)
 			{
 				if((!W_H_ok)||(W==0)||(H==0))
 					{
-						sscanf(readBuffer,"%i",&value);
+						sscanf_s(readBuffer,"%i",&value, sizeof(int));
 						if(W==0)
 							W=value;
 						else if(H==0)
@@ -150,10 +150,13 @@ Loader::LoadeFile(char* tmp)
 							W_H_ok=true;}
 					}
 				else if(!channelValueOk)
-					{sscanf(readBuffer,"%i\n",&MaximumChannelValue);channelValueOk=true;}
+				{
+					sscanf_s(readBuffer,"%i\n",&MaximumChannelValue, sizeof(int));
+					channelValueOk=true;
+				}
 				else 
 				{
-					sscanf(readBuffer,"%i\n",&value);
+					sscanf_s(readBuffer,"%i\n",&value, sizeof(int));
 					pixel.byte[chanelCount]=value;
 					if(++chanelCount==3)
 					{
@@ -351,7 +354,7 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 				}
 				else//Triangles without normals
 				{
-					fscanf(file, "%d/%d %d/%d %d/%d\n", 
+					fscanf_s(file, "%d/%d %d/%d %d/%d\n", 
 						&tempVertexIndex[0], &tempVertexTextureIndex[0],
 						&tempVertexIndex[1], &tempVertexTextureIndex[1],
 						&tempVertexIndex[2], &tempVertexTextureIndex[2],

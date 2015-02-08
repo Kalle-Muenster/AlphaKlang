@@ -123,7 +123,7 @@ IMeshObject::LoadTexture(const char* textureFile)
 	int i = -1;
 	while((++i<64)&&(textureFile[i]!='_'));
 	if(i<64)
-		sscanf(&textureFile[i],"_%ix%i.",&texture.w,&texture.h);
+		sscanf_s(&textureFile[i],"_%ix%i.",&texture.w,&texture.h, sizeof(short)*2);
 
 	this->texture.ID = Utility::loadTexture(textureFile);
 	UseTexture = true;

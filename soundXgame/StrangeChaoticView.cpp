@@ -136,7 +136,7 @@ StrangeChaoticView::ViewConvergencer::LoadTexture(char* filename)
 	int i = 0;
 	while((++i<64)&&(filename[i]!='_'));
 	if(i<64)
-		sscanf(&filename[i],"_%ix%i.",&texture.w,&texture.h);
+		sscanf_s(&filename[i],"_%ix%i.",&texture.w,&texture.h, sizeof(short)*2);
 
 	texture.ID = Utility::loadTexture(filename=="ImageFile"? "testbild_1600x900.png" : filename);
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
