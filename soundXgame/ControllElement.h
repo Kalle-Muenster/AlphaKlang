@@ -7,9 +7,9 @@
 #include "GuiManager.h"
 
 class ControllElement :
+	public IDrawable,
 	public IUpdateble ,
-	public IConnectable,
-	public IDrawable
+	public IConnectable
 {
 protected:
 
@@ -30,7 +30,7 @@ public:
 	virtual ProjectMappe::Rectangle GetArea(void);
 	GLfloat angle;
 	virtual bool isVisible(BOOL=3);
-	unsigned int GetElementID(void);
+	virtual unsigned GetElementID(void);
 	void SetText(char*);
 	char* GetText(void);
 };

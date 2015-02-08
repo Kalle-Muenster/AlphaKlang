@@ -294,7 +294,7 @@ void Texture::Loade(string fileName)
 	Loade(fileName,w,h);
 }
 
-void Texture::Loade(string fileName,short Width,short Height,Format textureFormat)
+void Texture::Loade(string fileName,unsigned short Width,unsigned short Height,Format textureFormat)
 {
 	w = Width;
 	h = Height;

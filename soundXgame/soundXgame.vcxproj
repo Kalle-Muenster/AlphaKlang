@@ -69,23 +69,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x86;C:\Libraries\glew-1.11.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\tags17\c;C:\Libraries\glew-1.11.0\lib\Release MX\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\glsdk_0_5_2\glimg\lib\x64;C:\Libraries\glsdk_0_5_2\glload\lib\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
-    <SourcePath>$(SourcePath)</SourcePath>
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x86;C:\Libraries\glew-1.11.0\lib\Release\Win32;C:\Libraries\glsdk_0_5_2\glimg\lib;C:\Libraries\glsdk_0_5_2\glload\lib;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\tags17\c;C:\Libraries\glew-1.11.0\lib\Release MX\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\glsdk_0_5_2\boost;C:\Libraries\glsdk_0_5_2\glimg\include;C:\Libraries\glsdk_0_5_2\glload\include;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\glsdk_0_5_2\glimg\lib\x64;C:\Libraries\glsdk_0_5_2\glload\lib\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -100,7 +99,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <HeapReserveSize>2048000</HeapReserveSize>
       <HeapCommitSize>8192</HeapCommitSize>
       <StackReserveSize>2048000</StackReserveSize>
@@ -128,7 +127,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <HeapReserveSize>2048000</HeapReserveSize>
       <HeapCommitSize>8192</HeapCommitSize>
       <StackReserveSize>2048000</StackReserveSize>
@@ -168,10 +167,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glimgD.lib;glloadD.lib;bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.cpp" />
     <ClCompile Include="AudioObject.cpp" />
     <ClCompile Include="BassAudio.cpp" />
     <ClCompile Include="ButtonControl.cpp" />
@@ -189,10 +190,13 @@
     <ClCompile Include="FountainObject.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="IEditable.cpp" />
     <ClCompile Include="IGObject.cpp" />
     <ClCompile Include="IMeshObject.cpp" />
     <ClCompile Include="InputFunctions.cpp" />
     <ClCompile Include="IPrimitive.cpp" />
+    <ClCompile Include="Knob.cpp" />
+    <ClCompile Include="PointAndClick.cpp" />
     <ClCompile Include="PrimitivObject.cpp" />
     <ClCompile Include="Listener.cpp" />
     <ClCompile Include="MainDisplayFunctions.cpp" />
@@ -236,6 +240,8 @@
     <ClCompile Include="VoxGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.h" />
+    <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.h" />
     <ClInclude Include="AllConnectablesInclude.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="AudioObject.h" />
@@ -257,10 +263,14 @@
     <ClInclude Include="FountainObject.h" />
     <ClInclude Include="globalfunctions.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="GuiControlls.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="IEditable.h" />
     <ClInclude Include="IGObject.h" />
     <ClInclude Include="IMeshObject.h" />
     <ClInclude Include="IPrimitive.h" />
+    <ClInclude Include="Knob.h" />
+    <ClInclude Include="PointAndClick.h" />
     <ClInclude Include="PrimitivObject.h" />
     <ClInclude Include="Listener.h" />
     <ClInclude Include="MusicController.h" />
@@ -305,6 +315,43 @@
     <ClInclude Include="Voxel.h" />
     <ClInclude Include="VoxelMap.h" />
     <ClInclude Include="VoxGrid.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\Bleche\Deckelblech-2s.png" />
+    <Image Include="Data\Bleche\Deckelblech128-1.png" />
+    <Image Include="Data\Bleche\Deckelblech128-3channel.png" />
+    <Image Include="Data\Bleche\Deckelblech2_256x256.png" />
+    <Image Include="Data\Bleche\Deckelblech_128x128.png" />
+    <Image Include="Data\GUI\button_64x64.png" />
+    <Image Include="Data\GUI\knobA_64x64.png" />
+    <Image Include="Data\GUI\knobB_64x64.png" />
+    <Image Include="Data\GUI\sliderX-2color_64x64.png" />
+    <Image Include="Data\GUI\sliderX_64x64.png" />
+    <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png" />
+    <Image Include="Data\panelT_256x512.png" />
+    <Image Include="Data\panel_256x512.png" />
+    <Image Include="Data\panel_menu.png" />
+    <Image Include="Data\Particles\Color_1.png" />
+    <Image Include="Data\Particles\Color_4.png" />
+    <Image Include="Data\Particles\Der Blaue Dunst_512x512.png" />
+    <Image Include="Data\Particles\grau_128x128.png" />
+    <Image Include="Data\Particles\kubismus.png" />
+    <Image Include="Data\Particles\Modus Grau_512x512.png" />
+    <Image Include="Data\Particles\Modus Grau_64x64.png" />
+    <Image Include="Data\Particles\particle1_128x128.png" />
+    <Image Include="Data\Particles\particle2_128x128.png" />
+    <Image Include="Data\Particles\particle3_128x128.png" />
+    <Image Include="Data\Particles\particle4_128x128.png" />
+    <Image Include="Data\SpriteSheets\Q2_1872x516.png" />
+    <Image Include="Data\SpriteSheets\q2_23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Bleche\Deckelblech128-3channel.tga" />
+    <None Include="Data\Bleche\Deckelblech128.tga" />
+    <None Include="Data\Particles\Modus Grau_128x128.ppm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Data\SpriteSheets\Q2.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

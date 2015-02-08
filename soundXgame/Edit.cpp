@@ -6,34 +6,34 @@
 
 int
 Edit::ID = -1;
-unsigned _panel;
+GuiObject* _panel;
 bool _NoPanelGenerated=true;
 int lastCamMode = FIRSTPERSON;
-bool mousereleased = true;
+bool _mousereleased_edit = true;
 
 void
 _button_fps_click(IConnectable* sender)
 {	
-	if(mousereleased)
+	if(_mousereleased_edit)
 	{
 		if(SCENE->ShowFPS)
 		{
-			GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Hide FPS");
+			GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Hide FPS");
 			SCENE->ShowFPS = false;
 		}
 		else
 		{	
-			GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Show FPS");
+			GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(2)->SetText("Show FPS");
 			SCENE->ShowFPS = true;
 		}
-		mousereleased = false;
+		_mousereleased_edit = false;
 	}
 }
 
 void
 _backButtonClick(IConnectable* sender)
 {
-	GUI->Element("Main-Menu")->isVisible(false);
+	GUI->Panel("Main-Menu")->isVisible(false);
 	SceneGraph::getInstance()->camera->Mode(lastCamMode);
 }
 
@@ -46,9 +46,19 @@ _exitButtonClick(IConnectable* sender)
 void
 Edit::switchBack(void)
 {
-	_backButtonClick(this);
+	_backButtonClick(GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(1));
 }
 
+
+void
+Edit::BindGuiObject(GuiObject* menu)
+{
+	this->IsActive=false;
+	GUI->Panel("Main-Menu")->isVisible(this->IsActive);
+	GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(1)->SetClickerFunc(_backButtonClick);
+	GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(2)->SetClickerFunc(_button_fps_click);
+	GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(3)->SetClickerFunc(_exitButtonClick);
+}
 
 Edit::Edit(void)
 {
@@ -95,7 +105,7 @@ Edit::UpdateMode(void)
 			  camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
 
 	if(INPUT->Mouse.LEFT.RELEASE)
-		mousereleased=true;
+		_mousereleased_edit=true;
 
 	this->IsDirty=false;
 }
@@ -104,7 +114,7 @@ Edit::UpdateMode(void)
 void 
 Edit::keyPress(char key)
 {
-	/*
+	
 	if(IsActive)
 	{
 		switch(key)
@@ -133,7 +143,7 @@ Edit::keyPress(char key)
 				
 
 		UpdateMode();
-	}*/
+	}
 }
 
 void
@@ -173,7 +183,7 @@ Edit::mouseMotion(int newX, int newY)
 
 	if(!IsActive)
 	{
-	//	GUI->Element("Editor-Panel")->isVisible(false);
+		GUI->Panel("Main-Menu")->isVisible(false);
 		return;
 	}
 
@@ -215,11 +225,14 @@ Edit::OnActivate(void)
 	//update view
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
-	GUI->Element("Main-Menu")->isVisible(true);
-	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(1)->ClickAction =  _backButtonClick;
-	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(2)->ClickAction =  _button_fps_click;
-	GUI->Element("Main-Menu")->GetConnected<ButtonControl>(3)->ClickAction =  _exitButtonClick;
+
+	GUI->Panel("Main-Menu")->isVisible(true);
+	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(1)->SetClickerFunc(_backButtonClick);
+	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(2)->SetClickerFunc(_button_fps_click);
+	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(3)->SetClickerFunc(_exitButtonClick);
+
 
 	eyeY = 4.0f;
 }
+
 

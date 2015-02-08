@@ -19,7 +19,11 @@ ButtonControl::ButtonControl(void)
 	texture.format =  GL_RGBA;
 	
 	glEnable(GL_TEXTURE_2D);
+<<<<<<< HEAD
 	texture.ID = Utility::loadTexture("GUI/buttons_256x256.png");
+=======
+	texture.ID = Utility::loadTexture("GUI/button_64x64.png");
+>>>>>>> kalle_07_02_15
 	
 	//glGenTextures(1,&texture.ID);
 	glBindTexture(GL_TEXTURE_2D, texture.ID);
@@ -65,7 +69,7 @@ char bufY[32];
 VectorF mPosition;
 
 void
-ButtonControl::DoEarly(void)
+ButtonControl::DoUpdate(void)
 {
 	GetArea();
 
@@ -91,9 +95,9 @@ ButtonControl::DoEarly(void)
 	bool ButtonControl::Initialize(void)
 	{
 		Area = *ProjectMappe::Rectangle::Zero;
-		UPDATE->SignOutFromUpdate(this);
-		UPDATE->SignInForEarlyUpdate(this);
-		GuiManager::getInstance()->Add(this);
+		//UPDATE->SignOutFromUpdate(this);
+		//UPDATE->SignInForEarlyUpdate(this);
+
 		Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
 										&this->Connection()->getTransform()->position.y,
 										&this->Connection()->getTransform()->scale.x,
@@ -120,7 +124,9 @@ ButtonControl::DoEarly(void)
 			btnState = (state<2)? state : (btnState!=DISABLED? state : btnState);
 
 			if(btnState==PRESSED)
+			{
 				ClickAction(this);
+			}
 
 			printf("ButtonState: %s...\n",States[btnState]);
 		}
@@ -132,7 +138,11 @@ ButtonControl::DoEarly(void)
 		ClickAction = clicFunc;
 	}
 
-
+   void
+	ButtonControl::SetSwitch(bool* pointerToSwitch)
+	{
+	   Switch = pointerToSwitch;
+	}
 
 	void ButtonControl::draw(void)
 	{

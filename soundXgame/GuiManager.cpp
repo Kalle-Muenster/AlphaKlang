@@ -1,4 +1,4 @@
-#include "GuiManager.h"
+#include "GuiControlls.h"
 #include "Utility.h"
 #include "SceneGraph.h"
 #include "InputManager.h"
@@ -10,9 +10,17 @@
 #include "FirstPerson.h"
 
  data32 _color;
+ 
  Vecti fpsTextPosition = Vecti();
  Vecti posTextPosition = Vecti();
  char fpsSTRING[32];
+float _gm_tc_r = 1;
+float _gm_tc_g = 1;
+float _gm_tc_b = 1;
+float _gm_tc_a = 1;
+
+ const data32 _noColor = {0x00000000};
+ const data32* GuiManager::NoColor = &_noColor;
 
 
 
@@ -23,9 +31,9 @@ GuiManager::GuiManager(void)
 {
 	NotIsInstanciated = false;
 	scene = SceneGraph::getInstance();
-	elements = List<IDrawable*,MAX_NUM_GUI_OBJECTS>();
+	elements = List<GuiObject*,MAX_NUM_GUI_OBJECTS>();
 	writeOrders = List<WriteOrder*,100>();
-	r=g=b=a=1.f;
+	//r=g=b=a=1.f;
 	_color.byte[0] = 255;
 	_color.byte[1] = 255;
 	_color.byte[2] = 255;
@@ -34,6 +42,12 @@ GuiManager::GuiManager(void)
 	fpsTextPosition.yps = 20;
 	posTextPosition.ix = 300;
 	posTextPosition.yps = 20;
+	color.byte[0]=255;
+	color.byte[1]=255;
+	color.byte[2]=255;
+	color.byte[3]=255;
+	fpsTextPosition.ix=20;
+	fpsTextPosition.yps=20;
 }
 
 
@@ -123,51 +137,109 @@ GuiManager::Disable2DDrawing(void)
 
 
 GobID 
-GuiManager::Add(IDrawable* element)
+GuiManager::Add(GuiObject* panel)
 {
-	return elements.Add(element) + MAX_MUM_SCENE_OBJECTS;
+	return elements.Add(panel) + MAX_MUM_SCENE_OBJECTS;
+}
+
+//GobID 
+//GuiManager::Add(IConnectable* element)
+//{
+//	return elements.Add((IDrawable*)element) + MAX_MUM_SCENE_OBJECTS;
+//}
+
+void 
+GuiManager::Remove(GuiObject* element)
+{
+	if( elements.Remove( element->GetID() - MAX_MUM_SCENE_OBJECTS) )
+		return;
+	else
+	{
+	for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
+		if(elements[ID] == element)
+		{
+			elements.Remove(ID);
+			return;
+		}
+	}
 }
 
 void 
-GuiManager::Remove(IDrawable* element)
+GuiManager::Remove(unsigned elementID)
 {
-	for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
-		if(elements[ID] == element)
-			elements.Remove(ID);
+	elements.Remove(elementID-MAX_MUM_SCENE_OBJECTS);
 }
 
-IObjection<IConnectable>* 
-GuiManager::Element(string name)
+GuiObject* 
+GuiManager::Panel(string name)
 {
 	for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
-		if(Utility::StringCompareRecursive(((IObjection<IConnectable>*)elements[ID])->GetName(),name))
-			return (IObjection<IConnectable>*)elements[ID];
+		if(Utility::StringCompareRecursive(name,elements[ID]->GetName())>64)
+			return (GuiObject*)elements[ID];
 	return NULL;
 }
 
-IObjection<IConnectable>*
-GuiManager::Element(GobID id)
+ControllElement*
+GuiManager::Element(string panelName,ConID ID)
+{
+	return Panel(panelName)->GetConnected<ControllElement>(ID);
+}
+
+ControllElement*
+GuiManager::Element(unsigned panelID,unsigned elementID)
+{
+	return Panel(panelID)->GetConnected<ControllElement>(elementID);
+}
+
+GuiObject*
+GuiManager::Panel(GobID id)
 {
 	GobID ID = id - MAX_MUM_SCENE_OBJECTS;
-	if(((IObjection<IConnectable>*)elements[ID])->GetID()==id)
-		return (IObjection<IConnectable>*)elements[ID];
+	if(elements[ID]->GetID()==id)
+		return (GuiObject*)elements[ID];
 	return NULL;
 }
 
 
-void _WriteText2D(const char * text, Vecti position,data32 color)		
+void _WriteText2D(const char * text, Vecti position,data32 color=NOLL)		
 {
   unsigned short i=0;
-  glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
+
+  if(color.byte[0] == NULL)
+	glColor4f(_gm_tc_r,_gm_tc_g,_gm_tc_b,_gm_tc_a);
+  else
+	glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
+
   glRasterPos2i(position.ix, position.yps);
   while(text[i] != '\0') 
   { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
 }
 
+
+
+double timeCounter=0;
+short frameCounter=0;
 void _writeFPS()
 {
-	sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
-	_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
+	//sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
+	//_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
+	timeCounter +=	InputManager::getInstance()->FrameTime;
+	frameCounter++;
+	
+	_WriteText2D(&fpsSTRING[0],fpsTextPosition);
+
+	if(frameCounter>10)
+	{
+		sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f",((float)frameCounter/timeCounter));
+		timeCounter=0;
+		frameCounter=0;
+	}
+}
+
+void
+GuiManager::Write(const char* Text,VectorF position)
+{
+	writeOrders.Add(new WriteOrder(Text,position.x,position.y,NOLL));
 }
 
 void _writePosition()
@@ -187,7 +259,7 @@ GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 void
 GuiManager::DrawGUI(void)
 {	
-	if(elements.Count()==0 && writeOrders.Count() == 0)
+	if(elements.Count()==0 && writeOrders.Count() == 0 && !scene->ShowFPS)
 		return;
 
 	Enable2DDrawing();
@@ -204,17 +276,21 @@ GuiManager::DrawGUI(void)
 			for(unsigned ID = writeOrders.First();ID<=writeOrders.Last();ID=writeOrders.Next(ID))
 			{
 				_WriteText2D(writeOrders[ID]->text,writeOrders[ID]->position,writeOrders[ID]->color);
-				writeOrders.Distruct(ID);
+				 writeOrders.Distruct(ID);
 			}
 			if(scene->ShowFPS)
 				_writeFPS();
-			_writePosition();
 		}
+
+		if(scene->ShowFPS)
+			_writeFPS();
+		_writePosition();
 	}	
 	Disable2DDrawing();
 }
+	  
 
-GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color)
+GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color=NOLL)
 {
 	text = Text;
 	position.ix = x;
@@ -222,8 +298,41 @@ GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color
 	color = Color;
 }
 
+
+#include "controllelement.h"
+
+//unsigned
+//GuiConXtor::GetElementID(void)
+//{
+//   return GetID();
+//}
+//
+//void
+//GuiConXtor::draw(void)
+//{
+//	Connection()->draw();
+//}
+
+void
+GuiObject::draw(void)
+{
+	Sprite::draw();
+	char i = -1;
+	char id = i;
+	while(++i < conXtor->NumberOfConnectedObjects)
+	{id++;
+		if(conXtor->getConnectables(id))
+			((ControllElement*)conXtor->getConnectables(id))->draw();
+		else
+			id++;}
+	if(ShowTitle)
+		GuiManager::getInstance()->Write(this->GetName(),Area.GetPosition()+VectorF(20,20));
+
+}
+
 GuiObject::GuiObject(void)
 {
+	ShowTitle=false;
 	transform.scale = Vector3(1,1,1);
 	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
 	InitializeGUIObject();
@@ -231,8 +340,14 @@ GuiObject::GuiObject(void)
 
 }
 
+//GuiObject::operator GuiConXtor*(void)
+//{
+//	 return (GuiConXtor*)conXtor;
+//}
+
  GuiObject::GuiObject(string name)
 {
+	ShowTitle=false;
 	transform.scale = Vector3(1,1,1);
 	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
 	InitializeGUIObject();
@@ -243,10 +358,14 @@ GuiObject::GuiObject(void)
 
 GuiObject::~GuiObject(void)
 {
-
+	delete conXtor;
 }
 
-
+unsigned
+GuiObject::GetElementID(void)
+{
+	return conXtor->GetID();
+}
 
 void
 GuiObject::InitializeGUIObject(void)
@@ -258,6 +377,7 @@ GuiObject::InitializeGUIObject(void)
 	IsVisible = IsActive = true;
 	SetID(GuiManager::getInstance()->Add(this));
 	LockID();
+
 }
 
 
@@ -305,4 +425,26 @@ GuiObject::scale(Vector3 s)
 	vec.y*=s.y;
 	Area.SetSize(vec);
 	return s;
+}
+
+bool
+GuiObject::isVisible(BOOL value)
+{
+	if(value<3)
+	{
+		if(IsVisible!=value);
+		{
+			char i = -1;
+			char id = -1;
+			while(++i<conXtor->NumberOfConnectedObjects)
+			{id++;
+				if(conXtor->getConnectables(id))
+					((ControllElement*)conXtor->getConnectables(id))->IsUpdatingActive=value;
+				else
+					id++;
+			}
+			IsVisible=value;
+		}
+	}
+	return IsVisible;
 }

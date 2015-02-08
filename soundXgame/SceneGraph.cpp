@@ -7,7 +7,7 @@
 
 #include "GuiManager.h"
 
-data32 _fpsDisplayColor;
+//data32 _fpsDisplayColor;
 
 SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 {
@@ -16,10 +16,10 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 	VoxtructsInitiator::initiateVoxtructs();
 	drawables = List<IDrawable*,MAX_MUM_SCENE_OBJECTS>();
 	ShowFPS = false;
-	_fpsDisplayColor.byte[1]=63;
-	_fpsDisplayColor.byte[2]=127;
-	_fpsDisplayColor.byte[3]=255;
-	_fpsDisplayColor.byte[0]=192;
+	//_fpsDisplayColor.byte[1]=63;
+	//_fpsDisplayColor.byte[2]=127;
+	//_fpsDisplayColor.byte[3]=255;
+	//_fpsDisplayColor.byte[0]=192;
 
 }
 
@@ -49,20 +49,20 @@ SceneGraph::Remove(IDrawable* object)
 }
 
 
-void
-_writeFPS(int X,int Y)
-{
-	char fpsString[32];
-	sprintf_s(fpsString, sizeof(fpsString),"FPS: %f\n\0",(float)(1.0f/INPUT->FrameTime));
-	GUI->Write(&fpsString[0], X,Y,_fpsDisplayColor);
-	printf("%s",&fpsString[0]);
-}
+//void
+//_writeFPS(int X,int Y)
+//{
+//	char fpsString[32];
+//	sprintf(&fpsString[0],"FPS: %f\n\0",(float)(1.0f/INPUT->FrameTime));
+//	GUI->Write(&fpsString[0], X,Y,_fpsDisplayColor);
+//	printf("%s",&fpsString[0]);
+//}
 
 void
 SceneGraph::DrawAll()
 {
-	if(ShowFPS)
-		_writeFPS(SCREENWIDTH-500,100);
+	//if(ShowFPS)
+	//	_writeFPS(20,20);
 	camera->Update();
 
 	for(unsigned ID = drawables.First(); ID<=drawables.Last(); ID=drawables.Next(ID))

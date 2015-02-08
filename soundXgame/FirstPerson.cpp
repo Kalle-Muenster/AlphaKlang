@@ -8,6 +8,7 @@ FirstPerson::FirstPerson(void)
 {
 	ModeName = "FirstPerson";
 	isPrimarMode=true;
+	MouseCapture=true;
 }
 
 //FirstPerson::~FirstPerson(void)
@@ -44,8 +45,8 @@ FirstPerson::Initialize(void)
 void
 FirstPerson::OnActivate(void)
 {
-	//hide cursor
-	glutSetCursor(GLUT_CURSOR_NONE);
+	//Enable recieving Mouse-Input and Cursor-warping.
+	EnableMouseCapture();
 	//update view...
 	camera->NeedViewUpdate=true;
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
@@ -62,6 +63,18 @@ FirstPerson::UpdateMode(void)
 	camera->transform.rotation.x,camera->transform.rotation.y,camera->transform.rotation.z,	0, 1, 0);
 }
 
+void
+FirstPerson::DisableMouseCapture(void)
+{
+	MouseCapture=false;
+}
+
+void 
+FirstPerson::EnableMouseCapture(void)
+{
+   MouseCapture=true;
+   glutSetCursor(GLUT_CURSOR_NONE);
+}
 
 void 
 FirstPerson::keyPress(char key)
@@ -135,36 +148,39 @@ FirstPerson::mouseMotion(int newX, int newY)
 	if(!IsActive)
 		return;
 
-	// if mouse haven't change -> return
-	if(newX == mouseX && newY == mouseY)
-		return;
+	if(MouseCapture)
+	{
+		// if mouse haven't change -> return
+		if(newX == mouseX && newY == mouseY)
+			return;
 
-	// check difference between last-frame mouse pos
-	int diffX = newX - mouseX;
-	int diffY = newY - mouseY;
+		// check difference between last-frame mouse pos
+		int diffX = newX - mouseX;
+		int diffY = newY - mouseY;
 
-	// calculate
-	angle += 0.005f * diffX * mouseSpeed;
-	lx = sin(angle);
-	lz = -cos(angle);
-	eyeY += (float)diffY / 300;
+		// calculate
+		angle += 0.005f * diffX * mouseSpeed;
+		lx = sin(angle);
+		lz = -cos(angle);
+		eyeY += (float)diffY / 300;
 
-	// set fixed restriction to top and bottom
-	if(eyeY < 1.5f + y) // look up
-		eyeY = 1.5f+ y;
-	else if(eyeY > 4.5f+ y) // look down
-		eyeY = 4.5f+ y;
+		// set fixed restriction to top and bottom
+		if(eyeY < -0.5f + y)
+			eyeY = -0.5f+ y;
+		else if(eyeY > 2.5f+ y)
+			eyeY = 2.5f+ y;
 
-	// set mouse pos center to screen
-	mouseX = SCREENWIDTH / 2;
-	mouseY = SCREENHEIGHT / 2;
-	
-	// fix to static mouse pos
-	glutWarpPointer(mouseX, mouseY);
+		// set mouse pos center to screen
+		mouseX = SCREENWIDTH / 2;
+		mouseY = SCREENHEIGHT / 2;
 
-	// flag check data uptodate
-	IsDirty=true;
-	UpdateMode();
+		// fix to static mouse pos
+		glutWarpPointer(mouseX, mouseY);
+
+		// flag check data uptodate
+		IsDirty=true;
+		UpdateMode();
+	}
 
 }
 

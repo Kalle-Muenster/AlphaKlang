@@ -27,29 +27,34 @@ void ProjectMappe::OnLoadContent(void)
 	(new SkyBox())->SetName("Skybox");
 	//ShaderObj* shaderObj = new ShaderObj();
 
-	// Fountain
+	/* Fountain
 	Fountain* fountain = new Fountain();
 	fountain->SetPosition(Vector3(-40, 0, 0));
 	fountain->size = 50;
 	fountain->createRange();
 	fountain->SetClambt(0,-1,1);
 	fountain->SetThreshold(0,0.33);
-	fountain->sensitivity = 5;
+	fountain->sensitivity = 5;	  */
 
 	// GUI
-	/*GuiObject* guiding = new GuiObject("GUI/panelT_256x512.png");
+	GuiObject* guiding = new GuiObject("GUI/panelT_256x512.png");
 	guiding->SetName("Editor-Panel");
 	guiding->scale(Vector3(256,256,1));
+	guiding->move(Vector3(20,20,0));
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,150);
-	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.4,0);
-	guiding->GetConnected<ButtonControl>(1)->SetText("FPS");
-	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,230);	
-	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.4,0);
-	guiding->GetConnected<ButtonControl>(2)->SetText(" Back");
-	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
-	guiding->IsVisible = false;*/
+	guiding->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(40,250);
+	guiding->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.8,0.8);
+	guiding->GetConnected<ButtonControl>(1)->SetText(" Back");
+	guiding->GetConnected<ButtonControl>(1)->SetColor(0,0,0,255);
+	guiding->GetConnected<ButtonControl>(1)->connection = guiding->Connection();
+	guiding->AddConnectable<SliderX>();
+	guiding->GetConnected<SliderX>(2)->PositionOnPanel = VectorF(40,40);
+	guiding->GetConnected<SliderX>(2)->SizeScaledPanel = VectorF(0.8,0.1);
+	guiding->GetConnected<SliderX>(2)->SetText(" Back");
+	guiding->GetConnected<SliderX>(2)->SetColor(0,0,0,255);
+	guiding->GetConnected<SliderX>(2)->connection = guiding->Connection();
+	guiding->isVisible(false);
+
 
 	// GUI -> Main Menu
 	GuiObject* menu = new GuiObject("GUI/panel_menu.png");
@@ -68,10 +73,9 @@ void ProjectMappe::OnLoadContent(void)
 	menu->GetConnected<ButtonControl>(3)->SizeScaledPanel = VectorF(0.4,0);
 	menu->GetConnected<ButtonControl>(3)->SetText("      Exit");
 	menu->isVisible(true);
-	//GUI->Element("Main-Menu")->GetConnected<ButtonControl>(1)->ClickAction = _backButtonClick;
 
 	// Qualle
-	(new AnimatedSprite<36,3>("Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
+	(new AnimatedSprite<36,3>("SpriteSheets/Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
 	SCENE->Object("Q2animated")->IsGrounded(false);
 	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
@@ -105,21 +109,12 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object(temp)->move(5,20,-5);
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,21,-30));
-/*
-	new Kubus();
-	GobID temp = SCENE->Object("last created")->GetID();
-	((Kubus*)SCENE->Object(temp))->SetPrimitiv<ICapsule>();
-	SCENE->Object(temp)->LoadTexture("Deckelblech2_256x256.png");
-	SCENE->Object(temp)->move(5,20,-5);
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
-	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-15,21,-30));
-*/
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMOVE(Vector3(Circle/100,Circle/200,Circle/150));
 	SCENE->Object(temp)->GetConnected<SmoothObjectMover>()->IsActive = true;
 	SCENE->Object(temp)->isVisible(true);
 	SCENE->Object(temp)->SetName("PrimitivKubus");
 	SCENE->Object(temp)->AlwaysFaceMovingdirection = true;
-	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("PrimitivKubus-emission");
+	(new ParticleSystem<100>("Particles/Der Blaue Dunst_512x512.png"))->SetName("PrimitivKubus-emission");
 	SCENE->Object("PrimitivKubus-emission")->AlwaysFaceMovingdirection=true;
 	SCENE->Object("PrimitivKubus-emission")->AddConnectable<ObjectFollower>();
 	SCENE->Object("PrimitivKubus-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object(temp));
@@ -287,7 +282,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-40,20,-40));
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMAX(Vector3(40,30,40));
 	SCENE->Object("AUDIO11")->AlwaysFaceMovingdirection=true;
-	(new ParticleSystem<100>("Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
+	(new ParticleSystem<100>("Particles/Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
 	SCENE->Object("AUDIO11-emission")->AlwaysFaceMovingdirection=true;
 	SCENE->Object("AUDIO11-emission")->AddConnectable<ObjectFollower>();
 	SCENE->Object("AUDIO11-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object("AUDIO11"));
@@ -305,7 +300,7 @@ void ProjectMappe::OnLoadContent(void)
 	AUDIO->Play();
 
 	// Music Cube
-	(new Cubus("kubismus.png"))->SetName("muckubus");
+	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
@@ -324,7 +319,7 @@ void ProjectMappe::OnLoadContent(void)
 	{
 		x-=((float)i);
 		z+=(2.f*(float)i/15.0f);
-		obj = (new Cubus("Deckelblech-2s.png"))->GetID();
+		obj = (new Cubus("Bleche/Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
@@ -346,14 +341,17 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
-
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindMenuObject(guiding);
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindValueToMenu(SCENE->Object("SpectrumAnalyzer")->getTransform()->scale.y,NULL,"Scale");
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->BindValueToMenu(((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->fallOffAmount,NULL,"fall-off");
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->HideDialog();
 	/*string particleImages[3];
 	particleImages[0] = "particle1_128x128.png";
 	particleImages[1] = "particle2_128x128.png";
 	particleImages[2] = "particle3_128x128.png";*/
 	
 	// Particles
-	(new ParticleSystem<500>("particle4_128x128.png"))->SetName("ParticleSystem");
+	(new ParticleSystem<500>("Particles/particle4_128x128.png"))->SetName("ParticleSystem");
 	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
 	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
@@ -371,10 +369,12 @@ void ProjectMappe::OnLoadContent(void)
 //	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->SetListenToChannel(AUDIO->GetBackgroundChannelHandle());
 //	SCENE->Object("ParticleSystem")->GetConnected<Listener>()->IsActive=true;
 	
-	
+
 	
 	// Camera
+	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->BindGuiObject(guiding);
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
+	SCENE->camera->ModeSocket->GetCameraMode<Edit>()->BindGuiObject(menu);
 	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>()->IsActive=false;
 	
 
@@ -383,6 +383,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Show Menu
 	SCENE->camera->Mode(Edit::ID);
+
 
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);

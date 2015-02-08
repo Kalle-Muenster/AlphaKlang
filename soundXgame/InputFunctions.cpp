@@ -27,7 +27,7 @@ void ProjectMappe::keyboardUpInput(unsigned char key,int x,int y)
 	}
 	else if(key=='o')
 	{
-		SCENE->camera->Mode(SPECTATOR);
+		SCENE->camera->Mode(POINTANDCLICK);
 	}
 	else if(key=='v')
 	{
@@ -35,7 +35,7 @@ void ProjectMappe::keyboardUpInput(unsigned char key,int x,int y)
 	}
 	else if(key == 27) // ESC
 	{
-		if(GUI->Element("Main-Menu")->IsVisible)
+		if(GUI->Panel("Main-Menu")->IsVisible)
 		{
 			SCENE->camera->ModeSocket->GetCameraMode<Edit>()->switchBack();
 		}

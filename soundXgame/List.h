@@ -244,7 +244,7 @@ public:
 	}
 
 	// remove's the member at slot-number [ListMemberID]...
-	void Remove(ListMemberID id)
+	bool Remove(ListMemberID id)
 	{
 		//check	if slot at "id" is in use..
 		if(list[id]!=Nulled)
@@ -256,11 +256,13 @@ public:
 				highestSlotNumberInUse = Prev(id); // to it's preceding ellement.
 
 			--numberOfMember;// and decrease the member-count by 1.
+			return true;
 		}
+		return false;
 	}
 
 	// remove's the given member from the list, if it's contained in it..
-	void Remove(ListMember member)
+	bool Remove(ListMember member)
 	{
 		for(unsigned ID = First(); ID <= Last() ; ID = Next(ID))
 		{
@@ -270,9 +272,10 @@ public:
 
 				list[ID] = Nulled;
 				--numberOfMember;
-				return;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	// remove's the element at slot-number [ListMemberID] and calls it's destructor...

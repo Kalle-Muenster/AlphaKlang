@@ -4,12 +4,13 @@
 
 #include "Connectable.h"
 #include "iprimitive.h"
-
+#include "IEditable.h"
 
 
 
 class IPrimitivObject :
-	public IObjection<IConXtor>
+	public IObjection<IConXtor>,
+	public IEditable
 {
 protected:
 	bool	NoBackfaceCulling;

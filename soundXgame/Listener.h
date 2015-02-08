@@ -4,9 +4,13 @@
 #include "Updatemanager.h"
 #include "ControlledValues.h"
 #include "Connectable.h"
+#include "IEditable.h"
+
 
 class Listener :
-	public IUpdateble, public IConnectable
+	public IUpdateble, 
+	public IConnectable,
+	public IEditable
 {
 protected:
 	float*			fftData;

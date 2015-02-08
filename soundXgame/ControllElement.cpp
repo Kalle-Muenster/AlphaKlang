@@ -7,9 +7,20 @@ ControllElement::ControllElement(void)
 	  SetColor(255,255,0,255);
 }
 
+bool
+ControllElement::isVisible(BOOL setter)
+{
+	if(setter==3)
+		IsUpdatingActive = IsVisible = this->Connection()->isVisible(setter);
+	else
+		IsVisible = setter;
+
+	return IsVisible; 
+}
 
 ControllElement::~ControllElement(void)
 {
+
 }
 
 //bool
@@ -39,16 +50,7 @@ ControllElement::GetArea(void)
 	return Area;
 }
 
-bool
-ControllElement::isVisible(BOOL setter)
-{
-	if(setter==3)
-		IsUpdatingActive = IsVisible = this->Connection()->isVisible(setter);
-	else
-		IsVisible = setter;
 
-	return IsVisible; 
-}
 
 char* 
 ControllElement::GetText(void)
@@ -65,7 +67,7 @@ ControllElement::SetText(char* label)
 	
 }
 
-unsigned int 
+unsigned 
 ControllElement::GetElementID(void)
 {
    return Connection()->GetID()+this->ConnectionID;

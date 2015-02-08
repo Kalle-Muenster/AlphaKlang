@@ -2,6 +2,7 @@
 #include "projectMacros.h"
 #include "Connectable.h"
 
+
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::InitializeObject();
@@ -82,6 +83,7 @@ void
 SpectrumAnalyzer::DoLate(void)
 {
 	//maybe the sub-updates here better...
+	
 }
 
 void 

@@ -90,7 +90,7 @@ bool SliderX::Initialize(void)
 		Area = *ProjectMappe::Rectangle::Zero;
 		//UpdateManager::getInstance()->SignOutFromUpdate(this);
 		//UpdateManager::getInstance()->SignInForEarlyUpdate(this);
-		GuiManager::getInstance()->Add(this);
+
 
 		PositionOnPanel = Panel.GetHalbSize();
 		SizeScaledPanel.x = 0.3;

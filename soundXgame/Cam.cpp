@@ -32,7 +32,7 @@ Cam::Cam(void) :
 	
 	ModeSocket->AddCameraMode<FollowTarget>()->IsActive=false;
 	ModeSocket->AddCameraMode<FirstPerson>()->IsActive=true;
-	ModeSocket->AddCameraMode<Spectator>()->IsActive=false;
+	ModeSocket->AddCameraMode<PointAndClick>()->IsActive=false;
 	ModeSocket->AddCameraMode<TargetGrabber>()->IsActive=true;
 	
 }

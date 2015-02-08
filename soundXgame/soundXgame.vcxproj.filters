@@ -171,6 +171,17 @@
     </ClCompile>
     <ClCompile Include="primitivSwitcher.cpp" />
     <ClCompile Include="PrimitivObject.cpp" />
+    <ClCompile Include="Knob.cpp">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClCompile>
+    <ClCompile Include="IEditable.cpp" />
+    <ClCompile Include="PointAndClick.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.cpp">
+      <Filter>LodePNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.cpp">
+      <Filter>LodePNG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -358,6 +369,18 @@
     </ClInclude>
     <ClInclude Include="primitivSwitcher.h" />
     <ClInclude Include="PrimitivObject.h" />
+    <ClInclude Include="Knob.h">
+      <Filter>Objects\ConnectableControllElements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiControlls.h" />
+    <ClInclude Include="IEditable.h" />
+    <ClInclude Include="PointAndClick.h" />
+    <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng.h">
+      <Filter>LodePNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Libraries\lodepng-master\lodepng_util.h">
+      <Filter>LodePNG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -381,5 +404,122 @@
     <Filter Include="Objects\ConnectableControllElements">
       <UniqueIdentifier>{e1b9a994-505a-47ce-b1cd-a0c3116d5463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{2e156eb6-c02f-4fee-bf6b-73cc5d4257f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\GUI">
+      <UniqueIdentifier>{2d464ce9-eb26-47e2-96a5-b2f7e15de729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Bleche">
+      <UniqueIdentifier>{91021cae-a6d6-4a11-ae6c-a2aa17faa8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LodePNG">
+      <UniqueIdentifier>{9ec8a6d8-863f-4a46-971e-972e6e8bf22f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Particles">
+      <UniqueIdentifier>{baa64afe-b8a8-40ca-9f16-64831bda0174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\SpriteSheets">
+      <UniqueIdentifier>{f65a9c0f-d60b-40dd-b0a8-562b391d10a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\GUI\knobA_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\button_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX-2color_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\knobB_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\sliderX_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panel_256x512.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panel_menu.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\panelT_256x512.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\Particles\Color_1.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\Color_4.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\Der Blaue Dunst_512x512.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\grau_128x128.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\kubismus.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\Modus Grau_64x64.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\Modus Grau_512x512.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\particle1_128x128.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\particle2_128x128.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\particle3_128x128.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Particles\particle4_128x128.png">
+      <Filter>Resources\Particles</Filter>
+    </Image>
+    <Image Include="Data\Bleche\Deckelblech_128x128.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\Deckelblech2_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\Deckelblech-2s.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\Deckelblech128-1.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\Deckelblech128-3channel.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\SpriteSheets\q2_23.png">
+      <Filter>Resources\SpriteSheets</Filter>
+    </Image>
+    <Image Include="Data\SpriteSheets\Q2_1872x516.png">
+      <Filter>Resources\SpriteSheets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Particles\Modus Grau_128x128.ppm">
+      <Filter>Resources\Particles</Filter>
+    </None>
+    <None Include="Data\Bleche\Deckelblech128.tga">
+      <Filter>Resources\Bleche</Filter>
+    </None>
+    <None Include="Data\Bleche\Deckelblech128-3channel.tga">
+      <Filter>Resources\Bleche</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Data\SpriteSheets\Q2.xml">
+      <Filter>Resources\SpriteSheets</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

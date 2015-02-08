@@ -83,7 +83,7 @@ IGObject::GetName(void)
 }
 
 void
-IGObject::SetName(char* name)
+IGObject::SetName(const char* name)
 {
 	conXtor->SetName(name);
 }

@@ -3,6 +3,7 @@
 #include "projectMacros.h"
 #include "AudioObject.h"
 #include "CameraModesIncluder.h"
+#include "Cubus.h"
 
 Cubus::Cubus(void)
 {

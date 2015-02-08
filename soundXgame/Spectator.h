@@ -1,7 +1,7 @@
 #ifndef	_CAMERAMODE_SPECTATOR_
 #define	_CAMERAMODE_SPECTATOR_
 
-#include "Cubus.h"
+
 #include "Cam.h"
 //#include "CameraMode.h"
 
