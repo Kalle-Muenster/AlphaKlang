@@ -186,6 +186,7 @@ void ProjectMappe::OnLoadContent(void)
 			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
 			SCENE->Object(id)->IsGrounded(true); // grounded
 			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
+			SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
 			SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
 			SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
 			SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
