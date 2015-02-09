@@ -305,17 +305,7 @@ GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color
 
 #include "controllelement.h"
 
-//unsigned
-//GuiConXtor::GetElementID(void)
-//{
-//   return GetID();
-//}
-//
-//void
-//GuiConXtor::draw(void)
-//{
-//	Connection()->draw();
-//}
+
 
 void
 GuiObject::draw(void)
@@ -330,7 +320,7 @@ GuiObject::draw(void)
 		else
 			id++;}
 	if(ShowTitle)
-		GuiManager::getInstance()->Write(this->GetName(),Area.GetPosition()+VectorF(20,20));
+		GuiManager::getInstance()->Write(this->GetName(),Area.GetPosition()+VectorF(20,20),this->color);
 
 }
 

@@ -3,8 +3,6 @@
 
 #include "sprite.h"
 
-
-
 template<const int NUMBER_OF_PARTICLES>
 class ParticleSystem :
 	public Sprite,
@@ -28,7 +26,6 @@ private:
 	};
 	bool movingaway;
 	List<Particle*,NUMBER_OF_PARTICLES>		particles;
-//	std::vector<Particle*>					particles_stdvec;
 	Vector3									particlePosition;
 	Vector3									particleDirection;
 	Vector3									particleRotationAxis;
@@ -45,14 +42,12 @@ private:
 											{						
 												Vector3 cameraDirection;
 												Particle P = *particles[ID];
-											//	Particle P = *particles_stdvec[ID];
 												P.time = P.time>0 ? P.time-INPUT->FrameTime : 0;
 
 													if(P.time > 0)
 													{
 															P.movement *= accselleration;
 															P.position += particles[ID]->movement;
-															//P.position += particles_stdvec[ID]->movement;
 
 															float timePoint = (P.time/lifetime) ;
 
@@ -87,7 +82,6 @@ private:
 															particlesEmitted--;
 													}
 													*particles[ID] = P;
-													//*particles_stdvec[ID] = P;
 													glBindBuffer(GL_ARRAY_BUFFER,0);
 													glBindTexture(GL_TEXTURE_2D, 0);
 													glDisable(GL_TEXTURE_2D);
@@ -129,10 +123,6 @@ private:
 													particles[lastActivatedParticle]->position = this->getTransform()->position + particles[lastActivatedParticle]->movement;
 													particles[lastActivatedParticle]->time = lifetime;
 													timer = 0;
-													//lastActivatedParticle=lastActivatedParticle==NUMBER_OF_PARTICLES-1?0:lastActivatedParticle+1;
-													//particles_stdvec[lastActivatedParticle]->movement = (particleDirection * (InitialSpeed * INPUT->FrameTime));
-													//particles_stdvec[lastActivatedParticle]->position = this->getTransform()->position + particles_stdvec[lastActivatedParticle]->movement;
-													//timer = particles_stdvec[lastActivatedParticle]->time = lifetime;
 
 													particlesEmitted++;
 													if(particlesEmitted>0)
@@ -213,9 +203,6 @@ public:
 					{
 						for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
 							particles.Distruct(ID);
-
-						//for(int i = 0;i < NUMBER_OF_PARTICLES;i++)
-						//	delete particles_stdvec[i];
 					}
 	
 
@@ -254,14 +241,9 @@ public:
 								movingaway = false;
 								turnMarker = lastActivatedParticle;
 							}
-
-						//	for(unsigned ID = particles.First(); ID <= particles.Last(); ID = particles.Next(ID))
-						//		ParticleCalculation(ID);
-							 
-							
+	
 							for(unsigned ID = particles.StartCycle(turnMarker); ID == particles.Cycle(); ID = particles.Next(ID))
 								ParticleCalculation(ID);
-
 						}
 						else
 						{
@@ -271,23 +253,10 @@ public:
 								turnMarker = lastActivatedParticle;
 							}
 							
-						//	for(unsigned ID = particles.Last(); ID > particles.First(); ID = particles.Prev(ID))
-						//		 ParticleCalculation(ID);
-						//	ParticleCalculation(particles.First());
 
 							for(unsigned ID=particles.StartCycle(turnMarker);ID==particles.Cycle();ID=particles.Prev(ID))
 							   ParticleCalculation(ID);
-							//for(unsigned ID = turnMarker; ID > particles.First(); ID = particles.Prev(ID))
-							//	 ParticleCalculation(ID);
-							//ParticleCalculation(particles.First());
 
-							//for(unsigned ID = turnMarker+1; ID <= particles.Last(); ID = particles.Next(ID))
-							//	 ParticleCalculation(ID);
-							
-							//for(unsigned i=turnMarker-1;i>=0;i--)
-							//	ParticleCalculation(i);
-							//for(unsigned i = turnMarker;i<NUMBER_OF_PARTICLES;i++)
-							//	ParticleCalculation(i);
 						}
 					}
 	virtual Vector3	rotate(Vector3 r)

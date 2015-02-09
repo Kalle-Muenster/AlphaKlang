@@ -53,9 +53,11 @@ ControllElement::GetArea(void)
 	vec = (Panel.GetPosition() + PositionOnPanel );
 	Area.SetPosition(vec);
 	left=vec.x;
-	right=Area.GetCenter().x+Area.GetHalbSize().x;
 	top=vec.y;
-	bottom=Area.GetCenter().y+Area.GetHalbSize().y;
+	vec = vec + Area.GetSize();
+	right = vec.x;
+	bottom = vec.y;
+
 	return Area;
 }
 

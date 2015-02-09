@@ -1,7 +1,7 @@
 #include "projectMacros.h"
 #include "projectGrafics.h"
 #include "Utility.h"
-
+#include <lodepng.h>
 
 Vector3	
 Utility::GlobalX = Vector3(1,0,0);
@@ -39,7 +39,7 @@ Loader::Loader(void)
 }
 
 
-Loader::Loader(char* filename)
+Loader::Loader(const char* filename)
 {
 	_w=_h=_length=0;
 	LoadeFile(filename);
@@ -47,7 +47,7 @@ Loader::Loader(char* filename)
 
 Loader::~Loader(void)
 {
-//	delete data;
+	FreeLoader();
 }
 
 int
@@ -93,9 +93,15 @@ Loader::Pixel(int x,int y)
 	return &_Data[y*_w+x];
 }
 
+void
+Loader::FreeLoader(void)
+{
+	while(_Data.size())
+		_Data.pop_back();
+}
 
 void*
-Loader::LoadeFile(char* tmp)
+Loader::LoadeFile(const char* tmp)
 {
 	char filename[64];
 	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
@@ -405,14 +411,44 @@ Utility::loadObj(const char* tmp,  std::vector<glm::vec3> &vertices, std::vector
 std::vector<Texture*> _loadedtTextures;
 std::vector<char*> _textureNames;
 
+Texture*
+_loadeWithPPMLoader(const char* ppmFileName)
+{
+	Loader loade(ppmFileName);
 
-Texture* _loadeWithLodePNG(const char* fileName)
+	GLuint GLName;
+	glGenTextures(1,&GLName);
+	glBindTexture(GL_TEXTURE_2D,GLName);
+	glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,loade.width(),loade.height(),0,GL_RGBA,GL_UNSIGNED_BYTE,loade.data);
+	Texture* tex = new Texture();
+	tex->w = loade.width();
+	tex->h = loade.height();
+	tex->format = GL_RGBA;
+	tex->ID = GLName;
+
+	return tex;
+}
+
+Texture* 
+_loadeWithJPEGlib(const char* jpegFileName)
+{
+   throw "Nö!";
+}
+
+Texture* 
+_loadeWithBMPfile(const char* bmpFileName)
+{
+	 throw "Nö!";
+}
+
+Texture*
+_loadeWithLodePNG(const char* pngFileName)
 {
 	Texture* tex = new Texture();
 	std::vector<unsigned char> image;
 	std::vector<unsigned char> reversi;
 	unsigned width, height;
-	unsigned error = lodepng::decode(image, width, height, &fileName[0],LCT_RGBA);
+	unsigned error = lodepng::decode(image, width, height, &pngFileName[0],LCT_RGBA);
 
 	// If there's an error, display it.
 	if(error != 0)
@@ -444,15 +480,21 @@ Texture* _loadeWithLodePNG(const char* fileName)
 	glBindTexture(GL_TEXTURE_2D,tex->ID);
 	glTexImage2D(GL_TEXTURE_2D, 0, 4, tex->w, tex->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, tex->pData);
 
+	for(int i=0;i<(tex->w * tex->h * 4);i++)
+	{image.pop_back(); reversi.pop_back();}
+
 	return tex;
 }
 
 GLuint
 Utility::loadTexture(const char* tmp)
 {
-
 	char filename[64];
 	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
+
+			
+	
+	
 
 	//glload::LoadTest loadTest = glload::LoadFunctions();
 	
@@ -487,22 +529,30 @@ Utility::loadTexture(const char* tmp)
 			if(Utility::StringCompareRecursive(filename,(*it))<0)
 				return _loadedtTextures[i]->ID; //return the already contained textureID;
 		}i = -1;
-
-		
-			
-		//save the textureID to list...
-		_loadedtTextures.push_back(_loadeWithLodePNG(filename));
-
-		//save the texture's filename...	
-		while(((temp[++i]=filename[i])!='\0')&&(i<64));
-		_textureNames.push_back(temp);
-
-		i=_loadedtTextures.size()-1;
-		//and return the textureID.
-		return _loadedtTextures[i]->ID;
-		
 	}
-	return 0;
+	_loadedtTextures.push_back(_loadeWithLodePNG(filename));
+	//while(tmp[++i]!='\0');
+	//while(tmp[--i]!='.');
+	//if(&tmp[i+1]=="jpg"||&tmp[i+1]=="jpeg")
+	//	_loadedtTextures.push_back(_loadeWithJPEGlib(filename));	
+	//else if(&tmp[i+1]=="png")
+	//	_loadedtTextures.push_back(_loadeWithLodePNG(filename));
+	//else if(&tmp[i+1]=="bmp")
+	//	_loadedtTextures.push_back(_loadeWithBMPfile(filename));
+	//else if(&tmp[i+1]=="ppm")
+	//	_loadedtTextures.push_back(_loadeWithPPMLoader(filename));
+	////save the textureID to list...
+	//
+
+	//save the texture's filename...	
+	while(((temp[i]=filename[i])!='\0')&&(i<64))i++;
+	_textureNames.push_back(temp);
+
+	i=_loadedtTextures.size()-1;
+	//and return the textureID.
+	return _loadedtTextures[i]->ID;
+
+	return NULL;
 }
 
 

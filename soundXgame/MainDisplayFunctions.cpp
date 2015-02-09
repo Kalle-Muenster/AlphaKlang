@@ -46,20 +46,17 @@ void ProjectMappe::OnDisplay(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	RenderCycle();
-	
-
 
 	glutSwapBuffers();
+
 	INPUT->PerFrameReset();
 	AUDIO->PerFrameReset();
+
 #ifdef LATE_AFTER_DRAW
 	UPDATE->DoTheLateUpdates();
 #endif
 
-
-
 	if(EXIT())
 		prepareForExit();
-
 
 }

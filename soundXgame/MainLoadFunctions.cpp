@@ -35,35 +35,23 @@ void ProjectMappe::OnLoadContent(void)
 	fountain->SetClambt(0,-1,1);
 	fountain->SetThreshold(0,0.33);
 	fountain->sensitivity = 5;	  */
-
+#include "knob.h"
 	// GUI
 	GuiObject* guiding = new GuiObject("GUI/panelT_256x512.png");
 	guiding->SetName("Editor-Panel");
-	guiding->scale(Vector3(256,256,1));
-	guiding->move(Vector3(SCREENWIDTH-276,20,0));
+	guiding->scale(Vector3(512,512,1));
+	guiding->move(Vector3(20,20,0));
 	guiding->AddConnectable<SliderX>();
-	/*guiding->GetConnected<SliderX>(2)->PositionOnPanel = VectorF(40,40);
-	guiding->GetConnected<SliderX>(2)->SizeScaledPanel = VectorF(0.8,0.1);
-	guiding->GetConnected<SliderX>(2)->SetText(" Back");
-	guiding->GetConnected<SliderX>(2)->SetColor(0,0,0,255);
-	guiding->GetConnected<SliderX>(2)->connection = guiding->Connection();*/
-	guiding->GetConnected<SliderX>(1)->PositionOnPanel = VectorF(40,40);
-	guiding->GetConnected<SliderX>(1)->SizeScaledPanel = VectorF(0.8,0.8);
+	guiding->GetConnected<SliderX>(1)->PositionOnPanel = VectorF(25,300);
+	guiding->GetConnected<SliderX>(1)->SizeScaledPanel = VectorF(0.5,0.5);
 	guiding->GetConnected<SliderX>(1)->SetText(" slider");
 	guiding->GetConnected<SliderX>(1)->SetColor(0,0,0,255);
-	guiding->GetConnected<SliderX>(1)->connection = guiding->Connection();
 	guiding->AddConnectable<ButtonControl>();
-	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(40,400);
+	guiding->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(25,400);
 	guiding->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.8,0.8);
 	guiding->GetConnected<ButtonControl>(2)->SetText(" Back");
 	guiding->GetConnected<ButtonControl>(2)->SetColor(0,0,0,255);
-	guiding->GetConnected<ButtonControl>(2)->connection = guiding->Connection();
-	guiding->AddConnectable<Knob>();
-	guiding->GetConnected<Knob>(3)->SetText(" knopper");
-	guiding->GetConnected<Knob>(3)->PositionOnPanel = VectorF(40,100);
-	guiding->GetConnected<Knob>(3)->SizeScaledPanel = VectorF(0.2,0.2);
-	guiding->GetConnected<Knob>(3)->SetColor(0,0,0,255);
-	guiding->GetConnected<Knob>(3)->connection = guiding->Connection();
+
 	guiding->isVisible(false);
 
 
@@ -293,7 +281,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMIN(Vector3(-40,20,-40));
 	SCENE->Object("AUDIO11")->GetConnected<SmoothObjectMover>()->movingVector.SetMAX(Vector3(40,30,40));
 	SCENE->Object("AUDIO11")->AlwaysFaceMovingdirection=true;
-	(new ParticleSystem<100>("Particles/Der Blaue Dunst_512x512.png"))->SetName("AUDIO11-emission");
+	(new ParticleSystem<100>("Particles/kubismus.png"))->SetName("AUDIO11-emission");
 	SCENE->Object("AUDIO11-emission")->AlwaysFaceMovingdirection=true;
 	SCENE->Object("AUDIO11-emission")->AddConnectable<ObjectFollower>();
 	SCENE->Object("AUDIO11-emission")->GetConnected<ObjectFollower>()->SetTarget(SCENE->Object("AUDIO11"));
@@ -302,7 +290,6 @@ void ProjectMappe::OnLoadContent(void)
 	((ParticleSystem<100>*)SCENE->Object("AUDIO11-emission"))->lifetime = 1.6f;
 	((ParticleSystem<100>*)SCENE->Object("AUDIO11-emission"))->InitialSize = 0.7f;
 	((ParticleSystem<100>*)SCENE->Object("AUDIO11-emission"))->ValueChangeReleasepoint = 0.6;
-	//((ParticleSystem<100>*)SCENE->Object("AUDIO11-emission"))->SetColor(128,128,255,25);
 	SCENE->Object("AUDIO11-emission")->SetColor(160,180,255,66);
 	SCENE->Object("AUDIO11-emission")->IsVisible = true;
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
@@ -345,7 +332,7 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
 	}
 	  
-
+	
 
 	// Spectrum Analyzer
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
@@ -358,28 +345,25 @@ void ProjectMappe::OnLoadContent(void)
 	particleImages[1] = "particle2_128x128.png";
 	particleImages[2] = "particle3_128x128.png";*/
 	
-	// Particles
-	(new ParticleSystem<150>("Particles/kubismus.png"))->SetName("ParticleSystem");
-	SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
-	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
-	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
-	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
-	SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->IsActive = true;
-	SCENE->Object("ParticleSystem")->IsGrounded(false);
-	SCENE->Object("ParticleSystem")->move(0,0,0);
-	SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
-	SCENE->Object("ParticleSystem")->scale(7.5,7.5,0);
-	SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
-	((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
-	((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindMenuObject(guiding);
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindValueToMenu(SCENE->Object("SpectrumAnalyzer")->getTransform()->scale.y,NULL,"Scale");
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->BindValueToMenu(((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->fallOffAmount,NULL,"fall-off");
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->HideDialog();
-	
+	//// Particles
+	//(new ParticleSystem<150>("Particles/kubismus.png"))->SetName("ParticleSystem");
+	//SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
+	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
+	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
+	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
+	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->IsActive = true;
+	//SCENE->Object("ParticleSystem")->IsGrounded(false);
+	//SCENE->Object("ParticleSystem")->move(0,0,0);
+	//SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
+	//SCENE->Object("ParticleSystem")->scale(7.5,7.5,0);
+	//SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
+	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
+
 
 	
 	// Camera
+	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->IsActive=false;
 	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->BindGuiObject(guiding);
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
 	SCENE->camera->ModeSocket->GetCameraMode<Edit>()->BindGuiObject(menu);
@@ -387,7 +371,7 @@ void ProjectMappe::OnLoadContent(void)
 	
 
 	SCENE->camera->Mode(FIRSTPERSON);
-	SCENE->camera->SetTarget(SCENE->Object("ParticleSystem"));
+	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
 	// Show Menu
 	SCENE->camera->Mode(Edit::ID);

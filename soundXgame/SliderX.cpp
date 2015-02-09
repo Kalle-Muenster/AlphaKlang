@@ -15,9 +15,9 @@ SliderX::SliderX(void)
 
 	//setting the slider's values to be in clambt ranges from 0-1 as default-values 
 	float  step=1.f/128.f;
-	ValueX.SetUp(0,1,0,step,ValueX.Clamp);
+	ValueX.SetUp(0,1,0.5,step,ValueX.Clamp);
 	ValueX.ControllerActive=true;
-	ValueY.SetUp(0,1,0,step,ValueY.Clamp);
+	ValueY.SetUp(0,1,0.5,step,ValueY.Clamp);
 	ValueY.ControllerActive=true;
 
 	lastMouse = VectorF(0,0);
@@ -92,6 +92,7 @@ SliderX::GetArea(void)
 	return Area;
 }
 
+
  
 //regular per-frame update...
 void SliderX::DoUpdate(void)
@@ -105,6 +106,8 @@ void SliderX::DoUpdate(void)
 
 		if(INPUT->Mouse.LEFT.RELEASE)  // if button released drop controlled-state
 			this->XIsUnderControll = false;
+
+		this->Connection()->getTransform()->scale.y = ValueX*100;
 	}
 
 	if(YIsUnderControll)
@@ -113,6 +116,8 @@ void SliderX::DoUpdate(void)
 
 	if(Label[0]!='\0')	  // draw the element's label-string if it has one defined...
 		GuiManager::getInstance()->Write(&Label[0],Area.GetPosition());
+
+
 }
 
 
@@ -130,26 +135,28 @@ SliderX::mouseMotion(int x, int y)
 	//when (mouse-over and button-hold-down)
 	if( XIsUnderControll || YIsUnderControll )
 	{
-		lastMouse.x = x-lastMouse.x;  //get the mouse-movement
-		lastMouse.y = y-lastMouse.y;
+		lastMouse.x = (x-lastMouse.x);  //get the mouse-movement
+		lastMouse.y = (y-lastMouse.y);
 		
 		// check if X/Y values are switched
 		if(DimensionsSwitched)	  
 		{	
 			if(YIsUnderControll)	 // and calculate the slider's new values by the width of mouse-movement 
-				ValueX = (ValueX + (lastMouse.y / Area.GetSize().x));
+				ValueX = (ValueX + ((lastMouse.y*0.5) / (Area.GetSize().x)));
 			if(XIsUnderControll)
-				ValueY = (ValueY + (lastMouse.x / Area.GetSize().x));
+				ValueY = (ValueY + ((lastMouse.x*0.5) / (Area.GetSize().x)));
 		} 
 		else
 		{
 			if(XIsUnderControll)
-				ValueX = ValueX + (lastMouse.x / Area.GetSize().x);
+				ValueX = ValueX + ((lastMouse.x *0.5)/ (Area.GetSize().x));
 			if(YIsUnderControll)
-				ValueY = ValueY + (lastMouse.y / Area.GetSize().x);
+				ValueY = ValueY + ((lastMouse.y *0.5)/ (Area.GetSize().x));
 		}
 		lastMouse.x = x;  // remember mouse-positions for next-frame movement-calculation... 
 		lastMouse.y = y;
+
+		sprintf(&Label[0],"X: %f, Y: %f",(float)ValueX,(float)ValueY);
 	}
 	else // If element not under user's control, sign it out from the Mouse-Update-Event
 		INPUT->DetachMouseMove(this);
@@ -172,7 +179,7 @@ SliderX::mouseClicks(int button,bool IsPressed,VectorF position)
 
 		 //set lastMouse to new warp-position, to prevent counting the warp as a regular mouse-movement,
 		 //when warping the cursor to the actual slider-position when clicked...
-		 lastMouse = VectorF(left + ((DimensionsSwitched?ValueY:ValueX) * (right-left)),Area.GetCenter().y);
+		 lastMouse = VectorF(left + ((DimensionsSwitched?ValueY:ValueX) *(right-left)),Area.GetCenter().y);
 		 glutWarpPointer(lastMouse.x,lastMouse.y);
 	 }
 }
@@ -224,7 +231,7 @@ SliderX::_DrawBackground(void)
 	{
 		// Translation:
 		VectorF values = GetArea().GetPosition(); 
-		glTranslatef(values.x+(right-left)*0.02f, values.y+((bottom-top)*0.95f),0);  
+		glTranslatef(values.x+(right-left)*0.01f, values.y+((bottom-top)*0.95f),0);  
 
 		// Rotation:  (parent-panel's rotation + element's own rotation on the panel...)
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
@@ -255,16 +262,15 @@ SliderX::_DrawBar(short i,float position,float move)
 	glPushMatrix();
 	{
 		// Translation:
-		VectorF pos = Area.GetPosition(); 
-		glTranslatef(pos.x, pos.y+((bottom-top)*0.9),0);
+		VectorF tempVec = GetArea().GetPosition(); 
+		glTranslatef(tempVec.x, tempVec.y+((bottom-top)*0.9),0);
 
 		// Rotation:
 		glRotatef(this->Connection()->getTransform()->rotation.z + this->angle, 0, 0, -1);
 
 		// Scaling:
-		pos.x = right-left;
-		pos.y = bottom-top;
-		glScalef(position * pos.x * 0.99,pos.y*0.9,0);
+		tempVec = Area.GetSize();
+		glScalef(tempVec.x*position,tempVec.y*0.9,0);
 
 		// draw..
 		glBegin(GL_QUADS);

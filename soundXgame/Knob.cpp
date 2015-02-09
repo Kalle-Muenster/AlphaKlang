@@ -1,17 +1,35 @@
 #include "Knob.h"
 #include "Utility.h"
 #include <math.h>
+#include "SceneGraph.h"
+
+class ActionHandler : public IConnectable
+{
+protected:
+		virtual void Handler(IConnectable* sender)=0;
+public: 
+	ActionHandler(void)
+		{}
+	virtual ~ActionHandler(void){}
+	virtual bool Initialize(void)
+		{
+			SceneGraph::getInstance()->Object("SpectrumAnalizer")->getTransform()->scale.y;
+		}
+	action Action;
+};
+
+
 
 bool const
-	Knob::canHaveMultipleInstances = true;
+Knob::canHaveMultipleInstances = true;
 
 #define INPUT InputManager::getInstance()
 
 Knob::Knob(void)
 {
 	TypeHashCode = (unsigned)typeid(Knob).hash_code();
-	float  step=1.0f;
-	Value.SetUp(0,360,0,step,Value.Cycle);
+	float  step=0.0f;
+	Value.SetUp(0.5,0.33,0.2,step,Value.Compress);
 	Value.ControllerActive=false;
 
 
@@ -100,6 +118,12 @@ bool Knob::Initialize(void)
 	return ok;
 }
 
+void
+Knob::OnUpdate(IConnectable* sender)
+{
+
+
+}
 
 void 
 Knob::DoUpdate(void)
@@ -109,6 +133,7 @@ Knob::DoUpdate(void)
 	{
 		if(INPUT->Mouse.LEFT.RELEASE)
 			this->IsUnderControll = false;
+		OnUpdate(this);
 	}
 
 	if(Label[0]!='\0')
@@ -149,7 +174,7 @@ Knob::mouseMotion(int x, int y)
 		lastMouse.x = x-lastMouse.x;
 		lastMouse.y = y-lastMouse.y;
 
-		Value = Value + lastMouse.y;
+		Value = (Value + (lastMouse.y/100));
 
 		sprintf_s(Label, sizeof(Label),"%f",(float)Value);
 

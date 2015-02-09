@@ -100,7 +100,7 @@ IEditable::ShowDialog(void)
 		}
 		return panel->isVisible(true);
 
-	//	glutSetCursor(GLUT_CURSOR_INHERIT);
+		glutSetCursor(GLUT_CURSOR_INHERIT);
 	}
 }
 
@@ -117,7 +117,7 @@ IEditable::HideDialog(void)
 				panel->Remove<ControllElement>(i);
 			panel->isVisible(false);
 		}
-	//   glutSetCursor(GLUT_CURSOR_NONE);
+	   glutSetCursor(GLUT_CURSOR_NONE);
 	}
 }
 

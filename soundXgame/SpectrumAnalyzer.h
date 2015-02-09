@@ -11,10 +11,10 @@
 
 class SpectrumAnalyzer :
 	public Cubus,
-	public IUpdateble,
-	public IEditable
+	public IUpdateble
 {
 private: 
+	GuiObject* GUIPanel;
 	short bandWidth;
 	Cubus* bands[SPECTRUM_SIZE];
 	float* fftData;
@@ -24,6 +24,7 @@ private:
 	void drawOnce(void);
 
 public:
+	void SetFalloff(float);
 	float ChartHeight;
 	SpectrumAnalyzer(void);
 	virtual ~SpectrumAnalyzer(void);
@@ -36,6 +37,7 @@ public:
 	virtual Vector3 move(float,float,float);
 	virtual Vector3 rotate(float,float,float);
 	virtual Vector3 scale(float,float,float);
+	
 };
 
 #endif

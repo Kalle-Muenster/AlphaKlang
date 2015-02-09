@@ -14,14 +14,42 @@ _OnBackButton(IConnectable* sender)
 	sender->Connection()->isVisible(false);
 }
 
+void _setFALLOFFAMOUNT(IConnectable*)
+{
+	((SpectrumAnalyzer*)GUI->Panel("SpectrumAnalizer-GUI-Panel"))->SetFalloff(GUI->Panel("SpectrumAnalizer-GUI-Panel")->GetConnected<Knob>(3)->Value);
+}
+
+
 SpectrumAnalyzer::SpectrumAnalyzer(void)
 {
 	IGObject::iherited.push_back((unsigned)typeid(IEditable).hash_code());
 	IGObject::InitializeObject();
 	this->ChartHeight = 100.0f;
 
-	this->BindValueToMenu(getTransform()->scale.y,_OnScaleY,"Scale Y");
-	this->BindValueToMenu(this->IsVisible,_OnBackButton,"Disable");
+	GUIPanel = new GuiObject("GUI/panelT_256x512.png");
+	GUIPanel->scale(Vector3(256,128,1));
+	GUIPanel->move(Vector3(20,20,0));
+	GUIPanel->SetName("SpectrumAnalizer-GUI-Panel");
+	GUIPanel->AddConnectable<Knob>();
+	GUIPanel->GetConnected<Knob>(1)->SetText(" knopX");
+	GUIPanel->GetConnected<Knob>(1)->PositionOnPanel = VectorF(25,100);
+	GUIPanel->GetConnected<Knob>(1)->SizeScaledPanel = VectorF(0.2,0.2);
+	GUIPanel->GetConnected<Knob>(1)->SetColor(0,0,0,255);
+	GUIPanel->GetConnected<Knob>(1)->Value.SetUp(0,1,0.5,0.001,Controlled<float>::Clamp);
+	GUIPanel->GetConnected<Knob>(1)->Value.SetVariable(&getTransform()->rotation.y);
+	GUIPanel->AddConnectable<Knob>();
+	GUIPanel->GetConnected<Knob>(2)->SetText(" knopY");
+	GUIPanel->GetConnected<Knob>(2)->PositionOnPanel = VectorF(85,100);
+	GUIPanel->GetConnected<Knob>(2)->SizeScaledPanel = VectorF(0.2,0.2);
+	GUIPanel->GetConnected<Knob>(2)->SetColor(0,0,0,255);
+	GUIPanel->GetConnected<Knob>(2)->Value.SetUp(0,1,0.5,0.001,Controlled<float>::Clamp);
+	GUIPanel->GetConnected<Knob>(2)->Value.SetVariable(&getTransform()->scale.y);
+	GUIPanel->AddConnectable<Knob>();
+	((SpectrumAnalyzer*)GUIPanel->GetConnected<Knob>(3)->Connection())->SetFalloff(0.5);
+	GUIPanel->GetConnected<Knob>(3)->SetText(" knopQX");
+	GUIPanel->GetConnected<Knob>(3)->PositionOnPanel = VectorF(145,100);
+	GUIPanel->GetConnected<Knob>(3)->SizeScaledPanel = VectorF(0.2,0.2);
+	GUIPanel->GetConnected<Knob>(3)->SetColor(0,0,0,255);
 }
 
 void
@@ -67,6 +95,12 @@ SpectrumAnalyzer::Initialize(void)
 	//get being invoked at EarlyUpdate, to get the FFT-Data...
 	UPDATE->SignInForEarlyUpdate(this);
 
+}
+
+void 
+SpectrumAnalyzer::SetFalloff(float falloff)
+{
+	fallOffAmount = falloff;
 }
 
 void

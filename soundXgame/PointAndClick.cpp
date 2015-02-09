@@ -21,6 +21,10 @@ _backButtonClick_pNc(IConnectable* sender)
 	}
 }
 
+void _sliderCange(IConnectable*)
+{
+
+}
 
 void
 PointAndClick::OnActivate(void)
@@ -33,11 +37,11 @@ PointAndClick::OnActivate(void)
 		glutSetCursor(GLUT_CURSOR_INHERIT);
 
 		if(camera->GetTarget())
-			if(camera->GetTarget()->Connection()->has<Connectable<IEditable>>())
+			if(camera->GetTarget()->Connection()->has<IEditable>())
 				{
-					targetBindings = camera->GetTarget()->operator IEditable *()->GetDialogBindings();
-					camera->GetTarget()->operator IEditable *()->BindMenuObject(this->guiObject);
-					camera->GetTarget()->operator IEditable *()->ShowDialog();
+					targetBindings = ((IEditable*)target)->GetDialogBindings();
+					((IEditable*)target)->BindMenuObject(this->guiObject);
+					((IEditable*)target)->ShowDialog();
 				}
 			else
 				this->guiObject->SetName(camera->GetTarget()->GetName());
@@ -62,8 +66,8 @@ void
 PointAndClick::BindGuiObject(GuiObject* bindToGUIobject)
 {
 	this->guiObject = bindToGUIobject;
-	this->IsActive=false;
-	this->guiObject->GetConnected<ButtonControl>(1)->SetClickerFunc(_backButtonClick_pNc);
+	this->IsActive=true;
+	this->guiObject->GetConnected<ButtonControl>(1)->SetClickerFunc(&_backButtonClick_pNc);
 	this->guiObject->isVisible(this->IsActive);
 
 }
@@ -72,7 +76,15 @@ PointAndClick::PointAndClick(void)
 {
 	ModeName = "PointAndClick";
 	isPrimarMode=false;
-	lastCamMode = FIRSTPERSON;
+	lastCamMode = FIRSTPERSON;		   
+	BINDING bind;
+	bind.OnChange = &_backButtonClick_pNc;
+	bind.TypeInfo = &typeid(bool);
+	bind.VariableData = &this->IsActive;
+	sprintf(&bind.labelName[0],"%s","Back");
+
+	bindings.push_back(bind);
+	bindings.push_back(bind);
 }
 
 
@@ -92,6 +104,24 @@ PointAndClick::Initialize(void)
 	return true;
 }
 
+void 
+PointAndClick::mouseWheel(int wheel, WHEEL state)
+{
+
+	
+	if (wheel==3)
+		if(target->GetID()!=camera->GetTarget()->GetID())
+		{	target = camera->GetTarget();
+	bindings.pop_back();
+
+	bindings[1].TypeInfo = &typeid(float);
+	bindings[1].OnChange = _sliderCange;
+	bindings[1].VariableData = &target->getTransform()->scale.y;
+	sprintf(&bindings[1].labelName[0],"%s","Scale Y");
+
+	guiObject->SetName(target->GetName());
+	}
+}
 
 void 
 PointAndClick::UpdateMode(void)

@@ -51,6 +51,9 @@
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <UseIntelIPP>false</UseIntelIPP>
+    <UseIntelMKL>No</UseIntelMKL>
+    <UseILP64Interfaces>false</UseILP64Interfaces>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -76,6 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\Libraries\jpeg-9a;C:\Libraries\libbmp-0.1.3\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
@@ -157,17 +161,30 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Strict</FloatingPointModel>
+      <OpenMPSupport>true</OpenMPSupport>
+      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>bass.lib;bass_fx.lib;bassmix.lib;glew32s.lib;freeglut_static.lib;tags.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Version>
+      </Version>
+      <SubSystem>NotSet</SubSystem>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

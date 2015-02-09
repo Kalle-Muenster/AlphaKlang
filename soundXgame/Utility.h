@@ -7,7 +7,7 @@
 #include "Voxel.h"
 #include "VoxelVector.h"
 #include "DataStructs.h"
-#include <lodepng.h>
+
 
 
 
@@ -40,14 +40,15 @@ private:
 public:
 	LoaderColor data;
 	Loader(void);
-	Loader(char* filename);
+	Loader(const char* filename);
 	~Loader(void);
 	int width(int=NULL);
 	int height(int=NULL);
 	int count(void);
 	LoaderColor Pixel(int);
 	LoaderColor Pixel(int,int);
-	void* LoadeFile(char* filename);
+	void* LoadeFile(const char* filename);
+	void FreeLoader(void);
 };
 
 class Utility 

@@ -25,6 +25,7 @@ public:
 	Controlled<float> Value;
 	virtual bool Initialize(void);
 	virtual void DoUpdate(void);
+	virtual void OnUpdate(IConnectable*);
 	virtual void draw(void);
 	action ClickAction;
 	virtual ProjectMappe::Rectangle GetArea(void);

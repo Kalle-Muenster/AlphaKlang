@@ -3,13 +3,15 @@
 | class: List					       |
 | description: 			               |	
 |		 a tiny list-type, very fast   |
-|		at Iterrating , but slower at  |
+|		at Iterating , but slower at   |
 |		adding or searching elements.  |
-|		by name. it provides Foreach-  |
-|       like iterration-style but with
-|       advantage of possy
-|
-\~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+|		by name. it provides foreach-  |
+|       like iteration-style but with  |
+|       advantage of ability to remove |
+|		elements from the list while   | 
+|		cycling through it.			   |
+|									   |
+\~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #ifndef _LUECKLIST_H_
 #define _LUECKLIST_H_
@@ -42,29 +44,29 @@ public:
 		highestSlotNumberInUse = 0;
 		CyclingActive = false;
 
-		//check if ListMember are class-pointers or valuetypes
+		//check if ListMember are class-pointers or value types
 		MemberArePointers = Utility::StringCompareRecursive( typeid(ListMember).name(),"class ") >= 6; 
 
 		//if it' a pointer-list set each slot to NULL
 		if(MemberArePointers)
 			Nulled = NULL;
 		else try
-		{	//try instanciating a variable of ListMembertype by using it's standardconstructor, for using it as NULL-sign..
+		{	//try instantiating a variable of ListMembertype by using it's standard constructor, for using it as NULL-sign..
 			Nulled = ListMember();
 		}
 		catch(...)
-		{	//if does'nt work: Allert!
+		{	//if doesn't work: Alert!
 			std::cout<<"ERROR: when using valuetypes as listmember, use the \"List<type,count>(type NullInstance)\" - constructor !...";
 			throw"LueckList: error while initializing. use a different constructor...";
 		}
 
-		//Initialize the List's dataarray with the desired Nulled value
+		//Initialize the List's data array with the desired Nulled value
 		//for signing it as unused empty...
 		for(int i=0;i<MAXIMUM_SIZE;i++)
 			list[i] = Nulled;	
 	}
 
-	//Construct a new Listinstance and initialize it's data-array to the given value...
+	//Construct a new List instance and initialize it's data-array to the given value...
 	List(ListMember NullValue)
 	{
 		numberOfMember = 0;
@@ -76,7 +78,7 @@ public:
 	}
 
 
-	// Distroy's all the list's members when the list is beeing distroyed... 
+	// Distroy's all the list's members when the list is being destroyed... 
 	virtual ~List(void)
 	{
 		if(MemberArePointers)
@@ -90,7 +92,7 @@ public:
 	}
 
 	// Add a member to the list and return the memberID 
-	// (slot-number) at wich the object has been addet to...
+	// (slot-number) at which the object has been addet to...
 	unsigned Add(ListMember member)
 	{
 		int FirstEmptySlotFound = -1;
@@ -99,7 +101,7 @@ public:
 		try
 		{
 			while(counter<numberOfMember)
-			{//check's if the object has been addet to the list allready...
+			{//check's if the object has been added to the list already...
 				if(list[index] == Nulled) // and look for free slot to add it there later..
 					FirstEmptySlotFound = FirstEmptySlotFound<0? index : FirstEmptySlotFound;
 				else if(list[index] == member)
@@ -169,7 +171,7 @@ public:
 		if(numberOfMember==0)
 			return EMPTY;
 		
-		//fastforward until finding next used slot.
+		//fast forward until finding next used slot.
 		while(list[++current]==Nulled);
 		
 		//If in cycle-mode jump to first if reached end...
@@ -197,15 +199,6 @@ public:
 			else
 				return EMPTY;
 		}
-
-		//return if already first element.
-		//if(current <= First())  
-		//{
-		//	if(CyclingActive)
-		//	{
-		//		Last() : -1;
-		//	}
-		//}
 
 		//rewind the list until finding a used slot.
 		while(list[--current] == Nulled);
