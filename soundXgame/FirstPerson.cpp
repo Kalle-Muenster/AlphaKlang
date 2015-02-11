@@ -52,9 +52,20 @@ FirstPerson::OnActivate(void)
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
 }
 
+int 
+FirstPerson::OnDeactivate(void)
+{
+	return FirstPerson::ID;
+}
+
 void 
 FirstPerson::UpdateMode(void)
 { 
+	if(GUI->IsAnyGUIActive())
+		DisableMouseCapture();
+	else
+		EnableMouseCapture();
+
 	camera->move(x, eyeY, z);
 	camera->rotate(x+lx, y + 3.0f, z+lz); 
 	this->IsDirty=false;
@@ -66,14 +77,17 @@ FirstPerson::UpdateMode(void)
 void
 FirstPerson::DisableMouseCapture(void)
 {
-	MouseCapture=false;
+	if(MouseCapture)
+	{	glutSetCursor(GLUT_CURSOR_INHERIT);
+		MouseCapture=false;  }
 }
 
 void 
 FirstPerson::EnableMouseCapture(void)
 {
-   MouseCapture=true;
-   glutSetCursor(GLUT_CURSOR_NONE);
+	if(!MouseCapture)
+	{  glutSetCursor(GLUT_CURSOR_NONE);
+	   MouseCapture = true; }
 }
 
 void 

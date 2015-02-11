@@ -90,6 +90,7 @@ namespace ProjectMappe
 	void GlobalDestructor(void);
 	void StartupRuntimeManagers(void);
 	bool EXIT(BOOL=3);
+	bool isGameRunning(void);
 };
 
 

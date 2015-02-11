@@ -24,6 +24,8 @@ class CameraMode : public IConnectable
 protected:
 	virtual void UpdateMode(void){}
 	bool isPrimarMode;
+	int lastActivePrimarMode;
+
 public:
 	Cam* camera;
 	char* ModeName;
@@ -34,10 +36,18 @@ public:
 				IsActive=setter;
 				if(IsActive)
 					OnActivate();
+				else 
+				{
+					if(isPrimarMode)
+						lastActivePrimarMode = OnDeactivate();
+					else
+						OnDeactivate();
+				}
 			}
 			return IsActive;
 		}
 	virtual void OnActivate(void){}
+	virtual int OnDeactivate(void){return 0;}
 	bool IsDirty;
 	bool IsPrimarMode(void)
 	{return isPrimarMode;}

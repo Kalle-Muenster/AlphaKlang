@@ -60,32 +60,25 @@ InputManager::InputManager(void)
 	Controler1.Enabled=true;
 	Controler1.NumberOfButtons=10;
 	Controler1.NumberOfAxis=3;
-
-//	UpdateManager::getInstance()->SignInForEarlyUpdate(this);
-
-	/*
-	if(glutGet(GLUT_HAS_JOYSTICK))
-	{
-		Controler1.NumberOfAxis = glutJoystickGetNumAxes(0);
-		if(Controler1.NumberOfAxis>0)
-		{
-			Controler1.Enabled=true;
-			glutJoystickSetCenter(0,0);
-			Controler1.aX=1;
-			glutJoystickSetMaxRange(0,&Controler1.aX);
-			Controler1.aX=-1;
-			glutJoystickSetMinRange(0,&Controler1.aX);
-			for(int i = 0;i<Controler1.NumberOfAxis;i++)
-				glutJoystickSetDeadBand(0,i,0.1);
-			Controler1.Buttons = glutJoystickGetNumButtons(0);
-		}
-	}
-	*/
 }
 
 InputManager::~InputManager(void)
 {
-
+	if(MouseMotionObservers.Count() > 0)
+		for(GobID ID=MouseMotionObservers.First();ID<=MouseMotionObservers.Last();ID=MouseMotionObservers.Next(ID))
+			MouseMotionObservers.Distruct(ID);
+	if(KeyboardObservers.Count() > 0)
+		for(GobID ID=KeyboardObservers.First();ID<=KeyboardObservers.Last();ID=KeyboardObservers.Next(ID))
+			KeyboardObservers.Distruct(ID);
+	if(SpecialKeyObservers.Count() > 0)
+		for(GobID ID=SpecialKeyObservers.First();ID<=SpecialKeyObservers.Last();ID=SpecialKeyObservers.Next(ID))
+			SpecialKeyObservers.Distruct(ID);
+	if(mouseClickObservers.Count() > 0)
+		for(GobID ID=mouseClickObservers.First();ID<=mouseClickObservers.Last();ID=mouseClickObservers.Next(ID))
+			mouseClickObservers.Distruct(ID);
+	if(MouseWheelObservers.Count() > 0)
+		for(GobID ID=MouseWheelObservers.First();ID<=MouseWheelObservers.Last();ID=MouseWheelObservers.Next(ID))
+			MouseWheelObservers.Distruct(ID);
 }
 
 void InputManager::attachMouseMove(IObserver* obs) 

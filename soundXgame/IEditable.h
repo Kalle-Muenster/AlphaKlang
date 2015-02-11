@@ -3,30 +3,33 @@
 
 #include "GuiControlls.h"
 
-struct BINDING
+class ObjectMenu;
+
+struct ControlElementBinding
 {
-	const type_info*	TypeInfo;
-	void*				VariableData;
-	char				labelName[32];
-	action				OnChange;
+	enum ELEMENT_TYPE : char
+	{BUTTON=0,SLIDER=1,KNOB=2};
+
+	ELEMENT_TYPE		ControlType;
+	void*				VariablePointer;
+	char				Label[32];
+	action				OnChangeAction;
 };
 
 class IEditable
 {
 protected:
-	std::vector<BINDING>	Bindings;
-	GuiObject*				panel;
-
+	std::vector<ControlElementBinding>	Bindings;
+	ObjectMenu*							GUIPanel;
 
 public:
-				IEditable(void);
-	virtual	   ~IEditable(void);
-	void		BindMenuObject(GuiObject*);
-	short		BindValueToMenu(float& VariableToBind,action,string);
-	short		BindValueToMenu(bool& VariableToBind,action,string);
-	virtual bool ShowDialog(void);
-	void		HideDialog(void);
-	std::vector<BINDING>*  GetDialogBindings(void);
+					IEditable(void);
+	virtual		   ~IEditable(void);
+	virtual bool	ShowDialog(void);//IObjection<IConnectable>* thisObject);
+	void			HideDialog(void);
+	unsigned		AddControlElement(ControlElementBinding::ELEMENT_TYPE controllType,void* targetVariable,const char* lable,action handler);
+	void			RemoveControllElement(unsigned controlID);
+	bool			isAttachedTo(ObjectMenu* menu);
 };
 
 #endif

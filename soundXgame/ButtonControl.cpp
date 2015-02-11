@@ -88,23 +88,6 @@ ButtonControl::DoUpdate(void)
 		GUI->Write(&Label[0],left+Area.GetHalbSize().x/2,bottom-Area.GetHalbSize().y/1+5,color);
 }
 
-	//bool ButtonControl::Initialize(void)
-	//{
-	//	Area = *ProjectMappe::Rectangle::Zero;
-	//	//UPDATE->SignOutFromUpdate(this);
-	//	//UPDATE->SignInForEarlyUpdate(this);
-
-	//	Panel = ProjectMappe::Rectangle(&this->Connection()->getTransform()->position.x,
-	//									&this->Connection()->getTransform()->position.y,
-	//									&this->Connection()->getTransform()->scale.x,
-	//									&this->Connection()->getTransform()->scale.y );
-	//	PositionOnPanel = Panel.GetHalbSize();
-	//	SizeScaledPanel.x = 0.1;
-	//	SizeScaledPanel.y = SizeScaledPanel.x/4;
-	//	this->angle = 0;
-	//	GetArea();
-	//	return true;
-	//}
 
 
 	ButtonControl::ButtonState 
@@ -122,6 +105,7 @@ ButtonControl::DoUpdate(void)
 			if(btnState==PRESSED)
 			{
 				ClickAction(this);
+				*Switch = !(*Switch);
 			}
 
 			printf("ButtonState: %s...\n",States[btnState]);

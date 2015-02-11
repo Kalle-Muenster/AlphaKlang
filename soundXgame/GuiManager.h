@@ -25,10 +25,15 @@ class SceneGraph;
 class GuiObject
 	: public Sprite
 {
+private:
+	char Label[32];
+protected:
+	void GenerateBackButton(void);
 public:
 	bool ShowTitle;
 	GuiObject(void);
-	GuiObject(char*);
+	GuiObject(bool);
+	GuiObject(const char*,bool=false);
 	void InitializeGUIObject(void);
 	virtual ~GuiObject(void);
 	void LoadTexture(char*);
@@ -42,6 +47,9 @@ public:
 	//operator GuiConXtor*(void);
 	virtual void draw(void);
 	virtual bool isVisible(BOOL=3);
+	void ResetHard(bool leaveBackbutton = false);
+	void SetText(const char * txt);
+	const char* GetText(void);
 	
 };
 
@@ -85,6 +93,7 @@ public:
 	void DrawGUI(void);
 	void Write(const char*,short,short,data32=NOLL);
 	void Write(const char*,VectorF,data32=NOLL);
+	bool IsAnyGUIActive(void);
 };
 
 #endif

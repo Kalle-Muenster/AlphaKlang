@@ -1,22 +1,23 @@
 #include "SpectrumAnalyzer.h"
 #include "projectMacros.h"
 #include "Connectable.h"
+#include "PointAndClick.h"
 
 void
 _OnScaleY(IConnectable* sender)
 {
-	GUI->Write("Y-changed",200,200);
+	printf("SpectrumAnalizer: scaleY: %f\n",(float)((Knob*)sender)->Value);
 }
 
 void
-_OnBackButton(IConnectable* sender)
+_OnRotateSpecrumAnalizer(IConnectable* sender)
 {
-	sender->Connection()->isVisible(false);
+	printf("SpectrumAnalizer: rotationY: %f\n",(float)((Knob*)sender)->Value);
 }
 
-void _setFALLOFFAMOUNT(IConnectable*)
+void _setFALLOFFAMOUNT(IConnectable* sender)
 {
-	((SpectrumAnalyzer*)GUI->Panel("SpectrumAnalizer-GUI-Panel"))->SetFalloff(GUI->Panel("SpectrumAnalizer-GUI-Panel")->GetConnected<Knob>(3)->Value);
+	printf("SpectrumAnalizer: FallOffAmount: %f\n",(float)((Knob*)sender)->Value);
 }
 
 
@@ -26,30 +27,10 @@ SpectrumAnalyzer::SpectrumAnalyzer(void)
 	IGObject::InitializeObject();
 	this->ChartHeight = 100.0f;
 
-	GUIPanel = new GuiObject("GUI/panelT_256x512.png");
-	GUIPanel->scale(Vector3(256,128,1));
-	GUIPanel->move(Vector3(20,20,0));
-	GUIPanel->SetName("SpectrumAnalizer-GUI-Panel");
-	GUIPanel->AddConnectable<Knob>();
-	GUIPanel->GetConnected<Knob>(1)->SetText(" knopX");
-	GUIPanel->GetConnected<Knob>(1)->PositionOnPanel = VectorF(25,100);
-	GUIPanel->GetConnected<Knob>(1)->SizeScaledPanel = VectorF(0.2,0.2);
-	GUIPanel->GetConnected<Knob>(1)->SetColor(0,0,0,255);
-	GUIPanel->GetConnected<Knob>(1)->Value.SetUp(0,1,0.5,0.001,Controlled<float>::Clamp);
-	GUIPanel->GetConnected<Knob>(1)->Value.SetVariable(&getTransform()->rotation.y);
-	GUIPanel->AddConnectable<Knob>();
-	GUIPanel->GetConnected<Knob>(2)->SetText(" knopY");
-	GUIPanel->GetConnected<Knob>(2)->PositionOnPanel = VectorF(85,100);
-	GUIPanel->GetConnected<Knob>(2)->SizeScaledPanel = VectorF(0.2,0.2);
-	GUIPanel->GetConnected<Knob>(2)->SetColor(0,0,0,255);
-	GUIPanel->GetConnected<Knob>(2)->Value.SetUp(0,1,0.5,0.001,Controlled<float>::Clamp);
-	GUIPanel->GetConnected<Knob>(2)->Value.SetVariable(&getTransform()->scale.y);
-	GUIPanel->AddConnectable<Knob>();
-	((SpectrumAnalyzer*)GUIPanel->GetConnected<Knob>(3)->Connection())->SetFalloff(0.5);
-	GUIPanel->GetConnected<Knob>(3)->SetText(" knopQX");
-	GUIPanel->GetConnected<Knob>(3)->PositionOnPanel = VectorF(145,100);
-	GUIPanel->GetConnected<Knob>(3)->SizeScaledPanel = VectorF(0.2,0.2);
-	GUIPanel->GetConnected<Knob>(3)->SetColor(0,0,0,255);
+	GUIPanel = (ObjectMenu*)GuiManager::getInstance()->Panel("Editor-Panel");
+	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->rotation.y,"Rotation",_OnRotateSpecrumAnalizer);
+	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->fallOffAmount,"fallOff",_setFALLOFFAMOUNT);
+	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->scale.y,"Scale Y",_OnScaleY);
 }
 
 void
@@ -160,16 +141,29 @@ SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 void
 SpectrumAnalyzer::draw(void)
 {
-	if(!IsVisible)
-		return;
+	//if(SCENE->camera->GetTarget()->GetID() == this->GetID())
+	//{
+	////	ShowDialog((IObjection<IConnectable>*)this);
+	//	
+	//		
+	//}
+	//if(SCENE->camera->GetTarget()->GetID()==this->GetID())
+	//	{
+	//	//	ShowDialog();
+	//		if(!GUIPanel->IsVisible)
+	//					GUIPanel->isVisible(true);
+	//	}
 
-	Vector3 vec;
-	for(int i = 0;i<360;i+=90)
+	Vector3 degree90(0,90,0);
+	Vector3 vec = getTransform()->rotation;
+	for(int i = 0;i<3;i++)
 	{
-		vec = getTransform()->rotation + Vector3(0,i,0);
-		rotate(vec.x,vec.y,vec.z);
+		rotate(getTransform()->rotation + degree90);
 		drawOnce();
 	}
+	rotate(vec);
+	drawOnce();
+
 }
 
 void
@@ -209,10 +203,10 @@ SpectrumAnalyzer::move(float X,float Y,float Z)
 }
 
 Vector3
-SpectrumAnalyzer::rotate(float X,float Y,float Z)
+SpectrumAnalyzer::rotate(Vector3 rotary)
 {
 	_CHANGEDrotation=true;
-	return IMeshObject::rotate(Vector3(X,Y,Z));
+	return IMeshObject::rotate(rotary);
 }
 
 // scale this object to the size each sub object will have.. 

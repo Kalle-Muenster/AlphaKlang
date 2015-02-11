@@ -1,12 +1,11 @@
 #ifndef _CMUSICVOX_
 #define _CMUSICVOX_
 
-#include "musiclistener.h"
+#include "musiccontroller.h"
 #include "SkyBox.h"
 
 class MusicVox :
-	public MusicListener,
-	public IConnectable
+	public MusicController
 {
 private:
 	ConID VoxcontrollID;

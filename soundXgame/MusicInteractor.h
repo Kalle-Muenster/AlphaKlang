@@ -1,12 +1,11 @@
 #ifndef _CMUSICINTERACTOR_
 #define	_CMUSICINTERACTOR_
 
-#include "MusicListener.h"
+#include "MusicController.h"
 #include "AudioObject.h"
 
 class MusicInteractor :
-	public MusicListener,
-	public IConnectable
+	public MusicController
 {
 
 public:
@@ -28,9 +27,10 @@ public:
 	virtual ~MusicInteractor(void){}
 
 protected:
+	Vector3 DataField;
 	float timer;
 	float value;
-	Vector3 DataField;
+//	Vector3 DataField;
 	virtual float* GetFFTData(void)
 		{return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}
 	virtual void MotivatorFunction(float Motivator,int number) 

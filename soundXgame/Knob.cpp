@@ -13,7 +13,7 @@ public:
 	virtual ~ActionHandler(void){}
 	virtual bool Initialize(void)
 		{
-			SceneGraph::getInstance()->Object("SpectrumAnalizer")->getTransform()->scale.y;
+			return true;
 		}
 	action Action;
 };

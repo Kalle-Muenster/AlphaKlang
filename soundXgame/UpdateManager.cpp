@@ -35,9 +35,12 @@ UpdateManager::UpdateManager(void)
 //Destructor...
 UpdateManager::~UpdateManager(void)
 {
-	//delete _earlyUpdates;
-	//delete _updates;
-	//delete _lateUpdates;
+	if(_NumberOfEarlyClients>0)
+		delete [] _earlyUpdates;
+	if(_NumberOfUpdateClients>0)
+		delete [] _updates;
+	if(_NumberOfLateClients>0)
+		delete [] _lateUpdates;
 }
 
 

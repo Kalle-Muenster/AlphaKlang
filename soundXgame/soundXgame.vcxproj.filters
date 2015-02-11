@@ -184,6 +184,9 @@
     <ClCompile Include="PointAndClick.cpp">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClCompile>
+    <ClCompile Include="MusicController.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -446,9 +449,6 @@
     <Image Include="Data\panel_menu.png">
       <Filter>Resources\GUI</Filter>
     </Image>
-    <Image Include="Data\panelT_256x512.png">
-      <Filter>Resources\GUI</Filter>
-    </Image>
     <Image Include="Data\Particles\Color_1.png">
       <Filter>Resources\Particles</Filter>
     </Image>
@@ -507,6 +507,12 @@
       <Filter>Resources\GUI</Filter>
     </Image>
     <Image Include="Data\GUI\sliderX_64x64.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\panelT_256x512.png">
+      <Filter>Resources\GUI</Filter>
+    </Image>
+    <Image Include="Data\GUI\panel_256x256.png">
       <Filter>Resources\GUI</Filter>
     </Image>
   </ItemGroup>

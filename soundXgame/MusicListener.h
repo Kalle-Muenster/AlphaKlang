@@ -22,29 +22,7 @@ struct ListenerData
 	float MAXClampf;
 };
 
-//typedef void(*ListenerFunc)(int,ListenerData*,IGObject*);
-//
-//class IMusicListener
-//{
-//public:
-//	
-//			IMusicListener(void);
-//	virtual ~IMusicListener(void);
-//
-//			float listenTo(int,float *fft);
-//			float* listen(float *fft);
-//			ListenerData* GetLineData(int);
-//			void SetThreshold(int,float);
-//			void SetClambt(int,bool);
-//			void SetClambt(int,float,float);
-//			bool Enabled(int,BOOL=3);
-//			void SetLineBounds(int line,int lower,int upper,int width);
-//	
-//			
-//			
-//protected:
-//
-//};
+
 
 
 class MusicListener :  

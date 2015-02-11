@@ -7,7 +7,7 @@
 
 #include "GuiManager.h"
 
-//data32 _fpsDisplayColor;
+
 
 SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 {
@@ -16,24 +16,13 @@ SceneGraph::SceneGraph(void) : r(0), g(0), b(0)
 	VoxtructsInitiator::initiateVoxtructs();
 	drawables = List<IDrawable*,MAX_MUM_SCENE_OBJECTS>();
 	ShowFPS = false;
-	//_fpsDisplayColor.byte[1]=63;
-	//_fpsDisplayColor.byte[2]=127;
-	//_fpsDisplayColor.byte[3]=255;
-	//_fpsDisplayColor.byte[0]=192;
-
 }
 
 SceneGraph::~SceneGraph(void)
 {
-	for(int ID = drawables.First(); ID <= drawables.Last(); ID = drawables.Next(ID))
-	{
-		drawables.Distruct(ID);
-	}
-
-
-	//for(int ID = drawables.Last(); ID >= drawables.First(); ID = drawables.Prev(ID))
-	//	if(ID!=0)
-	//		drawables.Distruct(ID);
+	if(drawables.Count()>0)
+		for(int ID = drawables.First(); ID <= drawables.Last(); ID = drawables.Next(ID))
+			drawables.Distruct(ID);
 }
 
 GobID // Add's a gameobject to the Scene and returns it's given ID
@@ -48,21 +37,10 @@ SceneGraph::Remove(IDrawable* object)
 	drawables.Remove(object);
 }
 
-
-//void
-//_writeFPS(int X,int Y)
-//{
-//	char fpsString[32];
-//	sprintf(&fpsString[0],"FPS: %f\n\0",(float)(1.0f/INPUT->FrameTime));
-//	GUI->Write(&fpsString[0], X,Y,_fpsDisplayColor);
-//	printf("%s",&fpsString[0]);
-//}
-
 void
 SceneGraph::DrawAll()
 {
-	//if(ShowFPS)
-	//	_writeFPS(20,20);
+	SetGameIsRunningState(true);
 	camera->Update();
 
 	for(unsigned ID = drawables.First(); ID<=drawables.Last(); ID=drawables.Next(ID))
@@ -80,13 +58,6 @@ SceneGraph::DrawSky(void)
 
 	glClearColor(r/255,g/255,b/255,1.);
 }
-
-void 
-SceneGraph::DrawGUI(void)
-{
-	GuiManager::getInstance()->DrawGUI();
-}
-
 
 void
 SceneGraph::UpdateSky(void)
@@ -157,7 +128,8 @@ SceneGraph::ObjectsCount(void)
 	return drawables.Count();
 }
 
-IObjection<IConnectable>* // Find a gameobject by it's Name...
+// Find a gameobject by it's Name...
+IObjection<IConnectable>* 
 SceneGraph::Object(char* name)
 {
 	//check's the name case-sensitive...

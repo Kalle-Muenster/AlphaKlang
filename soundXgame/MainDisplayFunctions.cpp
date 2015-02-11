@@ -57,6 +57,6 @@ void ProjectMappe::OnDisplay(void)
 #endif
 
 	if(EXIT())
-		prepareForExit();
+		glutLeaveMainLoop();
 
 }

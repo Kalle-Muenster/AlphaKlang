@@ -5,10 +5,6 @@
 
 #include "GuiManager.h"
 
-//#ifndef _POJECT_MACROS__
-//#define SCENE SceneGraph::getInstance()
-//#endif
-
 typedef unsigned int GobID;
 typedef char* string;
 
@@ -23,8 +19,7 @@ private:
 	List<IDrawable*,MAX_MUM_SCENE_OBJECTS> drawables;
 	float r,g,b;
 	void UpdateSky(void);
-	
-
+	void SetGameIsRunningState(bool);
 
 public:
 	~SceneGraph(void);
@@ -32,17 +27,16 @@ public:
 	static SceneGraph* getInstance();
 	void DrawAll(void);
 	void DrawSky(void);
-	void DrawGUI(void);
 
 
-	bool ShowFPS;
 	//Activate Color-flashing Sky drawer !...
 	bool SkyFlasherActive;
 
+	//If set "true" actual frames per second will be drawn at the upper left screen corner.
+	bool ShowFPS;
+
 	//Add's an object to the scene and generate a new ID that will be returned... 
 	unsigned int Add(IDrawable* object);
-
-
 
 	// removes an object from the scene, but does not destroy it.
 	// use "Destruct(IGObject*)" to delete an object permanently...
@@ -57,11 +51,8 @@ public:
 	//if the Object can be found in the scene, it will be removed and destroyed... 
 	void Destruct(IDrawable* Obj);
 
-	// accses to the scene's main-camera...
+	// access to the scene's main-camera...
 	Cam* camera;
-
-//	data32* GetFXbufferData(void);
-
 
 	// Find an object by it's name...
 	IObjection<IConnectable>* Object(char* name);  
@@ -69,12 +60,10 @@ public:
 	// Find an object by it's ID...
 	IObjection<IConnectable>*  Object(unsigned int ID);
 
-
-
 	// total count on objects in scene...
 	unsigned ObjectsCount(void);
 
-	// returns the GobID with the highest value that is contained in the scenegraph...
+	// returns the GobID with the highest value that is contained in the scene graph...
 	// its's the ID of the last Object at the end of the scene-draw-List...
 	GobID HighestID(void);
 };

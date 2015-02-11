@@ -1,14 +1,13 @@
 #ifndef _CMUSICSCALER_
 #define _CMUSICSCALER_
 
-#include "musiclistener.h"
+#include "musiccontroller.h"
 #include "AudioObject.h"
 
 
 
 class MusicScaler :
-	public MusicListener,
-	public IConnectable
+	public MusicController
 {
 public:
 	MusicScaler(void);

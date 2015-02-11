@@ -26,9 +26,47 @@ float _gm_tc_a = 1;
  const data32* GuiManager::NoColor = &_noColor;
 
 
+ void _WriteText2D(const char * text, Vecti position,data32 color=NOLL)		
+ {
+	 unsigned short i=0;
+
+	 if(color.byte[0] == NULL)
+		 glColor4f(_gm_tc_r,_gm_tc_g,_gm_tc_b,_gm_tc_a);
+	 else
+		 glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
+
+	 glRasterPos2i(position.ix, position.yps);
+	 while(text[i] != '\0') 
+	 { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
+ }
+
+
+
+ double timeCounter=0;
+ short frameCounter=0;
+ void _writeFPS()
+ {
+	 //sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
+	 //_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
+	 timeCounter += InputManager::getInstance()->FrameTime;
+	 frameCounter++;
+
+	 if(frameCounter>10)
+	 {
+		 sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f",((float)frameCounter/timeCounter));
+		 timeCounter=0;
+		 frameCounter=0;
+	 }
+
+	 _WriteText2D(&fpsSTRING[0],fpsTextPosition);
+
+ }
+
 
 bool
 GuiManager::NotIsInstanciated = true;
+
+bool _isAnyGUIActive = false;
 
 GuiManager::GuiManager(void)
 {
@@ -204,46 +242,19 @@ GuiManager::Panel(GobID id)
 }
 
 
-void _WriteText2D(const char * text, Vecti position,data32 color=NOLL)		
+
+
+bool
+GuiManager::IsAnyGUIActive(void)
 {
-  unsigned short i=0;
-
-  if(color.byte[0] == NULL)
-	glColor4f(_gm_tc_r,_gm_tc_g,_gm_tc_b,_gm_tc_a);
-  else
-	glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
-
-  glRasterPos2i(position.ix, position.yps);
-  while(text[i] != '\0') 
-  { glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i++]);}
-}
-
-
-
-double timeCounter=0;
-short frameCounter=0;
-void _writeFPS()
-{
-	//sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f\n",(float) (1.0f/InputManager::getInstance()->FrameTime));
-	//_WriteText2D(&fpsSTRING[0],fpsTextPosition,_color);
-	timeCounter += InputManager::getInstance()->FrameTime;
-	frameCounter++;
-	
-	if(frameCounter>10)
-	{
-		sprintf_s(fpsSTRING, sizeof(fpsSTRING),"FPS: %f",((float)frameCounter/timeCounter));
-		timeCounter=0;
-		frameCounter=0;
-	}
-
-	_WriteText2D(&fpsSTRING[0],fpsTextPosition);
-
+   return _isAnyGUIActive;
 }
 
 void
 GuiManager::Write(const char* Text,VectorF position,data32 coll)
 {
-	writeOrders.Add(new WriteOrder(Text,position.x,position.y,coll));
+	if(ProjectMappe::isGameRunning())
+		writeOrders.Add(new WriteOrder(Text,position.x,position.y,coll));
 }
 
 void _writePosition()
@@ -257,7 +268,8 @@ void _writePosition()
 void
 GuiManager::Write(const char* Text,short X,short Y,data32 Color)
 {
-	writeOrders.Add(new WriteOrder(Text,X,Y,Color));
+	if(ProjectMappe::isGameRunning())
+		writeOrders.Add(new WriteOrder(Text,X,Y,Color));
 }
 
 void
@@ -270,9 +282,14 @@ GuiManager::DrawGUI(void)
 	{
 		if(elements.Count()>0)
 		{
+			bool SomeGUIWasDrawn = false;
 			for(GobID ID = elements.First();ID<=elements.Last(); ID=elements.Next(ID))
 				if(elements[ID]->isVisible())
+				{
 					elements[ID]->draw();
+					SomeGUIWasDrawn = true;
+				}
+			_isAnyGUIActive = SomeGUIWasDrawn;
 		}
 
 		if(writeOrders.Count()>0)
@@ -305,7 +322,11 @@ GuiManager::WriteOrder::WriteOrder(const char* Text,short x,short y,data32 Color
 
 #include "controllelement.h"
 
-
+ void
+_backButtonClicked(IConnectable* sender)
+{
+	((ButtonControl*)sender)->Connection()->isVisible(false);
+}
 
 void
 GuiObject::draw(void)
@@ -320,7 +341,7 @@ GuiObject::draw(void)
 		else
 			id++;}
 	if(ShowTitle)
-		GuiManager::getInstance()->Write(this->GetName(),Area.GetPosition()+VectorF(20,20),this->color);
+		GuiManager::getInstance()->Write(this->GetText(),Area.GetPosition()+VectorF(20,20),this->color);
 
 }
 
@@ -330,16 +351,23 @@ GuiObject::GuiObject(void)
 	transform.scale = Vector3(1,1,1);
 	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
 	InitializeGUIObject();
-	 SetUp("panel_256x512.png",false,false);
-
+	Label[0]='\0';
 }
 
-//GuiObject::operator GuiConXtor*(void)
-//{
-//	 return (GuiConXtor*)conXtor;
-//}
 
- GuiObject::GuiObject(string name)
+GuiObject::GuiObject(bool withBackButton)
+{
+	ShowTitle=false;
+	transform.scale = Vector3(1,1,1);
+	Area = ProjectMappe::Rectangle(&transform.position.x,&transform.position.y,&transform.scale.x,&transform.scale.y);
+	InitializeGUIObject();
+	SetUp("GUI/panel_256x256.png",false,false);
+	Label[0]='\0';
+	if(withBackButton)
+		GenerateBackButton();
+}
+
+ GuiObject::GuiObject(const char* name,bool withBackButton)
 {
 	ShowTitle=false;
 	transform.scale = Vector3(1,1,1);
@@ -347,8 +375,24 @@ GuiObject::GuiObject(void)
 	InitializeGUIObject();
 	SetUp(name,false,false);
 	SetName(name);	
-	
+	Label[0]='\0';
+	if(withBackButton)
+		GenerateBackButton();
 }
+
+ void
+ GuiObject::GenerateBackButton(void)
+ {
+	 ButtonControl* newcon = new ButtonControl();
+	 newcon->ConnectionID = newcon->TypeHashCode = typeid(ButtonControl).hash_code();
+	 newcon->SetConnection(this);
+	 newcon->ConnectionID = 10;
+	 conXtor->setConnectables(9,newcon);
+	 newcon->SetText("   back");
+	 conXtor->GetConnected<ButtonControl>(10)->PositionOnPanel = VectorF(15,15);
+	 conXtor->GetConnected<ButtonControl>(10)->SizeScaledPanel = VectorF(0.4,0.1);
+	 conXtor->GetConnected<ButtonControl>(10)->SetClickerFunc(_backButtonClicked);
+ }
 
 GuiObject::~GuiObject(void)
 {
@@ -365,22 +409,18 @@ void
 GuiObject::InitializeGUIObject(void)
 {
 	Area.SetPosition(500,500);
-	Area.SetSize(256,256);
+	
 
 	UseTexture = true;
-	IsVisible = IsActive = true;
+	IsActive = true;
 	SetID(GuiManager::getInstance()->Add(this));
 	LockID();
 
 }
 
-
-
 void 
 GuiObject::LoadTexture(char* filename)
 {
-
-
 	int i = 0;
 	while((++i<64)&&(filename[i]!='_'));
 	if(i<64)
@@ -389,10 +429,8 @@ GuiObject::LoadTexture(char* filename)
 	texture.ID = Utility::loadTexture(filename);
 	transform.scale = Utility::GetScalevectorByAspect(texture.w,texture.h);
 	
-	
-
-	IsVisible = true;
-		IsActive = UseTexture = true;
+	IsActive = UseTexture = true;
+	Area.SetSize(texture.w,texture.h);
 }
 	
 
@@ -441,4 +479,36 @@ GuiObject::isVisible(BOOL value)
 		}
 	}
 	return IsVisible;
+}
+
+void
+GuiObject::ResetHard(bool leaveBackbutton)
+{
+	SetText("");
+	char id = -1;
+	char i = 0;
+	int n = conXtor->NumberOfConnectedObjects;
+	while(i<n)
+	{id++;
+		if(conXtor->getConnectables(id))
+			{conXtor->RemoveConnected<IConnectable>(id); 
+			i++;}
+		else
+			id++;}
+	if(leaveBackbutton)
+		GenerateBackButton();
+
+//	this->Area.SetSize(200,80);
+}
+
+void GuiObject::SetText(const char * txt)
+{
+	char i = 0;
+	while((Label[i]=txt[i])!='\0' && i<32)i++;
+}
+
+const char* 
+GuiObject::GetText(void)
+{
+	return &Label[0];
 }

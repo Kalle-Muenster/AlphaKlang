@@ -27,12 +27,12 @@ ObjectManagement*	_objectManagerInstance;
 void 
 ProjectMappe::GlobalDestructor(void)
 {
-	delete _inputManagerInstance;
-	delete _bassaudioInstance;
 	delete _scenegraphInstance;
-	delete _updateManagerInstance;
 	delete _guimanagerInstance;
+	delete _inputManagerInstance;
+	delete _updateManagerInstance;
 	delete _objectManagerInstance;
+	delete _bassaudioInstance;
 };
 
 void
@@ -68,7 +68,7 @@ ProjectMappe::StartupRuntimeManagers(void)
 //EXIT:	 - calling this [true] let the application 
 //		   begin shutting down the next few frames
 //------------------------------------------------
-bool _terminate=false;
+bool _terminate = false;
 bool ProjectMappe::EXIT(BOOL exit)
 {
 	if(exit<3)
@@ -76,7 +76,12 @@ bool ProjectMappe::EXIT(BOOL exit)
 	return _terminate;
 }
 
-
+//Check if engine has entered it's MainLoop-cycle..
+bool _isRunning = false;
+bool ProjectMappe::isGameRunning(void)
+{
+	 return _isRunning;
+}
 
 
 // SINGLETON HANDLUING:
@@ -149,6 +154,13 @@ SceneGraph::getInstance(void)
 {
 	return _scenegraphInstance;
 }
+
+void
+SceneGraph::SetGameIsRunningState(bool isrunning)
+{
+	_isRunning = isrunning;
+}
+
 
 //UPDATE - singleton-instance for handling all 
 //		   per-frame Update callings

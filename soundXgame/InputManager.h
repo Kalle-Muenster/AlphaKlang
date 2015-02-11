@@ -148,7 +148,7 @@ public:
 	void SetDoubleclickTime(int milliseconds);
 	double FrameTime; //FrameTime like deltaTime -> hold's actual timeDiff since last Frame in seconds
 
-    /*attachement functions by wich "IObserver"-objects
+    /*attachment functions by which "IObserver"-objects
     can register on Notification-Events */
 	void attachMouseMove(IObserver* obs);
 	void attachKey(IObserver* obs);

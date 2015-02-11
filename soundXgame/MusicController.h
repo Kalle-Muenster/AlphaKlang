@@ -4,45 +4,41 @@
 #include "MusicListener.h"
 #include "AudioObject.h"
 
+class MusicControllerPanel;
+
+
+
 class MusicController :
 	public MusicListener,
 	public IConnectable
 {
 
 public:
-	MusicController(void)
-	{
-		DataField=Vector3(0,0,0);
-		Line[0].enabled = true;
-		Line[0].clampf = true;
-		Line[0].MINClampf = 0.0f;
-		Line[0].MAXClampf = 10.0f;
-		Line[0].threshold = 0.05f;
-		Line[0].fallOff = 0.00001f;
-		Line[0].lowerBound = 0;
-		Line[0].upperBound = 9;
-		Line[0].bandWidth = 5;
-
-	}
+	static bool EditingEnabled;
+	MusicController(void);
 	virtual ~MusicController(void){}
-
+	virtual void DoUpdate(void);
+	bool IsAttachedToPanel;
 protected:
-	float timer;
-	float value;
-	Vector3 DataField;
-	virtual float* GetFFTData(void)
-	{
-		return (float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);
-	}
-	virtual void MotivatorFunction(float Motivator,int number)
-	{
-		Vector3 temp;
-		if(number == 0)
-		{
-			
-		}
-	}
-	virtual void MotivatorFunction(float Motivator[]){}
+	virtual float* GetFFTData(void);
+	
 };
 
+
+class MusicControllerPanel 
+	: 
+	public GuiObject,
+	public IUpdateble
+{
+protected:
+	MusicController* controller;
+
+public:
+	MusicControllerPanel(void);
+	virtual ~MusicControllerPanel(void);
+	void BindToMusicListener(MusicController* listener);
+	void DetachListener(MusicController* listener);
+	MusicController* GetListener(void);
+	void UpdateListenerValues(void);
+};
 #endif

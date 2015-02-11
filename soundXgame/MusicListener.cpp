@@ -2,6 +2,11 @@
 #include "MusicListener.h"
 
 
+
+
+
+
+
 MusicListener::MusicListener(void)
 {
 	automaticFallOffAdjust=true;
@@ -15,7 +20,7 @@ MusicListener::MusicListener(void)
 		Line[i].enabled = false;
 		Line[i].threshold = 0.02f;
 		Line[i].Effect = 0.5f;
-		Line[i].lowerBound = 0;
+		Line[i].lowerBound = 1;
 		Line[i].upperBound = 64;
 		Line[i].bandWidth = 32;
 		Line[i].clampf = true;

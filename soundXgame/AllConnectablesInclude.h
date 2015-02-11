@@ -1,7 +1,4 @@
 
-
-
-
 #include "Connectable.h"
 #include "VoxControl.h"
 #include "AudioObject.h"
@@ -20,3 +17,4 @@
 #include "SliderX.h"
 #include "primitivSwitcher.h"
 #include "Listener.h"
+#include "knob.h"

@@ -35,6 +35,7 @@ public:
 	
 protected:
 	virtual void UpdateMode(void);
+	virtual int OnDeactivate(void);
 	bool _targetGRABBED;
 	ConID targetConnectedMode[3];
 	int targetSwitcher;

@@ -1,7 +1,7 @@
 #include "projectMacros.h"
 #include "globalfunctions.h"
 #include "Camera.h"
-
+#include "MusicController.h"
 
 
 
@@ -15,6 +15,14 @@ void ProjectMappe::keyboardUpInput(unsigned char key,int x,int y)
 {
 	INPUT->registerKeyUp(key);
 
+	if(key=='e')
+	{
+		MusicController::EditingEnabled = !MusicController::EditingEnabled;
+		if(MusicController::EditingEnabled)
+			printf("EDITING ENABLED !!! \n\n");
+		else
+			printf("EDITING DISABLED !!! \n\n");
+	}
 	
 	/* Switches Cam-Modes..*/
 	if(key=='p')

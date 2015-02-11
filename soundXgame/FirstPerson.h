@@ -27,6 +27,7 @@ public:
 	static int ID;
 	void UpdateHeight(float y);
 	virtual void OnActivate(void);
+	virtual int OnDeactivate(void);
 	virtual bool Initialize(void);
 	virtual void keyPress(char key);
 	virtual void specialKeyPressed(int key);

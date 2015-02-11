@@ -18,21 +18,24 @@ int main(int argc,char** argv)
 }
 
 void ProjectMappe::LoadContent(void)
-{
-	printf("ENGINE: Loading Scene...\n");
+{printf("\nENGINE: Loading Scene...\n");
 
 	ProjectMappe::OnLoadContent();
 
-	printf("\nSCENE: Loaded... \n ...entering game-loop!\n\n");
+	printf("\nSCENE: Loaded... \n"
+		   "...entering game-loop!\n\n");
 }
 
 int ProjectMappe::prepareForExit(void)
-{
-	printf("ENGINE: preparing for exit...\n     .....     unloading objects...\n");
+{printf("\nENGINE: preparing for exit...\n"
+		".....     unloading objects...\n");
 
-	ProjectMappe::GlobalDestructor();
+	glutLeaveGameMode();
 	
-	printf("\n     .....unloading done ! \n    - EXIT\n");
+	//ProjectMappe::GlobalDestructor();
+	
+	printf("\n     .....unloading done ! \n"
+		   "    - EXIT\n");
 	return EXIT_SUCCESS;
 }
 

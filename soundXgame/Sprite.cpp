@@ -77,7 +77,7 @@ Sprite::SetTexture(Texture tex)
 }
 
 void 
-Sprite::SetUp(string textureFile,bool backFace,bool addToScene)
+Sprite::SetUp(const char* textureFile,bool backFace,bool addToScene)
 {	
 	verts.push_back(Vector3(-1,1,0));
 	verts.push_back(Vector3(1,1,0));

@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <InterproceduralOptimization>false</InterproceduralOptimization>
     <NumberOfCilkThreads>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
     <UseIntelIPP>false</UseIntelIPP>
@@ -213,6 +213,7 @@
     <ClCompile Include="InputFunctions.cpp" />
     <ClCompile Include="IPrimitive.cpp" />
     <ClCompile Include="Knob.cpp" />
+    <ClCompile Include="MusicController.cpp" />
     <ClCompile Include="PointAndClick.cpp" />
     <ClCompile Include="PrimitivObject.cpp" />
     <ClCompile Include="Listener.cpp" />
@@ -342,10 +343,11 @@
     <Image Include="Data\GUI\button_64x64.png" />
     <Image Include="Data\GUI\knobA_64x64.png" />
     <Image Include="Data\GUI\knobB_64x64.png" />
+    <Image Include="Data\GUI\panelT_256x512.png" />
+    <Image Include="Data\GUI\panel_256x256.png" />
     <Image Include="Data\GUI\sliderX_64x64.png" />
     <Image Include="Data\GUI\sliderX1_64x64.png" />
     <Image Include="Data\GUI\There Are Four Buttons !!!!_256x256.png" />
-    <Image Include="Data\panelT_256x512.png" />
     <Image Include="Data\panel_256x512.png" />
     <Image Include="Data\panel_menu.png" />
     <Image Include="Data\Particles\Color_1.png" />

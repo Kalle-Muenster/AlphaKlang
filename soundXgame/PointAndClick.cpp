@@ -4,72 +4,82 @@
 #include "SceneGraph.h"
 #include "CameraModesIncluder.h"
 
+ObjectMenu::ObjectMenu(bool withBackButton)
+{
+	SetUp("GUI/panel_256x256.png",false,false);
+	ShowTitle=true;
+	if(withBackButton)
+		GenerateBackButton();
+}
+
+ObjectMenu::ObjectMenu(const char* panelImage,bool withBackButton/* =true */)
+{
+	SetUp(panelImage,false,false);
+	ShowTitle=true;
+	if(withBackButton)
+		GenerateBackButton();
+}
+
+ObjectMenu::~ObjectMenu(void)
+{
+
+}
+
+void
+ObjectMenu::BindToObject(IObjection<IConXtor>* obj)
+{
+	attachedObjection = obj;
+}
+
+bool
+ObjectMenu::isAttachedTo(void* obj)
+{
+	return (obj==attachedObjection);
+}
+
+
 int
 PointAndClick::ID = POINTANDCLICK;
 
-
-
-bool mousereleased = true;
+bool _mousereleasedPnC = true;
 
 void
 _backButtonClick_pNc(IConnectable* sender)
 {	
-	if(mousereleased)
+	if(_mousereleasedPnC)
 	{
-		SCENE->camera->ModeSocket->Get<PointAndClick>(POINTANDCLICK)->switchBack();
-		mousereleased = false;
+		((ControllElement*)sender)->Connection()->isVisible(false);
+		_mousereleasedPnC = false;
 	}
-}
-
-void _sliderCange(IConnectable*)
-{
-
 }
 
 void
 PointAndClick::OnActivate(void)
 {
-	if(this->guiObject!=NULL)
-	{
-		this->guiObject->isVisible(true);
-
-		camera->ModeSocket->Get<FirstPerson>(FIRSTPERSON)->DisableMouseCapture();
-		glutSetCursor(GLUT_CURSOR_INHERIT);
-
-		if(camera->GetTarget())
-			if(camera->GetTarget()->Connection()->has<IEditable>())
-				{
-					targetBindings = ((IEditable*)target)->GetDialogBindings();
-					((IEditable*)target)->BindMenuObject(this->guiObject);
-					((IEditable*)target)->ShowDialog();
-				}
-			else
-				this->guiObject->SetName(camera->GetTarget()->GetName());
-
-			this->guiObject->GetConnected<ButtonControl>(1)->SetClickerFunc(_backButtonClick_pNc);
-	}
 	
-	//this->guiObject->GetConnected<ButtonControl>(2)->SetClickerFunc(_button_fps_click);
-	//this->guiObject->GetConnected<ButtonControl>(3)->SetClickerFunc(_exitButtonClick);
+}
 
+int
+PointAndClick::OnDeactivate(void)
+{
+	if(guiObject!=NULL)
+	{	
+		guiObject->isVisible(false);
+	}
 }
 
 void
 PointAndClick::switchBack(void)
 {
-	camera->ModeSocket->GetCameraMode<FirstPerson>()->EnableMouseCapture();
-    this->guiObject->isVisible(false);
+	if(this->guiObject!=NULL)
+		this->guiObject->isVisible(false);
 }
 
 
 void
 PointAndClick::BindGuiObject(GuiObject* bindToGUIobject)
 {
-	this->guiObject = bindToGUIobject;
-	this->IsActive=true;
-	this->guiObject->GetConnected<ButtonControl>(1)->SetClickerFunc(&_backButtonClick_pNc);
-	this->guiObject->isVisible(this->IsActive);
-
+	this->guiObject = (ObjectMenu*)bindToGUIobject;
 }
 
 PointAndClick::PointAndClick(void)
@@ -77,16 +87,22 @@ PointAndClick::PointAndClick(void)
 	ModeName = "PointAndClick";
 	isPrimarMode=false;
 	lastCamMode = FIRSTPERSON;		   
-	BINDING bind;
-	bind.OnChange = &_backButtonClick_pNc;
-	bind.TypeInfo = &typeid(bool);
-	bind.VariableData = &this->IsActive;
-	sprintf(&bind.labelName[0],"%s","Back");
 
-	bindings.push_back(bind);
-	bindings.push_back(bind);
 }
 
+
+
+void
+PointAndClick::GenerateGUIPanel(void)
+{
+	ObjectMenu* guiding = new ObjectMenu();
+	guiding->scale(Vector3(512,512,1));
+	guiding->move(Vector3(20,20,0));
+	guiding->ResetHard(true);
+	guiding->SetName("Editor-Panel");
+	guiding->isVisible(false);
+	BindGuiObject(guiding);
+}
 
 PointAndClick::~PointAndClick(void)
 {
@@ -101,6 +117,9 @@ PointAndClick::Initialize(void)
 	InputManager::getInstance()->attachMouseWheel(this);
 	InputManager::getInstance()->attachSpecial(this);
 	ID = this->CamModeID();
+
+
+
 	return true;
 }
 
@@ -108,19 +127,7 @@ void
 PointAndClick::mouseWheel(int wheel, WHEEL state)
 {
 
-	
-	if (wheel==3)
-		if(target->GetID()!=camera->GetTarget()->GetID())
-		{	target = camera->GetTarget();
-	bindings.pop_back();
 
-	bindings[1].TypeInfo = &typeid(float);
-	bindings[1].OnChange = _sliderCange;
-	bindings[1].VariableData = &target->getTransform()->scale.y;
-	sprintf(&bindings[1].labelName[0],"%s","Scale Y");
-
-	guiObject->SetName(target->GetName());
-	}
 }
 
 void 
@@ -129,12 +136,11 @@ PointAndClick::UpdateMode(void)
 	if(camera->GetTarget() != target)
 	{
 		target = camera->GetTarget();
-		OnActivate();
+		guiObject->BindToObject(target);
 	}
-
 	
 	if(INPUT->Mouse.LEFT.RELEASE)
-		mousereleased=true;
+		_mousereleasedPnC = true;
 
 	this->IsDirty=false;
 }
@@ -168,8 +174,8 @@ PointAndClick::mouseMotion(int newX, int newY)
 {
 	if(!IsActive)
 	{	
-		if(guiObject!=NULL)
-			this->guiObject->isVisible(false);
+		//if(guiObject!=NULL)
+		//	this->guiObject->isVisible(false);
 		return;
 	}
 }

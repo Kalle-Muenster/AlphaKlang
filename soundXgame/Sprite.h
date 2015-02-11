@@ -20,7 +20,7 @@ public:
 	virtual ~Sprite(void);
 	void SetSomeValue(float);
 
-	void SetUp(string textureFile,bool backface=true,bool addToScene=true);
+	void SetUp(const char* textureFile,bool backface=true,bool addToScene=true);
 	void SetUp(Texture texture,bool backface=true);
 };
 

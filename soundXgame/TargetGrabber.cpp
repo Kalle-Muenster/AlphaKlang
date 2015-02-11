@@ -140,9 +140,13 @@ TargetGrabber::ReleaseTarget(void)
 	std::cout<<"CAMERA: TARGETGRABBER: Target released!\n";
 }
 
-
-
-
+int
+TargetGrabber::OnDeactivate(void)
+{
+	if(_targetGRABBED)
+		ReleaseTarget();
+	return TargetGrabber::ID;
+}
 
 
 /////////////////////////////////

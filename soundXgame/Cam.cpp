@@ -219,13 +219,13 @@ Cam::Mode(int value)
 		
 		if(M->IsPrimarMode())
 		{
-			ModeSocket->Get<CameraMode>(_mode)->IsActive = false;
+			ModeSocket->Get<CameraMode>(_mode)->Activate(false);
 			M->Activate(true);
 			_mode = value;
 		}
 		else
 		{
-			if(!(M->Activate(!M->IsActive)));
+			if(!(M->Activate(!M->IsActive)))
 				text = "CAMERA: Mode: %s deactivated!\n";
 		}
 		
