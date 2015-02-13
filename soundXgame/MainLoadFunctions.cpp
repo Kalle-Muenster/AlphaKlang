@@ -102,21 +102,28 @@ void ProjectMappe::OnLoadContent(void)
 	
 
 	// Local Music Cubes
-	Vector3  CubeSpwns[22] = {
-								Vector3(0,0,0),Vector3(0,0,0),Vector3(-45,2,45),Vector3(-15,2,50),
-								Vector3(-40,2,15),Vector3(-22,2,31),Vector3(-10,2,10),Vector3(0,0,0),
-								Vector3(21,2,50),Vector3(15,2,25),Vector3(37,2,30),Vector3(50,2,15),
-								Vector3(22,2,-8),Vector3(15,2,-27),Vector3(50,2,-30),Vector3(0,0,0),
-								Vector3(45,2,-50),Vector3(0,0,0),Vector3(50,2,40),Vector3(-30,2,-45),
-								Vector3(-23,2,-28),Vector3(-33,2,-50)
+	Vector3  CubeSpwns[12] = {
+								Vector3(50,2,40),
+								Vector3(-55,2,-15),
+								Vector3(-40,2,15),
+								Vector3(50,2,-10),
+								Vector3(45,2,30),
+								
+								Vector3(15,2,-27),
+								Vector3(-10,2,10),
+								Vector3(45,2,-50),
+								Vector3(21,2,50),
+								Vector3(35,2,10),
+								
+								Vector3(-23,2,-28),
+								Vector3(0,2,40)
 							};
 	char tempString[16];
 	char tempString2[32];
-	for(int i = 1;i<22;i++)
+	for(int i = 1;i<12;i++)
 	{
-
-		if(i != 1 && i != 2 && i != 3 && i != 4 && i != 8 && i != 16 && i != 18)
-		{
+		//if(i != 4 && i != 6 && i != 10) // exclude list
+		//{
 			sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
 			sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
 
@@ -129,7 +136,7 @@ void ProjectMappe::OnLoadContent(void)
 			SCENE->Object(id)->LoadTexture("X-7.png");
 			// load music
 			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
-			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(30, 200);
+			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 30);
 			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
 			SCENE->Object(id)->IsGrounded(true); // grounded
 			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
@@ -137,16 +144,16 @@ void ProjectMappe::OnLoadContent(void)
 			SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
 			SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
 			SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
-		}
+			SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
+		//}
 	}
 
 	// Cubus - fliegender Cube
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
-	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
+	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/Fly-Audio.mp3");
 	SCENE->Object("AUDIO11")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->Set3Dparameter(30,200);
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->AudioVolume(1);
-	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO11")->move(12,0,-18);
 	SCENE->Object("AUDIO11")->IsGrounded(false);
 	SCENE->Object("AUDIO11")->AddConnectable<SmoothObjectMover>();
@@ -170,7 +177,7 @@ void ProjectMappe::OnLoadContent(void)
 	AUDIO->Play();
 
 	// Music Cube
-	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
+	/*(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
@@ -178,14 +185,14 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(1)->threshold = 0.03f;
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
-	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;*/
 
 	// Star Cube
 	unsigned obj;
 	float x,y,z;
-	x = 15.0f;
+	x = 1.0f;
 	y = 7.0f;
-	z=0;
+	z = 0.0f;
 	for(int i = 0;i<15;i++)
 	{
 		x-=((float)i);

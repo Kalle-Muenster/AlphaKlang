@@ -254,7 +254,8 @@ AudioEmitter::LoadeSample(const char* audioFileName,bool loop)
 {
 	audioSource = AUDIO->Loade3DSample(audioFileName,(void*)this,loop);
 //	SetMyPosition(&this->Connection()->transform);
-	this->AudioVolume(1);
+	if(audioSource)
+		this->AudioVolume(1);
 }
 
 void
