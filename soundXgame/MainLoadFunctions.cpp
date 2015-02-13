@@ -103,49 +103,46 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Local Music Cubes
 	Vector3  CubeSpwns[12] = {
-								Vector3(50,2,40),
+								Vector3(-23,2,-28),
 								Vector3(-55,2,-15),
 								Vector3(-40,2,15),
-								Vector3(50,2,-10),
-								Vector3(45,2,30),
-								
-								Vector3(15,2,-27),
 								Vector3(-10,2,10),
+
+								Vector3(45,2,30),
+								Vector3(15,2,-27),
+								Vector3(50,2,-10),
 								Vector3(45,2,-50),
+
 								Vector3(21,2,50),
 								Vector3(35,2,10),
-								
-								Vector3(-23,2,-28),
+								Vector3(50,2,40),
 								Vector3(0,2,40)
 							};
 	char tempString[16];
 	char tempString2[32];
 	for(int i = 1;i<12;i++)
 	{
-		//if(i != 4 && i != 6 && i != 10) // exclude list
-		//{
-			sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
-			sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
-
-			// create object
-			new IPrimitivObject();
-			GobID id = SCENE->Object("last created")->GetID();
-			SCENE->Object(id)->SetName(&tempString[0]);
-			((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
-			// load texture
-			SCENE->Object(id)->LoadTexture("X-7.png");
-			// load music
-			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
-			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 30);
-			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
-			SCENE->Object(id)->IsGrounded(true); // grounded
-			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
-			SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
-			SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
-		//}
+		// build objectname and filename
+		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
+		sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
+		// create object
+		new IPrimitivObject();
+		GobID id = SCENE->Object("last created")->GetID();
+		SCENE->Object(id)->SetName(&tempString[0]);
+		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
+		// load texture
+		SCENE->Object(id)->LoadTexture("X-7.png");
+		// load music
+		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 30);
+		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
+		SCENE->Object(id)->IsGrounded(true); // grounded
+		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
 	}
 
 	// Cubus - fliegender Cube
