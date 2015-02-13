@@ -219,7 +219,9 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
 	// Show Menu
+#ifdef _DEBUG
 	SCENE->camera->Mode(Edit::ID);
+#endif
 
 	// Spectrum Analyzer
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
