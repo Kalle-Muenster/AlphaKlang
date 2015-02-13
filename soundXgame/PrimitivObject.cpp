@@ -1,6 +1,5 @@
 #include "PrimitivObject.h"
-
-//
+#include "Ground.h"
 
 IPrimitivObject::IPrimitivObject(void)
 {
@@ -8,8 +7,7 @@ IPrimitivObject::IPrimitivObject(void)
 	conXtor->SetConnection(this);
 	conXtor->SetName("last created");
 	InitializeObject();
-	
-//	SetPrimitiv<IBall>();
+	//SetPrimitiv<IBall>();
 }
 
 
@@ -74,6 +72,13 @@ IPrimitivObject::draw(void)
 
 		// Translation:
 		glTranslatef(values.x, values.y, values.z);
+
+		//Grounding:
+		if(IsGrounded())
+		{
+			float y = Ground::getInstance()->GetGroundY(values.x, values.z);
+			glTranslatef(0, y, 0);
+		}
 
 		// Rotation:
 		values = this->getTransform()->rotation;
