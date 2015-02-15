@@ -203,6 +203,13 @@ Vector3::operator[](int index)
 }
 
 
+Vector4::Vector4(float X,float Y,float Z, float W)
+{
+	 x = X;
+	 y = Y;
+	 z = Z;
+	 w = W;
+}
 
 //Color and Sample
 //####################################################
