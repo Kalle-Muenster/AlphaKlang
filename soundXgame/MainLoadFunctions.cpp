@@ -200,7 +200,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Music Cube
 	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
-	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
+	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/Fly-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
 	SCENE->Object("muckubus")->GetConnected<Randomover>()->SetYoffset(75);
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
