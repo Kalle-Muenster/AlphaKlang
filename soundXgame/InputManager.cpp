@@ -64,21 +64,21 @@ InputManager::InputManager(void)
 
 InputManager::~InputManager(void)
 {
-	if(MouseMotionObservers.Count() > 0)
-		for(GobID ID=MouseMotionObservers.First();ID<=MouseMotionObservers.Last();ID=MouseMotionObservers.Next(ID))
-			MouseMotionObservers.Distruct(ID);
-	if(KeyboardObservers.Count() > 0)
-		for(GobID ID=KeyboardObservers.First();ID<=KeyboardObservers.Last();ID=KeyboardObservers.Next(ID))
-			KeyboardObservers.Distruct(ID);
-	if(SpecialKeyObservers.Count() > 0)
-		for(GobID ID=SpecialKeyObservers.First();ID<=SpecialKeyObservers.Last();ID=SpecialKeyObservers.Next(ID))
-			SpecialKeyObservers.Distruct(ID);
-	if(mouseClickObservers.Count() > 0)
-		for(GobID ID=mouseClickObservers.First();ID<=mouseClickObservers.Last();ID=mouseClickObservers.Next(ID))
-			mouseClickObservers.Distruct(ID);
-	if(MouseWheelObservers.Count() > 0)
-		for(GobID ID=MouseWheelObservers.First();ID<=MouseWheelObservers.Last();ID=MouseWheelObservers.Next(ID))
-			MouseWheelObservers.Distruct(ID);
+	//if(MouseMotionObservers.Count() > 0)
+	//	for(GobID ID=MouseMotionObservers.First();ID<=MouseMotionObservers.Last();ID=MouseMotionObservers.Next(ID))
+	//		MouseMotionObservers.Remove(ID);
+	//if(KeyboardObservers.Count() > 0)
+	//	for(GobID ID=KeyboardObservers.First();ID<=KeyboardObservers.Last();ID=KeyboardObservers.Next(ID))
+	//		KeyboardObservers.Remove(ID);
+	//if(SpecialKeyObservers.Count() > 0)
+	//	for(GobID ID=SpecialKeyObservers.First();ID<=SpecialKeyObservers.Last();ID=SpecialKeyObservers.Next(ID))
+	//		SpecialKeyObservers.Remove(ID);
+	//if(mouseClickObservers.Count() > 0)
+	//	for(GobID ID=mouseClickObservers.First();ID<=mouseClickObservers.Last();ID=mouseClickObservers.Next(ID))
+	//		mouseClickObservers.Remove(ID);
+	//if(MouseWheelObservers.Count() > 0)
+	//	for(GobID ID=MouseWheelObservers.First();ID<=MouseWheelObservers.Last();ID=MouseWheelObservers.Next(ID))
+	//		MouseWheelObservers.Remove(ID);
 }
 
 void InputManager::attachMouseMove(IObserver* obs) 

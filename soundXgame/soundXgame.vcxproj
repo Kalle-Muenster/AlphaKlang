@@ -241,6 +241,7 @@
     <ClCompile Include="ShaderObj.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SliderX.cpp" />
+    <ClCompile Include="SmoothObjectMover.cpp" />
     <ClCompile Include="Spectator.cpp" />
     <ClCompile Include="SpectrumAnalyzer.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="ShaderObj.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SliderX.h" />
+    <ClInclude Include="SmoothObjectMover.h" />
     <ClInclude Include="Spectator.h" />
     <ClInclude Include="SpectrumAnalyzer.h" />
     <ClInclude Include="Sphere.h" />

@@ -187,6 +187,7 @@
     <ClCompile Include="MusicController.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="SmoothObjectMover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -388,6 +389,7 @@
     <ClInclude Include="PointAndClick.h">
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
+    <ClInclude Include="SmoothObjectMover.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">

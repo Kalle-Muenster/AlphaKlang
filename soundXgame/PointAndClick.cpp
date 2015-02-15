@@ -99,7 +99,7 @@ PointAndClick::GenerateGUIPanel(void)
 	ObjectMenu* guiding = new ObjectMenu();
 	guiding->scale(Vector3(512,512,1));
 	guiding->move(Vector3(20,20,0));
-	guiding->ResetHard(true);
+	guiding->ResetHard(false);
 	guiding->SetName("Editor-Panel");
 	guiding->isVisible(false);
 	BindGuiObject(guiding);

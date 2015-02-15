@@ -17,7 +17,6 @@ void ProjectMappe::OnLoadContent(void)
 {
 	// Background Music
 	AUDIO->LoadeBackgroundAudio("Music/Background_v05.wav");
-	//AUDIO->LoadeBackgroundAudio("mp3/11-Audio.mp3");
 	AUDIO->BackgroundMusicVolume(1.0);
 
 	// Gameplay Elements
@@ -72,6 +71,14 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("Q2animated")->AlwaysFaceMovingdirection = true;
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
 
+
+
+	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
+	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
+	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
+
+
 	// Kubus -> fliegender Cube
 	new IPrimitivObject();
 	GobID temp = SCENE->Object("last created")->GetID();
@@ -98,6 +105,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("PrimitivKubus-emission")->SetColor(160,180,255,66);
 	SCENE->Object("PrimitivKubus-emission")->IsVisible = true;
 	
+
 
 	// Local Music Cubes
 	Vector3  CubeSpwns[12] = {
@@ -191,15 +199,17 @@ void ProjectMappe::OnLoadContent(void)
 	AUDIO->Play();
 
 	// Music Cube
-	/*(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
+	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
+	SCENE->Object("muckubus")->GetConnected<Randomover>()->SetYoffset(75);
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(0)->threshold = 1.5;
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(1)->threshold = 0.03f;
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
-	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;*/
+	SCENE->Object("muckubus")->IsGrounded(true);
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
 
 	// Star Cube
 	unsigned obj;
@@ -214,6 +224,7 @@ void ProjectMappe::OnLoadContent(void)
 		obj = (new Cubus("Bleche/Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
+		SCENE->Object(obj)->GetConnected<Randomover>()->SetYoffset(75);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
 		SCENE->Object(obj)->GetOrAdd<AudioEmitter>();
@@ -224,10 +235,10 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
+		SCENE->Object(obj)->IsGrounded(true);
 	}
 	
 	// Camera
-	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->GenerateGUIPanel();
 	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->IsActive=false;
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
 	SCENE->camera->ModeSocket->GetCameraMode<Edit>()->BindGuiObject(menu);
@@ -240,18 +251,14 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->camera->Mode(Edit::ID);
 #endif
 
-	// Spectrum Analyzer
-	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
-	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
-	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
+
 
 	// <-- Other stuff you can use if you want :)
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
 	//AUDIO->BackgroundMusicVolume(0.95);
 	//AUDIO->Volume(1);
-
+	AUDIO->Play();
 }
 
 

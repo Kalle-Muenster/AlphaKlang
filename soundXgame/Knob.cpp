@@ -174,7 +174,7 @@ Knob::mouseMotion(int x, int y)
 		lastMouse.x = x-lastMouse.x;
 		lastMouse.y = y-lastMouse.y;
 
-		Value = (Value + (lastMouse.y/100));
+		Value = (Value - (lastMouse.y/100));
 
 		sprintf_s(Label, sizeof(Label),"%f",(float)Value);
 

@@ -4,17 +4,7 @@
 #include "connectable.h"
 #include "UpdateManager.h"
 
-class SmoothObjectMover 
-	: 
-	public IConnectable, 
-	public IUpdateble
-{
-public:
-	bool purzelnOn;
-	ControlledVector3 movingVector;
-	virtual bool Initialize(void);
-	virtual void DoUpdate(void);
-};
+
 
 
 class Randomover 
@@ -26,12 +16,15 @@ private:
 	bool rotation, moving;
 	float x,y,z,iX,iY,iZ;
 	float speed;
+	float offsetY;
+
 protected:
 	virtual bool Initialize(void);
 public:
 	void SetRotation(bool status);
 	void SetMoving(bool status);
 	void SetSpeed(float speed);
+	void SetYoffset(float offset);
 	virtual void DoUpdate(void);
 	
 };

@@ -14,7 +14,7 @@ int main(int argc,char** argv)
 
 	glutMainLoop();
 
-	return ProjectMappe::prepareForExit();
+//	return ProjectMappe::prepareForExit();
 }
 
 void ProjectMappe::LoadContent(void)
@@ -30,9 +30,9 @@ int ProjectMappe::prepareForExit(void)
 {printf("\nENGINE: preparing for exit...\n"
 		".....     unloading objects...\n");
 
-	glutLeaveGameMode();
+//	glutLeaveGameMode();
 	
-	//ProjectMappe::GlobalDestructor();
+	ProjectMappe::GlobalDestructor();
 	
 	printf("\n     .....unloading done ! \n"
 		   "    - EXIT\n");

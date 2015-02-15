@@ -12,6 +12,7 @@
 
 void ProjectMappe::OnIdle(void)
 {
+
 	if(SCENE->camera->NeedViewUpdate)
 	{
 		glutReshapeWindow(SCREENWIDTH+1,SCREENHEIGHT+1);
@@ -33,6 +34,12 @@ void ProjectMappe::OnReshape(GLsizei size_x,GLsizei size_y)
 //Main Display-function called back by GL...
 void ProjectMappe::OnDisplay(void)
 {
+	if(EXIT())
+	{
+		glutExit();
+		ProjectMappe::prepareForExit();	
+		return;
+	}
 
 	//At first Invoke The OnUpdate
 	UpdateCycle();
@@ -56,7 +63,6 @@ void ProjectMappe::OnDisplay(void)
 	UPDATE->DoTheLateUpdates();
 #endif
 
-	if(EXIT())
-		glutLeaveMainLoop();
+
 
 }
