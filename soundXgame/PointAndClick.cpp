@@ -66,6 +66,7 @@ PointAndClick::OnDeactivate(void)
 	{	
 		guiObject->isVisible(false);
 	}
+	return 1;
 }
 
 void

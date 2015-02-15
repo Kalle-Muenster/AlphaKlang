@@ -34,12 +34,10 @@ void ProjectMappe::OnLoadContent(void)
 	fountain->createRange();
 	fountain->SetClambt(0,-1,1);
 	fountain->SetThreshold(0,0.33);
-	fountain->sensitivity = 5;	  */
+	fountain->sensitivity = 5; */
 
 	// GUI
 	(new MusicControllerPanel())->isVisible(false);
-	
-
 
 	// GUI -> Main Menu
 	GuiObject* menu = new GuiObject("GUI/panel_menu.png");
@@ -62,7 +60,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Qualle
 	(new AnimatedSprite<36,3>("SpriteSheets/Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
-	SCENE->Object("Q2animated")->IsGrounded(false);
+	//SCENE->Object("Q2animated")->IsGrounded(false);
 	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position);
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+Utility::GlobalZ*10);
@@ -77,10 +75,12 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
 
 
+
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
 	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
 	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
+
 
 	// Kubus -> fliegender Cube
 	new IPrimitivObject();
@@ -108,75 +108,57 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("PrimitivKubus-emission")->SetColor(160,180,255,66);
 	SCENE->Object("PrimitivKubus-emission")->IsVisible = true;
 	
-	/*
-	Vector3[] pos = Vector3[18];
-		pos[0] = new Vector3(0,0,0);
-		pos[1] = new Vector3(5,0,5);
-
-	for(int i = 1; i < 18; i++)
-	{
-		char dig = (char)(((int)'0')+i);
-		(new Cubus("X-7.png"))->SetName("AUDIO01");
-		SCENE->Object("AUDIO0" + dig)->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/15-Audio.mp3");
-		SCENE->Object("AUDIO01")->move(pos[i]);
-		SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
-		SCENE->Object("AUDIO01")->IsGrounded(true);
-		SCENE->Object("AUDIO01")->AddConnectable<MusicScaler>();
-		SCENE->Object("AUDIO01")->GetConnected<MusicScaler>()->sensitivity=2;
-		SCENE->Object("AUDIO01")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
-	}
-	*/
 
 
+	// Local Music Cubes
+	Vector3  CubeSpwns[12] = {
+								Vector3(-23,2,-28),
+								Vector3(-55,2,-15),
+								Vector3(-40,2,15),
+								Vector3(-10,2,10),
 
+								Vector3(45,2,30),
+								Vector3(15,2,-27),
+								Vector3(50,2,-10),
+								Vector3(45,2,-50),
 
-
-	Vector3  CubeSpwns[22] = {
-								Vector3(0,0,0),Vector3(0,0,0),Vector3(-45,2,45),Vector3(-15,2,50),
-								Vector3(-40,2,15),Vector3(-22,2,31),Vector3(-10,2,10),Vector3(0,0,0),
-								Vector3(21,2,50),Vector3(15,2,25),Vector3(37,2,30),Vector3(50,2,15),
-								Vector3(22,2,-8),Vector3(15,2,-27),Vector3(50,2,-30),Vector3(0,0,0),
-								Vector3(45,2,-50),Vector3(0,0,0),Vector3(50,2,40),Vector3(-30,2,-45),
-								Vector3(-23,-2,-28),Vector3(-33,2,-50)
-							};
+								Vector3(21,2,50),
+								Vector3(35,2,10),
+								Vector3(50,2,40),
+								Vector3(0,2,40)	};
 	char tempString[16];
 	char tempString2[32];
-	for(int i = 1;i<22;i++)
+	for(int i = 1;i<12;i++)
 	{
-
-		if(i != 1 && i != 2 && i != 3 && i != 4 && i != 8 && i != 16 && i != 18)
-		{
-			sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
-			sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
-
-			new IPrimitivObject();
-			GobID id = SCENE->Object("last created")->GetID();
-			SCENE->Object(id)->SetName(&tempString[0]);
-			((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>(); // cube or which obj
-			SCENE->Object(id)->LoadTexture("X-7.png"); // load texture
-			SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
-			// load music
-			SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(30, 200);
-			SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
-			SCENE->Object(id)->IsGrounded(true); // grounded
-			SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
-			SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
-			SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
-		//	SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio(); // play audio
-		}
+		// build objectname and filename
+		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
+		sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
+		// create object
+		new IPrimitivObject();
+		GobID id = SCENE->Object("last created")->GetID();
+		SCENE->Object(id)->SetName(&tempString[0]);
+		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
+		// load texture
+		SCENE->Object(id)->LoadTexture("X-7.png");
+		// load music
+		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 30);
+		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
+		SCENE->Object(id)->IsGrounded(true); // grounded
+		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
 	}
-
-	
 
 	// Cubus - fliegender Cube
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
-	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/16-Audio.mp3");
+	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/Fly-Audio.mp3");
 	SCENE->Object("AUDIO11")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->Set3Dparameter(30,200);
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->AudioVolume(1);
-	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("AUDIO11")->move(12,0,-18);
 	SCENE->Object("AUDIO11")->IsGrounded(false);
 	SCENE->Object("AUDIO11")->AddConnectable<SmoothObjectMover>();
@@ -209,13 +191,15 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(1)->threshold = 0.03f;
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
-	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
 	SCENE->Object("muckubus")->IsGrounded(true);
-	// Just some Music Cubes
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
+
+	// Star Cube
 	unsigned obj;
 	float x,y,z;
-	x=y=z=0;
-	x = 15.0f;
+	x = 1.0f;
+	y = 7.0f;
+	z = 0.0f;
 	for(int i = 0;i<15;i++)
 	{
 		x-=((float)i);
@@ -236,53 +220,25 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
 		SCENE->Object(obj)->IsGrounded(true);
 	}
-	  
-	
-
-	// Spectrum Analyzer
-
-
-	/*string particleImages[3];
-	particleImages[0] = "particle1_128x128.png";
-	particleImages[1] = "particle2_128x128.png";
-	particleImages[2] = "particle3_128x128.png";*/
-	
-	//// Particles
-	//(new ParticleSystem<150>("Particles/kubismus.png"))->SetName("ParticleSystem");
-	//SCENE->Object("ParticleSystem")->AddConnectable<ObjectMover<3>>();
-	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-20,0,40));
-	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(40,0,-20));
-	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->AddWaypoint(Vector3(-40,0,20));
-	//SCENE->Object("ParticleSystem")->GetConnected<ObjectMover<3>>()->IsActive = true;
-	//SCENE->Object("ParticleSystem")->IsGrounded(false);
-	//SCENE->Object("ParticleSystem")->move(0,0,0);
-	//SCENE->Object("ParticleSystem")->rotate(3,0.2,-1);
-	//SCENE->Object("ParticleSystem")->scale(7.5,7.5,0);
-	//SCENE->Object("ParticleSystem")->getTransform()->speed = 20.f;
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->SetColor(128,128,255,25);
-	//((ParticleSystem<150>*)SCENE->Object("ParticleSystem"))->IsVisible = true;
-
-
 	
 	// Camera
 	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->IsActive=false;
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
 	SCENE->camera->ModeSocket->GetCameraMode<Edit>()->BindGuiObject(menu);
 	SCENE->camera->ModeSocket->AddCameraMode<StrangeChaoticView>()->IsActive=false;
-	
-
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
 	// Show Menu
+#ifdef _DEBUG
 	SCENE->camera->Mode(Edit::ID);
+#endif
 
 
 
-
+	// <-- Other stuff you can use if you want :)
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
-
 	//AUDIO->BackgroundMusicVolume(0.95);
 	//AUDIO->Volume(1);
 	AUDIO->Play();

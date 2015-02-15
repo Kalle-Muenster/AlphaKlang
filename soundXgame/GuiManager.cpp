@@ -273,13 +273,14 @@ GuiManager::DrawGUI(void)
 				_WriteText2D(writeOrders[ID]->text,writeOrders[ID]->position,writeOrders[ID]->color);
 				 writeOrders.Distruct(ID);
 			}
-			if(scene->ShowFPS)
-				_writeFPS();
+		}
+		
+		if(scene->ShowFPS)
+		{
+			_writeFPS();
+			_writePosition();
 		}
 
-		if(scene->ShowFPS)
-			_writeFPS();
-		_writePosition();
 	}	
 	Disable2DDrawing();
 }
