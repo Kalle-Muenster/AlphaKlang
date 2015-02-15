@@ -19,7 +19,9 @@ MusicListener::MusicListener(void)
 	{
 		Line[i].enabled = false;
 		Line[i].threshold = 0.02f;
+		Line[i].Effect.SetUp(0,0,0.5f,0.001f,Line[i].Effect.Damp);
 		Line[i].Effect = 0.5f;
+		Line[i].Effect.ControllerActive = true;
 		Line[i].lowerBound = 1;
 		Line[i].upperBound = 64;
 		Line[i].bandWidth = 32;
@@ -127,9 +129,9 @@ void
 MusicListener::calculateEffect(int line,float lowValue,float highValue)
 {
 	if(lowValue > Line[line].threshold - highValue)
-		Line[line].Effect+=highValue*sensitivity*lowValue;
+		Line[line].Effect = Line[line].Effect + highValue*sensitivity*lowValue;
 	else
-		Line[line].Effect-=Line[line].fallOff;
+		Line[line].Effect = Line[line].Effect - Line[line].fallOff;
 }
 
 float*
@@ -194,7 +196,8 @@ MusicListener::SetClambt(int line,float min,float max)
 	Line[line].clampf=true;
 	Line[line].MINClampf = min;
 	Line[line].MAXClampf = max;
-}
+	Line[line].Effect.MOVE = (max-min)/100;
+} 
 
 void
 MusicListener::SetLineBounds(int line,int lower,int upper,int width)

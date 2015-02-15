@@ -51,7 +51,7 @@ IPrimitivObject::draw(void)
 
 	if(UseTexture())
 	{
-		glColor3f(1,1,1);
+		glColor3f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}

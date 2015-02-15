@@ -27,6 +27,9 @@ Ground::Ground(void) :
 	// height values
 	heightVal(100),
 	dynamicVal(0),
+	lastDVal(0),
+	MaximumChange(0.75f),
+	ChageAdder(0),
 
 	// states
 	drawPlanes(true), 
@@ -111,6 +114,7 @@ Ground::Ground(void) :
 
 	// initialize music listener options
 	this->AddConnectable<MusicController>();
+	this->GetConnected<MusicController>()->GetLineData(0)->Effect.ControllerActive = false;
 	this->GetConnected<MusicController>()->SetLineBounds(0, 0, 40, 2); // band, ReactToLine, AgainstLine, WidthForLines
 	this->GetConnected<MusicController>()->SetClambt(0, 1, 2); // band, minValue, maxValue
 	this->GetConnected<MusicController>()->SetThreshold(0, 0.01f); // grow Value (lower/smaller value = more grow)
@@ -359,6 +363,7 @@ void Ground::draw(void)
 	glPopMatrix();
 }
 
+
 void Ground::Update(void)
 {
 	//float line0 = 0;
@@ -367,7 +372,22 @@ void Ground::Update(void)
 	//std::cout << line0 << std::endl;
 
 	dynamicVal = line0*70 + 10;
+	if(((dynamicVal-lastDVal)>MaximumChange)||((dynamicVal-lastDVal)< -MaximumChange))
+	{
+		if(((dynamicVal-lastDVal)>MaximumChange))
+		{
+			ChageAdder+= ChageAdder<0? 0.045f:0.02f;
+			dynamicVal= (lastDVal+MaximumChange) +ChageAdder;
+		}
+		else
+		{
+			ChageAdder-= ChageAdder>0? 0.045f:0.02f;
+			dynamicVal= (lastDVal-MaximumChange) + ChageAdder;
+		}
+	}
+
 	*valueList[1] = dynamicVal;
+	lastDVal = dynamicVal;
 
 	// Update First Person Camera
 	Cam* cam = SceneGraph::getInstance()->camera;

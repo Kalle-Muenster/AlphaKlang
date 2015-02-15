@@ -43,6 +43,9 @@ private:
 	bool coloredTiles;
 	float heightVal;
 	float dynamicVal;
+	float lastDVal;
+	float MaximumChange;
+	float ChageAdder; 
 
 	int** CalculateMap(int** assignMap, int** config, int size);
 	void Update(void);

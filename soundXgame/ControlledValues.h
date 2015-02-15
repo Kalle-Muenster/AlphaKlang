@@ -63,6 +63,13 @@ protected:
 
 
 		/* DYNAMICS: */
+		case Controlled<ctrlType>::Damp:
+			MAX = *_Value - MIN;
+			if(MAX==0) 
+				break;
+			*_Value = MAX>0? (MAX>MOVE? MIN+MOVE : *_Value) : ((MAX < -MOVE)? MIN-MOVE : *_Value);
+			MIN = *_Value;
+			break;
 
 		// COMPRESS: - if the value's delta-movement becomes greater than MIN, it will be damped/Amplified by factor MAX (MAX from 0 to 1 will effect reduction, MAX greater 1 effect's amplification)... 
 		case Controlled<ctrlType>::Compress:
@@ -131,13 +138,13 @@ public:
 
 	//The selectable modes...
 	enum ControllMode : unsigned char
-	{NONE=0,Invert=1,Clamp=2,Compress=3,Expand=4,Moderate=5,Cycle=6,PingPong=7};
+	{NONE=0,Invert=1,Clamp=2,Damp=3,Compress=4,Expand=5,Moderate=6,Cycle=7,PingPong=8};
 	
 	//constructor...
 	Controlled(void)
 	{
 		_Value = new ctrlType();
-		userModesCount=7;
+		userModesCount=8;
 		ControllerActive = false;
 		CheckAtGet = true;
 		UserMode = NULL;
@@ -170,7 +177,11 @@ public:
 		checkValue(_mode);
 	}
 
-	
+	ctrlType* GetPointerToValue(void)
+	{
+		return _Value;
+	}
+
 
 	//returns the UserMode-Class instance if there's one attached...
 	template<typename Umode> Umode* GetUserMode(void)
@@ -238,6 +249,14 @@ public:
 			if(mode==ControllMode::Clamp) 
 				CheckAtGet = false; 
 			else if(mode==ControllMode::Invert) 
+				CheckAtGet = false;
+			else if(mode==ControllMode::Damp)
+				{CheckAtGet = false; MIN=*_Value;}
+			else if(mode==ControllMode::Compress)
+				CheckAtGet = false;
+			else if(mode==ControllMode::Expand)
+				CheckAtGet = false;
+			else if(mode==ControllMode::Moderate)
 				CheckAtGet = false;
 			else 
 				CheckAtGet = true;

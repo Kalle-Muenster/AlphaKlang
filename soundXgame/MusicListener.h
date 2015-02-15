@@ -11,7 +11,7 @@ struct ListenerData
 {
 	bool enabled;
 	float threshold;
-	float Effect;
+	Controlled<float> Effect;
 	int lowerBound;
 	int upperBound;
 	float value[NUMBER_OF_LINEVALUES];
