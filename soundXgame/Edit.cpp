@@ -33,14 +33,22 @@ _button_fps_click(IConnectable* sender)
 void
 _backButtonClick(IConnectable* sender)
 {
-	GUI->Panel("Main-Menu")->isVisible(false);
-	SceneGraph::getInstance()->camera->Mode(lastCamMode);
+	if(_mousereleased_edit)
+	{
+		GUI->Panel("Main-Menu")->isVisible(false);
+		SceneGraph::getInstance()->camera->Mode(lastCamMode);
+		_mousereleased_edit = false;
+	}
 }
 
 void
 _exitButtonClick(IConnectable* sender)
 {
-	ProjectMappe::EXIT(true);
+	if(_mousereleased_edit)
+	{
+		ProjectMappe::EXIT(true);
+		_mousereleased_edit = false;
+	}
 }
 
 void

@@ -14,14 +14,6 @@ Utility::GlobalZ = Vector3(0,0,-1);
 
 
 
-//void _rotate90(float partOf90,float & a,float &b)
-//{
-//	a=a*partOf90;
-//	b=b/(1.0-partOf90);
-//}
-
-
-
 u32_2s16_4b8::u32_2s16_4b8(void)
 {
 	this->u32 = 0;
@@ -491,12 +483,6 @@ Utility::loadTexture(const char* tmp)
 {
 	char filename[64];
 	sprintf_s(filename, sizeof(filename),"Data/%s",tmp);
-
-			
-	
-	
-
-	//glload::LoadTest loadTest = glload::LoadFunctions();
 	
 	char temp[64];
 	temp[63]='\0';
@@ -530,27 +516,15 @@ Utility::loadTexture(const char* tmp)
 				return _loadedtTextures[i]->ID; //return the already contained textureID;
 		}i = -1;
 	}
+
 	_loadedtTextures.push_back(_loadeWithLodePNG(filename));
-	//while(tmp[++i]!='\0');
-	//while(tmp[--i]!='.');
-	//if(&tmp[i+1]=="jpg"||&tmp[i+1]=="jpeg")
-	//	_loadedtTextures.push_back(_loadeWithJPEGlib(filename));	
-	//else if(&tmp[i+1]=="png")
-	//	_loadedtTextures.push_back(_loadeWithLodePNG(filename));
-	//else if(&tmp[i+1]=="bmp")
-	//	_loadedtTextures.push_back(_loadeWithBMPfile(filename));
-	//else if(&tmp[i+1]=="ppm")
-	//	_loadedtTextures.push_back(_loadeWithPPMLoader(filename));
-	////save the textureID to list...
-	//
 
 	//save the texture's filename...	
 	while(((temp[i]=filename[i])!='\0')&&(i<64))i++;
 	_textureNames.push_back(temp);
 
-	i=_loadedtTextures.size()-1;
 	//and return the textureID.
-	return _loadedtTextures[i]->ID;
+	return _loadedtTextures[_loadedtTextures.size()-1]->ID;
 
 	return NULL;
 }
@@ -569,8 +543,6 @@ Utility::GetRandom(void)
 
 
 bool _randomizatorSeeded=false;
-//random float from 0 to max;
-
 
 float
 Utility::Random(void)

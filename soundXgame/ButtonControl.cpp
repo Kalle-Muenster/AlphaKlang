@@ -105,10 +105,10 @@ ButtonControl::DoUpdate(void)
 			if(btnState==PRESSED)
 			{
 				ClickAction(this);
-				*Switch = !(*Switch);
+	//			*Switch = !(*Switch);
 			}
 
-			printf("ButtonState: %s...\n",States[btnState]);
+			printf("GUI: Panel: %s, Button: %s, State: %s...\n",Connection()->GetName(),this->GetText(),States[btnState]);
 		}
 	}
 

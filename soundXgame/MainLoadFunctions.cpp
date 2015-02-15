@@ -19,7 +19,7 @@ void ProjectMappe::OnLoadContent(void)
 	//unsigned int brummsound;
 	//AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("Music/Background_v05.wav");
-//	AUDIO->Play();
+//	AUDIO->LoadeBackgroundAudio("09-cpu_-_in_the_future.mp3");
 	AUDIO->BackgroundMusicVolume(1.0);
 
 	// Gameplay Elements
@@ -77,6 +77,11 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
 
 
+	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
+	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
+	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
+	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
+
 	// Kubus -> fliegender Cube
 	new IPrimitivObject();
 	GobID temp = SCENE->Object("last created")->GetID();
@@ -121,6 +126,9 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object("AUDIO01")->GetConnected<MusicScaler>()->SetThreshold(0,0.02f);
 	}
 	*/
+
+
+
 
 
 	Vector3  CubeSpwns[22] = {
@@ -195,13 +203,14 @@ void ProjectMappe::OnLoadContent(void)
 	(new Cubus("Particles/kubismus.png"))->SetName("muckubus");
 	SCENE->Object("muckubus")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/20-Audio.mp3",false);
 	SCENE->Object("muckubus")->AddConnectable<Randomover>();
+	SCENE->Object("muckubus")->GetConnected<Randomover>()->SetYoffset(75);
 	SCENE->Object("muckubus")->AddConnectable<MusicInteractor>();
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(0)->threshold = 1.5;
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->GetLineData(1)->threshold = 0.03f;
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->PlayAudio();
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
-
+	SCENE->Object("muckubus")->IsGrounded(true);
 	// Just some Music Cubes
 	unsigned obj;
 	float x,y,z;
@@ -214,6 +223,7 @@ void ProjectMappe::OnLoadContent(void)
 		obj = (new Cubus("Bleche/Deckelblech-2s.png"))->GetID();
 		SCENE->Object(obj)->move(x,y,z);
 		SCENE->Object(obj)->AddConnectable<Randomover>();
+		SCENE->Object(obj)->GetConnected<Randomover>()->SetYoffset(75);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetRotation(true);
 		SCENE->Object(obj)->GetConnected<Randomover>()->SetMoving(true);
 		SCENE->Object(obj)->GetOrAdd<AudioEmitter>();
@@ -224,6 +234,7 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);
+		SCENE->Object(obj)->IsGrounded(true);
 	}
 	  
 	
@@ -254,7 +265,6 @@ void ProjectMappe::OnLoadContent(void)
 
 	
 	// Camera
-	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->GenerateGUIPanel();
 	SCENE->camera->ModeSocket->GetCameraMode<PointAndClick>()->IsActive=false;
 	SCENE->camera->ModeSocket->AddCameraMode<Edit>()->IsActive=false;
 	SCENE->camera->ModeSocket->GetCameraMode<Edit>()->BindGuiObject(menu);
@@ -267,10 +277,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Show Menu
 	SCENE->camera->Mode(Edit::ID);
 
-	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
-	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
-	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
-	((SpectrumAnalyzer*)SCENE->Object("SpectrumAnalyzer"))->Initialize();
+
 
 
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
@@ -278,7 +285,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	//AUDIO->BackgroundMusicVolume(0.95);
 	//AUDIO->Volume(1);
-
+	AUDIO->Play();
 }
 
 

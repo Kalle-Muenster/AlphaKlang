@@ -18,3 +18,4 @@
 #include "primitivSwitcher.h"
 #include "Listener.h"
 #include "knob.h"
+#include "SmoothObjectMover.h"

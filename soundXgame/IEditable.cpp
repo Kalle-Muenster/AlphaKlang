@@ -32,7 +32,7 @@ IEditable::ShowDialog(void)//IObjection<IConnectable>* thisObject)
 //		 if(Utility::StringCompareRecursive(GUIPanel->GetText(),((IObjection<IConXtor>*)this)->GetName())>=0)
 //		 {
 			 char i = -1;
-			 GUIPanel->ResetHard(true);
+			 GUIPanel->ResetHard(false);
 			 GUIPanel->SetText(((IObjection<IConXtor>*)this)->GetName());
 			 GUIPanel->scale(Vector3(200,80*Bindings.size(),1));
 			 for(auto it=Bindings.begin();it!=Bindings.end();it++)

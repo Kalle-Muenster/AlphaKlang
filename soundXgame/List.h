@@ -281,7 +281,7 @@ public:
 
 			if(MemberArePointers)
 				delete list[id];  // same as "Remove", but also kill's the object itself befor ereasing the pointer to it...
-			
+
 			list[id] = Nulled;
 			--numberOfMember;
 		}

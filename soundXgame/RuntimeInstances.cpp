@@ -27,12 +27,15 @@ ObjectManagement*	_objectManagerInstance;
 void 
 ProjectMappe::GlobalDestructor(void)
 {
+	
+//	delete _guimanagerInstance;
 	delete _scenegraphInstance;
-	delete _guimanagerInstance;
-	delete _inputManagerInstance;
-	delete _updateManagerInstance;
-	delete _objectManagerInstance;
+	//delete _updateManagerInstance;
+	//delete _inputManagerInstance;
+	//
+	//delete _objectManagerInstance;
 	delete _bassaudioInstance;
+	glutExit();
 };
 
 void

@@ -11,8 +11,7 @@
 
 class SpectrumAnalyzer :
 	public Cubus,
-	public IUpdateble,
-	public IEditable
+	public IUpdateble
 {
 private: 
 	

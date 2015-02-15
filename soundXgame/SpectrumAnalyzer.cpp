@@ -3,22 +3,22 @@
 #include "Connectable.h"
 #include "PointAndClick.h"
 
-void
-_OnScaleY(IConnectable* sender)
-{
-	printf("SpectrumAnalizer: scaleY: %f\n",(float)((Knob*)sender)->Value);
-}
-
-void
-_OnRotateSpecrumAnalizer(IConnectable* sender)
-{
-	printf("SpectrumAnalizer: rotationY: %f\n",(float)((Knob*)sender)->Value);
-}
-
-void _setFALLOFFAMOUNT(IConnectable* sender)
-{
-	printf("SpectrumAnalizer: FallOffAmount: %f\n",(float)((Knob*)sender)->Value);
-}
+//void
+//_OnScaleY(IConnectable* sender)
+//{
+//	printf("SpectrumAnalizer: scaleY: %f\n",(float)((Knob*)sender)->Value);
+//}
+//
+//void
+//_OnRotateSpecrumAnalizer(IConnectable* sender)
+//{
+//	printf("SpectrumAnalizer: rotationY: %f\n",(float)((Knob*)sender)->Value);
+//}
+//
+//void _setFALLOFFAMOUNT(IConnectable* sender)
+//{
+//	printf("SpectrumAnalizer: FallOffAmount: %f\n",(float)((Knob*)sender)->Value);
+//}
 
 
 SpectrumAnalyzer::SpectrumAnalyzer(void)
@@ -27,10 +27,10 @@ SpectrumAnalyzer::SpectrumAnalyzer(void)
 	IGObject::InitializeObject();
 	this->ChartHeight = 100.0f;
 
-	GUIPanel = (ObjectMenu*)GuiManager::getInstance()->Panel("Editor-Panel");
-	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->rotation.y,"Rotation",_OnRotateSpecrumAnalizer);
-	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->fallOffAmount,"fallOff",_setFALLOFFAMOUNT);
-	AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->scale.y,"Scale Y",_OnScaleY);
+	//GUIPanel = (ObjectMenu*)GuiManager::getInstance()->Panel("Editor-Panel");
+	//AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->rotation.y,"Rotation",_OnRotateSpecrumAnalizer);
+	//AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->fallOffAmount,"fallOff",_setFALLOFFAMOUNT);
+	//AddControlElement(ControlElementBinding::ELEMENT_TYPE::KNOB,&this->getTransform()->scale.y,"Scale Y",_OnScaleY);
 }
 
 void
@@ -141,18 +141,6 @@ SpectrumAnalyzer::ChangeSize(int band,float newScaleY)
 void
 SpectrumAnalyzer::draw(void)
 {
-	//if(SCENE->camera->GetTarget()->GetID() == this->GetID())
-	//{
-	////	ShowDialog((IObjection<IConnectable>*)this);
-	//	
-	//		
-	//}
-	//if(SCENE->camera->GetTarget()->GetID()==this->GetID())
-	//	{
-	//	//	ShowDialog();
-	//		if(!GUIPanel->IsVisible)
-	//					GUIPanel->isVisible(true);
-	//	}
 
 	Vector3 degree90(0,90,0);
 	Vector3 vec = getTransform()->rotation;
