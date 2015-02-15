@@ -16,10 +16,8 @@ ProjectMappe::_backButtonClick(IConnectable* sender)
 void ProjectMappe::OnLoadContent(void)
 {
 	// Background Music
-	//unsigned int brummsound;
-	//AUDIO->LoadeSampleToBank(brummsound,"brumm_s16.wav");
 	AUDIO->LoadeBackgroundAudio("Music/Background_v05.wav");
-//	AUDIO->Play();
+	//AUDIO->LoadeBackgroundAudio("mp3/11-Audio.mp3");
 	AUDIO->BackgroundMusicVolume(1.0);
 
 	// Gameplay Elements
@@ -103,7 +101,7 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Local Music Cubes
 	Vector3  CubeSpwns[12] = {
-								Vector3(-23,2,-28),
+								Vector3(-50,2,-40),
 								Vector3(-55,2,-15),
 								Vector3(-40,2,15),
 								Vector3(-10,2,10),
@@ -115,12 +113,30 @@ void ProjectMappe::OnLoadContent(void)
 
 								Vector3(21,2,50),
 								Vector3(35,2,10),
-								Vector3(50,2,40),
+								Vector3(-20,2,-30),
 								Vector3(0,2,40)
 							};
+	
+	Vector4  LineBounds[12] = {
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(30, 60, 50, 0.001f), // not perfect
+								Vector4(0, 4, 15, 0.025f),
+								
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f),
+								Vector4(0, 4, 15, 0.025f)
+							};
+
 	char tempString[16];
 	char tempString2[32];
-	for(int i = 1;i<12;i++)
+	for(int i = 0;i<12;i++)
 	{
 		// build objectname and filename
 		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
@@ -134,14 +150,15 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->LoadTexture("X-7.png");
 		// load music
 		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
-		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 30);
+		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 50);
 		SCENE->Object(id)->move(CubeSpwns[i]); // moving to coordinate
 		SCENE->Object(id)->IsGrounded(true); // grounded
 		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 0, 4, 3);
-		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=15;
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,-1.1);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, LineBounds[i].x, LineBounds[i].y, 3);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=LineBounds[i].z;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,0,5);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
+		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->fallOff = LineBounds[i].w;
 		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
 	}
 

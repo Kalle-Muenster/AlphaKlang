@@ -122,6 +122,7 @@ struct Vector4 : public Vector3
 {
 public:
 	GLfloat w;
+	Vector4(float,float,float,float);
 };
 
 
