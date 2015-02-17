@@ -1,12 +1,5 @@
 #include "Transform.h"
 
-const ITransform _ZeroTransformInstance = ITransform(); 
-
-//Zero-Initialized-instance:
-
-const ITransform*
-	const ITransform::Zero = &_ZeroTransformInstance;
-
 ITransform::ITransform(void)
 {		
 
