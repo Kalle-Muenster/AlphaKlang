@@ -116,7 +116,7 @@ Ground::Ground(void) :
 	this->AddConnectable<MusicController>();
 	this->GetConnected<MusicController>()->GetLineData(0)->Effect.ControllerActive = false;
 	this->GetConnected<MusicController>()->SetLineBounds(0, 0, 40, 2); // band, ReactToLine, AgainstLine, WidthForLines
-	this->GetConnected<MusicController>()->SetClambt(0, 1, 2); // band, minValue, maxValue
+	this->GetConnected<MusicController>()->SetClambt(0, 0.5, 2); // band, minValue, maxValue
 	this->GetConnected<MusicController>()->SetThreshold(0, 0.01f); // grow Value (lower/smaller value = more grow)
 	this->GetConnected<MusicController>()->GetLineData(0)->fallOff = 0.01f; // shrink value (heigher value = faster shrink)
 	this->GetConnected<MusicController>()->sensitivity = 70; // speed to reach the min / max value (heigher value = larger steps)
@@ -371,18 +371,18 @@ void Ground::Update(void)
 	float line0 = this->GetConnected<MusicController>()->GetLineData(0)->Effect;
 	//std::cout << line0 << std::endl;
 
-	dynamicVal = line0*70 + 10;
+	dynamicVal = line0*100 + 5;
 	if(((dynamicVal-lastDVal)>MaximumChange)||((dynamicVal-lastDVal)< -MaximumChange))
 	{
 		if(((dynamicVal-lastDVal)>MaximumChange))
 		{
 			//ChageAdder+= ChageAdder<0? 0.075f:0.05f;
-			ChageAdder+=0.03f;
+			ChageAdder+=0.06f;
 			dynamicVal= (lastDVal+MaximumChange) +ChageAdder;
 		}
 		else
 		{
-			ChageAdder-=0.03f;
+			ChageAdder-=0.06f;
 		//	ChageAdder-= ChageAdder>0? 0.075f:0.05f;
 			dynamicVal= (lastDVal-MaximumChange) + ChageAdder;
 		}

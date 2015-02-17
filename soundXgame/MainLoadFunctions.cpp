@@ -162,13 +162,15 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->Effect.ControllerActive = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, LineBounds[i].x, LineBounds[i].y, 16);
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(0,20,20);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(0,5,10);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(1)->enabled = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(1)->Effect.ControllerActive = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(1,16,96,64);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(1,10,15);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(2)->enabled = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(2)->Effect.ControllerActive = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(2,64,127,32);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(2,15,30);
 		
 
 		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=LineBounds[i].z;
