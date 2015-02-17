@@ -249,9 +249,9 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
 	// Show Menu
-#ifdef _DEBUG
+
 	SCENE->camera->Mode(Edit::ID);
-#endif
+
 
 
 
@@ -260,6 +260,9 @@ void ProjectMappe::OnLoadContent(void)
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->Mode(TargetGrabber::MODE::ROTATE);
 	//AUDIO->BackgroundMusicVolume(0.95);
 	//AUDIO->Volume(1);
+
+	Sleep(2000);
+
 	AUDIO->Play();
 }
 
