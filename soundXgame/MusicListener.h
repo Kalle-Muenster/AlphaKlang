@@ -10,16 +10,18 @@
 struct ListenerData
 {
 	bool enabled;
-	float threshold;
-	Controlled<float> Effect;
-	int lowerBound;
-	int upperBound;
+	float threshold;	// if the level becomes over this value, the output will raise by this value.
+	Controlled<float> Effect;  // the output value. it's a ControlledValue in "Damp" mode which won't allow changes higher then 2% of the MIN/MAX-range.. 
+	int lowerBound;	// untere grenze des zu analysierenden spektrums...  
+	int upperBound;	 // obere grenze des zu analysierenden spektrums...
 	float value[NUMBER_OF_LINEVALUES];
 	int bandWidth;
-	float fallOff; /* Zeit in sekunden, auf dem der threshold bleiben soll */
+	float fallOff; /* if the level stays under the "threshold" the output will fall by this value  */
 	bool clampf; /* clampen min / max begrenzen für end-ausgabe wert */
 	float MINClampf;
 	float MAXClampf;
+	float lowerAmp;	   //amplify the input of the lower bands
+	float upperAmp;	   //amplify the input of the upper bands
 };
 
 
@@ -39,6 +41,7 @@ public:
 	void SetClambt(int line,bool clamb);
 	void SetClambt(int line,float min,float max);
 	bool Enabled(int lineNumber,BOOL=3);
+	void SetInputAplification(int line,float lower,float upper);
 	void SetLineBounds(int line,int lower,int upper,int width);
 	float sensitivity;
 	virtual void DoEarly(void);

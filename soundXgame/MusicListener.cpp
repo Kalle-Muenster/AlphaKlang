@@ -19,7 +19,7 @@ MusicListener::MusicListener(void)
 	{
 		Line[i].enabled = false;
 		Line[i].threshold = 0.02f;
-		Line[i].Effect.SetUp(0,0,0.5f,0.001f,Line[i].Effect.Damp);
+		Line[i].Effect.SetUp(0,0,0.5f,0.02f,Line[i].Effect.Damp);
 		Line[i].Effect = 0.5f;
 		Line[i].Effect.ControllerActive = true;
 		Line[i].lowerBound = 1;
@@ -31,6 +31,8 @@ MusicListener::MusicListener(void)
 		Line[i].fallOff = 0.05f;
 		for(int c=0;c<NUMBER_OF_LINEVALUES;c++)
 			Line[i].value[c] = 0;
+		Line[i].lowerAmp = 1;
+		Line[i].upperAmp = 1;
 	}
 
 	Line[0].enabled = true;
@@ -96,11 +98,15 @@ MusicListener::listenTo(int line, float* fft)
 	for(int c1 = Line[line].lowerBound; c1 < Line[line].lowerBound + Line[line].bandWidth; c1++)
 		lowVal += fft[c1];
 	lowVal /= Line[line].bandWidth;
+	//and amplify it by lowerAmp..
+	lowVal*=Line[line].lowerAmp;
 
 	//calculate half the average level of the higher bands
 	for(int c2 = Line[line].upperBound - Line[line].bandWidth; c2 < Line[line].upperBound; c2++)
 		highVal += fft[c2];
-	highVal /= (Line[line].bandWidth/2);
+	highVal /= (Line[line].bandWidth);
+	//and amplify it by upperAmp...
+	highVal*=Line[line].upperAmp;
 
 	//apply effect to the output variable...
 	calculateEffect(line,lowVal,highVal);
@@ -211,18 +217,26 @@ MusicListener::SetClambt(int line,bool clamb)
 	Line[line].clampf=clamb;
 }
 
+void
+MusicListener::SetInputAplification(int line,float lows,float heights)
+{
+	Line[line].lowerAmp=lows;
+	Line[line].upperAmp=heights;
+}
+
 //set a line clambt and set its MIN/MAX values.
+//and set the output's controller to allow maximum changes of 2% of the MIN/MAX-range...
 void
 MusicListener::SetClambt(int line,float min,float max)
 {
 	Line[line].clampf=true;
 	Line[line].MINClampf = min;
 	Line[line].MAXClampf = max;
-	Line[line].Effect.MOVE = (max-min)/100;
+	Line[line].Effect.MOVE = (max-min)/50;
 } 
 
 //set a line's band-ranges..
-//it means:	start mesuaring the lower bands at "lower" to "lower"+"width"
+//it means:	start measuring the lower bands at "lower" to "lower"+"width"
 //and the upper bands from "upper"-"width" to "upper". (so lower will be bottom and upper will be top of overall band-range) 
 void
 MusicListener::SetLineBounds(int line,int lower,int upper,int width)
@@ -232,7 +246,7 @@ MusicListener::SetLineBounds(int line,int lower,int upper,int width)
 	Line[line].upperBound = upper;
 }
 
-//empty "Motivator-function" to be overriden and placed code in for doing movement or other changing properties in derived classes..
+//empty "Motivator-function" to be override and placed code in for doing movement or other changing properties in derived classes..
 void
 MusicListener::MotivatorFunction(float motivator,int number)
 {

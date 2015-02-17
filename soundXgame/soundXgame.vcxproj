@@ -367,9 +367,24 @@
     <Image Include="Data\SpriteSheets\q2_23.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\ball_high_tris.obi" />
+    <None Include="Data\ball_low_tris.obi" />
     <None Include="Data\Bleche\Deckelblech128-3channel.tga" />
     <None Include="Data\Bleche\Deckelblech128.tga" />
+    <None Include="Data\capsula_quads_32.obi" />
+    <None Include="Data\capsula_tris_32.obi" />
+    <None Include="Data\capsula_tris_Groupt.obi" />
+    <None Include="Data\cone_tris_32.obi" />
+    <None Include="Data\cube-quads.obi" />
+    <None Include="Data\cube.obi" />
+    <None Include="Data\cube_quads.obi" />
+    <None Include="Data\cube_tris.obi" />
+    <None Include="Data\cylinder_quads.obi" />
+    <None Include="Data\cylinder_tris.obi" />
+    <None Include="Data\Landschaft.obi" />
     <None Include="Data\Particles\Modus Grau_128x128.ppm" />
+    <None Include="Data\sphere_quads_high.obi" />
+    <None Include="Data\wendy_Scene.obi" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Data\SpriteSheets\Q2.xml" />

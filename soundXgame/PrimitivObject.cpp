@@ -20,10 +20,10 @@ void
 IPrimitivObject::InitializeObject(void)
 {
 	conXtor->AddToSceneAndLockID();
-	color.byte[1] = 32;
-	color.byte[2] = 128;
+	color.byte[1] = 255;
+	color.byte[2] = 255;
 	color.byte[3] = 255;		  
-	color.byte[0] = 128;
+	color.byte[0] = 255;
 	UseTexture(false);
 	conXtor->IsActive=true;
 }
@@ -51,7 +51,7 @@ IPrimitivObject::draw(void)
 
 	if(UseTexture())
 	{
-		glColor3f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255);
+		glColor4f(color.byte[1]/255,color.byte[2]/255,color.byte[3]/255,color.byte[0]/255);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture.ID);
 	}

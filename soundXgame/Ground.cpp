@@ -376,12 +376,14 @@ void Ground::Update(void)
 	{
 		if(((dynamicVal-lastDVal)>MaximumChange))
 		{
-			ChageAdder+= ChageAdder<0? 0.045f:0.02f;
+			//ChageAdder+= ChageAdder<0? 0.075f:0.05f;
+			ChageAdder+=0.03f;
 			dynamicVal= (lastDVal+MaximumChange) +ChageAdder;
 		}
 		else
 		{
-			ChageAdder-= ChageAdder>0? 0.045f:0.02f;
+			ChageAdder-=0.03f;
+		//	ChageAdder-= ChageAdder>0? 0.075f:0.05f;
 			dynamicVal= (lastDVal-MaximumChange) + ChageAdder;
 		}
 	}

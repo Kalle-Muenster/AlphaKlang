@@ -11,13 +11,28 @@ MusicScaler::MusicScaler(void)
 bool
 MusicScaler::Initialize(void)
 {
-	 //if(this->Connection()->HasConnected<AudioReciever>())
-		//return true;
-	 //else 
-		// this->Connection()->AddConnectable<AudioReciever>();
 	 return true;
 }
 
 MusicScaler::~MusicScaler(void)
 {
+
+}
+
+float*
+MusicScaler::GetFFTData(void)
+{
+	return (float*) this->Connection()->GetConnected<AudioEmitter>()->GetFFTData();
+}
+
+void
+MusicScaler::MotivatorFunction(float Motivator,int number)
+{
+	if(number==0)
+	{	
+		Motivator+=5;
+		Motivator/=3;
+
+		((ILocatable*)this->Connection())->scale(Motivator,Motivator,Motivator);
+	}
 }

@@ -170,7 +170,6 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="primitivSwitcher.cpp" />
-    <ClCompile Include="PrimitivObject.cpp" />
     <ClCompile Include="Knob.cpp">
       <Filter>Objects\ConnectableControllElements</Filter>
     </ClCompile>
@@ -188,6 +187,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="SmoothObjectMover.cpp" />
+    <ClCompile Include="PrimitivObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllConnectablesInclude.h" />
@@ -374,7 +376,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="primitivSwitcher.h" />
-    <ClInclude Include="PrimitivObject.h" />
     <ClInclude Include="Knob.h">
       <Filter>Objects\ConnectableControllElements</Filter>
     </ClInclude>
@@ -390,6 +391,9 @@
       <Filter>Objects\ConnectableCameraModes</Filter>
     </ClInclude>
     <ClInclude Include="SmoothObjectMover.h" />
+    <ClInclude Include="PrimitivObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -527,6 +531,51 @@
     </None>
     <None Include="Data\Bleche\Deckelblech128-3channel.tga">
       <Filter>Resources\Bleche</Filter>
+    </None>
+    <None Include="Data\ball_high_tris.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\ball_low_tris.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\capsula_quads_32.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\capsula_tris_32.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\capsula_tris_Groupt.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cone_tris_32.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cube.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cube_quads.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cube_tris.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cube-quads.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cylinder_quads.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\cylinder_tris.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\Landschaft.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\sphere_quads_high.obi">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Data\wendy_Scene.obi">
+      <Filter>Resources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

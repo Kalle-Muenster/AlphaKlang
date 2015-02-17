@@ -24,14 +24,14 @@ void ProjectMappe::OnLoadContent(void)
 	(new SkyBox())->SetName("Skybox");
 	//ShaderObj* shaderObj = new ShaderObj();
 
-	/* Fountain
+	// Fountain
 	Fountain* fountain = new Fountain();
 	fountain->SetPosition(Vector3(-40, 0, 0));
 	fountain->size = 50;
 	fountain->createRange();
 	fountain->SetClambt(0,-1,1);
 	fountain->SetThreshold(0,0.33);
-	fountain->sensitivity = 5; */
+	fountain->sensitivity = 5;
 
 	// GUI
 	(new MusicControllerPanel())->isVisible(false);
@@ -57,7 +57,6 @@ void ProjectMappe::OnLoadContent(void)
 	// Qualle
 	(new AnimatedSprite<36,3>("SpriteSheets/Q2_1872x516.png",12,3,25,true))->SetName("Q2animated");
 	SCENE->Object("Q2animated")->move(0,5,0);
-	//SCENE->Object("Q2animated")->IsGrounded(false);
 	SCENE->Object("Q2animated")->AddConnectable<ObjectMover<8>>();
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position);
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->AddWaypoint(SCENE->Object("Q2animated")->getTransform()->position+Utility::GlobalZ*10);
@@ -72,7 +71,7 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("Q2animated")->GetConnected<ObjectMover<8>>()->IsActive = true;
 
 
-
+	// Spectrum
 	(new SpectrumAnalyzer())->SetName("SpectrumAnalyzer");
 	SCENE->Object("SpectrumAnalyzer")->move(0, 0, -35.0f);
 	SCENE->Object("SpectrumAnalyzer")->scale(40.0f * 3.5f/128.0f, 0.3f, 2.0f); // 90 ground-tiles * 3.5m width * 128 bands
@@ -125,21 +124,21 @@ void ProjectMappe::OnLoadContent(void)
 								Vector3(0,2,40)
 							};
 	
-	Vector4  LineBounds[12] = {
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
+	Vector4  LineBounds[12] = {	// low  high  sens  falloff
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
 								Vector4(30, 60, 50, 0.001f), // not perfect
-								Vector4(0, 4, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
 								
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
-
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f),
-								Vector4(0, 4, 15, 0.025f)
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
+						
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f),
+								Vector4(1, 64, 15, 0.025f)
 							};
 
 	char tempString[16];
@@ -163,9 +162,10 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->IsGrounded(true); // grounded
 		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->Effect.ControllerActive = true;
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, LineBounds[i].x, LineBounds[i].y, 3);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, LineBounds[i].x, LineBounds[i].y, 16);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=LineBounds[i].z;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,0,5);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(0,20,20);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->fallOff = LineBounds[i].w;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->automaticFallOffAdjust = true;
