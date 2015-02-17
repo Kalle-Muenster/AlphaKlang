@@ -394,6 +394,7 @@
     <ClInclude Include="PrimitivObject.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -521,6 +522,8 @@
     <Image Include="Data\GUI\panel_256x256.png">
       <Filter>Resources\GUI</Filter>
     </Image>
+    <Image Include="icon.png" />
+    <Image Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Particles\Modus Grau_128x128.ppm">
@@ -582,5 +585,8 @@
     <Xml Include="Data\SpriteSheets\Q2.xml">
       <Filter>Resources\SpriteSheets</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="soundXgame1.rc" />
   </ItemGroup>
 </Project>

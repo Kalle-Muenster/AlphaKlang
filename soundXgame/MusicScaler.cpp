@@ -12,10 +12,11 @@ bool
 MusicScaler::Initialize(void)
 {
 	 return true;
+	 vec = *Vector3::Zero;
 }
 
 MusicScaler::~MusicScaler(void)
-{
+{														
 
 }
 
@@ -30,9 +31,24 @@ MusicScaler::MotivatorFunction(float Motivator,int number)
 {
 	if(number==0)
 	{	
-		Motivator+=5;
-		Motivator/=3;
-
-		((ILocatable*)this->Connection())->scale(Motivator,Motivator,Motivator);
+		vec.x = Motivator;
+		//Motivator+=5;
+		//Motivator/=3;
+		//((ILocatable*)this->Connection())->scale(Motivator,Motivator,Motivator);
+	}
+	if(number==1)
+	{
+		vec.y=Motivator*5;
+	}
+	if(number==2)
+	{
+		vec.z=Motivator+10;
+		Connection()->scale(vec);
 	}
 }
+
+//void
+//MusicScaler::MotivatorFunction(float Motivator[])
+//{
+//	Connection()->scale((Motivator[0]+5)/3,Motivator[1],Motivator[2]);
+//}
