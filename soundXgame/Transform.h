@@ -54,7 +54,6 @@ void							SetClean(void);
 bool							CleanDimensions(void);
 bool							CleanDirections(void);		// Get's the dirt off...
 bool							SetPhysicClean(void);	// cleanUp...
-const static ITransform* const	Zero;
 };
 
 #endif
