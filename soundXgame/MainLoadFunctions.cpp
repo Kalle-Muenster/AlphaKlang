@@ -26,12 +26,9 @@ void ProjectMappe::OnLoadContent(void)
 
 	// Fountain
 	Fountain* fountain = new Fountain();
-	fountain->SetPosition(Vector3(-40, 0, 0));
+	fountain->SetPosition(Vector3(-30, 0, 0));
 	fountain->size = 50;
 	fountain->createRange();
-	fountain->SetClambt(0,-1,1);
-	fountain->SetThreshold(0,0.33);
-	fountain->sensitivity = 5;
 
 	// GUI
 	(new MusicControllerPanel())->isVisible(false);

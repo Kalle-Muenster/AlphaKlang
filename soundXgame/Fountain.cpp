@@ -7,12 +7,21 @@
 Fountain::Fountain(void) :
 	timer(0),
 	timer2(0),
-	spawnDelay(0.05f),
+	spawnDelay(0.4f),
 	deleteDelay(1.5f),
 	size(10)
 {
 	this->transform.position = Vector3(0, 0, 0);
 	UpdateManager::getInstance()->SignInForUpdate(this);
+
+	// Music Settings
+	this->GetLineData(0)->Effect.ControllerActive = false;
+	this->SetLineBounds(0, 0, 40, 2); // band, ReactToLine, AgainstLine, WidthForLines
+	this->SetClambt(0, 0.5, 1); // band, minValue, maxValue
+	this->SetThreshold(0, 0.01f); // grow Value (lower/smaller value = more grow)
+	this->GetLineData(0)->fallOff = 0.01f; // shrink value (heigher value = faster shrink)
+	this->sensitivity = 50; // speed to reach the min / max value (heigher value = larger steps)
+
 }
 
 Fountain::~Fountain(void)
@@ -75,8 +84,6 @@ Fountain::DoUpdate(void)
 {
 	timer += INPUT->FrameTime;
 
-	//std::cout << motivator[0] << std::endl;
-
 	if(motivator[0] > 0.75f)
 	{
 		if(timer >= this->spawnDelay)
@@ -88,6 +95,7 @@ Fountain::DoUpdate(void)
 
 	// Check removing old objects
 	timer2 += INPUT->FrameTime;
+
 	if(timer2 >= this->deleteDelay)
 	{
 		timer2 = 0;
