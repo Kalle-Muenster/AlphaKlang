@@ -109,8 +109,8 @@ void ProjectMappe::OnLoadContent(void)
 	// Local Music Cubes
 	Vector3  CubeSpwns[12] = {
 								Vector3(-50,2,-40),
-								Vector3(-55,2,-15),
 								Vector3(-40,2,15),
+								Vector3(-55,2,-15),
 								Vector3(-10,2,10),
 
 								Vector3(45,2,30),
@@ -258,12 +258,10 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->camera->Mode(FIRSTPERSON);
 	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
-	// Show Menu
-
+	// Show Menu if Debug
+#ifdef _DEBUG
 	SCENE->camera->Mode(Edit::ID);
-
-
-
+#endif
 
 	// <-- Other stuff you can use if you want :)
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
@@ -271,11 +269,8 @@ void ProjectMappe::OnLoadContent(void)
 	//AUDIO->BackgroundMusicVolume(0.95);
 	//AUDIO->Volume(1);
 
-	Sleep(2000);
-
 	
 	AUDIO->Play();
-
 	AUDIO->Volume(1);
 }
 

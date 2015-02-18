@@ -9,12 +9,10 @@ void
 ProjectMappe::InitEngine(int &argc,char** argv)
 {
 	glutInit(&argc,argv);
-	Sleep(2000);
 	InitGlut();
 	GlInit();
 
 	ProjectMappe::StartupRuntimeManagers();
-	Sleep(2000);
 	INPUT->SetDoubleclickTime(400);
 
 
@@ -23,7 +21,6 @@ ProjectMappe::InitEngine(int &argc,char** argv)
 	AUDIO->Set3D_DistanceFactor(1.0f);
 	AUDIO->Set3D_RollOffFactor(10.0f);
 	AUDIO->Volume(0);
-	Sleep(2000);
 }
 
 void 
@@ -59,7 +56,6 @@ ProjectMappe::InitGlut(void)
 	{
 		std::cerr << "Unable to init GLew";
 	}
-	Sleep(2000);
 }
 
 void 
