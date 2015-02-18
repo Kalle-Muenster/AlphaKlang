@@ -47,7 +47,9 @@ public:
 	virtual void DoEarly(void);
 	virtual void DoUpdate(void);
 	bool automaticFallOffAdjust;
+	float Amplificator;
 protected:
+	
 	bool motivatorsUpdated;
 	virtual float* GetFFTData(void)
 		{return(float*)AUDIO->GetBackgroundAudioFFT(FFT_SIZE::Small);}

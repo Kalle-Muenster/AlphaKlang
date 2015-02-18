@@ -5,7 +5,7 @@
 
 MusicScaler::MusicScaler(void)
 {
-	Line[0].fallOff = 0.000001f;
+//	Line[0].fallOff = 0.000001f;
 }
 
 bool
@@ -31,7 +31,7 @@ MusicScaler::MotivatorFunction(float Motivator,int number)
 {
 	if(number==0)
 	{	
-		vec.x = Motivator;
+		vec.x = Motivator*2;
 	}
 	if(number==1)
 	{
@@ -39,7 +39,7 @@ MusicScaler::MotivatorFunction(float Motivator,int number)
 	}
 	if(number==2)
 	{
-		vec.z=Motivator*5;
+		vec.z=Motivator*10;
 		Connection()->scale(vec);
 	}
 }
