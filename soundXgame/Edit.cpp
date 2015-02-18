@@ -121,40 +121,40 @@ Edit::UpdateMode(void)
 }
 
 
-void 
-Edit::keyPress(char key)
-{
-	
-	if(IsActive)
-	{
-		switch(key)
-		{
-			case 119: // W
-				x += lx * moveSpeed;
-				z += lz * moveSpeed;
-				IsDirty=true;
-				break;
-			case 115: // S
-				x -= lx * moveSpeed;
-				z -= lz * moveSpeed;
-				IsDirty=true;
-				break;
-			case 97: // A
-				x += lz * moveSpeed;
-				z += lx * (moveSpeed*-1);
-				IsDirty=true;
-				break;
-			case 100: // D
-				x -= lz * moveSpeed;
-				z -= lx * (moveSpeed*-1);
-				IsDirty=true;
-				break;
-		}
-				
-
-		UpdateMode();
-	}
-}
+//void 
+//Edit::keyPress(char key)
+//{
+//	
+//	if(IsActive)
+//	{
+//		switch(key)
+//		{
+//			case 119: // W
+//				x += lx * moveSpeed;
+//				z += lz * moveSpeed;
+//				IsDirty=true;
+//				break;
+//			case 115: // S
+//				x -= lx * moveSpeed;
+//				z -= lz * moveSpeed;
+//				IsDirty=true;
+//				break;
+//			case 97: // A
+//				x += lz * moveSpeed;
+//				z += lx * (moveSpeed*-1);
+//				IsDirty=true;
+//				break;
+//			case 100: // D
+//				x -= lz * moveSpeed;
+//				z -= lx * (moveSpeed*-1);
+//				IsDirty=true;
+//				break;
+//		}
+//				
+//
+//		UpdateMode();
+//	}
+//}
 
 void
 Edit::specialKeyPressed(int key)
@@ -237,9 +237,7 @@ Edit::OnActivate(void)
 	glutReshapeWindow(SCREENWIDTH-1,SCREENHEIGHT-1);
 
 	GUI->Panel("Main-Menu")->isVisible(true);
-	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(1)->SetClickerFunc(_backButtonClick);
-	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(2)->SetClickerFunc(_button_fps_click);
-	//GUI->Panel("Main-Menu")->GetConnected<ButtonControl>(3)->SetClickerFunc(_exitButtonClick);
+	_mousereleased_edit=true;
 
 
 	eyeY = 4.0f;

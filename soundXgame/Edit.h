@@ -27,7 +27,7 @@ public:
 	virtual bool Initialize(void);
 
 	virtual void OnActivate(void);
-	virtual void keyPress(char key);
+//	virtual void keyPress(char key);
 	virtual void specialKeyPressed(int key);
 	virtual void mouseMotion(int newX, int newY);
 	virtual void mouseWheel(int wheel,WHEEL state){};
