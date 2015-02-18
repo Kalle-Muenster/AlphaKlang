@@ -115,6 +115,8 @@ Edit::UpdateMode(void)
 	if(INPUT->Mouse.LEFT.RELEASE)
 		_mousereleased_edit=true;
 
+	GUI->Write("Press Escape to start !...",80,80);
+
 	this->IsDirty=false;
 }
 
