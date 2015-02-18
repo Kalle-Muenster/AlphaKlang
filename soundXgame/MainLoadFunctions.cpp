@@ -81,7 +81,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Kubus -> fliegender Cube
 	new IPrimitivObject();
 	GobID temp = SCENE->Object("last created")->GetID();
-	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<ICubic>();
+	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<IZylinder>();
 	SCENE->Object(temp)->LoadTexture("X-7.png");
 	SCENE->Object(temp)->move(5,20,-5);
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
@@ -185,7 +185,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Cubus - fliegender Cube
 	(new Cubus("X-7.png"))->SetName("AUDIO11");
 	SCENE->Object("AUDIO11")->GetOrAdd<AudioEmitter>()->LoadeSample("mp3/Fly-Audio.mp3");
-	SCENE->Object("AUDIO11")->AddConnectable<MusicScaler>();
+//	SCENE->Object("AUDIO11")->AddConnectable<MusicScaler>();
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->Set3Dparameter(30,200);
 	SCENE->Object("AUDIO11")->GetConnected<AudioEmitter>()->AudioVolume(1);
 	SCENE->Object("AUDIO11")->move(12,0,-18);
@@ -222,6 +222,9 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->Object("muckubus")->GetConnected<AudioEmitter>()->AudioVolume(1);
 	SCENE->Object("muckubus")->IsGrounded(true);
 	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->SetInputAplification(0,2,5);
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->SetInputAplification(1,5,10);
+	SCENE->Object("muckubus")->GetConnected<MusicInteractor>()->SetInputAplification(2,10,20);
 
 	// Star Cube
 	unsigned obj;
@@ -243,7 +246,11 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->LoadeSample("mp3/3-Audio.mp3",false);
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->PlayAudio();
 		SCENE->Object(obj)->AddConnectable<MusicInteractor>();
+		SCENE->Object(obj)->GetConnected<MusicInteractor>()->Amplificator = 5;
 		SCENE->Object(obj)->GetConnected<MusicInteractor>()->automaticFallOffAdjust=false;
+		SCENE->Object(obj)->GetConnected<MusicInteractor>()->SetInputAplification(0,2,5);
+		SCENE->Object(obj)->GetConnected<MusicInteractor>()->SetInputAplification(1,5,10);
+		SCENE->Object(obj)->GetConnected<MusicInteractor>()->SetInputAplification(2,10,20);
 		SCENE->Object(obj)->SetName("Brummer");
 		SCENE->Object(obj)->IsVisible=true;
 		SCENE->Object(obj)->GetConnected<AudioEmitter>()->AudioVolume(1);

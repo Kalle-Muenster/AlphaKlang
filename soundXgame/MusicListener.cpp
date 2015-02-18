@@ -14,6 +14,7 @@ MusicListener::MusicListener(void)
 	allMotivatorsEnabled  = false;
 	motivatorsUpdated = false;
 	sensitivity = 50;
+	Amplificator = 1;
 
 	for(int i=0;i<NUMBER_OF_LISTENINGLINES;i++)
 	{
@@ -99,14 +100,14 @@ MusicListener::listenTo(int line, float* fft)
 		lowVal += fft[c1];
 	lowVal /= Line[line].bandWidth;
 	//and amplify it by lowerAmp..
-	lowVal*=Line[line].lowerAmp;
+	lowVal*=Line[line].lowerAmp * Amplificator;
 
 	//calculate half the average level of the higher bands
 	for(int c2 = Line[line].upperBound - Line[line].bandWidth; c2 < Line[line].upperBound; c2++)
 		highVal += fft[c2];
 	highVal /= (Line[line].bandWidth);
 	//and amplify it by upperAmp...
-	highVal*=Line[line].upperAmp;
+	highVal*=Line[line].upperAmp * Amplificator;
 
 	//apply effect to the output variable...
 	calculateEffect(line,lowVal,highVal);
@@ -223,6 +224,9 @@ MusicListener::SetInputAplification(int line,float lows,float heights)
 	Line[line].lowerAmp=lows;
 	Line[line].upperAmp=heights;
 }
+
+
+
 
 //set a line clambt and set its MIN/MAX values.
 //and set the output's controller to allow maximum changes of 2% of the MIN/MAX-range...
