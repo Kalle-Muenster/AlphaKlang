@@ -7,8 +7,10 @@
 Fountain::Fountain(void) :
 	timer(0),
 	timer2(0),
-	spawnDelay(0.4f),
+	//spawnDelay(0.001f),
 	deleteDelay(1.5f),
+	groupDelay(0.5f),
+	pauseDelay(5.0f),
 	size(10)
 {
 	this->transform.position = Vector3(0, 0, 0);
@@ -86,10 +88,16 @@ Fountain::DoUpdate(void)
 
 	if(motivator[0] > 0.75f)
 	{
-		if(timer >= this->spawnDelay)
+		if(timer > this->pauseDelay)
 		{
-			this->Spawn();
 			timer = 0;
+		}
+		else if(timer <= this->groupDelay)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				this->Spawn();
+			}
 		}
 	}
 
