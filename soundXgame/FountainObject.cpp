@@ -24,13 +24,12 @@ FountainObject::Initialize(void)
 {
 	float randX = Utility::GetRandom() - 0.5f;
 	float randZ = Utility::GetRandom() - 0.5f;
+	float speed = (Utility::GetRandom() - 0.5f) / 10; // -0.05 to 0.05
+	float gravity = (Utility::GetRandom() - 0.5f) / 10; // -0.05 to 0.05
 
-	//this->power = 3.0f;
-	//this->gravity = -0.035f;
-	//this->speed = 0.04f;
 	this->power = 2.5f;
-	this->gravity = -0.4f;
-	this->speed = 0.5f;
+	this->gravity = -0.4f + gravity;
+	this->speed = 0.5f + speed;
 	this->expanding = 40.0f;
 	this->reduction = 1.0f;
 	this->direction = Vector3(randX,0,randZ);

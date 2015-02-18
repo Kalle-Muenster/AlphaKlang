@@ -17,6 +17,8 @@ private:
 	void Spawn(void);
 	float spawnDelay;
 	float deleteDelay;
+	float groupDelay;
+	float pauseDelay;
 	Transform transform;
 
 	/* Object Pool */

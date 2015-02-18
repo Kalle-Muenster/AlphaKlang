@@ -27,7 +27,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Fountain
 	Fountain* fountain = new Fountain();
 	fountain->SetPosition(Vector3(-30, 0, 0));
-	fountain->size = 50;
+	fountain->size = 150;
 	fountain->createRange();
 
 	// GUI
@@ -145,12 +145,12 @@ void ProjectMappe::OnLoadContent(void)
 		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
 		sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
 		// create object
-		new IPrimitivObject();
-		GobID id = SCENE->Object("last created")->GetID();
+		GobID id = (new Cubus("X-7.png"))->GetID();
+		//GobID id = SCENE->Object("last created")->GetID();
 		SCENE->Object(id)->SetName(&tempString[0]);
-		((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
+		//((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
 		// load texture
-		SCENE->Object(id)->LoadTexture("X-7.png");
+		//SCENE->Object(id)->LoadTexture("X-7.png");
 		// load music
 		SCENE->Object(id)->AddConnectable<AudioEmitter>()->LoadeSample(&tempString2[0]); 
 		SCENE->Object(id)->GetConnected<AudioEmitter>()->Set3Dparameter(10, 50);
@@ -168,11 +168,8 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(2)->Effect.ControllerActive = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(2,64,127,32);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(2,15,30);
-		
-
 		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=LineBounds[i].z;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,0,5);
-		
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->fallOff = LineBounds[i].w;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->automaticFallOffAdjust = true;
@@ -263,9 +260,9 @@ void ProjectMappe::OnLoadContent(void)
 	SCENE->camera->SetTarget(SCENE->Object("Q2animated"));
 
 	// Show Menu if Debug
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	SCENE->camera->Mode(Edit::ID);
-#endif
+//#endif
 
 	// <-- Other stuff you can use if you want :)
 	//SCENE->camera->ModeSocket->GetCameraMode<TargetGrabber>()->GrabTarget();
