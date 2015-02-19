@@ -29,7 +29,7 @@ ProjectMappe::InitGlut(void)
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowSize(SCREENWIDTH,SCREENHEIGHT);
-	_wnd = glutCreateWindow("AlphaKlang by Kalle Münster and Dario D. Müller [www.game-coding.com]");
+	_wnd = glutCreateWindow("AlphaKlang by Kalle Münster and Dario D. Müller - www.dariodomi.de/alphaklang");
 //	ProjectMappe::font = GLUT_BITMAP_HELVETICA_18;
 
 	glutDisplayFunc(OnDisplay);
