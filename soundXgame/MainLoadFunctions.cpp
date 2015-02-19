@@ -121,21 +121,21 @@ void ProjectMappe::OnLoadContent(void)
 								Vector3(0,2,40)
 							};
 	
-	Vector4  LineBounds[12] = {	// low  high  sens  falloff
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f), // not perfect
-							Vector4(1, 33, 200, 0.025f),
-									
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-									   
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f),
-							Vector4(1, 33, 200, 0.025f)};
+	string TextureNames[12] = {
+							"X-7.png",
+							"X-7.png",
+							"X-7.png",
+							"X-7.png",
+
+							"X-7.png",
+							"X-7.png",
+							"X-7.png",
+							"X-7.png",
+
+							"X-7.png",
+							"X-7.png",
+							"X-7.png",
+							"X-7.png"};
 
 	char tempString[16];
 	char tempString2[32];
@@ -145,7 +145,7 @@ void ProjectMappe::OnLoadContent(void)
 		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
 		sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
 		// create object
-		GobID id = (new Cubus("X-7.png"))->GetID();
+		GobID id = (new Cubus(TextureNames[i]))->GetID();
 		//GobID id = SCENE->Object("last created")->GetID();
 		SCENE->Object(id)->SetName(&tempString[0]);
 		//((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();
@@ -158,7 +158,7 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->IsGrounded(true); // grounded
 		SCENE->Object(id)->AddConnectable<MusicScaler>(); // scale to music	->
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->Effect.ControllerActive = true;
-		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, LineBounds[i].x, LineBounds[i].y, 16);
+		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(0, 1, 33, 16);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(0,5,10);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(1)->enabled = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(1)->Effect.ControllerActive = true;
@@ -168,10 +168,10 @@ void ProjectMappe::OnLoadContent(void)
 		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(2)->Effect.ControllerActive = true;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetLineBounds(2,64,127,32);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetInputAplification(2,15,30);
-		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=LineBounds[i].z;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->sensitivity=200;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetClambt(0,0,5);
 		SCENE->Object(id)->GetConnected<MusicScaler>()->SetThreshold(0,0.0002f);   
-		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->fallOff = LineBounds[i].w;
+		SCENE->Object(id)->GetConnected<MusicScaler>()->GetLineData(0)->fallOff = 0.025f;
 		SCENE->Object(id)->GetConnected<MusicScaler>()->automaticFallOffAdjust = true;
 		SCENE->Object(id)->GetConnected<AudioEmitter>()->PlayAudio();
 	}
