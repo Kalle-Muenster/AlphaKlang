@@ -13,7 +13,7 @@ struct ISphere;
 struct IZylinder;
 struct ICone;
 struct ICapsule;
-
+struct IPyramidal;
 
 struct PrimitivMesh	
 {
@@ -28,7 +28,7 @@ class PrimitiveType
 {
 public:
 	enum PRIMITIVE : char
-	{FLATQUAD,QUBE,BALL,SPHERE,ZYLINDER,CONE,CAPSULA};
+	{FLATQUAD,QUBE,BALL,SPHERE,ZYLINDER,CONE,CAPSULA,PYRAMID};
 	PrimitivMesh buffers;
 	static const IFlatquad * FlatQuad;
 	const static ICubic * Qube;
@@ -37,6 +37,7 @@ public:
 	const static IZylinder * Zylinder;
 	const static ICone * Cone;
 	const static ICapsule * Capsula;
+	const static IPyramidal * Pyramid;
 };
 
 namespace ProjectMappe
@@ -48,6 +49,7 @@ namespace ProjectMappe
 	void InitIspheree(void);
 	void InitICone(void);
 	void InitICapsule(void); 
+	void InitiPyramidi(void);
 	void _backButtonClick(IConnectable* sender);
 };
 		
@@ -107,11 +109,21 @@ namespace ProjectMappe
 struct IFlatquad : public PrimitiveType
 {
 	static const GLuint shape;
+	static const GLuint VertsCount;
 	static GLuint vertsBufferID;
 	static GLuint paintBufferID;
 	static GLuint normsBufferID;
-	static const GLuint VertsCount;
 };
+
+struct IPyramidal : public PrimitiveType
+{   
+	static const GLuint shape;
+	static const GLuint VertsCount;
+	static GLuint vertsBufferID;
+	static GLuint paintBufferID;
+	static GLuint normsBufferID;
+};
+
 
 struct ICubic : public PrimitiveType
 {   

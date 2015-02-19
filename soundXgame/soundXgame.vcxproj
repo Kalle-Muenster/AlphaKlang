@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\freeglut-2.8.1\lib\x64;C:\Libraries\glew-1.11.0\lib\Release\x64;C:\Libraries\bass24x64\bass24\c\x64;C:\Libraries\bass24x64\bass_fx24\C\x64;C:\Libraries\bass24x64\bassmix24\c\x64;C:\Libraries\bass24x64\tags17\c\x64;C:\Libraries\glew-1.11.0\lib\Release MX\x64;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\Libraries\jpeg-9a;C:\Libraries\libbmp-0.1.3\src;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Libraries\freeglut-2.8.1\include;C:\Libraries\glew-1.11.0\include;C:\Libraries\glm-9.5.2\glm;C:\Libraries\bass24x64\bass24\c;C:\Libraries\bass24x64\bassmix24\c;C:\Libraries\bass24x64\bass_fx24\C;C:\Libraries\bass24x64\tags17\c;C:\Libraries\lodepng-master;$(IncludePath)</IncludePath>
@@ -343,6 +343,8 @@
     <Image Include="Data\Bleche\Deckelblech128-3channel.png" />
     <Image Include="Data\Bleche\Deckelblech2_256x256.png" />
     <Image Include="Data\Bleche\Deckelblech_128x128.png" />
+    <Image Include="Data\Bleche\logoT_256x256.png" />
+    <Image Include="Data\Bleche\logo_256x256.png" />
     <Image Include="Data\GUI\button_64x64.png" />
     <Image Include="Data\GUI\knobA_64x64.png" />
     <Image Include="Data\GUI\knobB_64x64.png" />
