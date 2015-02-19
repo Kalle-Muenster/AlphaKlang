@@ -345,6 +345,7 @@
     <Image Include="Data\Bleche\Deckelblech_128x128.png" />
     <Image Include="Data\Bleche\logoT_256x256.png" />
     <Image Include="Data\Bleche\logo_256x256.png" />
+    <Image Include="Data\Bleche\sae_128x128.png" />
     <Image Include="Data\GUI\button_64x64.png" />
     <Image Include="Data\GUI\knobA_64x64.png" />
     <Image Include="Data\GUI\knobB_64x64.png" />

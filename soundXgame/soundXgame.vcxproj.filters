@@ -530,6 +530,9 @@
     <Image Include="Data\Bleche\logoT_256x256.png">
       <Filter>Resources\Bleche</Filter>
     </Image>
+    <Image Include="Data\Bleche\sae_128x128.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Particles\Modus Grau_128x128.ppm">
