@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <InterproceduralOptimization>false</InterproceduralOptimization>
     <NumberOfCilkThreads>
@@ -48,7 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>Intel C++ Compiler XE 15.0</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
     <UseIntelIPP>false</UseIntelIPP>
@@ -338,13 +338,16 @@
     <ClInclude Include="VoxGrid.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Data\Bleche\codeFreaks-black_256x256.png" />
+    <Image Include="Data\Bleche\codeFreaks-white_256x256.png" />
     <Image Include="Data\Bleche\Deckelblech-2s.png" />
     <Image Include="Data\Bleche\Deckelblech128-1.png" />
     <Image Include="Data\Bleche\Deckelblech128-3channel.png" />
     <Image Include="Data\Bleche\Deckelblech2_256x256.png" />
     <Image Include="Data\Bleche\Deckelblech_128x128.png" />
-    <Image Include="Data\Bleche\logoT_256x256.png" />
-    <Image Include="Data\Bleche\logo_256x256.png" />
+    <Image Include="Data\Bleche\logo-black_256x256.png" />
+    <Image Include="Data\Bleche\logo-credits_256x256.png" />
+    <Image Include="Data\Bleche\logo-white_256x256.png" />
     <Image Include="Data\Bleche\sae_128x128.png" />
     <Image Include="Data\GUI\button_64x64.png" />
     <Image Include="Data\GUI\knobA_64x64.png" />

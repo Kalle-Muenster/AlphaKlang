@@ -524,13 +524,22 @@
     </Image>
     <Image Include="icon.png" />
     <Image Include="icon.ico" />
-    <Image Include="Data\Bleche\logo_256x256.png">
-      <Filter>Resources\Bleche</Filter>
-    </Image>
-    <Image Include="Data\Bleche\logoT_256x256.png">
-      <Filter>Resources\Bleche</Filter>
-    </Image>
     <Image Include="Data\Bleche\sae_128x128.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\codeFreaks-black_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\codeFreaks-white_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\logo-black_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\logo-credits_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\logo-white_256x256.png">
       <Filter>Resources\Bleche</Filter>
     </Image>
   </ItemGroup>

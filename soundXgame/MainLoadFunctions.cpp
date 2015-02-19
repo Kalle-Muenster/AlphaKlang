@@ -128,13 +128,13 @@ void ProjectMappe::OnLoadContent(void)
 							"X-7.png",
 
 							"X-7.png",
-							"Bleche/logo_credits_256x256.png",
+							"Bleche/logo-credits_256x256.png",
 							"X-7.png",
 							"X-7.png",
 
-							"Bleche/logo_256x256.png",
+							"Bleche/logo-white_256x256.png",
 							"Bleche/sae_128x128.png",
-							"Bleche/codeFreaks_black_256x256.png",
+							"Bleche/codeFreaks-black_256x256.png",
 							"X-7.png"};
 
 	char tempString[16];
