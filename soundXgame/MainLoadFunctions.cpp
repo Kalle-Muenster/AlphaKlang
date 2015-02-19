@@ -134,7 +134,7 @@ void ProjectMappe::OnLoadContent(void)
 
 							"Bleche/alphaklang2-white_256x256.png",
 							"Bleche/sae_128x128.png",
-							"Bleche/codeFreaks-black_256x256.png",
+							"Bleche/codeFreaks-black2_256x256.png",
 							"X-7.png"};
 
 	char tempString[16];
