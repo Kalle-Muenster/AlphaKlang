@@ -96,7 +96,6 @@ Edit::Initialize(void)
 	InputManager::getInstance()->attachKey(this);
 	InputManager::getInstance()->attachMouseMove(this);
 	InputManager::getInstance()->attachMouseWheel(this);
-//	InputManager::getInstance()->attachSpecial(this);
 	ID = this->CamModeID();
 	accelerate = false;
 	return true;
@@ -115,7 +114,7 @@ Edit::UpdateMode(void)
 	if(INPUT->Mouse.LEFT.RELEASE)
 		_mousereleased_edit=true;
 
-	GUI->Write("Press Enter to start the Experience of Sound",256,236);
+	GUI->Write("Press [Escape] to start the Experience of Sound",256,236);
 
 	this->IsDirty=false;
 }
@@ -137,19 +136,7 @@ Edit::keyPress(char key)
 	}
 }
 
-//void
-//Edit::specialKeyPressed(int key)
-//{
-//	if(IsActive)
-//	{
-//	switch (key) {
-//		case 13:   //Enter
-//			switchBack();
-//			break;
-//		}
-//	UpdateMode();
-//	}
-//}
+
 
 void
 Edit::mouseMotion(int newX, int newY)

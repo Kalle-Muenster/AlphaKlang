@@ -28,34 +28,34 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[front] = new VoxGrid(imagefilename,false);
 	walls[front]->AlwaysFaceMovingdirection = false;
 	walls[front]->SetName("plane_front");
-	walls[front]->LoadeMap("drei_64x64.ppm",0);
+	walls[front]->LoadeMap("Bump_3.ppm",0);
 	walls[front]->move(-500,-250,-500);
 
 	walls[rear] = new VoxGrid(imagefilename,false);
 	walls[rear]->AlwaysFaceMovingdirection = false;
 	walls[rear]->SetName("plane_rear");
-	walls[rear]->LoadeMap("drei_64x64.ppm",0);
+	walls[rear]->LoadeMap("Bump_3.ppm",0);
 	walls[rear]->move(-500,-250,500);
 
 	walls[left] = new VoxGrid(imagefilename,false);
 	walls[left]->AlwaysFaceMovingdirection = false;
 	walls[left]->SetName("plane_left");
-	walls[left]->LoadeMap("drei_64x64.ppm",0);
+	walls[left]->LoadeMap("Bump_3.ppm",0);
 	walls[left]->move(-500,-250,-500);
 	walls[left]->flip('z');
-	walls[left]->LoadeMap("drei_64x64.ppm",0);
+	walls[left]->LoadeMap("Bump_3.ppm",0);
 
 	walls[right] = new VoxGrid(imagefilename,false);
 	walls[right]->AlwaysFaceMovingdirection = false;
 	walls[right]->SetName("plane_right");
-	walls[right]->LoadeMap("drei_64x64.ppm",0);
+	walls[right]->LoadeMap("Bump_3.ppm",0);
 	walls[right]->move(-500,-250,500);
 	walls[right]->flip('z');
 
 	walls[top] = new VoxGrid(imagefilename,false);
 	walls[top]->AlwaysFaceMovingdirection = false;
 	walls[top]->SetName("plane_top");
-	walls[top]->LoadeMap("drei_64x64.ppm",0);
+	walls[top]->LoadeMap("Bump_3.ppm",0);
 	walls[top]->move(-500,500,-500);
 	walls[top]->flip('y');
 	walls[top]->flipZ();
@@ -63,7 +63,7 @@ SkyBox::InitializeObject(string imagefilename,bool addToScene)
 	walls[bottom] = new VoxGrid(imagefilename,false);
 	walls[bottom]->AlwaysFaceMovingdirection = false;
 	walls[bottom]->SetName("plane_bottom");
-	walls[bottom]->LoadeMap("drei_64x64.ppm",0);
+	walls[bottom]->LoadeMap("Bump_3.ppm",0);
 	walls[bottom]->move(-500,-500,-500);
 	walls[bottom]->flip('y');
 	walls[bottom]->flipZ();
