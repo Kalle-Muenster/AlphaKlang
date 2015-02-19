@@ -38,15 +38,15 @@ void ProjectMappe::OnLoadContent(void)
 	menu->SetName("Main-Menu");
 	menu->scale(Vector3(256,256,1));
 	menu->AddConnectable<ButtonControl>();
-	menu->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,150);
+	menu->GetConnected<ButtonControl>(1)->PositionOnPanel = VectorF(100,170);
 	menu->GetConnected<ButtonControl>(1)->SizeScaledPanel = VectorF(0.4,0);
 	menu->GetConnected<ButtonControl>(1)->SetText("  Play game");
 	menu->AddConnectable<ButtonControl>();
-	menu->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,220);	
+	menu->GetConnected<ButtonControl>(2)->PositionOnPanel = VectorF(100,240);	
 	menu->GetConnected<ButtonControl>(2)->SizeScaledPanel = VectorF(0.4,0);
 	menu->GetConnected<ButtonControl>(2)->SetText("  Show FPS");
 	menu->AddConnectable<ButtonControl>();
-	menu->GetConnected<ButtonControl>(3)->PositionOnPanel = VectorF(100,290);	
+	menu->GetConnected<ButtonControl>(3)->PositionOnPanel = VectorF(100,310);	
 	menu->GetConnected<ButtonControl>(3)->SizeScaledPanel = VectorF(0.4,0);
 	menu->GetConnected<ButtonControl>(3)->SetText("      Exit");
 	menu->isVisible(true);
