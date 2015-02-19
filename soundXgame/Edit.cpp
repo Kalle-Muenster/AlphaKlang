@@ -96,7 +96,7 @@ Edit::Initialize(void)
 	InputManager::getInstance()->attachKey(this);
 	InputManager::getInstance()->attachMouseMove(this);
 	InputManager::getInstance()->attachMouseWheel(this);
-	InputManager::getInstance()->attachSpecial(this);
+//	InputManager::getInstance()->attachSpecial(this);
 	ID = this->CamModeID();
 	accelerate = false;
 	return true;
@@ -115,77 +115,41 @@ Edit::UpdateMode(void)
 	if(INPUT->Mouse.LEFT.RELEASE)
 		_mousereleased_edit=true;
 
-	GUI->Write("Press Escape to start !...",80,80);
+	GUI->Write("Press Enter to start the Experience of Sound",256,236);
 
 	this->IsDirty=false;
 }
 
 
-//void 
-//Edit::keyPress(char key)
-//{
-//	
-//	if(IsActive)
-//	{
-//		switch(key)
-//		{
-//			case 119: // W
-//				x += lx * moveSpeed;
-//				z += lz * moveSpeed;
-//				IsDirty=true;
-//				break;
-//			case 115: // S
-//				x -= lx * moveSpeed;
-//				z -= lz * moveSpeed;
-//				IsDirty=true;
-//				break;
-//			case 97: // A
-//				x += lz * moveSpeed;
-//				z += lx * (moveSpeed*-1);
-//				IsDirty=true;
-//				break;
-//			case 100: // D
-//				x -= lz * moveSpeed;
-//				z -= lx * (moveSpeed*-1);
-//				IsDirty=true;
-//				break;
-//		}
-//				
-//
-//		UpdateMode();
-//	}
-//}
-
-void
-Edit::specialKeyPressed(int key)
+void 
+Edit::keyPress(char key)
 {
+	
 	if(IsActive)
 	{
-	switch (key) {
-		case GLUT_KEY_UP:
-			x += lx * moveSpeed;
-			z += lz * moveSpeed;
-			IsDirty=true;
-			break;
-		case GLUT_KEY_DOWN:
-			x -= lx * moveSpeed;
-			z -= lz * moveSpeed;
-			IsDirty=true;
-			break;
-		case GLUT_KEY_LEFT:
-			x += lz * moveSpeed;
-			z += lx * (moveSpeed*-1);
-			IsDirty=true;
-			break;
-		case GLUT_KEY_RIGHT:
-			x -= lz * moveSpeed;
-			z -= lx * (moveSpeed*-1);
-			IsDirty=true;
-			break;
+		switch(key)
+		{
+			case 13: // W
+				switchBack();
+				break;
 		}
-	UpdateMode();
+		UpdateMode();
 	}
 }
+
+//void
+//Edit::specialKeyPressed(int key)
+//{
+//	if(IsActive)
+//	{
+//	switch (key) {
+//		case 13:   //Enter
+//			switchBack();
+//			break;
+//		}
+//	UpdateMode();
+//	}
+//}
 
 void
 Edit::mouseMotion(int newX, int newY)
