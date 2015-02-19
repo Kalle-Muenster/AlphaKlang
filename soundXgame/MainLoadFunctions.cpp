@@ -126,14 +126,14 @@ void ProjectMappe::OnLoadContent(void)
 							"X-7.png",
 							"X-7.png",
 							"X-7.png",
-
-							"Bleche/sae_128x128.png",
+							
+							"X-7.png",
 							"X-7.png",
 							"Bleche/logo-credits_256x256.png",
 							"X-7.png",
 
 							"Bleche/alphaklang2-white_256x256.png",
-							"X-7.png",
+							"Bleche/sae_128x128.png",
 							"Bleche/codeFreaks-black_256x256.png",
 							"X-7.png"};
 
