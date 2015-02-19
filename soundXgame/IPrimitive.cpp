@@ -10,21 +10,23 @@ typedef GLfloat zweier[2];
 
 
 //A Type-Array, containing constants of the primitives Type-ID's
-const type_info* _primitiveTypes[7] = { &(typeid(IFlatquad)),
+const type_info* _primitiveTypes[8] = { &(typeid(IFlatquad)),
 									    &(typeid(ICubic)),
 									    &(typeid(IBall)),
 									    &(typeid(ISphere)),
 									    &(typeid(IZylinder)),
 									    &(typeid(ICone)),
-									    &(typeid(ICapsule)) };
+									    &(typeid(ICapsule)),
+										&(typeid(IPyramidal)) };
 
-PrimitiveType* _primitivs[7] = { new IFlatquad(),
+PrimitiveType* _primitivs[8] = { new IFlatquad(),
 								 new ICubic(),
 								 new IBall(),
 								 new ISphere(),
 								 new IZylinder(),
 								 new ICone(),
-								 new ICapsule() };
+								 new ICapsule(),
+								 new IPyramidal() };
 
 IFlatquad	_flatquad	= IFlatquad();
 ICubic		_qube		= ICubic();
@@ -56,6 +58,8 @@ const ICone const *
 const ICapsule const *
 	PrimitiveType::Capsula = (ICapsule const*) _primitivs[PRIMITIVE::CAPSULA];
 
+const IPyramidal const *
+	PrimitiveType::Pyramid = (IPyramidal const*) _primitivs[PRIMITIVE::PYRAMID]; 
 
 //////////////////////////////////////////////////////////////
 // Flatquad static definitions:
@@ -445,6 +449,109 @@ ProjectMappe::InitICapsule(void)
 	_capsula.vertsBufferID = ICapsule::vertsBufferID;
 	_capsula.paintBufferID = ICapsule::paintBufferID;
 	_capsula.normsBufferID = ICapsule::normsBufferID;
+}
+
+
+
+
+//////////////////////////////////////////////////////////////
+// Pyramid static definitions:
+//////////////////////////////////////////////////////////////
+
+
+const GLuint
+	IPyramidal::shape = GL_TRIANGLE_STRIP;
+const GLuint 
+	IPyramidal::VertsCount = 6;
+GLuint
+	IPyramidal::vertsBufferID = 0; 
+GLuint
+	IPyramidal::paintBufferID = 0;
+GLuint
+	IPyramidal::normsBufferID = 0;
+
+
+
+// Initiation-function for IFlatquad-static's
+void
+ProjectMappe::InitiPyramidi(void)
+{
+	dreier vertsTemp[IPyramidal::VertsCount];
+	zweier paintTemp[IPyramidal::VertsCount];
+	dreier normsTemp[4];
+
+		
+	vertsTemp[0][0] = 0;
+	vertsTemp[0][1] = -0.5f;
+	vertsTemp[0][2] = -1.2f;
+	paintTemp[0][0] = 0;
+	paintTemp[0][1] = 0;
+
+	vertsTemp[1][0] = 1.039230f;
+	vertsTemp[1][1] = -0.5f;
+	vertsTemp[1][2] = 0.6f;
+	paintTemp[1][0] = 1;
+	paintTemp[1][1] = 0;
+
+	vertsTemp[2][0] = 0;  
+	vertsTemp[2][1] = 1.053666f;
+	vertsTemp[2][2] = 0;
+	paintTemp[2][0] = 1;
+	paintTemp[2][1] = 1;
+
+	vertsTemp[3][0] = -1.039230f;
+	vertsTemp[3][1] = -0.5f;
+	vertsTemp[3][2] = 0.6f;
+	paintTemp[3][0] = 0;
+	paintTemp[3][1] = 1;
+
+	vertsTemp[4][0] = 0;
+	vertsTemp[4][1] = -0.5f;
+	vertsTemp[4][2] = -1.2f;
+	paintTemp[4][0] = 0;
+	paintTemp[4][1] = 0;
+
+	vertsTemp[5][0] = 1.039230f;
+	vertsTemp[5][1] = -0.5f;
+	vertsTemp[5][2] = 0.6f;
+	paintTemp[5][0] = 1;
+	paintTemp[5][1] = 0;
+
+
+	normsTemp[0][0] = -0;
+	normsTemp[0][1] = 0.360300f;
+	normsTemp[0][2] = 0.932900f;
+	normsTemp[1][0] = 0.807900f; 
+	normsTemp[1][1] = 0.360300f; 
+	normsTemp[1][2] = -0.466400f;
+	normsTemp[2][0] = -0.807900f;
+	normsTemp[2][1] = 0.360300f;
+	normsTemp[2][2] = -0.466400f;
+	normsTemp[3][0] = 0;
+	normsTemp[3][1] = -1;
+	normsTemp[3][2] = 0;
+
+	glGenBuffers(1, &IPyramidal::vertsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, IPyramidal::vertsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, IPyramidal::VertsCount * sizeof(dreier), &vertsTemp[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &IPyramidal::paintBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, IPyramidal::paintBufferID);
+	glBufferData(GL_ARRAY_BUFFER, IPyramidal::VertsCount * sizeof(zweier), &paintTemp[0], GL_STATIC_DRAW);
+
+	glGenBuffers(1, &IPyramidal::normsBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, IPyramidal::normsBufferID);
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(dreier), &normsTemp[0], GL_STATIC_DRAW);
+
+	_primitivs[PrimitiveType::PRIMITIVE::PYRAMID]->buffers.vertsBufferID = IPyramidal::vertsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::PYRAMID]->buffers.paintBufferID = IPyramidal::paintBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::PYRAMID]->buffers.normsBufferID = IPyramidal::normsBufferID;
+	_primitivs[PrimitiveType::PRIMITIVE::PYRAMID]->buffers.VertsCount	 = IPyramidal::VertsCount;
+	_primitivs[PrimitiveType::PRIMITIVE::PYRAMID]->buffers.shape	     = IPyramidal::shape;
+
+	_flatquad.vertsBufferID = IPyramidal::vertsBufferID;
+	_flatquad.paintBufferID = IPyramidal::paintBufferID;
+	_flatquad.normsBufferID = IPyramidal::normsBufferID;
 }
 
 //EOF

@@ -524,6 +524,12 @@
     </Image>
     <Image Include="icon.png" />
     <Image Include="icon.ico" />
+    <Image Include="Data\Bleche\logo_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
+    <Image Include="Data\Bleche\logoT_256x256.png">
+      <Filter>Resources\Bleche</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\Particles\Modus Grau_128x128.ppm">

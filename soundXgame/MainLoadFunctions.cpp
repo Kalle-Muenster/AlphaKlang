@@ -78,7 +78,7 @@ void ProjectMappe::OnLoadContent(void)
 	// Kubus -> fliegender Cube
 	new IPrimitivObject();
 	GobID temp = SCENE->Object("last created")->GetID();
-	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<IZylinder>();
+	((IPrimitivObject*)SCENE->Object(temp))->SetPrimitiv<IPyramidal>();
 	SCENE->Object(temp)->LoadTexture("X-7.png");
 	SCENE->Object(temp)->move(5,20,-5);
 	SCENE->Object(temp)->GetOrAdd<SmoothObjectMover>()->movingVector.SetMAX(Vector3(10,25,20));
@@ -145,7 +145,7 @@ void ProjectMappe::OnLoadContent(void)
 		sprintf_s(tempString, sizeof(tempString),"AUDIO_%i",i);
 		sprintf_s(tempString2, sizeof(tempString2),"mp3/%i-Audio.mp3",i);
 		// create object
-		GobID id = (new Cubus("X-7.png"))->GetID();
+		GobID id = (new Cubus("x-7.png",true))->GetID();
 		//GobID id = SCENE->Object("last created")->GetID();
 		SCENE->Object(id)->SetName(&tempString[0]);
 		//((IPrimitivObject*)SCENE->Object(id))->SetPrimitiv<ICubic>();

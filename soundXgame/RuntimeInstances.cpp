@@ -64,6 +64,7 @@ ProjectMappe::StartupRuntimeManagers(void)
 	InitIspheree();
 	InitICone();
 	InitICapsule();
+	InitiPyramidi();
 	printf("Done ! \n\n");
 }
 
