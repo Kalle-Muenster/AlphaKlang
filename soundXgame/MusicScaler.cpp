@@ -40,7 +40,7 @@ MusicScaler::MotivatorFunction(float Motivator,int number)
 	if(number==2)
 	{
 		vec.z=Motivator*10;
-		Connection()->scale(vec);
+		Connection()->scale(vec/2);
 	}
 }
 
