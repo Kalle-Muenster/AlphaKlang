@@ -1,7 +1,7 @@
-![](https://github.com/KallePower/ProjectMappe/blob/development/soundXgame/codefreaks_black.jpg)
+![](http://www.game-coding.com/media/alphaklang_teaser.jpg)
 std::cout << Team Code Freaks << Programming by Kalle Münster and Dario D. Müller << std::endl
 
-Framework: Stepflow
+Framework
 ==============
 
 * Custom-build Graphics Framework build with C++ and OpenGL
@@ -20,9 +20,15 @@ About
 
 * Final Project at SAE Institute University, Hamburg, Germany
 * Copyright (c) 09/2014 - 01/2015
-* by Kalle Münster and Dario D. Müller
+
+Credits
+============
+
+* Kalle Münster
+* Dario D. Müller
 
 Links
 ============
+
   * Documentation: https://docs.google.com/document/d/1_fZ0rWXhQemJyiExTHA93nG4yES0Mfp_2MNUDu5DR-E/edit?usp=sharing
-  * Blog: www.dariodomi.de
+  * Blog: http://www.game-coding.com/alphaklang
